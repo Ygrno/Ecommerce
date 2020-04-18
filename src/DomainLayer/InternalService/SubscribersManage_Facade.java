@@ -32,9 +32,9 @@ public class SubscribersManage_Facade implements InternalService {
 
             Store store = new Store(store_name);
 
-            StoreManger storeManger = new StoreManger(subscriber, store);
+            StoreOwner storeOwner = new StoreOwner(subscriber, store);
 
-            store.getRoles().add(storeManger);
+            store.getRoles().add(storeOwner);
 
             system.getStore_list().add(store);
     }
