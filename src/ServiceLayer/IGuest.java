@@ -2,11 +2,17 @@ package ServiceLayer;
 
 public interface IGuest {
 
-    public boolean sign_up(String user_name, String password);
-    public boolean login(String user_name, String password);
-    public boolean search_products(String product_name);
-    public boolean save_products(String product_name);
-    public boolean watch_products_in_cart();
-    public boolean buy_products_in_cart();
+    //1.1 is done with login.
+    //2.1 is done with GUI
+
+    public boolean sign_up(String user_name, String password); //2.2
+    public boolean login(String user_name, String password);   //2.3
+    public boolean view_products_information_store (String store_name); //2.4
+
+    public boolean search_products(String product_name);  //2.5 (Right now, search via name only).
+
+    public boolean save_products(String product_name); //2.6
+    public boolean watch_products_in_cart();  //2.7
+    public boolean buy_products_in_cart();   //2.8 //7
 
 }
