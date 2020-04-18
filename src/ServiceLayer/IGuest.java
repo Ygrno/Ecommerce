@@ -11,8 +11,9 @@ public interface IGuest {
 
     public boolean search_products(String product_name);  //2.5 (Right now, search via name only).
 
-    public boolean save_products(String product_name); //2.6
-    public boolean watch_products_in_cart();  //2.7
+    public boolean save_products(String product_name, String store_name); //2.6
+    public boolean watch_products_in_cart();  //2.7.1
+    //remove_product_from cart                //2.7.2
     public boolean buy_products_in_cart();   //2.8 //7
 
 }
