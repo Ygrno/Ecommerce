@@ -40,7 +40,7 @@ public class GuestImp implements IGuest {
     @Override
     public boolean search_products(String product_name) {
         if(!SystemManage_Facade.is_initialized()) return false;
-        return true;
+        return false;
 
     }
 
