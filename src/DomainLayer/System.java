@@ -47,9 +47,7 @@ public class System {
         return user_list;
     }
 
-    public List<Store> getStore_list() {
-        return store_list;
-    }
+    public List<Store> getStore_list() { return store_list; }
 
     public Subscriber get_subscriber(String user_name){
         Subscriber subscriber = null;
@@ -58,6 +56,14 @@ public class System {
         }
         return subscriber;
     }
+    public Store get_store(String store_name){
+        Store store = null;
+        for (Store s : store_list){
+            if(s.getName().equals(store_name)) store = s;
+        }
+        return store;
+    }
+
 
     public ProductSupplyService getProductSupplyService() {
         return productSupplyService;
