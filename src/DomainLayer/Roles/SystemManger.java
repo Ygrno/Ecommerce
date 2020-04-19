@@ -13,7 +13,7 @@ public class SystemManger extends Role {
     public SystemManger(Subscriber user) {
         this.user = user;
     }
-
+//all purches from evrery store
     public List<PurchaseProcess> allpurchases() {
         List<PurchaseProcess> all_purchases_processes = new ArrayList<>();
         List<Store> all_stores = SystemManage_Facade.getAllStores();
