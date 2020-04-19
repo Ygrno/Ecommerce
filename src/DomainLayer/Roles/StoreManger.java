@@ -18,9 +18,11 @@ public class StoreManger extends StoreRole {
         permissions.add(Permission.VIEW_STORE_HISTORY);
     }
 
+    public void setPermissions(List<Permission> permissions) {
+        this.permissions = permissions;
+    }
 
-
-
-
-
+    public List<Permission> getPermissions() {
+        return permissions;
+    }
 }

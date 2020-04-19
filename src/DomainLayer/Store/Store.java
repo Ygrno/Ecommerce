@@ -77,4 +77,8 @@ public class Store {
     public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
+    public void removeRole(List<Role> roles) {
+        this.roles = roles;
+    }
+
 }
