@@ -38,6 +38,11 @@ public class GuestImp implements IGuest {
     }
 
     @Override
+    public boolean view_products_information_store(String store_name) {
+        return false;
+    }
+
+    @Override
     public boolean search_products(String product_name) {
         if(!SystemManage_Facade.is_initialized()) return false;
         return false;
@@ -45,7 +50,7 @@ public class GuestImp implements IGuest {
     }
 
     @Override
-    public boolean save_products(String product_name) {
+    public boolean save_products(String product_name, String store_name) {
         if(!SystemManage_Facade.is_initialized()) return false;
         return true;
     }
