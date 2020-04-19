@@ -80,5 +80,13 @@ public class Store {
     public void removeRole(List<Role> roles) {
         this.roles = roles;
     }
-
+    public Product getProduct(String product_name){
+        Product product = null;
+        for(Product p : product_list){
+            if(product_name.equals(p.getName())){
+                product = p;
+            }
+        }
+        return product;
+    }
 }

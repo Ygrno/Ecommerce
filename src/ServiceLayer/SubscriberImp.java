@@ -53,9 +53,10 @@ public class SubscriberImp implements ISubscriber {
     }
 
     @Override
-    public boolean write_review() {
-        if(!SystemManage_Facade.is_initialized()) return false;
-        return false;
+    public boolean write_review(String user_name, String product_name, String store_name, String review_data, int rank) {
+        if(!SystemManage_Facade.is_initialized())
+            return false;
+       return SystemManage_Facade.addProductReview( user_name,  product_name,  store_name,  review_data, rank);
     }
 
     @Override

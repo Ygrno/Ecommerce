@@ -12,7 +12,7 @@ public interface ISubscriber {
 
     public boolean sign_out(String user_name);  //3.1
     public boolean open_store(String user_name, String store_name); //3.2
-    public boolean write_review(); //3.3
+    public boolean write_review(String user_name, String product_name, String store_name, String review_data, int rank) ; //3.3
     public boolean rank_product(); //3.4
     public boolean rank_store();   //3.4
     public boolean send_query_to_store(); //3.5
