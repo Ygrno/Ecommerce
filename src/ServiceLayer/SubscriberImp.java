@@ -6,6 +6,31 @@ import DomainLayer.InternalService.SystemManage_Facade;
 public class SubscriberImp implements ISubscriber {
 
     @Override
+    public boolean view_products_information_store(String store_name) {
+        return false;
+    }
+
+    @Override
+    public boolean search_products(String product_name) {
+        return false;
+    }
+
+    @Override
+    public boolean save_products(String product_name, String store_name) {
+        return false;
+    }
+
+    @Override
+    public boolean watch_products_in_cart() {
+        return false;
+    }
+
+    @Override
+    public boolean buy_products_in_cart() {
+        return false;
+    }
+
+    @Override
     public boolean sign_out(String user_name) {
         if(!SystemManage_Facade.is_initialized()) return false;
 
