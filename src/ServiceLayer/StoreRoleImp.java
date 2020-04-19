@@ -119,9 +119,11 @@ public class StoreRoleImp implements IStoreRole {
         return false;
     }
 
+
+    //Not good to use internal class of domain
     @Override
     public List<PurchaseProcess> watch_store_history(String user_name, String store_name) {
-        if (!SystemManage_Facade.is_initialized()) return null;
+/*        if (!SystemManage_Facade.is_initialized()) return null;
         if (SystemManage_Facade.find_subscriber(user_name) && SystemManage_Facade.find_store(store_name)) {
             Store store = SystemManage_Facade.get_store(store_name);
             List<Role> roles = store.getRoles();
@@ -135,6 +137,8 @@ public class StoreRoleImp implements IStoreRole {
 
             }
         }
+
+ */
         return null;
 
     }
