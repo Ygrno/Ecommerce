@@ -35,6 +35,9 @@ public class SystemManage_Facade implements InternalService {
 
         return system.get_store(store_name);
     }
+    public static List<Store> getAllStores(){
+        return system.getStore_list();
+    }
 
     ////////////////////////////////////////////////////////
 
