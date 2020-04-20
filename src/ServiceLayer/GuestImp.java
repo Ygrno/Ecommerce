@@ -2,7 +2,10 @@ package ServiceLayer;
 
 import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
+import DomainLayer.Product;
 import Encryption.EncryptImp;
+
+import java.util.List;
 
 
 public class GuestImp implements IGuest {
@@ -39,7 +42,10 @@ public class GuestImp implements IGuest {
 
     @Override
     public boolean view_products_information_store(String store_name) {
-        return false;
+        if(!SystemManage_Facade.is_initialized()) return false;
+        List<Product> products = SystemManage_Facade.get_products_of_store(store_name);
+        if (products==null) return false; //todo- change to massage for user- wrong store_name
+        return true;
     }
 
     @Override
