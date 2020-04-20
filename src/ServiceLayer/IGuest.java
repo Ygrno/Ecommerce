@@ -1,5 +1,9 @@
 package ServiceLayer;
 
+import DomainLayer.Product;
+
+import java.util.List;
+
 public interface IGuest {
 
     //1.1 is done with login.
@@ -7,7 +11,7 @@ public interface IGuest {
 
     public boolean sign_up(String user_name, String password); //2.2
     public boolean login(String user_name, String password);   //2.3
-    public boolean view_products_information_store (String store_name); //2.4
+    public List<Product> view_products_information_store (String store_name); //2.4
 
     public boolean search_products(String product_name);  //2.5 (Right now, search via name only).
 
