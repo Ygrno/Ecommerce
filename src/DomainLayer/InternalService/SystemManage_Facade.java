@@ -1,5 +1,6 @@
 package DomainLayer.InternalService;
 
+import DomainLayer.Product;
 import DomainLayer.Roles.Permission;
 import DomainLayer.Store.Store;
 import DomainLayer.System;
@@ -82,5 +83,14 @@ public class SystemManage_Facade implements InternalService {
         return permissions;
 
 
+    }
+
+    public static List<Product> get_products_of_store(String store_name) {
+        List<Store> storeList = system.getStore_list();
+        for (Store s : storeList) {
+            if (s.getName().equals(store_name))
+                return s.getProduct_list();
+        }
+        return null;
     }
 }
