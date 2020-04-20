@@ -1,8 +1,12 @@
 package ServiceLayer;
 
+import DomainLayer.Product;
+
+import java.util.List;
+
 public interface ISubscriber {
 
-    public boolean view_products_information_store (String store_name); //2.4
+    public List<Product> view_products_information_store (String store_name); //2.4
     public boolean search_products(String product_name);  //2.5 (Right now, search via name only).
 
     public boolean save_products(String product_name, String store_name); //2.6

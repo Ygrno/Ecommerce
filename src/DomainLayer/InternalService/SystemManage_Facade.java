@@ -87,10 +87,11 @@ public class SystemManage_Facade implements InternalService {
 
     public static List<Product> get_products_of_store(String store_name) {
         List<Store> storeList = system.getStore_list();
+        List<Product> productList = null;
         for (Store s : storeList) {
             if (s.getName().equals(store_name))
-                return s.getProduct_list();
+                productList = s.getProduct_list();
         }
-        return null;
+        return productList;
     }
 }

@@ -41,11 +41,11 @@ public class GuestImp implements IGuest {
     }
 
     @Override
-    public boolean view_products_information_store(String store_name) {
-        if(!SystemManage_Facade.is_initialized()) return false;
-        List<Product> products = SystemManage_Facade.get_products_of_store(store_name);
-        if (products==null) return false; //todo- change to massage for user- wrong store_name
-        return true;
+    public List<Product> view_products_information_store(String store_name) {
+        List<Product> products = null;
+        if(!SystemManage_Facade.is_initialized()) return null;
+        products = SystemManage_Facade.get_products_of_store(store_name);
+        return products;
     }
 
     @Override

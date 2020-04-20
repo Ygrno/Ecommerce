@@ -2,12 +2,18 @@ package ServiceLayer;
 
 import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
+import DomainLayer.Product;
+
+import java.util.List;
 
 public class SubscriberImp implements ISubscriber {
 
     @Override
-    public boolean view_products_information_store(String store_name) {
-        return false;
+    public List<Product> view_products_information_store(String store_name) {
+        List<Product> products = null;
+        if(!SystemManage_Facade.is_initialized()) return null;
+        products = SystemManage_Facade.get_products_of_store(store_name);
+        return products;
     }
 
     @Override
