@@ -1,5 +1,7 @@
 package DomainLayer.InternalService;
 
+import DomainLayer.DealDetails;
+import DomainLayer.ExternalSerivce.ProductFinanceService;
 import DomainLayer.Product;
 import DomainLayer.Roles.Permission;
 import DomainLayer.Store.Store;
@@ -45,6 +47,10 @@ public class SystemManage_Facade implements InternalService {
     }
 
 
+
+    public static boolean buy(DealDetails dd){
+        return system.getProductFinanceService().tryToBuy(dd);
+    }
 
 
 

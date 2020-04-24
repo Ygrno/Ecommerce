@@ -104,8 +104,10 @@ public class GuestImp implements IGuest {
     }
 
     @Override
-    public boolean buy_products_in_cart(double discount) {
+    public boolean buy_products_in_cart(int id,double discount) {
         if(!SystemManage_Facade.is_initialized()) return false;
+        Guest g=SystemManage_Facade.getGuest(id);
+
         return true;
     }
 }
