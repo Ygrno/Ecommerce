@@ -1,6 +1,7 @@
 package DomainLayer.InternalService;
 
 import DomainLayer.Product;
+import DomainLayer.PurchaseProcess;
 import DomainLayer.Roles.Permission;
 import DomainLayer.Store.Store;
 import DomainLayer.System;
@@ -54,6 +55,16 @@ public class SystemManage_Facade implements InternalService {
     public static void add_subscriber(String user_name, String password) {
         Subscriber subscriber = new Subscriber(user_name, password);
         system.getUser_list().add(subscriber);
+    }
+
+    public static  List<PurchaseProcess> View_purchase(String user_name) { //3.7
+        Subscriber subscriber = system.get_subscriber(user_name);
+        return subscriber.getPurchaseProcesslist();
+    }
+
+    public static void Add_Query(String user_name,String query) { //3.5  -- #TODO add test that the query inserted
+        Subscriber subscriber = system.get_subscriber(user_name);
+        subscriber.getQuries().add(query);
     }
 
     ////////////////////////////////////////////////////////

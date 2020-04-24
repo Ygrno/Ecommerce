@@ -17,13 +17,14 @@ public class Subscriber extends User {
     private List<Role> role_list;
     private List<PurchaseProcess> purchaseProcesslist;
     private boolean logged_in = false;
+    private List<String> Quries; //3.5
 
     public Subscriber(String user_name, String password) {
         this.password = password;
         this.name = user_name;
         role_list = new ArrayList<>();
         purchaseProcesslist = new ArrayList<>();
-
+        Quries= new ArrayList<>();
     }
 
     public String getName() {
@@ -60,4 +61,7 @@ public class Subscriber extends User {
         return role_to_return;
     }
 
+    public List<String> getQuries() {
+        return Quries;
+    }
 }
