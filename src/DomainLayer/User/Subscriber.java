@@ -19,6 +19,7 @@ public class Subscriber extends User {
     private boolean logged_in = false;
 
     public Subscriber(String user_name, String password) {
+        super();
         this.password = password;
         this.name = user_name;
         role_list = new ArrayList<>();

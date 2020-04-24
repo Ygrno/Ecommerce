@@ -13,11 +13,11 @@ public interface IGuest {
     public boolean login(String user_name, String password);   //2.3
     public List<Product> view_products_information_store (String store_name); //2.4
 
-    public boolean search_products(String product_name);  //2.5 (Right now, search via name only).
+    public List<Product> search_products(String product_name);  //2.5 (Right now, search via name only).
 
-    public boolean save_products(String product_name, String store_name); //2.6
-    public boolean watch_products_in_cart();  //2.7.1
+    public boolean save_products(int id,String product_name, String store_name); //2.6
+    public List<String> watch_products_in_cart(int id);  //2.7.1
     //remove_product_from cart                //2.7.2
-    public boolean buy_products_in_cart();   //2.8 //7
+    public boolean buy_products_in_cart(double discount);   //2.8 //7
 
 }

@@ -5,6 +5,7 @@ import DomainLayer.ExternalSerivce.ProductSupplyService;
 import DomainLayer.Roles.Role;
 import DomainLayer.Roles.SystemManger;
 import DomainLayer.Store.Store;
+import DomainLayer.User.Guest;
 import DomainLayer.User.Subscriber;
 import DomainLayer.User.User;
 import Encryption.EncryptImp;
@@ -17,6 +18,8 @@ public class System {
     private static System SYSTEM_SINGLETON = null;
 
     private List<Subscriber> user_list;
+    private List<Guest> guest_list;
+    private int nextGuestId;
     private List<Store> store_list;
     public static boolean initialized = false;
     private ProductSupplyService productSupplyService;
@@ -25,6 +28,7 @@ public class System {
 
     private System(){
         user_list = new ArrayList<>();
+        guest_list=new ArrayList<>();
         store_list = new ArrayList<>();
         initialized = true;
         Subscriber admin = new Subscriber("Admin","Password");
@@ -36,6 +40,7 @@ public class System {
         encryptImp.connect();
         productFinanceService.connect();
         productSupplyService.connect();
+        nextGuestId=0;
     }
 
     public static System getSystem() {
@@ -46,6 +51,8 @@ public class System {
     public List<Subscriber> getUser_list() {
         return user_list;
     }
+
+
 
     public List<Store> getStore_list() { return store_list; }
 
@@ -87,5 +94,17 @@ public class System {
 
     public void setEncryptImp(EncryptImp encryptImp) {
         this.encryptImp = encryptImp;
+    }
+
+    public List<Guest> getGuest_list() {
+        return guest_list;
+    }
+
+    public int getNextGuestId() {
+        return nextGuestId;
+    }
+
+    public void increaseGuestId(){
+        this.nextGuestId++;
     }
 }
