@@ -8,12 +8,25 @@ import java.util.List;
 
 public class Guest extends User {
 
+
+    private int id;
     private List<PurchaseProcess> purchaseProcesslist;
 
-    public Guest(String user_name) {
+    public Guest(int id) {
+        super();
+        this.id=id;
         purchaseProcesslist = new ArrayList<>();
+
     }
 
+
+    public int getId() {
+        return id;
+    }
+
+    public List<PurchaseProcess> getPurchaseProcesslist() {
+        return purchaseProcesslist;
+    }
 
 
 }

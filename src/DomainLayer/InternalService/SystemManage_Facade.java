@@ -1,10 +1,13 @@
 package DomainLayer.InternalService;
 
+import DomainLayer.DealDetails;
+import DomainLayer.ExternalSerivce.ProductFinanceService;
 import DomainLayer.Product;
 import DomainLayer.PurchaseProcess;
 import DomainLayer.Roles.Permission;
 import DomainLayer.Store.Store;
 import DomainLayer.System;
+import DomainLayer.User.Guest;
 import DomainLayer.User.Subscriber;
 import Encryption.EncryptImp;
 
@@ -16,6 +19,8 @@ import static DomainLayer.Roles.Permission.VIEW_AND_RESPOND_TO_USERS;
 public class SystemManage_Facade implements InternalService {
 
     private static System system;
+
+
 
     public static void init_system() {
         system = System.getSystem();
@@ -37,8 +42,35 @@ public class SystemManage_Facade implements InternalService {
         return system.get_store(store_name);
     }
 
-    ////////////////////////////////////////////////////////
+    public static List<Store> get_stores() {
 
+        return system.getStore_list();
+    }
+
+
+
+    public static boolean buy(DealDetails dd){
+        return system.getProductFinanceService().tryToBuy(dd);
+    }
+
+
+
+    /////////////////guest methods/////////////////////
+
+    public static Guest getGuest(int id){
+        for(Guest g : system.getGuest_list()){
+            if(g.getId()==id)
+                return g;
+        }
+        return null;
+    }
+
+    public static Guest addGuest(){
+        Guest guest=new Guest(system.getNextGuestId());
+        system.getGuest_list().add(guest);
+        system.increaseGuestId();
+        return guest;
+    }
 
     /////////////// subscriber methods//////////////////////
 
