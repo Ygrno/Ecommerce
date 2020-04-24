@@ -1,9 +1,14 @@
 package ServiceLayer;
 
+import DomainLayer.*;
 import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
-import DomainLayer.Product;
+import DomainLayer.Store.Store;
+import DomainLayer.System;
+import DomainLayer.User.Guest;
+import DomainLayer.User.Subscriber;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SubscriberImp implements ISubscriber {
@@ -17,24 +22,75 @@ public class SubscriberImp implements ISubscriber {
     }
 
     @Override
-    public boolean search_products(String product_name) {
-        return false;
+    public List<Product> search_products(String product_name) {
+        List<Product> products = new ArrayList<>();
+        if(!SystemManage_Facade.is_initialized()) return null;
+        List<Store> stores=SystemManage_Facade.get_stores();
+        for(Store store : stores){
+            for(Product p : store.getProduct_list()){
+                if(p.getName().equals(product_name))
+                    products.add(p);
+            }
+        }
+        return products;
     }
 
     @Override
-    public boolean save_products(String product_name, String store_name) {
-        return false;
+    public boolean save_products(String userName,String product_name, String store_name) {
+        Subscriber s=SystemManage_Facade.get_subscriber(userName);
+        boolean processExist =false;
+        Product product=null;
+        Store store = SystemManage_Facade.get_store(store_name);
+        for(Product prod : store.getProduct_list()) {
+            if (prod.getName().equals(product_name))
+                product = prod;
+        }
+        for(PurchaseProcess p:s.getPurchaseProcesslist()){
+            if(p.getStore().getName().equals(store_name)){
+                p.getShoppingBag().getProducts_names().add(product_name);
+                p.getShoppingBag().getProducts().add(product);
+                processExist=true;
+            }
+        }
+        if(!processExist){
+            PurchaseProcess p=new PurchaseProcess(s,SystemManage_Facade.get_store(store_name),new ShoppingBag(new ArrayList<>()));
+            s.getShoppingCart().getShopping_bag_list().add(p.getShoppingBag());
+            p.getShoppingBag().getProducts_names().add(product_name);
+            p.getShoppingBag().getProducts().add(product);
+        }
+        return true;
     }
 
     @Override
-    public boolean watch_products_in_cart() {
-        return false;
+    public List<String> watch_products_in_cart(String userName) {
+        List<String> res= new ArrayList<>();
+        if(!SystemManage_Facade.is_initialized()) return null;
+        Subscriber s= SystemManage_Facade.get_subscriber(userName);
+
+        ShoppingCart sc=s.getShoppingCart();
+        for(ShoppingBag sb : sc.getShopping_bag_list()){
+            res.addAll(sb.getProducts_names());
+        }
+        return res;
     }
 
     @Override
-    public boolean buy_products_in_cart() {
-        return false;
+    public boolean buy_products_in_cart(String id, String buyerName, String creditCardNumber, String expireDate, int cvv, double discount) {
+        if(!SystemManage_Facade.is_initialized()) return false;
+        Subscriber g=SystemManage_Facade.get_subscriber(id);
+        assert g != null;
+        double price=0;
+        for(PurchaseProcess pp : g.getPurchaseProcesslist()){
+            for(Product prod : pp.getShoppingBag().getProducts()){
+                price+=prod.getPrice();
+            }
+        }
+        price= price*discount;
+
+        DealDetails dd =new DealDetails(price,buyerName,creditCardNumber,expireDate,cvv);
+        return SystemManage_Facade.buy(dd);
     }
+
 
     @Override
     public boolean sign_out(String user_name) {

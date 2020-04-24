@@ -75,9 +75,17 @@ public class GuestImp implements IGuest {
         if(g==null)
             g=SystemManage_Facade.addGuest();
         boolean processExist=false;
+        Product product=null;
+        Store s=SystemManage_Facade.get_store(store_name);
+        for(Product prod: s.getProduct_list()){
+            if(prod.getName().equals(product_name)){
+                product=prod;
+            }
+        }
         for(PurchaseProcess p:g.getPurchaseProcesslist()){
             if(p.getStore().getName().equals(store_name)){
                 p.getShoppingBag().getProducts_names().add(product_name);
+                p.getShoppingBag().getProducts().add(product);
                 processExist=true;
             }
         }
@@ -85,6 +93,8 @@ public class GuestImp implements IGuest {
             PurchaseProcess p=new PurchaseProcess(g,SystemManage_Facade.get_store(store_name),new ShoppingBag(new ArrayList<>()));
             g.getShoppingCart().getShopping_bag_list().add(p.getShoppingBag());
             p.getShoppingBag().getProducts_names().add(product_name);
+            p.getShoppingBag().getProducts().add(product);
+
         }
 
         return true;
@@ -104,10 +114,19 @@ public class GuestImp implements IGuest {
     }
 
     @Override
-    public boolean buy_products_in_cart(int id,double discount) {
+    public boolean buy_products_in_cart(int id,String buyerName,String creditCardNumber,String expireDate,int cvv,double discount) {
         if(!SystemManage_Facade.is_initialized()) return false;
         Guest g=SystemManage_Facade.getGuest(id);
+        assert g != null;
+        double price=0;
+        for(PurchaseProcess pp : g.getPurchaseProcesslist()){
+            for(Product prod : pp.getShoppingBag().getProducts()){
+                price+=prod.getPrice();
+            }
+        }
+        price= price*discount;
 
-        return true;
+        DealDetails dd =new DealDetails(price,buyerName,creditCardNumber,expireDate,cvv);
+        return SystemManage_Facade.buy(dd);
     }
 }
