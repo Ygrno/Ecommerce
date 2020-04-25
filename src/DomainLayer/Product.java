@@ -12,7 +12,7 @@ public class Product {
     private int price;
     private int amount;
     private Store store;
-    private List<ProductReview> product_rivew_list;
+    private List<ProductReview> product_review_list;
 
 
 
@@ -21,7 +21,7 @@ public class Product {
         this.price = price;
         this.amount = amount;
         this.store = store;
-        product_rivew_list = new ArrayList<>();
+        product_review_list = new ArrayList<>();
     }
 
     public String getName() {
@@ -56,6 +56,6 @@ public class Product {
         this.store = store;
     }
     public void  addReview(ProductReview pr){
-        product_rivew_list.add(pr);
+        product_review_list.add(pr);
     }
 }

@@ -43,6 +43,7 @@ public class SubscriberImp implements ISubscriber {
         boolean processExist =false;
         Product product=null;
         Store store = SystemManage_Facade.get_store(store_name);
+        if(store == null) return false;
         for(Product prod : store.getProduct_list()) {
             if (prod.getName().equals(product_name))
                 product = prod;
