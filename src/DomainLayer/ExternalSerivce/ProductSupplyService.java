@@ -1,8 +1,27 @@
 package DomainLayer.ExternalSerivce;
 
+import DomainLayer.ExternalSerivce.PassiveObjects.ExternalSupplyService;
+import DomainLayer.OrderDetails;
+
 public class ProductSupplyService implements ExternalService {
+
+    private ExternalSupplyService SupplyService;
+
+    public ProductSupplyService(ExternalSupplyService SupplyService){
+        this.SupplyService = SupplyService;
+    }
+
     @Override
     public boolean connect() {
-        return true;
+        try{
+            this.SupplyService.connect();
+            return true;
+        }catch(Exception e){
+            return false;
+        }
+    }
+
+    public boolean order(OrderDetails orderDetails){
+        return this.SupplyService.order(orderDetails);
     }
 }

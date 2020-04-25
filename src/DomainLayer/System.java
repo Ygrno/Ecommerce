@@ -9,6 +9,7 @@ import DomainLayer.User.Guest;
 import DomainLayer.User.Subscriber;
 import DomainLayer.User.User;
 import Encryption.EncryptImp;
+import Stubs.ExternalFinanceServiceStub;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +35,10 @@ public class System {
         Subscriber admin = new Subscriber("Admin","Password");
         SystemManger systemManger = new SystemManger(admin);
         user_list.add(admin);
-        productFinanceService = new ProductFinanceService();
+
+        productFinanceService = new ProductFinanceService(new ExternalFinanceServiceStub());
         productSupplyService = new ProductSupplyService();
+
         encryptImp = new EncryptImp();
         encryptImp.connect();
         productFinanceService.connect();

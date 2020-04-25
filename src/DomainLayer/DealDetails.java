@@ -1,14 +1,14 @@
 package DomainLayer;
 
 public class DealDetails {
-    private int price;
+    private double price;
     private String buyer_name;
     private String creditCardNumber;
     private String expireDate;
     private int cvv;
 
 
-    public DealDetails(int price, String buyer_name, String creditCardNumber, String expireDate, int cvv) {
+    public DealDetails(double price, String buyer_name, String creditCardNumber, String expireDate, int cvv) {
         this.price = price;
         this.buyer_name = buyer_name;
         this.creditCardNumber = creditCardNumber;
@@ -16,7 +16,7 @@ public class DealDetails {
         this.cvv = cvv;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
