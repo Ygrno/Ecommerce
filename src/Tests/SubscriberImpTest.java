@@ -78,6 +78,10 @@ public class SubscriberImpTest {
 
     @Test
     public void view_products_information_store() {
+        assertEquals(SYS.get_store("store1").getProduct_list(), SUBImp.view_products_information_store("store1"));
+        assertEquals(SYS.get_store("store2").getProduct_list(), SUBImp.view_products_information_store("store2"));
+        assertEquals(SYS.get_store("store3").getProduct_list(), SUBImp.view_products_information_store("store3"));
+        assertEquals(null, SUBImp.view_products_information_store("store10"));
     }
 
     @Test
