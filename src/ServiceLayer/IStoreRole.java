@@ -18,8 +18,6 @@ public interface IStoreRole {
     public boolean assign_store_manager(String user_name, String store_name, String user_assign); //4.5
     public boolean edit_manager_permissions(String user_name, String store_name, ArrayList<String> permissions); //4.6
 
-    boolean edit_manager_permissions(String user_name, String store_name, List<String> permissions);
-
     public boolean remove_store_manager(String user_name, String store_name, String user_assign); //4.7
     public boolean close_store(String user_name, String store_name); //4.8
     public boolean view_and_respond_to_questions(); //4.9 //5.1
