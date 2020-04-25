@@ -148,7 +148,7 @@ public class SubscriberImp implements ISubscriber {
     }
 
     @Override
-    public void send_query_to_store(String user_name,String Query) {
+    public void send_query_to_store(String user_name,String Query) {//add test
         if(SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
             SystemManage_Facade.Add_Query(user_name, Query);
         }
