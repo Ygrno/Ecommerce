@@ -7,6 +7,8 @@ import DomainLayer.Store.Store;
 import DomainLayer.System;
 import DomainLayer.User.Guest;
 import DomainLayer.User.Subscriber;
+import DomainLayer.Product;
+import DomainLayer.PurchaseProcess;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -133,9 +135,10 @@ public class SubscriberImp implements ISubscriber {
     }
 
     @Override
-    public boolean send_query_to_store() {
-        if(!SystemManage_Facade.is_initialized()) return false;
-        return false;
+    public void send_query_to_store(String user_name,String Query) {
+        if(SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
+            SystemManage_Facade.Add_Query(user_name, Query);
+        }
     }
 
     @Override
@@ -145,9 +148,11 @@ public class SubscriberImp implements ISubscriber {
     }
 
     @Override
-    public boolean view_purchase_history() {
-        if(!SystemManage_Facade.is_initialized()) return false;
-        return false;
+    public List<PurchaseProcess> view_purchase_history(String user_name) {
+        if(SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)){
+            return SystemManage_Facade.View_purchase(user_name);
+        }
+        return null;
     }
 
     @Override

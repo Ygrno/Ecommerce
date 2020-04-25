@@ -55,7 +55,6 @@ public class GuestImp implements IGuest {
     @Override
     public List<Product> search_products(String product_name) {
         List<Product> products = new ArrayList<>();
-        if(!SystemManage_Facade.is_initialized()) return null;
         List<Store> stores=SystemManage_Facade.get_stores();
         for(Store store : stores){
             for(Product p : store.getProduct_list()){
@@ -70,7 +69,6 @@ public class GuestImp implements IGuest {
     @Override
     public boolean save_products(int id,String product_name, String store_name) {
 
-        if(!SystemManage_Facade.is_initialized()) return false;
         Guest g=SystemManage_Facade.getGuest(id);
         if(g==null)
             g=SystemManage_Facade.addGuest();
@@ -103,7 +101,6 @@ public class GuestImp implements IGuest {
     @Override
     public List<String> watch_products_in_cart(int id) {
         List<String> res= new ArrayList<>();
-        if(!SystemManage_Facade.is_initialized()) return null;
         Guest g= SystemManage_Facade.getGuest(id);
         assert g != null;
         ShoppingCart sc=g.getShoppingCart();
@@ -115,9 +112,19 @@ public class GuestImp implements IGuest {
 
     @Override
     public boolean buy_products_in_cart(int id,String buyerName,String creditCardNumber,String expireDate,int cvv,double discount) {
-        if(!SystemManage_Facade.is_initialized()) return false;
+        if(discount > 1 || discount < 0){
+            return false;
+        }
+        if(expireDate.length() != 5){
+            return false;
+        }
+        if(creditCardNumber.length()!=16)
+            return false;
+        if(cvv>=1000)
+            return false;
         Guest g=SystemManage_Facade.getGuest(id);
-        assert g != null;
+        if(g==null)
+            return false;
         double price=0;
         for(PurchaseProcess pp : g.getPurchaseProcesslist()){
             for(Product prod : pp.getShoppingBag().getProducts()){
