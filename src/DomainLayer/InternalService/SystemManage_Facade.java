@@ -1,12 +1,12 @@
 package DomainLayer.InternalService;
 
-import DomainLayer.DealDetails;
+import DomainLayer.*;
 import DomainLayer.ExternalSerivce.ProductFinanceService;
-import DomainLayer.Product;
 import DomainLayer.Roles.Permission;
 import DomainLayer.Store.Store;
 import DomainLayer.System;
 import DomainLayer.User.Guest;
+import DomainLayer.User.ProductReview;
 import DomainLayer.User.Subscriber;
 import Encryption.EncryptImp;
 
@@ -88,6 +88,41 @@ public class SystemManage_Facade implements InternalService {
         system.getUser_list().add(subscriber);
     }
 
+    public static  List<PurchaseProcess> View_purchase(String user_name) { //3.7
+        Subscriber subscriber = system.get_subscriber(user_name);
+        return subscriber.getPurchaseProcesslist();
+    }
+
+    public static void Add_Query(String user_name,String query) { //3.5  -- #TODO add test that the query inserted
+        Subscriber subscriber = system.get_subscriber(user_name);
+        subscriber.getQuries().add(query);
+    }
+    public static boolean addProductReview(String user_name, String product_name, String store_name, String review_data, int rank) {
+        Subscriber subscriber = system.get_subscriber(user_name);
+        Product reviewedProduct = system.get_store(store_name).getProduct(product_name);
+        List<PurchaseProcess> purchedlist = new ArrayList<>();
+        ProductReview product_review;
+        boolean isPurchased = false;
+        ShoppingBag currentShoppingBag;
+        if (subscriber != null && subscriber.isLogged_in() && reviewedProduct != null) {
+            purchedlist = subscriber.getPurchaseProcesslist();
+            for (PurchaseProcess pp : purchedlist) {
+                currentShoppingBag = pp.getShoppingBag();
+                for (String p : currentShoppingBag.getProducts_names())
+                    if (p.equals(product_name) && pp.getStore().getName().equals(store_name)&&pp.isfinished()) {
+                        isPurchased = true;
+                        product_review = new ProductReview(subscriber,rank,review_data);
+                        reviewedProduct.addReview(product_review);
+
+                    }
+
+            }
+
+        }
+        return isPurchased;
+    }
+
+
     ////////////////////////////////////////////////////////
     public static boolean check_password(String user_name, String password) {
         EncryptImp encryptImp = system.getEncryptImp();
@@ -126,4 +161,8 @@ public class SystemManage_Facade implements InternalService {
         }
         return productList;
     }
+    public static List<Store> getAllStores(){
+        return system.getStore_list();
+    }
+
 }
