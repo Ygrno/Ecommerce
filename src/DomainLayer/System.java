@@ -1,5 +1,6 @@
 package DomainLayer;
 
+import DomainLayer.ExternalSerivce.PassiveObjects.ExternalSupplyService;
 import DomainLayer.ExternalSerivce.ProductFinanceService;
 import DomainLayer.ExternalSerivce.ProductSupplyService;
 import DomainLayer.Roles.Role;
@@ -37,7 +38,7 @@ public class System {
         user_list.add(admin);
 
         productFinanceService = new ProductFinanceService(new ExternalFinanceServiceStub());
-        productSupplyService = new ProductSupplyService();
+        productSupplyService = new ProductSupplyService(null);
 
         encryptImp = new EncryptImp();
         encryptImp.connect();
