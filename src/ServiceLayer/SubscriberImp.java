@@ -78,9 +78,20 @@ public class SubscriberImp implements ISubscriber {
 
     @Override
     public boolean buy_products_in_cart(String id, String buyerName, String creditCardNumber, String expireDate, int cvv, double discount) {
-        if(!SystemManage_Facade.is_initialized()) return false;
+        if(discount > 1 || discount < 0){
+            return false;
+        }
+        if(expireDate.length() != 5){
+            return false;
+        }
+        if(creditCardNumber.length()!=16)
+            return false;
+        if(cvv>=1000)
+            return false;
+
         Subscriber g=SystemManage_Facade.get_subscriber(id);
-        assert g != null;
+        if(g==null)
+            return false;
         double price=0;
         for(PurchaseProcess pp : g.getPurchaseProcesslist()){
             for(Product prod : pp.getShoppingBag().getProducts()){
