@@ -8,12 +8,12 @@ import java.util.List;
 public interface ISubscriber {
 
     public List<Product> view_products_information_store (String store_name); //2.4
-    public boolean search_products(String product_name);  //2.5 (Right now, search via name only).
+    public List<Product> search_products(String product_name);  //2.5 (Right now, search via name only).
 
-    public boolean save_products(String product_name, String store_name); //2.6
-    public boolean watch_products_in_cart();  //2.7.1
+    public boolean save_products(String userName,String product_name, String store_name); //2.6
+    public List<String> watch_products_in_cart(String userName);  //2.7.1
     //remove_product_from cart                //2.7.2
-    public boolean buy_products_in_cart();   //2.8 //7
+    public boolean buy_products_in_cart(String id,String buyerName,String creditCardNumber,String expireDate,int cvv,double discount);   //2.8 //7
 
     public boolean sign_out(String user_name);  //3.1
     public boolean open_store(String user_name, String store_name); //3.2
