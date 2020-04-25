@@ -14,8 +14,10 @@ import static org.junit.Assert.*;
 public class GuestImpTest {
 
     private static GuestImp gi;
+    private static GuestImp gi2;
     private static System system;
     private static Guest guest;
+
 
     @BeforeClass
     public static void setUp(){
@@ -56,7 +58,20 @@ public class GuestImpTest {
     }
 
     @Test
-    public void view_products_information_store() {
+    public void sign_up() { //2.2
+        assertEquals(true ,gi.sign_up("name", "pass") );
+        assertEquals(true ,system.getUser_list().size()==1);
+        assertEquals(true ,gi2.sign_up("name2", "pass2") );
+        assertEquals(false ,gi2.sign_up("name2", "222") );
+    }
+
+    @Test
+    public void login() { //2.3
+        assertEquals(true ,gi.login("name", "pass") );
+        assertEquals(false ,gi.login("name", "passFailed") );
+    }
+
+    public void view_products_information_store() {//2.4
         assertEquals(system.get_store("store1").getProduct_list(), gi.view_products_information_store("store1"));
         assertEquals(system.get_store("store2"), gi.view_products_information_store("store2"));
         assertEquals(system.get_store("store3"), gi.view_products_information_store("store3"));

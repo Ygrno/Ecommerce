@@ -77,6 +77,7 @@ public class SubscriberImpTest {
         subscriber.setLogged_in(true);
     }
 
+
     @Test
     public void view_products_information_store() {
         assertEquals(SYS.get_store("store1").getProduct_list(), SUBImp.view_products_information_store("store1"));

@@ -25,4 +25,7 @@ public class StoreManger extends StoreRole {
     public List<Permission> getPermissions() {
         return permissions;
     }
+
+    public boolean havePermission () {return true;}
+
 }
