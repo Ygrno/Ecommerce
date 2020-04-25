@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 public class GuestImpTest {
 
     private static GuestImp gi;
-    private static GuestImp gi2
+    private static GuestImp gi2;
     private static System system;
     private static Guest guest;
 
@@ -57,8 +57,6 @@ public class GuestImpTest {
 
     }
 
-    @Test
-    public void view_products_information_store() {
     @Test
     public void sign_up() { //2.2
         assertEquals(true ,gi.sign_up("name", "pass") );
