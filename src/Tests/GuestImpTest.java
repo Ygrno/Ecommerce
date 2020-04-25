@@ -1,4 +1,4 @@
-package Tests;
+//package Tests;
 
 import DomainLayer.Product;
 import DomainLayer.PurchaseProcess;
@@ -30,12 +30,14 @@ public class GuestImpTest {
     }
 
     GuestImp gi;
+    GuestImp gi2;
     private System system;
     private Guest guest;
 
     @Before
     public void setUp(){
         gi=new GuestImp();
+        gi2=new GuestImp();
         system=System.getSystem();
         Store s1=new Store("sotre1");
         Product p1=new Product("bmba",1,2,s1);
@@ -71,7 +73,21 @@ public class GuestImpTest {
 
     }
 
-    public void view_products_information_store() {
+    @Test
+    public void sign_up() { //2.2
+        assertEquals(true ,gi.sign_up("name", "pass") );
+        assertEquals(true ,system.getUser_list().size()==1);
+        assertEquals(true ,gi2.sign_up("name2", "pass2") );
+        assertEquals(false ,gi2.sign_up("name2", "222") );
+    }
+
+    @Test
+    public void login() { //2.3
+        assertEquals(true ,gi.login("name", "pass") );
+        assertEquals(false ,gi.login("name", "passFailed") );
+    }
+
+    public void view_products_information_store() {//2.4
         assertEquals(system.get_store("store1").getProduct_list(), gi.view_products_information_store("store1"));
         assertEquals(system.get_store("store2"), gi.view_products_information_store("store2"));
         assertEquals(system.get_store("store3"), gi.view_products_information_store("store3"));

@@ -1,4 +1,4 @@
-package Tests;
+//package Tests;
 
 import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
@@ -75,6 +75,7 @@ public class SubscriberImpTest {
     public void login_true(){
         subscriber.setLogged_in(true);
     }
+
 
     @Test
     public void view_products_information_store() {
