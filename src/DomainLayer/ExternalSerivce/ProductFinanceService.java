@@ -7,6 +7,10 @@ public class ProductFinanceService implements ExternalService {
 
     private ExternalFinanceService FinanceService;
 
+    public ProductFinanceService(ExternalFinanceService FinanceService){
+        this.FinanceService = FinanceService;
+    }
+
     @Override
     public boolean connect() {
         try{
@@ -19,6 +23,11 @@ public class ProductFinanceService implements ExternalService {
 
 
     public boolean tryToBuy(DealDetails details){
-        return true;
+        return FinanceService.purchase(
+                details.getBuyer_name(),
+                details.getCreditCardNumber(),
+                details.getExpireDate(),
+                details.getCvv()
+        );
     }
 }
