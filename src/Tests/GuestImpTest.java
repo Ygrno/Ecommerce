@@ -5,7 +5,6 @@ import DomainLayer.Store.Store;
 import DomainLayer.System;
 import DomainLayer.User.Guest;
 import ServiceLayer.GuestImp;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -57,6 +56,14 @@ public class GuestImpTest {
     }
 
     @Test
+    public void view_products_information_store() {
+        assertEquals(system.get_store("store1").getProduct_list(), gi.view_products_information_store("store1"));
+        assertEquals(system.get_store("store2"), gi.view_products_information_store("store2"));
+        assertEquals(system.get_store("store3"), gi.view_products_information_store("store3"));
+        assertEquals(null, gi.view_products_information_store("store10"));
+    }
+
+    @Test
     public void search_products() {
         assertEquals(3, gi.search_products("bmba").size());
         assertEquals(2, gi.search_products("besli").size());
@@ -105,4 +112,6 @@ public class GuestImpTest {
         assertFalse(gi.buy_products_in_cart(1,"mahmoud","12341234123412341","11/26",999,0));
         assertFalse(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/261",999,0));
     }
+
+
 }

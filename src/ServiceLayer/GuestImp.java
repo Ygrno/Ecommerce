@@ -22,8 +22,6 @@ public class GuestImp implements IGuest {
         if(!encryption.connect()) return false;
         password = encryption.encrypt(password);
 
-
-
         if(!SystemManage_Facade.find_subscriber(user_name)) {
             SystemManage_Facade.add_subscriber(user_name, password);
             return true;
