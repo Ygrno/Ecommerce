@@ -72,7 +72,8 @@ public class GuestImp implements IGuest {
             g=SystemManage_Facade.addGuest();
         boolean processExist=false;
         Product product=null;
-        Store s=SystemManage_Facade.get_store(store_name);
+        Store s = SystemManage_Facade.get_store(store_name);
+
         for(Product prod: s.getProduct_list()){
             if(prod.getName().equals(product_name)){
                 product=prod;

@@ -1,4 +1,4 @@
-package Tests;
+package unit;
 
 import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
@@ -29,6 +29,7 @@ public class SubscriberImpTest {
     private static SubscribersManage_Facade SUB;
     private static Subscriber subscriber;
     private static Store store;
+
     @BeforeClass
     public static void init_func(){
         SUBImp= new SubscriberImp();
@@ -55,17 +56,17 @@ public class SubscriberImpTest {
         Product p5=new Product("bmba",11,2,s2);
         Product p4=new Product("chips",3,2,s2);
         Product p6=new Product("twix",5,2,s2);
-        s2.getProduct_list().add(p1);
-        s2.getProduct_list().add(p2);
-        s2.getProduct_list().add(p3);
+        s2.getProduct_list().add(p5);
+        s2.getProduct_list().add(p4);
+        s2.getProduct_list().add(p6);
 
         Store s3=new Store("sotre3");
         Product p7=new Product("bmba",4,2,s3);
         Product p8=new Product("besli",4,2,s3);
         Product p9=new Product("twix",6,2,s3);
-        s3.getProduct_list().add(p1);
-        s3.getProduct_list().add(p2);
-        s3.getProduct_list().add(p3);
+        s3.getProduct_list().add(p7);
+        s3.getProduct_list().add(p8);
+        s3.getProduct_list().add(p9);
 
         system.getStore_list().add(s1);
         system.getStore_list().add(s2);
@@ -75,6 +76,7 @@ public class SubscriberImpTest {
     public void login_true(){
         subscriber.setLogged_in(true);
     }
+
 
     @Test
     public void view_products_information_store() {

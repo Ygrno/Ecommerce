@@ -20,6 +20,7 @@ public class StoreRoleImp implements IStoreRole {
         if (!SystemManage_Facade.is_initialized()) return false;
         if (SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
 
+
         }
 
 
