@@ -8,11 +8,14 @@ public class PurchaseProcess {
     private User user;
     private Store store;
     private ShoppingBag shoppingBag;
+    boolean isDone;
 
     public PurchaseProcess(User user, Store store, ShoppingBag shoppingBag) {
         this.user = user;
         this.store = store;
         this.shoppingBag = shoppingBag;
+        this.isDone = false;
+
     }
 
     public User getUser() {
@@ -37,5 +40,8 @@ public class PurchaseProcess {
 
     public void setShoppingBag(ShoppingBag shoppingBag) {
         this.shoppingBag = shoppingBag;
+    }
+    public boolean isfinished(){
+        return isDone;
     }
 }

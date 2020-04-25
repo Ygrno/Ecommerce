@@ -65,13 +65,10 @@ public class StoreRoleImp implements IStoreRole {
         return false;
     }
 
-    @Override
-    public boolean edit_manager_permissions(String user_name, String store_name, ArrayList<String> permissions) {
-        return false;
-    }
+
 
     @Override
-    public boolean edit_manager_permissions(String user_name, String store_name, List<String> permissions) {
+    public boolean edit_manager_permissions(String user_name, String store_name, ArrayList<String> permissions) {
         if (!SystemManage_Facade.is_initialized()) return false;
         else if (SystemManage_Facade.find_subscriber(user_name) && SystemManage_Facade.find_store(store_name)) {
             List<Permission> fixPermissions = SystemManage_Facade.strings_to_permissions(permissions);
@@ -79,8 +76,10 @@ public class StoreRoleImp implements IStoreRole {
             List<Role> roles = store.getRoles();
             for (Role r : roles) {
                 if (r instanceof StoreManger)
-                    if (((StoreManger) r).user.equals(user_name) && ((StoreManger) r).store.equals(store_name))
+                    if (((StoreManger) r).user.equals(user_name) && ((StoreManger) r).store.equals(store_name)) {
                         ((StoreManger) r).setPermissions(fixPermissions);
+                        return true;
+                    }
 
             }
 
@@ -88,6 +87,7 @@ public class StoreRoleImp implements IStoreRole {
         }
         return false;
     }
+
 
     @Override
     public boolean remove_store_manager(String user_name, String store_name, String user_assign) {
@@ -123,7 +123,7 @@ public class StoreRoleImp implements IStoreRole {
     //Not good to use internal class of domain
     @Override
     public List<PurchaseProcess> watch_store_history(String user_name, String store_name) {
-/*        if (!SystemManage_Facade.is_initialized()) return null;
+       if (!SystemManage_Facade.is_initialized()) return null;
         if (SystemManage_Facade.find_subscriber(user_name) && SystemManage_Facade.find_store(store_name)) {
             Store store = SystemManage_Facade.get_store(store_name);
             List<Role> roles = store.getRoles();
@@ -138,8 +138,9 @@ public class StoreRoleImp implements IStoreRole {
             }
         }
 
- */
+
         return null;
 
     }
+
 }
