@@ -1,5 +1,6 @@
 package DomainLayer;
 
+import DomainLayer.ExternalSerivce.PassiveObjects.ExternalSupplyService;
 import DomainLayer.ExternalSerivce.ProductFinanceService;
 import DomainLayer.ExternalSerivce.ProductSupplyService;
 import DomainLayer.Roles.Role;
@@ -9,6 +10,7 @@ import DomainLayer.User.Guest;
 import DomainLayer.User.Subscriber;
 import DomainLayer.User.User;
 import Encryption.EncryptImp;
+import Stubs.ExternalFinanceServiceStub;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +36,10 @@ public class System {
         Subscriber admin = new Subscriber("Admin","Password");
         SystemManger systemManger = new SystemManger(admin);
         user_list.add(admin);
-        productFinanceService = new ProductFinanceService();
-        productSupplyService = new ProductSupplyService();
+
+        productFinanceService = new ProductFinanceService(new ExternalFinanceServiceStub());
+        productSupplyService = new ProductSupplyService(null);
+
         encryptImp = new EncryptImp();
         encryptImp.connect();
         productFinanceService.connect();
