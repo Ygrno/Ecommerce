@@ -18,6 +18,11 @@ public class PurchaseProcess {
     }
 
     private DealDetails details;
+
+    public void setDone(boolean done) {
+        isDone = done;
+    }
+
     boolean isDone;
 
     public PurchaseProcess(User user, Store store, ShoppingBag shoppingBag) {
@@ -51,6 +56,7 @@ public class PurchaseProcess {
     public void setShoppingBag(ShoppingBag shoppingBag) {
         this.shoppingBag = shoppingBag;
     }
+
     public boolean isfinished(){
         return isDone;
     }

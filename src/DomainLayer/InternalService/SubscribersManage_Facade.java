@@ -33,6 +33,8 @@ public class SubscribersManage_Facade implements InternalService {
 
         StoreOwner storeOwner = new StoreOwner(subscriber, store);
 
+        subscriber.getRole_list().add(storeOwner);
+
         store.getRoles().add(storeOwner);
 
         System.getSystem().getStore_list().add(store);
@@ -59,6 +61,7 @@ public class SubscribersManage_Facade implements InternalService {
         StoreRole store_role = subscriber.get_role_at_store(store_name);
         if (store_role instanceof StoreOwner) {
             Product product = store_role.store.getProduct(product_name);
+            if(product == null) return false;
             product.setName(new_product_name);
             product.setPrice(product_price);
             product.setAmount(product_amount);
@@ -81,6 +84,7 @@ public class SubscribersManage_Facade implements InternalService {
         StoreRole store_role = subscriber.get_role_at_store(store_name);
         if (store_role instanceof StoreOwner) {
             Product product = store_role.store.getProduct(product_name);
+            if(product == null) return false;
             store_role.store.getProduct_list().remove(product);
             return true;
         } else if (store_role instanceof StoreManger) {
@@ -99,7 +103,7 @@ public class SubscribersManage_Facade implements InternalService {
         StoreRole store_role = subscriber1.get_role_at_store(store_name);
         if (store_role instanceof StoreOwner) {
             Subscriber subscriber2 = System.getSystem().get_subscriber(user_assign);
-            if(subscriber2 == null) return false;
+            if(subscriber2 == null || store_role.store.find_store_owner_by_name(user_assign) != null) return false;
             StoreOwner storeOwner = new StoreOwner(subscriber2,store_role.store);
             subscriber2.getRole_list().add(storeOwner);
             storeOwner.store.getRoles().add(storeOwner);
@@ -155,7 +159,7 @@ public class SubscribersManage_Facade implements InternalService {
             Subscriber to_remove = System.getSystem().get_subscriber(user_assign);
             if(to_remove == null) return false;
 
-            StoreManger storeManger = ((StoreManger)store_role).store.find_store_manager_by_name(to_remove.getName());
+            StoreManger storeManger = store_role.store.find_store_manager_by_name(to_remove.getName());
             if(storeManger == null) return false;
             store_role.store.getRoles().remove(storeManger);
             store_role.getAssigned_users().remove(storeManger);

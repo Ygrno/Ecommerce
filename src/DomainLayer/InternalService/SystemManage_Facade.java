@@ -17,7 +17,7 @@ import static DomainLayer.Roles.Permission.VIEW_AND_RESPOND_TO_USERS;
 
 public class SystemManage_Facade implements InternalService {
 
-    private static System system;
+    public static System system;
 
 
 

@@ -18,7 +18,7 @@ import java.util.List;
 
 public class System {
 
-    public static System SYSTEM_SINGLETON = null;
+    private static System SYSTEM_SINGLETON = null;
 
     private List<Subscriber> user_list;
     private List<Guest> guest_list;
@@ -116,5 +116,9 @@ public class System {
 
     public void increaseGuestId(){
         this.nextGuestId++;
+    }
+
+    public void clearSystem(){
+        SYSTEM_SINGLETON = null;
     }
 }

@@ -10,6 +10,7 @@ import DomainLayer.ShoppingBag;
 import DomainLayer.Store.Store;
 import DomainLayer.System;
 import DomainLayer.User.Subscriber;
+import ServiceLayer.GuestImp;
 import ServiceLayer.SubscriberImp;
 import org.junit.After;
 import org.junit.BeforeClass;
@@ -23,26 +24,31 @@ import static org.junit.Assert.assertNotNull;
 
 public class SubscriberImpTest {
     private static SubscriberImp SUBImp;
+    private  static GuestImp guestImp;
     private static SystemManage_Facade SYS;
     private static SubscribersManage_Facade SUB;
     private static Subscriber subscriber;
     private static Store store;
 
     @BeforeClass
-    public static void init_func(){
+    public static void init_func() throws IOException {
         SUBImp= new SubscriberImp();
         SUB= new SubscribersManage_Facade();
         SYS= new SystemManage_Facade();
-        SYS.init_system();
-        SYS.is_initialized();
-        SYS.add_subscriber("subscriber","subscriber");
+        guestImp = new GuestImp();
+        guestImp.login("Admin","Password");
+
+       // SystemManage_Facade.init_system();
+       // SystemManage_Facade.is_initialized();
+        SystemManage_Facade.add_subscriber("subscriber","subscriber");
         subscriber= System.getSystem().get_subscriber("subscriber");
         subscriber.setLogged_in(true);
         System system=System.getSystem();
+        system.getStore_list().clear();
 
 
 
-        Store s1=new Store("sotre1");
+        Store s1=new Store("store1");
         Product p1=new Product("bmba",1,2,s1);
         Product p2=new Product("besli",12,2,s1);
         Product p3=new Product("twix",3,2,s1);
@@ -50,7 +56,7 @@ public class SubscriberImpTest {
         s1.getProduct_list().add(p2);
         s1.getProduct_list().add(p3);
 
-        Store s2=new Store("sotre2");
+        Store s2=new Store("store2");
         Product p5=new Product("bmba",11,2,s2);
         Product p4=new Product("chips",3,2,s2);
         Product p6=new Product("twix",5,2,s2);
@@ -58,7 +64,7 @@ public class SubscriberImpTest {
         s2.getProduct_list().add(p4);
         s2.getProduct_list().add(p6);
 
-        Store s3=new Store("sotre3");
+        Store s3=new Store("store3");
         Product p7=new Product("bmba",4,2,s3);
         Product p8=new Product("besli",4,2,s3);
         Product p9=new Product("twix",6,2,s3);
@@ -153,6 +159,11 @@ public class SubscriberImpTest {
 
     @Test
     public void write_review() {
+        assertFalse(SUBImp.write_review("subscriber","bmba","store3","A++",5));
+        SUBImp.save_products("subscriber","bmba","store3");
+        SUBImp.buy_products_in_cart("subscriber","moti","1234123412341234","11/26",120,0.5);
+        assertTrue(SUBImp.write_review("subscriber","bmba","store3","A++",5));
+
     }
 
     @Test
@@ -187,7 +198,7 @@ public class SubscriberImpTest {
         subscriber.getPurchaseProcesslist().add(purchaseProcess);
         List<PurchaseProcess> purchase = SUBImp.view_purchase_history("subscriber");
         assertNotNull(purchase);//the purchase added successfully
-        assertEquals(purchase.get(0),purchaseProcess);
+        assertEquals(purchase.get(3),purchaseProcess);
     }
 
     @Test

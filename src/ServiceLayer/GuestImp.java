@@ -4,22 +4,36 @@ import DomainLayer.*;
 import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
 import DomainLayer.Store.Store;
-import DomainLayer.System;
 import DomainLayer.User.Guest;
 import Encryption.EncryptImp;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class GuestImp implements IGuest {
 
+    Log my_log = Log.getLogger();
+
+    public GuestImp() throws IOException {
+    }
+
     @Override
     public boolean sign_up(String user_name, String password) {
 
-        if(!SystemManage_Facade.is_initialized()) return false;
+        my_log.logger.info("Sign Up");
+
+
+        if(!SystemManage_Facade.is_initialized()) {
+            my_log.logger.warning("System not initialized");
+            return false;
+        }
         EncryptImp encryption = new EncryptImp();
-        if(!encryption.connect()) return false;
+        if(!encryption.connect()) {
+            my_log.logger.warning("System not initialized");
+            return false;
+        }
         password = encryption.encrypt(password);
 
         if(!SystemManage_Facade.find_subscriber(user_name)) {
@@ -27,23 +41,36 @@ public class GuestImp implements IGuest {
             return true;
         }
 
+        my_log.logger.severe("Action Failed");
         return false;
     }
 
     @Override
     public boolean login(String user_name, String password) {
+        my_log.logger.info("Login");
 
         if(user_name.equals("Admin") && password.equals("Password")) SystemManage_Facade.init_system();
-        if(!SystemManage_Facade.is_initialized()) return false;
+        if(!SystemManage_Facade.is_initialized()) {
+            my_log.logger.warning("System not initialized");
+            return false;
+
+        }
         if(SystemManage_Facade.find_subscriber(user_name) && SystemManage_Facade.check_password(user_name,password)){
             SubscribersManage_Facade.subscriber_login_state(user_name,true);
             return true;
         }
+        my_log.logger.severe("Action Failed");
         return false;
     }
 
     @Override
     public List<Product> view_products_information_store(String store_name) {
+        my_log.logger.info("view_products_information_store");
+        if(!SystemManage_Facade.is_initialized()) {
+            my_log.logger.warning("System not initialized");
+            return null;
+        }
+
         List<Product> products = null;
         if(!SystemManage_Facade.is_initialized()) return null;
         products = SystemManage_Facade.get_products_of_store(store_name);
@@ -52,6 +79,12 @@ public class GuestImp implements IGuest {
 
     @Override
     public List<Product> search_products(String product_name) {
+        my_log.logger.info("search_products");
+        if(!SystemManage_Facade.is_initialized()) {
+            my_log.logger.warning("System not initialized");
+            return null;
+        }
+
         List<Product> products = new ArrayList<>();
         List<Store> stores=SystemManage_Facade.get_stores();
         for(Store store : stores){
@@ -66,6 +99,11 @@ public class GuestImp implements IGuest {
 
     @Override
     public boolean save_products(int id,String product_name, String store_name) {
+        my_log.logger.info("save_products");
+        if(!SystemManage_Facade.is_initialized()) {
+            my_log.logger.warning("System not initialized");
+            return false;
+        }
 
         Guest g=SystemManage_Facade.getGuest(id);
         if(g==null)
@@ -93,12 +131,17 @@ public class GuestImp implements IGuest {
             p.getShoppingBag().getProducts().add(product);
 
         }
-
         return true;
     }
 
     @Override
     public List<String> watch_products_in_cart(int id) {
+        my_log.logger.info("watch_products_in_cart");
+        if(!SystemManage_Facade.is_initialized()) {
+            my_log.logger.warning("System not initialized");
+            return null;
+        }
+
         List<String> res= new ArrayList<>();
         Guest g= SystemManage_Facade.getGuest(id);
         assert g != null;
@@ -111,6 +154,11 @@ public class GuestImp implements IGuest {
 
     @Override
     public boolean buy_products_in_cart(int id,String buyerName,String creditCardNumber,String expireDate,int cvv,double discount) {
+        my_log.logger.info("buy_products_in_cart");
+        if(!SystemManage_Facade.is_initialized()) {
+            my_log.logger.warning("System not initialized");
+            return false;
+        }
         if(discount > 1 || discount < 0){
             return false;
         }
