@@ -1,3 +1,4 @@
+package AcceptanceTests;
 
 import DomainLayer.Product;
 import DomainLayer.ShoppingBag;

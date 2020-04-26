@@ -1,6 +1,6 @@
-import org.junit.Test;
+package AcceptanceTests;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 public class StoreRoleImpTest {
 

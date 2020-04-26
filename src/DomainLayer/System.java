@@ -11,13 +11,14 @@ import DomainLayer.User.Subscriber;
 import DomainLayer.User.User;
 import Encryption.EncryptImp;
 import Stubs.ExternalFinanceServiceStub;
+import Stubs.ExternalSupplyServiceStub;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class System {
 
-    private static System SYSTEM_SINGLETON = null;
+    public static System SYSTEM_SINGLETON = null;
 
     private List<Subscriber> user_list;
     private List<Guest> guest_list;
@@ -32,13 +33,14 @@ public class System {
         user_list = new ArrayList<>();
         guest_list=new ArrayList<>();
         store_list = new ArrayList<>();
+
         initialized = true;
         Subscriber admin = new Subscriber("Admin","Password");
         SystemManger systemManger = new SystemManger(admin);
         user_list.add(admin);
 
         productFinanceService = new ProductFinanceService(new ExternalFinanceServiceStub());
-        productSupplyService = new ProductSupplyService(null);
+        productSupplyService = new ProductSupplyService(new ExternalSupplyServiceStub());
 
         encryptImp = new EncryptImp();
         encryptImp.connect();
@@ -46,6 +48,7 @@ public class System {
         productSupplyService.connect();
         nextGuestId=0;
     }
+
 
     public static System getSystem() {
         if(SYSTEM_SINGLETON == null) SYSTEM_SINGLETON = new System();
@@ -57,8 +60,11 @@ public class System {
     }
 
 
-
     public List<Store> getStore_list() { return store_list; }
+
+    public void add_subscriber(Subscriber s){
+        user_list.add(s);
+    }
 
     public Subscriber get_subscriber(String user_name){
         Subscriber subscriber = null;

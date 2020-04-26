@@ -132,7 +132,9 @@ public class SubscriberImp implements ISubscriber {
     public boolean write_review(String user_name, String product_name, String store_name, String review_data, int rank) {
         if(!SystemManage_Facade.is_initialized())
             return false;
+        if(SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name))
         return SystemManage_Facade.addProductReview( user_name,  product_name,  store_name,  review_data, rank);
+        return false;
     }
 
     @Override
@@ -148,7 +150,7 @@ public class SubscriberImp implements ISubscriber {
     }
 
     @Override
-    public void send_query_to_store(String user_name,String Query) {
+    public void send_query_to_store(String user_name,String Query) {//add test
         if(SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
             SystemManage_Facade.Add_Query(user_name, Query);
         }
