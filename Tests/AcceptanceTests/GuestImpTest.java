@@ -61,15 +61,19 @@ public class GuestImpTest {
     @Test
     public void sign_up() { //2.2
         assertEquals(true ,gi.sign_up("name", "pass") );
-        assertEquals(true ,system.getUser_list().size()==1);
+        assertEquals(2 ,system.getUser_list().size()); //Admin +1 new user
         assertEquals(true ,gi2.sign_up("name2", "pass2") );
         assertEquals(false ,gi2.sign_up("name2", "222") );
+        assertEquals(3 ,system.getUser_list().size());
     }
 
     @Test
     public void login() { //2.3
-        assertEquals(true ,gi.login("name", "pass") );
-        assertEquals(false ,gi.login("name", "passFailed") );
+        assertEquals(true ,gi.login("Admin", "Password") );
+        assertEquals(true ,gi2.login("Admin", "Password") );
+        assertEquals(false ,gi2.login("AdminWrong", "Password") );
+        assertEquals(false ,gi2.login("Admin", "PasswordWrong") );
+
     }
 
     public void view_products_information_store() {//2.4
