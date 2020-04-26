@@ -1,4 +1,4 @@
-package unit;
+package AcceptanceTests;
 
 import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
@@ -10,8 +10,6 @@ import DomainLayer.ShoppingBag;
 import DomainLayer.Store.Store;
 import DomainLayer.System;
 import DomainLayer.User.Subscriber;
-import DomainLayer.User.User;
-import ServiceLayer.ISubscriber;
 import ServiceLayer.SubscriberImp;
 import org.junit.After;
 import org.junit.BeforeClass;

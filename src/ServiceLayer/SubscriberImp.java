@@ -132,7 +132,9 @@ public class SubscriberImp implements ISubscriber {
     public boolean write_review(String user_name, String product_name, String store_name, String review_data, int rank) {
         if(!SystemManage_Facade.is_initialized())
             return false;
+        if(SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name))
         return SystemManage_Facade.addProductReview( user_name,  product_name,  store_name,  review_data, rank);
+        return false;
     }
 
     @Override

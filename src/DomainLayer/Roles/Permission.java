@@ -9,7 +9,9 @@ public enum Permission {
     VIEW_STORE_HISTORY,
 
     //And can have these permissions as well if the store Owner would want that:
-    MANAGE_PRODUCT_IN_STORE,
+    ADD_PRODUCT,
+    EDIT_PRODUCT,
+    REMOVE_PRODUCT,
     EDIT_STORE_POLICY,
     ASSIGN_STORE_MANAGER,
     REMOVE_STORE_MANAGER,

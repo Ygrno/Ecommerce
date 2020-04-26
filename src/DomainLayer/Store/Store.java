@@ -3,6 +3,8 @@ package DomainLayer.Store;
 import DomainLayer.Product;
 import DomainLayer.PurchaseProcess;
 import DomainLayer.Roles.Role;
+import DomainLayer.Roles.StoreManger;
+import DomainLayer.Roles.StoreOwner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +90,20 @@ public class Store {
             }
         }
         return product;
+    }
+
+    public StoreOwner find_store_owner_by_name(String user_name){
+        for(Role role : roles){
+            if(role instanceof StoreOwner && ((StoreOwner)role).user.getName().equals(user_name)) return (StoreOwner) role;
+        }
+        return null;
+    }
+
+    public StoreManger find_store_manager_by_name(String user_name){
+        for(Role role : roles){
+            if(role instanceof StoreManger && ((StoreManger)role).user.getName().equals(user_name)) return (StoreManger) role;
+        }
+        return null;
     }
 
 }

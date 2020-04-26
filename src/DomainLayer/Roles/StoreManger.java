@@ -26,6 +26,11 @@ public class StoreManger extends StoreRole {
         return permissions;
     }
 
-    public boolean havePermission () {return true;}
+    public boolean havePermission (String permission) {
+        for(Permission p: permissions){
+            if(p.toString().equals(permission)) return true;
+        }
+        return false;
+    }
 
 }

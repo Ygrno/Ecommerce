@@ -8,6 +8,16 @@ public class PurchaseProcess {
     private User user;
     private Store store;
     private ShoppingBag shoppingBag;
+
+    public DealDetails getDetails() {
+        return details;
+    }
+
+    public void setDetails(DealDetails details) {
+        this.details = details;
+    }
+
+    private DealDetails details;
     boolean isDone;
 
     public PurchaseProcess(User user, Store store, ShoppingBag shoppingBag) {
