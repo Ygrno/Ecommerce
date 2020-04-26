@@ -73,7 +73,6 @@ public class GuestImpTest {
         assertEquals(true ,gi2.login("Admin", "Password") );
         assertEquals(false ,gi2.login("AdminWrong", "Password") );
         assertEquals(false ,gi2.login("Admin", "PasswordWrong") );
-
     }
 
     public void view_products_information_store() {//2.4
