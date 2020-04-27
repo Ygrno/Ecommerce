@@ -1,4 +1,4 @@
-package AcceptanceTests;
+package integration.tests;
 
 import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
@@ -10,7 +10,8 @@ import DomainLayer.ShoppingBag;
 import DomainLayer.Store.Store;
 import DomainLayer.System;
 import DomainLayer.User.Subscriber;
-import ServiceLayer.GuestImp;
+import DomainLayer.User.User;
+import ServiceLayer.ISubscriber;
 import ServiceLayer.SubscriberImp;
 import org.junit.After;
 import org.junit.BeforeClass;
@@ -24,7 +25,6 @@ import static org.junit.Assert.assertNotNull;
 
 public class SubscriberImpTest {
     private static SubscriberImp SUBImp;
-    private  static GuestImp guestImp;
     private static SystemManage_Facade SYS;
     private static SubscribersManage_Facade SUB;
     private static Subscriber subscriber;
@@ -35,16 +35,12 @@ public class SubscriberImpTest {
         SUBImp= new SubscriberImp();
         SUB= new SubscribersManage_Facade();
         SYS= new SystemManage_Facade();
-        guestImp = new GuestImp();
-        guestImp.login("Admin","Password");
-
-       // SystemManage_Facade.init_system();
-       // SystemManage_Facade.is_initialized();
-        SystemManage_Facade.add_subscriber("subscriber","subscriber");
+        SYS.init_system();
+        SYS.is_initialized();
+        SYS.add_subscriber("subscriber","subscriber");
         subscriber= System.getSystem().get_subscriber("subscriber");
         subscriber.setLogged_in(true);
         System system=System.getSystem();
-        system.getStore_list().clear();
 
 
 
@@ -159,11 +155,6 @@ public class SubscriberImpTest {
 
     @Test
     public void write_review() {
-        assertFalse(SUBImp.write_review("subscriber","bmba","store3","A++",5));
-        SUBImp.save_products("subscriber","bmba","store3");
-        SUBImp.buy_products_in_cart("subscriber","moti","1234123412341234","11/26",120,0.5);
-        assertTrue(SUBImp.write_review("subscriber","bmba","store3","A++",5));
-
     }
 
     @Test
@@ -192,13 +183,13 @@ public class SubscriberImpTest {
 
     @Test
     public void view_purchase_history() {
-        store=SYS.get_store("test");
+        store = SYS.get_store("test");
         List<String> strings = new ArrayList<String>();
         PurchaseProcess purchaseProcess = new PurchaseProcess(subscriber,store,new ShoppingBag(strings));
         subscriber.getPurchaseProcesslist().add(purchaseProcess);
         List<PurchaseProcess> purchase = SUBImp.view_purchase_history("subscriber");
         assertNotNull(purchase);//the purchase added successfully
-        assertEquals(purchase.get(3),purchaseProcess);
+        assertEquals(purchase.get(0),purchaseProcess);
     }
 
     @Test

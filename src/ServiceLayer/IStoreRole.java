@@ -11,7 +11,6 @@ public interface IStoreRole {
     public boolean edit_store_product(String user_name, String store_name, String product_name,String new_product_name ,int product_price, int product_amount); //4.1 //5.1
     public boolean remove_store_product(String user_name, String store_name, String product_name);  //4.1 //5.1
 
-
     public boolean edit_store_policy(String user_name, String store_name);    //4.2 //5.1
     public boolean assign_store_owner(String user_name, String store_name, String user_assign); //4.3
     public boolean remove_store_owner(String user_name, String store_name, String user_assign); //4.4

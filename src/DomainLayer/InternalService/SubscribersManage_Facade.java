@@ -123,6 +123,7 @@ public class SubscribersManage_Facade implements InternalService {
             if(to_remove == null) return false;
             StoreOwner storeOwner2 = ((StoreOwner)store_role).store.find_store_owner_by_name(to_remove.getName());
             if(storeOwner2 == null) return false;
+            if(!store_role.getAssigned_users().contains(storeOwner2)) return false;
             store_role.store.getRoles().remove(storeOwner2);
             store_role.getAssigned_users().remove(storeOwner2);
             storeOwner2.setAssigned_by(null);
@@ -161,6 +162,7 @@ public class SubscribersManage_Facade implements InternalService {
 
             StoreManger storeManger = store_role.store.find_store_manager_by_name(to_remove.getName());
             if(storeManger == null) return false;
+            if(!store_role.getAssigned_users().contains(storeManger)) return false;
             store_role.store.getRoles().remove(storeManger);
             store_role.getAssigned_users().remove(storeManger);
             storeManger.setAssigned_by(null);

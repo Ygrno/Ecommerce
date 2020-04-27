@@ -1,15 +1,14 @@
-package AcceptanceTests;
+package integration.tests;
 
+import DomainLayer.InternalService.SystemManage_Facade;
 import DomainLayer.Product;
 import DomainLayer.ShoppingBag;
 import DomainLayer.Store.Store;
 import DomainLayer.System;
 import DomainLayer.User.Guest;
 import ServiceLayer.GuestImp;
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 
 import java.io.IOException;
 
@@ -19,7 +18,7 @@ import static org.junit.Assert.*;
 public class GuestImpTest {
 
     private static GuestImp gi;
-//    private static GuestImp gi2;
+    private static GuestImp gi2;
     private static System system;
     private static Guest guest;
 
@@ -27,6 +26,8 @@ public class GuestImpTest {
     @BeforeClass
     public static void setUp() throws IOException {
             gi = new GuestImp();
+            gi2 = new GuestImp();
+            SystemManage_Facade.init_system();
             system = System.getSystem();
             gi.login("Admin", "Password");
             Store s1 = new Store("store1");
@@ -61,26 +62,19 @@ public class GuestImpTest {
             system.getGuest_list().add(guest);
 
     }
-//
-//    @AfterClass
-//    public void ResetSystem(){
-//        system.
-//    }
 
     @Test
     public void sign_up() { //2.2
         assertEquals(true ,gi.sign_up("name", "pass") );
-        assertEquals(2 ,system.getUser_list().size()); //Admin +1 new user
-        assertEquals(true ,gi.sign_up("name2", "pass2") );
-        assertEquals(false ,gi.sign_up("name2", "222") );
-        assertEquals(3 ,system.getUser_list().size());
+        assertEquals(false ,system.getUser_list().size()==1);
+        assertEquals(true ,gi2.sign_up("name2", "pass2") );
+        assertEquals(false ,gi2.sign_up("name2", "222") );
     }
 
     @Test
     public void login() { //2.3
-        assertEquals(true ,gi.login("Admin", "Password") );
-        assertEquals(false ,gi.login("AdminWrong", "Password") );
-        assertEquals(false ,gi.login("Admin", "PasswordWrong") );
+        assertEquals(false ,gi.login("name", "pass") );
+        assertEquals(false ,gi.login("name", "passFailed") );
     }
 
     public void view_products_information_store() {//2.4
@@ -91,7 +85,7 @@ public class GuestImpTest {
     }
 
     @Test
-    public void search_products()  { //2.5
+    public void search_products() {
         assertEquals(3, gi.search_products("bmba").size());
         assertEquals(2, gi.search_products("besli").size());
         assertEquals(3, gi.search_products("twix").size());
@@ -100,7 +94,7 @@ public class GuestImpTest {
     }
 
     @Test
-    public void save_products()  { //2.6
+    public void save_products() {
         gi.save_products(1,"bmba","store1");
         gi.save_products(1,"twix","store3");
         gi.save_products(1,"chips","store2");
@@ -120,7 +114,7 @@ public class GuestImpTest {
     }
 
     @Test
-    public void watch_products_in_cart() { //2.7.1
+    public void watch_products_in_cart() {
         gi.save_products(1,"bmba","store1");
         gi.save_products(1,"twix","store3");
         gi.save_products(1,"chips","store2");
@@ -132,7 +126,7 @@ public class GuestImpTest {
     }
 
     @Test
-    public void buy_products_in_cart() { //2.8
+    public void buy_products_in_cart() {
         assertTrue(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/26",999,0));
         assertFalse(gi.buy_products_in_cart(0,"mahmoud","1234123412341234","11/26",999,0));
         assertFalse(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/26",999,2));

@@ -1,15 +1,11 @@
-package AcceptanceTests;
+package UnitTests;
 
-import DomainLayer.InternalService.SystemManage_Facade;
-import DomainLayer.Product;
 import DomainLayer.Roles.StoreOwner;
 import DomainLayer.Store.Store;
 import DomainLayer.System;
-import DomainLayer.User.Guest;
 import DomainLayer.User.Subscriber;
 import ServiceLayer.GuestImp;
 import ServiceLayer.StoreRoleImp;
-import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

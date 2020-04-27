@@ -1,6 +1,8 @@
-package AcceptanceTests;
+package integration.tests;
 
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class ManagerImpTest {
 

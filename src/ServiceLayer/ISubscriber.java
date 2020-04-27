@@ -16,7 +16,7 @@ public interface ISubscriber {
     public boolean buy_products_in_cart(String id,String buyerName,String creditCardNumber,String expireDate,int cvv,double discount);   //2.8 //7
 
     public boolean sign_out(String user_name);  //3.1
-    public boolean open_store(String user_name, String store_name); //3.2
+    public boolean open_store(String user_name, String store_name);
     public boolean write_review(String user_name, String product_name, String store_name, String review_data, int rank); //3.3
     public boolean rank_product(); //3.4
     public boolean rank_store();   //3.4
