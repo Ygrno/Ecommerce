@@ -18,4 +18,22 @@ public class ShoppingCart {
     public void setShopping_bag_list(List<ShoppingBag> shopping_bag_list) {
         this.shopping_bag_list = shopping_bag_list;
     }
+
+    public List<String> getProductsNames(){
+        List<String> res= new ArrayList<>();
+        for(ShoppingBag sb : getShopping_bag_list()){
+            res.addAll(sb.getProducts_names());
+        }
+        return  res;
+    }
+
+    public double getTotalPrice(){
+        double price=0;
+        for(ShoppingBag sb : getShopping_bag_list()){
+            for(Product prod : sb.getProducts()){
+                price+=prod.getPrice();
+            }
+        }
+        return price;
+    }
 }

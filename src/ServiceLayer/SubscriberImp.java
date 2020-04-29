@@ -12,6 +12,7 @@ import DomainLayer.PurchaseProcess;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class SubscriberImp implements ISubscriber {
@@ -31,18 +32,13 @@ public class SubscriberImp implements ISubscriber {
     }
 
     @Override
-    public List<Product> search_products(String product_name) {
+    public HashMap<String,Integer> search_products(String product_name) {
         my_log.logger.info("search_products");
-        List<Product> products = new ArrayList<>();
-        if(!SystemManage_Facade.is_initialized()) return null;
-        List<Store> stores=SystemManage_Facade.get_stores();
-        for(Store store : stores){
-            for(Product p : store.getProduct_list()){
-                if(p.getName().equals(product_name))
-                    products.add(p);
-            }
+        if(!SystemManage_Facade.is_initialized()) {
+            my_log.logger.warning("System not initialized");
+            return null;
         }
-        return products;
+        return SystemManage_Facade.searchProductStores(product_name);
     }
 
     @Override
@@ -50,30 +46,7 @@ public class SubscriberImp implements ISubscriber {
         my_log.logger.info("save_products");
         if(!SystemManage_Facade.is_initialized())
             return false;
-        Subscriber s=SystemManage_Facade.get_subscriber(userName);
-        boolean processExist =false;
-        Product product=null;
-        Store store = SystemManage_Facade.get_store(store_name);
-        if(store == null) return false;
-        for(Product prod : store.getProduct_list()) {
-            if (prod.getName().equals(product_name))
-                product = prod;
-        }
-        for(PurchaseProcess p:s.getPurchaseProcesslist()){
-            if(p.getStore().getName().equals(store_name)){
-                p.getShoppingBag().getProducts_names().add(product_name);
-                p.getShoppingBag().getProducts().add(product);
-                processExist=true;
-            }
-        }
-        if(!processExist){
-            PurchaseProcess p=new PurchaseProcess(s,SystemManage_Facade.get_store(store_name),new ShoppingBag(new ArrayList<>()));
-            s.getShoppingCart().getShopping_bag_list().add(p.getShoppingBag());
-            p.getShoppingBag().getProducts_names().add(product_name);
-            p.getShoppingBag().getProducts().add(product);
-            s.getPurchaseProcesslist().add(p);
-        }
-        return true;
+        return SystemManage_Facade.saveProductForSubscriber(userName,product_name,store_name);
     }
 
     @Override
@@ -81,15 +54,8 @@ public class SubscriberImp implements ISubscriber {
         my_log.logger.info("watch_products_in_cart");
         if(!SystemManage_Facade.is_initialized())
             return null;
-        List<String> res= new ArrayList<>();
-        if(!SystemManage_Facade.is_initialized()) return null;
-        Subscriber s= SystemManage_Facade.get_subscriber(userName);
 
-        ShoppingCart sc=s.getShoppingCart();
-        for(ShoppingBag sb : sc.getShopping_bag_list()){
-            res.addAll(sb.getProducts_names());
-        }
-        return res;
+        return SystemManage_Facade.getProductsInCartForSubscriber(userName);
     }
 
     @Override
@@ -107,21 +73,9 @@ public class SubscriberImp implements ISubscriber {
             return false;
         if(cvv>=1000)
             return false;
-
-        Subscriber g=SystemManage_Facade.get_subscriber(id);
-        if(g==null)
-            return false;
-        double price=0;
-        for(PurchaseProcess pp : g.getPurchaseProcesslist()){
-            for(Product prod : pp.getShoppingBag().getProducts()){
-                price+=prod.getPrice();
-            }
-        }
-        price= price*discount;
-
-        DealDetails dd =new DealDetails(price,buyerName,creditCardNumber,expireDate,cvv);
-        if (SystemManage_Facade.buy(dd)) for(PurchaseProcess pp: g.getPurchaseProcesslist()) pp.setDone(true);
-        return true;
+        double price=SystemManage_Facade.getPriceOfCart(id,discount);
+        String[] dealDetails={String.valueOf(price),buyerName,creditCardNumber,expireDate, String.valueOf(cvv)};
+        return SystemManage_Facade.buy(dealDetails);
     }
 
 

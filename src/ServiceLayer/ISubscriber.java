@@ -3,12 +3,13 @@ package ServiceLayer;
 import DomainLayer.Product;
 import DomainLayer.PurchaseProcess;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface ISubscriber {
 
     public List<Product> view_products_information_store (String store_name); //2.4
-    public List<Product> search_products(String product_name);  //2.5 (Right now, search via name only).
+    public HashMap<String,Integer> search_products(String product_name);  //2.5 (Right now, search via name only).
 
     public boolean save_products(String userName,String product_name, String store_name); //2.6
     public List<String> watch_products_in_cart(String userName);  //2.7.1

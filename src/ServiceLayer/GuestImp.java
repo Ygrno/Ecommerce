@@ -1,14 +1,16 @@
 package ServiceLayer;
 
-import DomainLayer.*;
+
 import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
-import DomainLayer.Store.Store;
-import DomainLayer.User.Guest;
+
+import DomainLayer.Product;
+import DomainLayer.System;
 import Encryption.EncryptImp;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -78,22 +80,13 @@ public class GuestImp implements IGuest {
     }
 
     @Override
-    public List<Product> search_products(String product_name) {
+    public HashMap<String,Integer> search_products(String product_name) {
         my_log.logger.info("search_products");
         if(!SystemManage_Facade.is_initialized()) {
             my_log.logger.warning("System not initialized");
             return null;
         }
-
-        List<Product> products = new ArrayList<>();
-        List<Store> stores=SystemManage_Facade.get_stores();
-        for(Store store : stores){
-            for(Product p : store.getProduct_list()){
-                if(p.getName().equals(product_name))
-                    products.add(p);
-            }
-        }
-        return products;
+        return SystemManage_Facade.searchProductStores(product_name);
 
     }
 
@@ -105,33 +98,7 @@ public class GuestImp implements IGuest {
             return false;
         }
 
-        Guest g=SystemManage_Facade.getGuest(id);
-        if(g==null)
-            g=SystemManage_Facade.addGuest();
-        boolean processExist=false;
-        Product product=null;
-        Store s = SystemManage_Facade.get_store(store_name);
-
-        for(Product prod: s.getProduct_list()){
-            if(prod.getName().equals(product_name)){
-                product=prod;
-            }
-        }
-        for(PurchaseProcess p:g.getPurchaseProcesslist()){
-            if(p.getStore().getName().equals(store_name)){
-                p.getShoppingBag().getProducts_names().add(product_name);
-                p.getShoppingBag().getProducts().add(product);
-                processExist=true;
-            }
-        }
-        if(!processExist){
-            PurchaseProcess p=new PurchaseProcess(g,SystemManage_Facade.get_store(store_name),new ShoppingBag(new ArrayList<>()));
-            g.getShoppingCart().getShopping_bag_list().add(p.getShoppingBag());
-            p.getShoppingBag().getProducts_names().add(product_name);
-            p.getShoppingBag().getProducts().add(product);
-
-        }
-        return true;
+        return SystemManage_Facade.saveProductForGuest(id,product_name,store_name);
     }
 
     @Override
@@ -141,15 +108,10 @@ public class GuestImp implements IGuest {
             my_log.logger.warning("System not initialized");
             return null;
         }
+        if(SystemManage_Facade.getGuest(id)==null)
+            return null;
 
-        List<String> res= new ArrayList<>();
-        Guest g= SystemManage_Facade.getGuest(id);
-        assert g != null;
-        ShoppingCart sc=g.getShoppingCart();
-        for(ShoppingBag sb : sc.getShopping_bag_list()){
-            res.addAll(sb.getProducts_names());
-        }
-        return res;
+        return SystemManage_Facade.getProductsInCartForGuest(id);
     }
 
     @Override
@@ -169,18 +131,8 @@ public class GuestImp implements IGuest {
             return false;
         if(cvv>=1000)
             return false;
-        Guest g=SystemManage_Facade.getGuest(id);
-        if(g==null)
-            return false;
-        double price=0;
-        for(PurchaseProcess pp : g.getPurchaseProcesslist()){
-            for(Product prod : pp.getShoppingBag().getProducts()){
-                price+=prod.getPrice();
-            }
-        }
-        price= price*discount;
-
-        DealDetails dd =new DealDetails(price,buyerName,creditCardNumber,expireDate,cvv);
-        return SystemManage_Facade.buy(dd);
+        double price=SystemManage_Facade.getPriceOfCart(String.valueOf(id),discount);
+        String[] dealDetails={String.valueOf(price),buyerName,creditCardNumber,expireDate, String.valueOf(cvv)};
+        return SystemManage_Facade.buy(dealDetails);
     }
 }
