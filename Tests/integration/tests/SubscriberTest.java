@@ -41,16 +41,8 @@ public class SubscriberTest {
         assert !subscriber.isLogged_in();
     }
 
-//    @Test
-//    public void get_role_at_store() {
-//        StoreRole r = new StoreRole() {};
-//        r.setUser(subscriber);
-//        ((StoreRole) r).setStore(System.getSystem().get_store("test_store"));
-//
-//        assert subscriber.get_role_at_store("test_store") == null;
-//
-//        subscriber.getRole_list().add(r);
-//        assert subscriber.get_role_at_store("test_store") != null;
-//
-//    }
+    @Test
+    public void get_role_at_store() {
+        //TODO : implement
+    }
 }

@@ -2,6 +2,7 @@ package ServiceLayer;
 
 import DomainLayer.Product;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface IGuest {
@@ -13,7 +14,7 @@ public interface IGuest {
     public boolean login(String user_name, String password);   //2.3
     public List<Product> view_products_information_store (String store_name); //2.4
 
-    public List<Product> search_products(String product_name);  //2.5 (Right now, search via name only).
+    public HashMap<String,Integer> search_products(String product_name);  //2.5 (Right now, search via name only).
 
     public boolean save_products(int id,String product_name, String store_name); //2.6
     public List<String> watch_products_in_cart(int id);  //2.7.1

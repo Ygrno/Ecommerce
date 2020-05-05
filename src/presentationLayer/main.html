@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<div id="stores_holder">
+
+
+
+</div>
+
+
+
+<script>
+
+    var websocket = new WebSocket("ws://127.0.0.1:8112/");
+
+    websocket.onopen = function(evt){
+        console.log("Connection is opened");
+
+        websocket.send("zb6 _!_");
+    };
+
+    websocket.onmessage = function () {
+        alert(1);
+    }
+
+
+
+
+
+</script>
+
+</body>
+</html>

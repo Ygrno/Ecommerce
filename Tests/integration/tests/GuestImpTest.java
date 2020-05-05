@@ -10,8 +10,6 @@ import ServiceLayer.GuestImp;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.io.IOException;
-
 import static org.junit.Assert.*;
 
 
@@ -24,7 +22,7 @@ public class GuestImpTest {
 
 
     @BeforeClass
-    public static void setUp() throws IOException {
+    public static void setUp(){
             gi = new GuestImp();
             gi2 = new GuestImp();
             SystemManage_Facade.init_system();

@@ -10,8 +10,6 @@ import ServiceLayer.SubscriberImp;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.io.IOException;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -25,7 +23,7 @@ public class uc_3_1_SignOut {
 
 
     @BeforeClass
-    public static void before() throws IOException {
+    public static void before(){
         SUBImp= new SubscriberImp();
         SYS= new SystemManage_Facade();
         SYS.init_system();

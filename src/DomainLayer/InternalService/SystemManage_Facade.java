@@ -8,9 +8,11 @@ import DomainLayer.System;
 import DomainLayer.User.Guest;
 import DomainLayer.User.ProductReview;
 import DomainLayer.User.Subscriber;
+import DomainLayer.User.User;
 import Encryption.EncryptImp;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static DomainLayer.Roles.Permission.VIEW_AND_RESPOND_TO_USERS;
@@ -48,8 +50,9 @@ public class SystemManage_Facade implements InternalService {
 
 
 
-    public static boolean buy(DealDetails dd){
-        return system.getProductFinanceService().tryToBuy(dd);
+    public static boolean buy(String[] dd){
+        DealDetails dd1=new DealDetails(Integer.parseInt(dd[0]),dd[1],dd[2],dd[3],Integer.parseInt(dd[4]));
+        return system.getProductFinanceService().tryToBuy(dd1);
     }
 
 
@@ -69,6 +72,66 @@ public class SystemManage_Facade implements InternalService {
         system.getGuest_list().add(guest);
         system.increaseGuestId();
         return guest;
+    }
+
+
+    public static HashMap<String,Integer> searchProductStores(String product_name){
+        HashMap<String,Integer> stores = new HashMap<>();
+        for(Store s : get_stores()){
+            Product p=s.getProduct(product_name);
+            if(p!=null)
+                stores.put(s.getName(),p.getPrice());
+        }
+        return stores;
+    }
+
+    public static boolean saveProductForGuest(int id,String product_name, String store_name){
+
+        Guest g=SystemManage_Facade.getGuest(id);
+        if(g==null)
+            g=SystemManage_Facade.addGuest();
+        boolean processExist=false;
+        Product product=null;
+        Store s = SystemManage_Facade.get_store(store_name);
+
+        for(Product prod: s.getProduct_list()){
+            if(prod.getName().equals(product_name)){
+                product=prod;
+            }
+        }
+        for(PurchaseProcess p:g.getPurchaseProcesslist()){
+            if(p.getStore().getName().equals(store_name)){
+                p.getShoppingBag().getProducts_names().add(product_name);
+                p.getShoppingBag().getProducts().add(product);
+                processExist=true;
+            }
+        }
+        if(!processExist){
+            PurchaseProcess p=new PurchaseProcess(g,SystemManage_Facade.get_store(store_name),new ShoppingBag(new ArrayList<>()));
+            g.getShoppingCart().getShopping_bag_list().add(p.getShoppingBag());
+            p.getShoppingBag().getProducts_names().add(product_name);
+            p.getShoppingBag().getProducts().add(product);
+
+        }
+        return true;
+    }
+
+
+    public static List<String> getProductsInCartForGuest(int id){
+        Guest g=getGuest(id);
+        assert g != null;
+        return g.getShoppingCart().getProductsNames();
+    }
+
+
+    public static double getPriceOfCart(String id,double discount){
+        User u;
+        if(id.charAt(0)>='0' && id.charAt(0)<='9')
+            u=getGuest(Integer.parseInt(id));
+        else
+            u=get_subscriber(id);
+        assert u != null;
+        return u.getShoppingCart().getTotalPrice()*discount;
     }
 
     /////////////// subscriber methods//////////////////////
@@ -122,6 +185,40 @@ public class SystemManage_Facade implements InternalService {
         return isPurchased;
     }
 
+
+    public static boolean saveProductForSubscriber(String userName,String product_name, String store_name){
+
+        Subscriber s=SystemManage_Facade.get_subscriber(userName);
+        boolean processExist =false;
+        Product product=null;
+        Store store = SystemManage_Facade.get_store(store_name);
+        if(store == null) return false;
+        for(Product prod : store.getProduct_list()) {
+            if (prod.getName().equals(product_name))
+                product = prod;
+        }
+        for(PurchaseProcess p:s.getPurchaseProcesslist()){
+            if(p.getStore().getName().equals(store_name)){
+                p.getShoppingBag().getProducts_names().add(product_name);
+                p.getShoppingBag().getProducts().add(product);
+                processExist=true;
+            }
+        }
+        if(!processExist){
+            PurchaseProcess p=new PurchaseProcess(s,SystemManage_Facade.get_store(store_name),new ShoppingBag(new ArrayList<>()));
+            s.getShoppingCart().getShopping_bag_list().add(p.getShoppingBag());
+            p.getShoppingBag().getProducts_names().add(product_name);
+            p.getShoppingBag().getProducts().add(product);
+            s.getPurchaseProcesslist().add(p);
+        }
+        return true;
+    }
+
+    public static List<String> getProductsInCartForSubscriber(String id){
+        Subscriber g=get_subscriber(id);
+        assert g != null;
+        return g.getShoppingCart().getProductsNames();
+    }
 
     ////////////////////////////////////////////////////////
     public static boolean check_password(String user_name, String password) {

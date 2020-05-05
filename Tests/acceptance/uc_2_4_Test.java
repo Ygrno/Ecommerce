@@ -8,7 +8,6 @@ import DomainLayer.User.Subscriber;
 import ServiceLayer.GuestImp;
 import ServiceLayer.IGuest;
 import org.junit.Before;
-import org.junit.Test;
 
 import java.io.IOException;
 
@@ -34,7 +33,6 @@ public class uc_2_4_Test {
         system.getStore_list().add(s1);
     }
 
-    @Test
     public void successScenario(){
         assert guestimp.view_products_information_store("store1").contains(p1);
         assert guestimp.view_products_information_store("store1").contains(p2);

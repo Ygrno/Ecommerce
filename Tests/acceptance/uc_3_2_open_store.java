@@ -10,7 +10,6 @@ import ServiceLayer.SubscriberImp;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -25,7 +24,7 @@ public class uc_3_2_open_store {
 
 
     @BeforeClass
-    public static void before() throws IOException {
+    public static void before(){
         SUBImp= new SubscriberImp();
         SYS= new SystemManage_Facade();
         SYS.init_system();
