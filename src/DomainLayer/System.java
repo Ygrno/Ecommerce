@@ -34,6 +34,9 @@ public class System {
         guest_list=new ArrayList<>();
         store_list = new ArrayList<>();
 
+        //dummy
+        store_list.add(new Store("store"));
+
         initialized = true;
         Subscriber admin = new Subscriber("Admin","Password");
         SystemManger systemManger = new SystemManger(admin);

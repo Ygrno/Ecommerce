@@ -3,7 +3,7 @@ package NetworkLayer.passiveObjects;
 import java.io.*;
 import java.net.Socket;
 import java.security.MessageDigest;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -13,6 +13,8 @@ public class connectionHandler {
 
     private Socket socket;
     private MessagingProtocol protocol;
+    private DataInputStream in;
+    private OutputStream out;
 
 
     public connectionHandler(Socket s){
@@ -20,6 +22,9 @@ public class connectionHandler {
         this.protocol = new MessagingProtocol(this);
 
         try {
+            this.in = new DataInputStream(socket.getInputStream());
+            this.out = socket.getOutputStream();
+
             this.handshake();
         }catch (Exception e){
 
@@ -28,8 +33,6 @@ public class connectionHandler {
 
     private void handshake() throws Exception {
 
-        InputStream in = socket.getInputStream();
-        OutputStream out = socket.getOutputStream();
         Scanner s = new Scanner(in, "UTF-8");
 
         String data = s.useDelimiter("\\r\\n\\r\\n").next();
@@ -49,18 +52,23 @@ public class connectionHandler {
     }
 
     public void send(String msg){
+        send(msg.getBytes());
+    }
+
+    private void send(byte[] msg){
         try {
-            OutputStream out = socket.getOutputStream();
-
-            out.write(msg.getBytes());
+            byte[] send = new byte[2 + msg.length];
+            send[0] = (byte)0x81; // last frame, text
+            send[1] = (byte)msg.length; // not masked
+            for(int i=0;i<msg.length;i++){
+                send[i+2] = msg[i];
+            }
+            out.write(send, 0, send.length); // nwStream = client.GetStream(), client is a TcpClient
             out.flush();
-
         }catch (Exception e){
             e.printStackTrace();
         }
     }
-
-
 
     private byte[] encode(byte[] encoded, byte[] key){
         byte[] decoded = new byte[encoded.length];
@@ -71,7 +79,11 @@ public class connectionHandler {
     }
 
     private String readMessage(DataInputStream in) throws Exception{
+
         int start_byte = in.read();
+        while (start_byte != 129){
+            start_byte = in.read();
+        }
         if(start_byte != 129){
             throw new Exception("first byte not 129 ");
         }
@@ -95,9 +107,9 @@ public class connectionHandler {
 
     public void serve() throws Exception{
         while (true){
-            DataInputStream in = new DataInputStream(socket.getInputStream());
-            System.out.println(readMessage(in));
+            this.protocol.proccess(readMessage(in));
         }
     }
 
 }
+

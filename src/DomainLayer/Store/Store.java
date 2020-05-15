@@ -15,7 +15,7 @@ public class Store {
     private PurchasePolicy purchasePolicy;
     private DiscountPolicy discountPolicy;
     private String name;
-    private boolean is_open = true;
+    private boolean is_open = false;
     private List<Product> product_list = new ArrayList<>();
     private List<PurchaseProcess> purchase_process_list = new ArrayList<>();
     private List<Role> roles = new ArrayList<>();

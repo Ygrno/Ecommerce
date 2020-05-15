@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <script src="../js/EcommerceClient.js"></script>
+    <script src="../js/Main.js"></script>
+
+    <title>Title</title>
+
+    <style>
+        .header{
+            width:100%;
+            height:70px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            overflow:auto;
+        }
+
+        .logged_as{
+            float: left;
+            width:20%;
+            font-size: 30px;
+            height:100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        .container{
+            width:100%;
+            margin-top:1%;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            height:700px;
+        }
+
+        #stores_intro{
+            width: 100%;
+        }
+
+        .store_div{
+            width: 20%;
+            border: 1px solid black;
+            margin-top: 2%;
+            height : 100px;
+        }
+
+        .store_name_span{
+            font-size: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+
+    <div class="logged_as">Logged as : <span id="logged_as"></span></div>
+
+</div>
+
+
+<div class="container">
+
+    <div id="stores_intro">
+
+    </div>
+</div>
+
+<script>
+    
+    function addStore(store) {
+        let name = store.name;
+        let is_open = store.is_open;
+
+        let parent = document.getElementById("stores_intro");
+
+        let div = document.createElement("div");
+        div.className = "store_div";
+        parent.appendChild(div);
+
+        let name_span = document.createElement("span");
+        name_span.innerHTML = name;
+        name_span.className = "store_name_span";
+
+        let is_open_span = document.createElement("span");
+        is_open_span.innerHTML = "opened : " + (is_open ? "yes" : "no");
+        is_open_span.className = "is_open_span";
+
+        let br = document.createElement("br");
+
+        div.appendChild(name_span);
+        div.appendChild(br);
+        div.appendChild(is_open_span);
+    }
+    
+    function setMessageHandler(){
+        Main.prototype.messageHandler = function(msg){
+            let response = JSON.parse(msg);
+            let req = response.req;
+
+            if(req === "get_stores"){
+                addStore(response);
+            }
+        };
+    }
+
+    function run() {
+        setMessageHandler();
+
+
+        let current_username = localStorage.getItem("current_username");
+        let isGuest = localStorage.getItem("guest");
+
+        if(current_username === null && isGuest === null) {
+            window.location.href = "main.html";
+        }
+
+        document.getElementById("logged_as").innerHTML = current_username;
+
+        let main = Main.getInstance();
+        main.init(()=>main.get_stores());
+
+    }
+
+    run();
+
+</script>
+
+</body>
+</html>

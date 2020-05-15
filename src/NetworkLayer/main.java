@@ -1,18 +1,17 @@
 package NetworkLayer;
 
+import DomainLayer.InternalService.SystemManage_Facade;
 import NetworkLayer.passiveObjects.connectionHandler;
 
 import java.net.ServerSocket;
 
 public class main {
     public static void main(String[] args){
-
-
+        if(!SystemManage_Facade.is_initialized())
+            SystemManage_Facade.init_system();
 
         try {
             ServerSocket server = new ServerSocket(8112, 100);
-
-
 
             while (true){
                 connectionHandler client = new connectionHandler(server.accept());
@@ -32,4 +31,3 @@ public class main {
 
     }
 }
-

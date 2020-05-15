@@ -31,6 +31,15 @@ public class SystemManage_Facade implements InternalService {
         return System.initialized;
     }
 
+    /////////////// login/signup methods///////////////////////////
+    public static boolean login(String username, String password){
+        return true;
+    }
+
+    public static boolean signup(String username, String password){
+        return true;
+    }
+
     /////////////// store methods///////////////////////////
 
     public static boolean find_store(String store_name) {
@@ -240,7 +249,7 @@ public class SystemManage_Facade implements InternalService {
 
     public static List<Permission> strings_to_permissions(List<String> strings) {
         List<Permission> permissions = new ArrayList<>();
-        ;
+
         for (String s : strings) {
             permissions.add(string_to_permission(s));
         }
