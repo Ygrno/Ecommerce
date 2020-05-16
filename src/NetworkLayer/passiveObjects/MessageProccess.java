@@ -1,5 +1,6 @@
 package NetworkLayer.passiveObjects;
 
+import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
 import DomainLayer.Store.Store;
 import org.json.JSONObject;
@@ -9,14 +10,13 @@ import java.util.List;
 
 public class MessageProccess {
 
-
     public static void Login(MessagingProtocol protocol, JSONObject request) throws Exception{
         JSONObject response = new JSONObject();
         response.put("req", request.get("req"));
-        response.put("res", "true");
-        /**
-         * check availability of username
-         * **/
+        if(SubscribersManage_Facade.login((String)request.get("username"),(String)request.get("password")))
+            response.put("res", "true");
+        else
+            response.put("res", "false");
         response.put("username", request.get("username"));
         protocol.send(response);
         //{req:"login", res:"true", username:"tamernassar"}

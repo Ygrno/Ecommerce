@@ -31,14 +31,6 @@ public class SystemManage_Facade implements InternalService {
         return System.initialized;
     }
 
-    /////////////// login/signup methods///////////////////////////
-    public static boolean login(String username, String password){
-        return true;
-    }
-
-    public static boolean signup(String username, String password){
-        return true;
-    }
 
     /////////////// store methods///////////////////////////
 

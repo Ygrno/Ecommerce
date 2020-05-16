@@ -2,11 +2,15 @@ package NetworkLayer;
 
 import DomainLayer.InternalService.SystemManage_Facade;
 import NetworkLayer.passiveObjects.connectionHandler;
+import Stubs.Esimulation;
 
 import java.net.ServerSocket;
 
 public class main {
     public static void main(String[] args){
+        //start the database
+        Esimulation.Init();
+
         if(!SystemManage_Facade.is_initialized())
             SystemManage_Facade.init_system();
 

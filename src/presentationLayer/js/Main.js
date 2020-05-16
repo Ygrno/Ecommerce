@@ -1,5 +1,4 @@
 
-
 class Main{
 
     static getInstance(){
@@ -14,7 +13,6 @@ class Main{
         //init client
         if(this.client !== undefined)
             return;
-
         let client = new EcommerceClient("127.0.0.1", 8112);
         let that = this;
 
@@ -36,8 +34,7 @@ class Main{
     }
 
     messageHandler(msg) {
-        let response = JSON.parse(msg);
-        console.log(response);
+
     }
 
     login(username, password){
@@ -47,6 +44,8 @@ class Main{
     get_stores(){
         this.client.send(JSON.stringify({req:"get_stores"}));
     }
+
+
 }
 
 let instance = new Main();

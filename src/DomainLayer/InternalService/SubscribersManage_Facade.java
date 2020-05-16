@@ -12,7 +12,17 @@ import java.util.List;
 
 public class SubscribersManage_Facade implements InternalService {
 
-//    private static System system;
+    /////////////// login/signup methods///////////////////////////
+    public static boolean login(String username, String password){
+        if(System.getSystem().get_subscriber(username)== null)
+            return false;
+        subscriber_login_state(username, true);
+        return true;
+    }
+
+    public static boolean signup(String username, String password){
+        return true;
+    }
 
     public static void subscriber_login_state(String user_name, boolean state) {
         System.getSystem().get_subscriber(user_name).setLogged_in(state);

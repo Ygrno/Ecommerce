@@ -3,7 +3,6 @@ package NetworkLayer.passiveObjects;
 import java.io.*;
 import java.net.Socket;
 import java.security.MessageDigest;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -18,6 +17,7 @@ public class connectionHandler {
 
 
     public connectionHandler(Socket s){
+
         this.socket = s;
         this.protocol = new MessagingProtocol(this);
 

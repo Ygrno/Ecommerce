@@ -175,7 +175,7 @@ function setMessageHandler(){
             }else{
                 alert("Can't log in")
             }
-        }
+        }//sign up
     };
 }
 
@@ -185,6 +185,10 @@ function run(){
     let current_username = localStorage.getItem("current_username");
     let isGuest = localStorage.getItem("guest");
 
+/*
+    localStorage.removeItem("current_username");
+    localStorage.removeItem("guest");
+*/
     if(current_username === null){
 
         if(isGuest === null){
@@ -195,6 +199,7 @@ function run(){
             window.location.href = "home.html";
         }
     }else{
+    //Already logged in
         window.location.href = "home.html";
     }
 
