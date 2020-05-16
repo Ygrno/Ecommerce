@@ -12,23 +12,26 @@ import java.util.List;
 public class Store {
 
 
-    private PurchasePolicy purchasePolicy;
+    private Policy purchasePolicy;
     private DiscountPolicy discountPolicy;
     private String name;
     private boolean is_open = true;
     private List<Product> product_list = new ArrayList<>();
     private List<PurchaseProcess> purchase_process_list = new ArrayList<>();
     private List<Role> roles = new ArrayList<>();
+    //hila
+    enum Logicaloperation { or, and, xor};
+    private List<Policy> productPurchasePolicies;
 
     public Store(String name) {
         this.name = name;
     }
 
-    public PurchasePolicy getPurchasePolicy() {
+    public Policy getPurchasePolicy() {
         return purchasePolicy;
     }
 
-    public void setPurchasePolicy(PurchasePolicy purchasePolicy) {
+    public void setPurchasePolicy(Policy purchasePolicy) {
         this.purchasePolicy = purchasePolicy;
     }
 
