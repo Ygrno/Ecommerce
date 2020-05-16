@@ -7,11 +7,11 @@
     <script src="../js/EcommerceClient.js"></script>
     <script src="../js/Main.js"></script>
 
-    <title>Title</title>
+    <title>Products</title>
 
     <style>
         body{
-            background-image: url('../images/ebg.png'); /* home_bg.jpg */
+            background-image: url('../images/ebg.png');
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
@@ -24,9 +24,11 @@
             overflow:auto;
         }
 
+
+
         .logged_as{
             float: left;
-            margin-left: 1%;
+            width:10%;
             font-size: 30px;
             height:100%;
             display: flex;
@@ -41,19 +43,6 @@
             margin-right: 1%;
         }
 
-        .profile_pic{
-            float: left;
-            width: 70px;
-            height: 70px;
-        }
-
-        .logout_pic{
-            float: right;
-            width: 70px;
-            height: 70px;
-            cursor: pointer;
-        }
-
         #product_search_value{
             width: 100%;
             padding: 12px 20px;
@@ -65,20 +54,13 @@
             margin-top:2%;
         }
 
-        .container{
-            width:80%;
-            margin-top:2%;
-            margin-left:2%;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-            height:700px;
-            overflow: auto;
-        }
 
-        #stores_intro{
+        #products_intro{
             width: 80%;
             margin-top: 2%;
             margin-left: 2%;
         }
+
 
         .list_div{
             width: 32%;
@@ -92,41 +74,58 @@
             background-color: white;
             border-radius: 2%;
         }
-
         .list_div:hover{
             background-color: #cccccc;
         }
 
-        .store_name_span{
+        .profile_pic{
+            float: left;
+            width: 70px;
+            height: 70px;
+        }
+
+        .home_pic{
+            float: right;
+            width: 70px;
+            height: 70px;
+            cursor: pointer;
+        }
+
+        .product_store_span{
             font-size: 40px;
             margin-left: 2%;
         }
 
-        .is_open_span{
+        .product_name_span{
+
+            font-size: 40px;
+            margin-left: 2%;
+        }
+
+        .price_span{
             margin-left: 2%;
 
         }
 
-        .store_img{
+        .product_img{
             float: left;
             width: 70px;
             height:60px;
             margin-top: 15px;
             margin-left: 1%;
-
         }
-
 
     </style>
 </head>
 <body>
 
 <div class="header">
+
+
     <img class="profile_pic" src="../images/profile.png">
     <div class="logged_as"><span id="logged_as"></span></div>
 
-    <img class="logout_pic" onclick="logout()" src="../images/logout.png">
-
+    <img class="home_pic" onclick="home()" src="../images/home.png">
     <div class="search_div">
         <input type="text" onkeydown="searchProduct(this)"  placeholder="Search for product ..." id="product_search_value">
     </div>
@@ -134,78 +133,78 @@
 
 </div>
 
-
 <div class="container">
 
-    <div id="stores_intro">
+    <div id="products_intro">
 
     </div>
 </div>
 
-<script>
 
-    const StoreDivCreator = (store)=>{
-        let name = store.name;
-        let is_open = store.is_open;
+
+<script>
+    const ProductDivCreator = (product)=>{
+        let store = product.store;
+        let product_name = product.product;
+        let price = product.price;
 
         let div = document.createElement("div");
         div.className = "list_div";
 
         let img = document.createElement("img");
         img.src = "../images/store.png";
-        img.className = "store_img";
+        img.className = "product_img";
 
+        let product_span = document.createElement("span");
+        product_span.innerHTML = product_name;
+        product_span.className = "product_name_span";
 
-        let name_span = document.createElement("span");
-        name_span.innerHTML = name;
-        name_span.className = "store_name_span";
+        let store_span = document.createElement("span");
+        store_span.innerHTML = store;
+        store_span.className = "product_store_span";
 
-        let is_open_span = document.createElement("span");
-        is_open_span.innerHTML = "opened : " + (is_open ? "yes" : "no");
-        is_open_span.className = "is_open_span";
+        let price_span = document.createElement("span");
+        price_span.innerHTML = "Price : "+price;
+        price_span.className = "price_span";
 
         let br = document.createElement("br");
 
         div.appendChild(img);
-        div.appendChild(name_span);
+        div.appendChild(product_span);
         div.appendChild(br);
-        div.appendChild(is_open_span);
-
-        div.style.pointer = "cursor";
+        div.appendChild(store_span);
+        div.appendChild(br);
+        div.appendChild(price_span);
 
         div.onclick = function () {
-            window.location.href = "stores.html?s="+name;
+            window.location.href = "stores.html?s="+store;
         };
 
         return div;
     };
 
-    let storesList = new HTMLList(document.getElementById("stores_intro"));
+    let productsList = new HTMLList(document.getElementById("products_intro"));
 
-
-
-    function addStore(store) {
-        storesList.addElement(store);
-        storesList.rerender(StoreDivCreator);
+    function addProduct(product) {
+        productsList.addElement(product);
+        productsList.rerender(ProductDivCreator);
     }
 
-    function setMessageHandler(){
+    function setMessageHandler() {
         Main.prototype.messageHandler = function(msg){
             let response = JSON.parse(msg);
             let req = response.req;
-
-            if(req === "get_stores"){
-                addStore(response);
+            console.log(response);
+            if(req === "get_products"){
+                addProduct(response);
             }
         };
 
         return Main.getInstance();
     }
 
-
     function run() {
         let main = setMessageHandler();
-
 
         let current_username = localStorage.getItem("current_username");
         let isGuest = localStorage.getItem("guest");
@@ -215,15 +214,25 @@
         }
 
         document.getElementById("logged_as").innerHTML = current_username;
-        main.init(() => {
-            main.get_stores();
-        });
+
+
+        let vars = main.getUrlVars();
+        if(Object.keys(vars).length === 0){
+            return;
+        }else{
+            main.init(() => {
+                main.get_products(vars["p"]);
+            });
+        }
+
+
+
+
 
     }
 
     run();
 
 </script>
-
 </body>
 </html>

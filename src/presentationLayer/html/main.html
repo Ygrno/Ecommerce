@@ -107,105 +107,151 @@
 
 
 
-function process_login() {
-    let form_container = document.getElementsByClassName("form_container")[0];
+    function process_login() {
+        let form_container = document.getElementsByClassName("form_container")[0];
 
-    if(form_container === undefined) {
-        form_container = document.createElement("div");
-        form_container.className = "form_container";
-        document.getElementById("container").appendChild(form_container);
-    }else{
-        form_container.innerHTML = '';
+        if(form_container === undefined) {
+            form_container = document.createElement("div");
+            form_container.className = "form_container";
+            document.getElementById("container").appendChild(form_container);
+        }else{
+            form_container.innerHTML = '';
+        }
+
+
+        let inputs_container = document.createElement("div");
+        inputs_container.className = "inputs_container";
+        form_container.appendChild(inputs_container);
+
+
+
+        let username = document.createElement("input");
+        username.placeholder = 'username';
+        username.className = "form_input_text";
+
+        let password = document.createElement("input");
+        password.placeholder = 'password';
+        password.className = "form_input_text";
+
+        let submit = document.createElement("input");
+        submit.type = 'submit';
+        submit.value = 'Log in';
+        submit.className = 'form_input_btn';
+
+        submit.onclick = function (){
+            Main.getInstance().login(username.value, password.value);
+        };
+
+        inputs_container.appendChild(username);
+        inputs_container.appendChild(password);
+        inputs_container.appendChild(submit);
+
     }
 
+    function process_signup() {
+        let form_container = document.getElementsByClassName("form_container")[0];
 
-    let inputs_container = document.createElement("div");
-    inputs_container.className = "inputs_container";
-    form_container.appendChild(inputs_container);
-
-
-
-    let username = document.createElement("input");
-    username.placeholder = 'username';
-    username.className = "form_input_text";
-
-    let password = document.createElement("input");
-    password.placeholder = 'password';
-    password.className = "form_input_text";
-
-    let submit = document.createElement("input");
-    submit.type = 'submit';
-    submit.value = 'Log in';
-    submit.className = 'form_input_btn';
-
-    submit.onclick = function (){
-        Main.getInstance().login(username.value, password.value);
-    };
-
-    inputs_container.appendChild(username);
-    inputs_container.appendChild(password);
-    inputs_container.appendChild(submit);
-
-}
-
-function process_signup() {
-
-}
-
-function process_guest() {
-    
-}
-
-function tab_click(tab) {
-    tab === "login" ? process_login() :
-        tab === "signup" ? process_signup() :
-            tab === "guest" ? process_guest() : undefined;
-}
-
-function setMessageHandler(){
-    Main.prototype.messageHandler = function(msg){
-        let response = JSON.parse(msg);
-        let req = response.req;
-        if(req === "login"){
-            let res = response.res;
-            if(res === "true") {
-                localStorage.setItem("current_username", response.username);
-                localStorage.setItem("guest", "false");
-                window.location.href = "home.html";
-            }else{
-                alert("Can't log in")
-            }
-        }//sign up
-    };
-}
-
-
-function run(){
-    setMessageHandler();
-    let current_username = localStorage.getItem("current_username");
-    let isGuest = localStorage.getItem("guest");
-
-/*
-    localStorage.removeItem("current_username");
-    localStorage.removeItem("guest");
-*/
-    if(current_username === null){
-
-        if(isGuest === null){
-            let main = Main.getInstance();
-            main.init();
+        if(form_container === undefined) {
+            form_container = document.createElement("div");
+            form_container.className = "form_container";
+            document.getElementById("container").appendChild(form_container);
         }else{
-            //Guest redirect
-            window.location.href = "home.html";
+            form_container.innerHTML = '';
         }
-    }else{
-    //Already logged in
+
+
+        let inputs_container = document.createElement("div");
+        inputs_container.className = "inputs_container";
+        form_container.appendChild(inputs_container);
+
+
+
+        let username = document.createElement("input");
+        username.placeholder = 'username';
+        username.className = "form_input_text";
+
+        let password = document.createElement("input");
+        password.placeholder = 'password';
+        password.className = "form_input_text";
+
+        let submit = document.createElement("input");
+        submit.type = 'submit';
+        submit.value = 'Sign up';
+        submit.className = 'form_input_btn';
+
+        submit.onclick = function (){
+            Main.getInstance().Signup(username.value, password.value);
+        };
+
+        inputs_container.appendChild(username);
+        inputs_container.appendChild(password);
+        inputs_container.appendChild(submit);
+
+    }
+
+    function process_guest() {
+        localStorage.setItem("current_username", "Guest");
+        localStorage.setItem("guest", "true");
         window.location.href = "home.html";
     }
 
-}
+    function tab_click(tab) {
+        tab === "login" ? process_login() :
+            tab === "signup" ? process_signup() :
+                tab === "guest" ? process_guest() : undefined;
+    }
 
-run();
+    function setMessageHandler(){
+        Main.prototype.messageHandler = function(msg){
+            let response = JSON.parse(msg);
+            let req = response.req;
+            if(req === "login"){
+                let res = response.res;
+                if(res === "true") {
+                    localStorage.setItem("current_username", response.username);
+                    localStorage.setItem("guest", "false");
+                    window.location.href = "home.html";
+                }else{
+                    alert("Can't log in")
+                }
+            }else if(req === "signup"){
+                let res = response.res;
+                if(res === "true") {
+                    localStorage.setItem("current_username", response.username);
+                    localStorage.setItem("guest", "false");
+                    window.location.href = "home.html";
+                }else{
+                    alert("Can't sign up");
+                }
+            }
+        };
+    }
+
+
+    function run(){
+        setMessageHandler();
+
+        let current_username = localStorage.getItem("current_username");
+        let isGuest = localStorage.getItem("guest");
+
+
+        if(current_username === null){
+
+            if(isGuest === null){
+                let main = Main.getInstance();
+                main.init();
+            }else{
+                //Guest redirect
+                window.location.href = "home.html";
+            }
+        }else{
+            //Already logged in
+            window.location.href = "home.html";
+        }
+
+    }
+
+    run();
 
 
 </script>
