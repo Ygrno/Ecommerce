@@ -20,17 +20,18 @@ public class uc_2_3_Test {
         guestimp=new GuestImp();
     }
 
+    @Test
     public void successScenario(){
         guestimp.sign_up("mahmod","123");
         assert  guestimp.login("mahmod","123");;
     }
-
+    @Test
     public void failScenario1(){
         guestimp.sign_up("mahmod","123");
 
         assert !guestimp.login("mahmo", "123");
     }
-
+    @Test
     public void failScenario2(){
         guestimp.sign_up("mahmod","123");
 

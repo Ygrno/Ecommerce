@@ -4,6 +4,7 @@ import ServiceLayer.GuestImp;
 import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
 import org.junit.Before;
+import org.junit.Test;
 
 import java.io.IOException;
 
@@ -41,7 +42,7 @@ public class uc_2_7_Test {
     }
 
 
-
+    @Test
     public void successScenario(){
         gi.save_products(1,"bmba","store1");
         gi.save_products(1,"twix","store3");
@@ -53,7 +54,7 @@ public class uc_2_7_Test {
         assertFalse(gi.watch_products_in_cart(1).contains("besli"));
 
     }
-
+    @Test
     public void failScenario1(){
 
         assert null == gi.watch_products_in_cart(2);
