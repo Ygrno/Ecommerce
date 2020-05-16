@@ -5,6 +5,7 @@ import ServiceLayer.GuestImp;
 import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
 import org.junit.Before;
+import org.junit.Test;
 
 import java.io.IOException;
 
@@ -39,12 +40,12 @@ public class uc_2_8_Test {
         sri.add_store_product("mhmod","store3","twix",6,2);
 
     }
-
+    @Test
     public void successScenario(){
         assertTrue(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/26",999,0));
 
     }
-
+    @Test
     public void failScenario1(){
         assertFalse(gi.buy_products_in_cart(0,"mahmoud","1234123412341234","11/26",999,0));
         assertFalse(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/26",999,2));

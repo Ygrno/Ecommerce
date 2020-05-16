@@ -8,6 +8,7 @@ import DomainLayer.User.Subscriber;
 import ServiceLayer.GuestImp;
 import ServiceLayer.IGuest;
 import org.junit.Before;
+import org.junit.Test;
 
 import java.io.IOException;
 
@@ -32,18 +33,18 @@ public class uc_2_4_Test {
         s1.getProduct_list().add(p3);
         system.getStore_list().add(s1);
     }
-
+    @Test
     public void successScenario(){
         assert guestimp.view_products_information_store("store1").contains(p1);
         assert guestimp.view_products_information_store("store1").contains(p2);
         assert guestimp.view_products_information_store("store1").contains(p3);
 
     }
-
+    @Test
     public void failScenario1(){
         assert guestimp.view_products_information_store("store")==null;
     }
-
+    @Test
     public void failScenario2(){
         Store s2=new Store("store2");
         system.getStore_list().add(s2);
