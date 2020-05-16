@@ -48,11 +48,11 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/json.jar!/" />
+          <root url="jar://D:/Downloads/java-json.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/json.jar!/" />
+          <root url="jar://D:/Downloads/java-json.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
