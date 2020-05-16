@@ -1,17 +1,11 @@
 package ServiceLayer;
-
-import DomainLayer.*;
 import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
-import DomainLayer.Store.Store;
-import DomainLayer.System;
-import DomainLayer.User.Guest;
-import DomainLayer.User.Subscriber;
+
 import DomainLayer.Product;
 import DomainLayer.PurchaseProcess;
 
-import java.io.IOException;
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 

@@ -1,58 +1,43 @@
 package acceptance;
-
-import DomainLayer.InternalService.SystemManage_Facade;
-import DomainLayer.Product;
-import DomainLayer.PurchaseProcess;
-import DomainLayer.ShoppingBag;
-import DomainLayer.Store.Store;
-import DomainLayer.System;
-import DomainLayer.User.Subscriber;
+import ServiceLayer.GuestImp;
+import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+
 
 import static org.junit.Assert.*;
 
 public class uc_4_1_add_edit_remove {
     private static SubscriberImp SUBImp;
-    private static SystemManage_Facade SYS;
-    private static Subscriber subscriber;
-    private static Store store;
-
+    private static GuestImp guestImp;
+    private static StoreRoleImp storeRoleImp;
 
     @BeforeClass
     public static void before() throws IOException {
         SUBImp = new SubscriberImp();
-        SYS = new SystemManage_Facade();
-        SYS.init_system();
-        SYS.is_initialized();
-        SYS.add_subscriber("subscriber", "subscriber");
-        subscriber = System.getSystem().get_subscriber("subscriber");
-        System system=System.getSystem();
-        subscriber.setLogged_in(true);
-        Store s1=new Store("sotre1");
-        system.getStore_list().add(s1);
+        guestImp = new GuestImp();
+        storeRoleImp = new StoreRoleImp();
+        guestImp.login("Admin","Password");
+        guestImp.sign_up("subscriber", "subscriber");
+        guestImp.login("subscriber","subscriber");
+        SUBImp.open_store("subscriber","store1");
     }
 
-//    @Test
-//    public void success_scenario() {
-//        asssertTrue(add_store_product("subscriber", "store1", p1.getName(), p1.getPrice(), p1.getAmount()));
-//        add_store_product("subscriber", "store1", p1.getName(), p1.getPrice(), p1.getAmount());
-//        edit_store_product("subscriber", "store1", p1.getName(),"new", p1.getPrice(), p1.getAmount());
-//        StoreRole store_role = subscriber.get_role_at_store("store1");
-//        Product product = store_role.store.getProduct("new");
-//        assertNotNull(product);
-//    }
-//
-//
-//    @Test
-//    public void failure_scenario() {
-//        asssertTrue(add_store_product("subscriber", "store1", p1.getName(), p1.getPrice(), p1.getAmount()));
-//        Product product = store_role.store.getProduct("new");
-//        assertNull(purchase);
-//    }
+    @Test
+    public void success_scenario() {
+        assertTrue(storeRoleImp.add_store_product("subscriber", "store1", "Bamba", 3, 25));
+        assertTrue(storeRoleImp.edit_store_product("subscriber", "store1", "Bamba","new", 5, 17));
+        assertTrue(storeRoleImp.remove_store_product("subscriber","store1","new"));
+    }
+
+
+    @Test
+    public void failure_scenario() {
+        assertFalse(storeRoleImp.remove_store_product("subscriber","store1","new"));
+        assertFalse(storeRoleImp.edit_store_product("subscriber", "store1", "Bamba","new", 5, 17));
+
+    }
 }
