@@ -103,8 +103,11 @@ public class SystemManage_FacadeTest {
         s1.getProduct_list().add(p2);
         s2.getProduct_list().add(p3);
 
-        assertTrue(SystemManage_Facade.get_products_of_store("store1").contains(p1));
-        assertTrue(SystemManage_Facade.get_products_of_store("store1").contains(p2));
-        assertTrue(SystemManage_Facade.get_products_of_store("store2").contains(p3));
+        assertTrue((SystemManage_Facade.get_products_of_store("store1")).length==2);
+        assertTrue(SystemManage_Facade.get_products_of_store("store1")[0][0].equals("bmba"));
+        assertTrue(SystemManage_Facade.get_products_of_store("store1")[1][0].equals("bmba1"));
+        assertTrue(SystemManage_Facade.get_products_of_store("store2")[0][0].equals("bmba2"));
+
+
     }
 }

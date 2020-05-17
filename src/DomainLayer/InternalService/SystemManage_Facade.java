@@ -1,7 +1,6 @@
 package DomainLayer.InternalService;
 
 import DomainLayer.*;
-import DomainLayer.ExternalSerivce.ProductFinanceService;
 import DomainLayer.Roles.Permission;
 import DomainLayer.Store.Store;
 import DomainLayer.System;
@@ -14,8 +13,6 @@ import Encryption.EncryptImp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import static DomainLayer.Roles.Permission.VIEW_AND_RESPOND_TO_USERS;
 
 public class SystemManage_Facade implements InternalService {
 
@@ -250,14 +247,23 @@ public class SystemManage_Facade implements InternalService {
 
     }
 
-    public static List<Product> get_products_of_store(String store_name) {
+    public static String[][] get_products_of_store(String store_name) {
         List<Store> storeList = system.getStore_list();
         List<Product> productList = null;
         for (Store s : storeList) {
             if (s.getName().equals(store_name))
                 productList = s.getProduct_list();
         }
-        return productList;
+
+        int size = productList.size();
+        String[][] products_arr = new String[size][4];
+        for (int i = 0; i<size; i++){
+            products_arr[i][0]=productList.get(i).getName();
+            products_arr[i][1]=String.valueOf(productList.get(i).getPrice());
+            products_arr[i][2]=String.valueOf(productList.get(i).getAmount());
+            products_arr[i][3]=productList.get(i).getStore().getName();
+        }
+        return products_arr;
     }
     public static List<Store> getAllStores(){
         return system.getStore_list();

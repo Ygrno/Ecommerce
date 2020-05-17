@@ -1,6 +1,5 @@
 package ServiceLayer;
 
-import DomainLayer.Product;
 import DomainLayer.PurchaseProcess;
 
 import java.util.HashMap;
@@ -8,7 +7,7 @@ import java.util.List;
 
 public interface ISubscriber {
 
-    public List<Product> view_products_information_store (String store_name); //2.4
+    public String[][] view_products_information_store (String store_name); //2.4
     public HashMap<String,Integer> search_products(String product_name);  //2.5 (Right now, search via name only).
 
     public boolean save_products(String userName,String product_name, String store_name); //2.6
