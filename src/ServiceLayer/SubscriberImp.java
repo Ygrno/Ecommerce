@@ -2,7 +2,6 @@ package ServiceLayer;
 import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
 
-import DomainLayer.Product;
 import DomainLayer.PurchaseProcess;
 
 
@@ -17,12 +16,12 @@ public class SubscriberImp implements ISubscriber {
     }
 
     @Override
-    public List<Product> view_products_information_store(String store_name) {
+    public String[][] view_products_information_store(String store_name) {
         my_log.logger.info("view_products_information_store");
-        List<Product> products = null;
+        String[][] products_arr;
         if(!SystemManage_Facade.is_initialized()) return null;
-        products = SystemManage_Facade.get_products_of_store(store_name);
-        return products;
+        products_arr = SystemManage_Facade.get_products_of_store(store_name);
+        return products_arr;
     }
 
     @Override
