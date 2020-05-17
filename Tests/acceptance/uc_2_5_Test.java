@@ -1,13 +1,6 @@
 package acceptance;
 
-import DomainLayer.InternalService.SystemManage_Facade;
-import DomainLayer.Product;
-import DomainLayer.Store.Store;
-import DomainLayer.System;
-import DomainLayer.User.Guest;
-import DomainLayer.User.Subscriber;
 import ServiceLayer.GuestImp;
-import ServiceLayer.IGuest;
 import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
 import org.junit.Before;
@@ -15,7 +8,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 
 public class uc_2_5_Test {
     private GuestImp gi;
@@ -49,7 +41,7 @@ public class uc_2_5_Test {
 
     @Test
     public void successScenario(){
-        HashMap<String,Integer> l=gi.search_products("bmba");
+        HashMap<String, Double> l=gi.search_products("bmba");
         assert l.containsKey("store1");
         assert l.containsKey("store2");
         assert l.containsKey("store3");
@@ -57,7 +49,7 @@ public class uc_2_5_Test {
     }
     @Test
     public void failScenario1(){
-        HashMap<String,Integer> l=gi.search_products("aa");
+        HashMap<String, Double> l=gi.search_products("aa");
         assert l.size()==0;
     }
 

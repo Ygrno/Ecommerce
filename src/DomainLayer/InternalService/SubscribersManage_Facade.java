@@ -207,7 +207,7 @@ public class SubscribersManage_Facade implements InternalService {
         if (store_role instanceof StoreOwner || (store_role instanceof StoreManger && ((StoreManger) store_role).havePermission("VIEW_STORE_HISTORY"))) {
             Store store = store_role.store;
             for(PurchaseProcess purchase: store.getPurchase_process_list()){
-                if(purchase.isfinished())
+                if(purchase.isFinished())
                     history.append("\n").append("Customer Name: ").append(purchase.getDetails().getBuyer_name()).append("\nList of products: ").append(purchase.getShoppingBag().getProducts_names().toString()).append("\n sum: ").append(purchase.getDetails().getPrice());
             }
         }

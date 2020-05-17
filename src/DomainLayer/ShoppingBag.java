@@ -24,4 +24,12 @@ public class ShoppingBag {
     public List<Product> getProducts() {
         return products;
     }
+
+    public double get_SumPrice(){
+        double sum = 0;
+        for(Product p: products){
+            sum = sum + p.getPrice();
+        }
+        return sum;
+    }
 }
