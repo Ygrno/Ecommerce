@@ -10,16 +10,24 @@ public class Product {
 
     private String name;
     private double price;
-    private int amount;
+    private int supplied_amount;
+    private int Buy_amount;
     private Store store;
     private List<ProductReview> product_review_list;
 
 
+    public int getBuy_amount() {
+        return Buy_amount;
+    }
 
-    public Product(String name, int price, int amount, Store store) {
+    public void setBuy_amount(int buy_amount) {
+        Buy_amount = buy_amount;
+    }
+
+    public Product(String name, int price, int supplied_amount, Store store) {
         this.name = name;
         this.price = price;
-        this.amount = amount;
+        this.supplied_amount = supplied_amount;
         this.store = store;
         product_review_list = new ArrayList<>();
     }
@@ -40,12 +48,12 @@ public class Product {
         this.price = price;
     }
 
-    public int getAmount() {
-        return amount;
+    public int getSupplied_amount() {
+        return supplied_amount;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setSupplied_amount(int supplied_amount) {
+        this.supplied_amount = supplied_amount;
     }
 
     public Store getStore() {

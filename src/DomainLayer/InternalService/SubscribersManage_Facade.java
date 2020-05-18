@@ -84,7 +84,7 @@ public class SubscribersManage_Facade implements InternalService {
             if(product == null) return false;
             product.setName(new_product_name);
             product.setPrice(product_price);
-            product.setAmount(product_amount);
+            product.setSupplied_amount(product_amount);
             return true;
         }
         else if (store_role instanceof StoreManger) {
@@ -92,7 +92,7 @@ public class SubscribersManage_Facade implements InternalService {
                 Product product = store_role.store.getProduct(product_name);
                 product.setName(new_product_name);
                 product.setPrice(product_price);
-                product.setAmount(product_amount);
+                product.setSupplied_amount(product_amount);
                 return true;
             }
         }
