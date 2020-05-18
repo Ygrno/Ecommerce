@@ -21,7 +21,7 @@ public class Store {
     private List<Role> roles = new ArrayList<>();
 
     //hila
-    private List<Policy> purchasePolicies;
+    private List<Policy> purchasePolicies = new ArrayList<>();
 
     public Store(String name) {
         this.name = name;

@@ -48,11 +48,11 @@ public class ComplexDiscount extends DiscountComponent {
         or_discountComponents.remove(newDiscountComponent);
     }
 
-    public void add_xor(DiscountComponent newDiscountComponent) {
+    public void add_OnlyOne(DiscountComponent newDiscountComponent) {
         onlyOne_discountComponents.add(newDiscountComponent);
     }
 
-    public void remove_xor(DiscountComponent newDiscountComponent) {
+    public void remove_OnlyOne(DiscountComponent newDiscountComponent) {
         onlyOne_discountComponents.remove(newDiscountComponent);
     }
 

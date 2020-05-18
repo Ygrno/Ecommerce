@@ -19,10 +19,9 @@ public class ConditionedDiscount extends DiscountComponent {
         return final_price;
     }
 
-    public ConditionedDiscount(String discount_name, double discount_percentage, double final_price, int end_of_use_date, Condition condition, Store store, Product product, int required_amount, int required_sum) {
+    public ConditionedDiscount(String discount_name, double discount_percentage, int end_of_use_date, Condition condition, Store store, Product product, int required_amount, int required_sum) {
         this.discount_name = discount_name;
         this.discount_percentage = discount_percentage;
-        this.final_price = final_price;
         this.end_of_use_date = end_of_use_date;
         this.condition = condition;
         this.store = store;
@@ -63,25 +62,25 @@ public class ConditionedDiscount extends DiscountComponent {
         switch(condition){
             case IF_NUMBER_OF_PRODUCTS:
             {
-                int count = 0;
                 for(Product p:products){
                     if(p.getName().equals(this.product.getName())){
-                        count++;
+                        if(p.getBuy_amount() >= required_amount)
+                            return true;
                     }
                 }
-                if(count >= required_amount)
-                    return true;
+                break;
 
             }
             case IF_SUM_GREATER_THAN:
             {
                 if(purchaseProcess.getShoppingBag().get_SumPrice() >= required_sum)
                     return true;
+                break;
             }
             default:
                 return false;
         }
-
+        return false;
     }
 
     @Override

@@ -3,6 +3,8 @@ package integration.tests;
 import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
 import DomainLayer.Product;
+import DomainLayer.Store.BuyPolicy;
+import DomainLayer.Store.Policy;
 import DomainLayer.Store.Store;
 import DomainLayer.System;
 import DomainLayer.User.Subscriber;
@@ -10,6 +12,8 @@ import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -63,4 +67,26 @@ public class SubscribersManage_FacadeTest {
         p = s.getProduct("test_product_not_exist");
         assert p == null;
     }
+
+    @Test
+    public void add_store_simple_buyPolicy() {
+        Store s = System.getSystem().get_store("test_store");
+
+        if(s == null){
+            SubscribersManage_Facade.create_store("test_sub", "test_store");
+            s = System.getSystem().get_store("test_store");
+        }
+        SubscribersManage_Facade.add_product_to_store("test_sub", "test_store", "test_product", 2,3);
+
+        SubscribersManage_Facade.create_store_simple_policy("test_sub", "test_store", 2, 1, "test_product", 1, 5,  -1, -1);
+        List<Policy> policies = s.getPurchasePolicies();
+        assert policies != null;
+        assert policies.size()==1;
+        for (Policy p: policies){
+            assert (p.getPolicy_id()==1);
+        }
+
+    }
+
+
 }
