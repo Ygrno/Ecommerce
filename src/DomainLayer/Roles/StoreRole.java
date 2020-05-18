@@ -27,6 +27,7 @@ public abstract class StoreRole extends Role {
         this.assigned_by = assigned_by;
     }
 
+    //Notification
     public void Upadte(String update){Upadtes.add(update);}
 
 

@@ -13,8 +13,8 @@ public class main {
         if(!SystemManage_Facade.is_initialized()) {
             SystemManage_Facade.init_system();
         }
-        Esimulation.Init();
 
+        Esimulation.Init();
         try {
             ServerSocket server = new ServerSocket(8112, 100);
 
