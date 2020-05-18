@@ -9,4 +9,5 @@ import java.util.List;
 public interface Policy {
     //enum Logicaloperation { or, and, xor};
     public boolean validate (ShoppingBag shopBag, User user);
+    public int getPolicy_id();
 }

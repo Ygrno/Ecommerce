@@ -18,7 +18,11 @@ public class BuyPolicy implements Policy {
 
     @Override
     public boolean validate(ShoppingBag shopBag, User user) {
-        return false;
+        return true;
+    }
+
+    public int getPolicy_id(){
+        return policy_id;
     }
 
 }
