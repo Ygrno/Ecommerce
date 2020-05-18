@@ -35,6 +35,8 @@ public class SubscribersManage_Facade implements InternalService {
         return false;
     }
 
+
+
     public static void create_store(String user_name, String store_name) {
 
         Subscriber subscriber = System.getSystem().get_subscriber(user_name);
@@ -64,6 +66,8 @@ public class SubscribersManage_Facade implements InternalService {
         }
         return false;
     }
+
+
 
 
     public static boolean change_product_in_store(String user_name, String store_name, String product_name, String new_product_name, int product_price, int product_amount) {

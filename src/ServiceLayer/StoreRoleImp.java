@@ -50,11 +50,7 @@ public class StoreRoleImp implements IStoreRole {
             return false;
     }
 
-    @Override
-    public boolean edit_store_policy(String user_name, String store_name) {
-        //if (!SystemManage_Facade.is_initialized()) return false;
-        return false;
-    }
+
 
     @Override
     public boolean assign_store_owner(String user_name, String store_name, String user_assign) {

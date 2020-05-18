@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class DiscountPolicy {
 
-    ArrayList<ComplexDiscount> complexDiscounts = new ArrayList<>();
+    ArrayList<DiscountComponent> discounts = new ArrayList<>();
 
-    public void add_discount(ComplexDiscount complexDiscount) {
-        complexDiscounts.add(complexDiscount);
+    public void add_discount(DiscountComponent discountComponent) {
+        discounts.add(discountComponent);
     }
 
 }

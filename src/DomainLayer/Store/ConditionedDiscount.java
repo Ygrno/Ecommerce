@@ -7,6 +7,7 @@ import java.util.List;
 
 public class ConditionedDiscount extends DiscountComponent {
 
+    private String discount_name;
     private double discount_percentage, final_price = -1;
     private int end_of_use_date;     // { Format 12062020 = 12/06/2020 }
     private Condition condition;
@@ -18,8 +19,10 @@ public class ConditionedDiscount extends DiscountComponent {
         return final_price;
     }
 
-    public ConditionedDiscount(float discount_percentage, int end_of_use_date, Condition condition, Store store, Product product, int required_amount, int required_sum) {
+    public ConditionedDiscount(String discount_name, double discount_percentage, double final_price, int end_of_use_date, Condition condition, Store store, Product product, int required_amount, int required_sum) {
+        this.discount_name = discount_name;
         this.discount_percentage = discount_percentage;
+        this.final_price = final_price;
         this.end_of_use_date = end_of_use_date;
         this.condition = condition;
         this.store = store;

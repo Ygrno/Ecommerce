@@ -6,6 +6,20 @@ import java.util.ArrayList;
 
 public class ComplexDiscount extends DiscountComponent {
 
+    private String discount_name;
+
+    public String getDiscount_name() {
+        return discount_name;
+    }
+
+    public void setDiscount_name(String discount_name) {
+        this.discount_name = discount_name;
+    }
+
+    public ComplexDiscount(String discount_name){
+        this.discount_name = discount_name;
+    }
+
     ArrayList<DiscountComponent> and_discountComponents = new ArrayList<>();
     ArrayList<DiscountComponent> or_discountComponents = new ArrayList<>();
     ArrayList<DiscountComponent> onlyOne_discountComponents = new ArrayList<>();
