@@ -8,7 +8,7 @@ import java.util.List;
 public interface ISubscriber {
 
     public String[][] view_products_information_store (String store_name); //2.4
-    public HashMap<String,Integer> search_products(String product_name);  //2.5 (Right now, search via name only).
+    public HashMap<String, Double> search_products(String product_name);  //2.5 (Right now, search via name only).
 
     public boolean save_products(String userName,String product_name, String store_name); //2.6
     public List<String> watch_products_in_cart(String userName);  //2.7.1

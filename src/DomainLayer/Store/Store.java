@@ -19,6 +19,7 @@ public class Store {
     private List<Product> product_list = new ArrayList<>();
     private List<PurchaseProcess> purchase_process_list = new ArrayList<>();
     private List<Role> roles = new ArrayList<>();
+
     //hila
     enum Logicaloperation { or, and, xor};
     private List<Policy> productPurchasePolicies;

@@ -77,7 +77,7 @@ public class GuestImp implements IGuest {
     }
 
     @Override
-    public HashMap<String,Integer> search_products(String product_name) {
+    public HashMap<String, Double> search_products(String product_name) {
         my_log.logger.info("search_products");
         if(!SystemManage_Facade.is_initialized()) {
             my_log.logger.warning("System not initialized");

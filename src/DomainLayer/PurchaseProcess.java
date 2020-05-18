@@ -57,7 +57,7 @@ public class PurchaseProcess {
         this.shoppingBag = shoppingBag;
     }
 
-    public boolean isfinished(){
+    public boolean isFinished(){
         return isDone;
     }
 }

@@ -35,6 +35,8 @@ public class SubscribersManage_Facade implements InternalService {
         return false;
     }
 
+
+
     public static void create_store(String user_name, String store_name) {
 
         Subscriber subscriber = System.getSystem().get_subscriber(user_name);
@@ -64,6 +66,8 @@ public class SubscribersManage_Facade implements InternalService {
         }
         return false;
     }
+
+
 
 
     public static boolean change_product_in_store(String user_name, String store_name, String product_name, String new_product_name, int product_price, int product_amount) {
@@ -207,7 +211,7 @@ public class SubscribersManage_Facade implements InternalService {
         if (store_role instanceof StoreOwner || (store_role instanceof StoreManger && ((StoreManger) store_role).havePermission("VIEW_STORE_HISTORY"))) {
             Store store = store_role.store;
             for(PurchaseProcess purchase: store.getPurchase_process_list()){
-                if(purchase.isfinished())
+                if(purchase.isFinished())
                     history.append("\n").append("Customer Name: ").append(purchase.getDetails().getBuyer_name()).append("\nList of products: ").append(purchase.getShoppingBag().getProducts_names().toString()).append("\n sum: ").append(purchase.getDetails().getPrice());
             }
         }
