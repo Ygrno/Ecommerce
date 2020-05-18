@@ -3,6 +3,7 @@ package DomainLayer.InternalService;
 import DomainLayer.Product;
 import DomainLayer.PurchaseProcess;
 import DomainLayer.Roles.*;
+import DomainLayer.ShoppingBag;
 import DomainLayer.Store.*;
 import DomainLayer.Store.DiscountPolicy;
 import DomainLayer.Store.Store;
@@ -11,12 +12,10 @@ import DomainLayer.System;
 import DomainLayer.User.Subscriber;
 import DomainLayer.User.User;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class SubscribersManage_Facade implements InternalService {
-
     /////////////// login/signup methods///////////////////////////
     public static boolean login(String username, String password){
         if(System.getSystem().get_subscriber(username)== null)
@@ -33,6 +32,36 @@ public class SubscribersManage_Facade implements InternalService {
         System.getSystem().getUser_list().add(sub);
         return true;
     }
+    public static Boolean openstore(String username,String name) {
+        return System.getSystem().SubImp().open_store(username,name);
+    }
+
+    public static List<Role> GetRoles(String store) {
+        return System.getSystem().get_store(store).getRoles();
+    }
+    public static StoreOwner StoreOwner(String username,String store) {
+        return System.getSystem().storeOwner(username,store);
+    }
+
+    public static boolean signout(String username){
+        if(!check_if_logged_in(username)) {
+            return false;
+        }
+        subscriber_login_state(username,false);
+        return true;
+    }
+    public static void purchaseListAdd(String sub, String store ,ArrayList<String> arr){
+        System.getSystem().get_subscriber(sub).getPurchaseProcesslist().add(new PurchaseProcess( System.getSystem().get_subscriber(sub), System.getSystem().get_store(store),new ShoppingBag(arr)));
+    }
+
+
+//    public static void view_purchase_history(String sub){
+//        SubscriberImp SubImp = new SubscriberImp();
+//        return SubImp.view_purchase_history("subscriber");
+//    }
+
+
+
 
     public static void subscriber_login_state(String user_name, boolean state) {
         System.getSystem().get_subscriber(user_name).setLogged_in(state);

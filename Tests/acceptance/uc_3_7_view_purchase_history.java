@@ -1,4 +1,5 @@
 package acceptance;
+import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
 import DomainLayer.PurchaseProcess;
 import DomainLayer.Roles.Role;
@@ -16,40 +17,29 @@ import static org.junit.Assert.*;
 
 public class uc_3_7_view_purchase_history {
 
-    private static SubscriberImp SUBImp;
+    private  static SubscribersManage_Facade SUB;
     private static SystemManage_Facade SYS;
-    private static Subscriber subscriber;
-    private static Store store;
 
 
     @BeforeClass
     public static void before() {
-        SUBImp = new SubscriberImp();
         SYS = new SystemManage_Facade();
         SYS.init_system();
         SYS.is_initialized();
         SYS.add_subscriber("subscriber", "subscriber");
-        subscriber = System.getSystem().get_subscriber("subscriber");
-        System system=System.getSystem();
-        subscriber.setLogged_in(true);
+        SUB.subscriber_login_state("subscriber",true);
     }
 
     @Test
     public void success_scenario() {
-        store=SYS.get_store("test");
-        List<String> strings = new ArrayList<String>();
-        PurchaseProcess purchaseProcess = new PurchaseProcess(subscriber,store,new ShoppingBag(strings));
-        subscriber.getPurchaseProcesslist().add(purchaseProcess);
-        List<PurchaseProcess> purchase = SUBImp.view_purchase_history("subscriber");
-        assertNotNull(purchase);
-        assertEquals(purchase.get(0),purchaseProcess);
+        SUB.purchaseListAdd("subscriber" ,"test",new ArrayList<String>());
+        assertNotNull(SYS.View_purchase("subscriber"));
     }
 
 
     @Test
     public void failure_scenario() {
-        subscriber.setLogged_in(false);
-        List<PurchaseProcess> purchase = SUBImp.view_purchase_history("subscriber");
-        assertNull(purchase);
+        System.getSystem().get_subscriber("subscriber").setLogged_in(false);
+        assertNotNull(SYS.View_purchase("subscriber"));
     }
 }

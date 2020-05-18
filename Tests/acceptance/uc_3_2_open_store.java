@@ -16,39 +16,31 @@ import static org.junit.Assert.*;
 
 public class uc_3_2_open_store {
 
-    private static SubscriberImp SUBImp;
     private static SystemManage_Facade SYS;
-    private static Subscriber subscriber;
-    private static Store store;
-
-
+    private static SubscribersManage_Facade SUB;
 
     @BeforeClass
     public static void before(){
-        SUBImp= new SubscriberImp();
         SYS= new SystemManage_Facade();
         SYS.init_system();
         SYS.is_initialized();
         SYS.add_subscriber("subscriber","subscriber");
-        subscriber= System.getSystem().get_subscriber("subscriber");
     }
 
     @Test
     public void success_scenario(){
-        subscriber.setLogged_in(true);
-        assertTrue(SUBImp.open_store("subscriber","test"));
+        SUB.subscriber_login_state("subscriber",true);
+        assertTrue(SUB.openstore("subscriber","test"));
         assertTrue(SYS.get_store("test")!=null);
-        store=SYS.get_store("test");
-        List<Role> role = (List<Role>) store.getRoles();
-        StoreOwner storeOwner = new StoreOwner(subscriber, store);
-        assertNotNull(role.get(0));
-        assertTrue(role.get(0) instanceof StoreOwner);
+        SubscribersManage_Facade.StoreOwner("subscriber","test");
+        assertNotNull(SUB.GetRoles("test").get(0));
+        assertTrue(SUB.GetRoles("test").get(0) instanceof StoreOwner);
     }
 
 
     @Test
     public void failure_scenario() {
-        subscriber.setLogged_in(false);
-        assertFalse(SUBImp.open_store("subscriber","test"));
+        SUB.subscriber_login_state("subscriber",false);
+        assertFalse(SUB.openstore("subscriber","test"));
     }
 }

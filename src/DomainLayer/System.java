@@ -4,12 +4,14 @@ import DomainLayer.ExternalSerivce.PassiveObjects.ExternalSupplyService;
 import DomainLayer.ExternalSerivce.ProductFinanceService;
 import DomainLayer.ExternalSerivce.ProductSupplyService;
 import DomainLayer.Roles.Role;
+import DomainLayer.Roles.StoreOwner;
 import DomainLayer.Roles.SystemManger;
 import DomainLayer.Store.Store;
 import DomainLayer.User.Guest;
 import DomainLayer.User.Subscriber;
 import DomainLayer.User.User;
 import Encryption.EncryptImp;
+import ServiceLayer.SubscriberImp;
 import Stubs.ExternalFinanceServiceStub;
 import Stubs.ExternalSupplyServiceStub;
 
@@ -19,7 +21,7 @@ import java.util.List;
 public class System {
 
     private static System SYSTEM_SINGLETON = null;
-
+    private SubscriberImp SubImp;
     private List<Subscriber> user_list;
     private List<Guest> guest_list;
     private int nextGuestId;
@@ -28,6 +30,7 @@ public class System {
     private ProductSupplyService productSupplyService;
     private ProductFinanceService productFinanceService;
     private EncryptImp encryptImp;
+    private StoreOwner storeowner;
 
     private System(){
         user_list = new ArrayList<>();
@@ -50,6 +53,7 @@ public class System {
         productFinanceService.connect();
         productSupplyService.connect();
         nextGuestId=0;
+        SubImp = new SubscriberImp();
     }
 
 
@@ -113,6 +117,10 @@ public class System {
         return guest_list;
     }
 
+    public SubscriberImp SubImp() {
+        return SubImp;
+    }
+
     public int getNextGuestId() {
         return nextGuestId;
     }
@@ -121,6 +129,10 @@ public class System {
         this.nextGuestId++;
     }
 
+    public StoreOwner storeOwner(String username,String store ){
+        Subscriber sub = get_subscriber(username);
+        return new StoreOwner(sub , this.get_store(store));
+    }
     public void clearSystem(){
         SYSTEM_SINGLETON = null;
     }
