@@ -9,7 +9,7 @@ import java.util.List;
 public class Product {
 
     private String name;
-    private int price;
+    private double price;
     private int amount;
     private Store store;
     private List<ProductReview> product_review_list;
@@ -32,11 +32,11 @@ public class Product {
         this.name = name;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

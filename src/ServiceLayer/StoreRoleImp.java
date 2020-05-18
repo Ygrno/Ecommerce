@@ -52,11 +52,18 @@ public class StoreRoleImp implements IStoreRole {
             return false;
     }
 
+
     @Override
-    public boolean edit_store_policy(String user_name, String store_name) {
+    public boolean add_store_visible_discount(String user_name, String store_name, String product_name, String discount_name, double discount_percentage, int due_date) {
+        my_log.logger.info("Add visible discount");
+        if (!SystemManage_Facade.is_initialized())  return false;
+        if (SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
+            return SubscribersManage_Facade.add_visible_discount_to_product(user_name, store_name, product_name,discount_name,discount_percentage,due_date);
+        }
+
+
         return false;
     }
-
 
     public boolean add_store_simple_policy(String user_name, String store_name, int type, int policy_id, String product_name, int min, int max, User user, int max_quantity, int day) {
         if (SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
@@ -74,8 +81,6 @@ public class StoreRoleImp implements IStoreRole {
         //if (!SystemManage_Facade.is_initialized()) return false;
         return false;
     }
-
-
 
     @Override
     public boolean assign_store_owner(String user_name, String store_name, String user_assign) {

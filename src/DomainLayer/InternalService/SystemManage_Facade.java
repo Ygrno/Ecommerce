@@ -73,8 +73,8 @@ public class SystemManage_Facade implements InternalService {
     }
 
 
-    public static HashMap<String,Integer> searchProductStores(String product_name){
-        HashMap<String,Integer> stores = new HashMap<>();
+    public static HashMap<String, Double> searchProductStores(String product_name){
+        HashMap<String, Double> stores = new HashMap<>();
         for(Store s : get_stores()){
             Product p=s.getProduct(product_name);
             if(p!=null)
@@ -170,7 +170,7 @@ public class SystemManage_Facade implements InternalService {
             for (PurchaseProcess pp : purchedlist) {
                 currentShoppingBag = pp.getShoppingBag();
                 for (String p : currentShoppingBag.getProducts_names())
-                    if (p.equals(product_name) && pp.getStore().getName().equals(store_name)&&pp.isfinished()) {
+                    if (p.equals(product_name) && pp.getStore().getName().equals(store_name)&&pp.isFinished()) {
                         isPurchased = true;
                         product_review = new ProductReview(subscriber,rank,review_data);
                         reviewedProduct.addReview(product_review);

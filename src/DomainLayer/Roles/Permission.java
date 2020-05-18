@@ -15,6 +15,7 @@ public enum Permission {
     EDIT_STORE_POLICY,
     ASSIGN_STORE_MANAGER,
     REMOVE_STORE_MANAGER,
+    ADD_DISCOUNT
 
 }
 

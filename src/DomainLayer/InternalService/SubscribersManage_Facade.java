@@ -4,6 +4,9 @@ import DomainLayer.Product;
 import DomainLayer.PurchaseProcess;
 import DomainLayer.Roles.*;
 import DomainLayer.Store.*;
+import DomainLayer.Store.DiscountPolicy;
+import DomainLayer.Store.Store;
+import DomainLayer.Store.VisibleDiscount;
 import DomainLayer.System;
 import DomainLayer.User.Subscriber;
 import DomainLayer.User.User;
@@ -162,6 +165,24 @@ public class SubscribersManage_Facade implements InternalService {
             return true;
         }
         return false;
+    }
+
+    public static boolean add_visible_discount_to_product(String user_name, String store_name, String product_name, String discount_name, double discount_percentage, int due_date) {
+        Subscriber requester = System.getSystem().get_subscriber(user_name);
+
+        StoreRole store_role = requester.get_role_at_store(store_name);
+        if(store_role == null ) return false;
+        Store store_to_add = store_role.store;
+        Product p = store_to_add.getProduct(product_name);
+        if(p == null) return false;
+
+        if (store_role instanceof StoreOwner || (store_role instanceof  StoreManger && ((StoreManger) store_role).havePermission("ADD_DISCOUNT"))) {
+            DiscountPolicy discountPolicy = store_to_add.getDiscountPolicy();
+            discountPolicy.add_discount(new VisibleDiscount(discount_name,discount_percentage,due_date,p));
+            return true;
+        }
+        return false;
+
     }
 
     public static boolean remove_manager_from_store(String user_name, String store_name, String user_assign) {
