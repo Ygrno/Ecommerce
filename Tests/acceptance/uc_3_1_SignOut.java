@@ -20,8 +20,6 @@ public class uc_3_1_SignOut {
     private static SubscribersManage_Facade SUB;
     private static Subscriber subscriber;
 
-
-
     @BeforeClass
     public static void before(){
         SUBImp= new SubscriberImp();

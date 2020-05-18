@@ -9,10 +9,11 @@ import java.net.ServerSocket;
 public class main {
     public static void main(String[] args){
         //start the database
-        Esimulation.Init();
 
-        if(!SystemManage_Facade.is_initialized())
+        if(!SystemManage_Facade.is_initialized()) {
             SystemManage_Facade.init_system();
+        }
+        Esimulation.Init();
 
         try {
             ServerSocket server = new ServerSocket(8112, 100);

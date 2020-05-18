@@ -26,6 +26,11 @@ public class SubscribersManage_Facade implements InternalService {
     }
 
     public static boolean signup(String username, String password){
+        if(System.getSystem().get_subscriber(username) != null ){
+            return false;
+        }
+        Subscriber sub = new Subscriber(username,password);
+        System.getSystem().getUser_list().add(sub);
         return true;
     }
 
