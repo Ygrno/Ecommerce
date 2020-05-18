@@ -11,10 +11,9 @@ public class VisibleDiscount extends DiscountComponent {
     private Product product;
 
 
-    public VisibleDiscount(String discount_name, double discount_percentage, double final_price, int end_of_use_date, Product product) {
+    public VisibleDiscount(String discount_name, double discount_percentage, int end_of_use_date, Product product) {
         this.discount_name = discount_name;
         this.discount_percentage = discount_percentage;
-        this.final_price = final_price;
         this.end_of_use_date = end_of_use_date;
         this.product = product;
     }

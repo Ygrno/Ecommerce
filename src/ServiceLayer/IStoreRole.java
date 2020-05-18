@@ -12,7 +12,7 @@ public interface IStoreRole {
     public boolean remove_store_product(String user_name, String store_name, String product_name);  //4.1 //5.1
 
 
-//    public boolean add_store_discount_policy(String user_name, String store_name,String product_name,String discount_name,String condition,double discount_percentage, int required_amount, int required_sum);    //4.2 //5.1
+      public boolean add_store_visible_discount (String user_name, String store_name,String product_name,String discount_name, double discount_percentage, int due_date);    //4.2 //5.1
 //    public boolean remove_store_discount_policy(String user_name, String store_name, String discount_name);    //4.2 //5.1
 //
 //    public boolean add_store_buying_policy(String user_name, String store_name);    //4.2 //5.1

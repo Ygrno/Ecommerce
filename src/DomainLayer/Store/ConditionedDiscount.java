@@ -69,13 +69,13 @@ public class ConditionedDiscount extends DiscountComponent {
                         count++;
                     }
                 }
-                if(count > required_amount)
+                if(count >= required_amount)
                     return true;
 
             }
             case IF_SUM_GREATER_THAN:
             {
-                if(purchaseProcess.getShoppingBag().get_SumPrice() > required_sum)
+                if(purchaseProcess.getShoppingBag().get_SumPrice() >= required_sum)
                     return true;
             }
             default:
