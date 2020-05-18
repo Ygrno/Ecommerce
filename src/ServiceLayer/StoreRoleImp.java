@@ -65,20 +65,25 @@ public class StoreRoleImp implements IStoreRole {
         return false;
     }
 
-    public boolean add_store_simple_policy(String user_name, String store_name, int type, int policy_id, String product_name, int min, int max, User user, int max_quantity, int day) {
+    public boolean add_store_simple_buyPolicy(String user_name, String store_name, int type, int policy_id, String product_name, int min, int max, int max_quantity, int day) {
+        my_log.logger.info("Add simple buy Policy");
         if (SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
-            return SubscribersManage_Facade.create_store_simple_policy(user_name, store_name, type, policy_id, product_name, min, max, user, max_quantity, day);
+            return SubscribersManage_Facade.create_store_simple_policy(user_name, store_name, type, policy_id, product_name, min, max, max_quantity, day);
         }
-        else return false;
+        return false;
     }
-    public boolean add_store_complex_policy(String user_name, String store_name, int type, int policy_id, String product_name, int min, int max, User user, int max_quantity, int day, int op) {
+    public boolean add_store_complex_buyPolicy(String user_name, String store_name, int type, int policy_id, String product_name, int min, int max, User user, int max_quantity, int day, int op) {
+        my_log.logger.info("Add comlex buy Policy");
         if (SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
             return SubscribersManage_Facade.create_store_complex_policy(user_name, store_name, type, policy_id, product_name, min, max, user, max_quantity,day, op);
         }
-        else return false;
+        return false;
     }
-    public boolean add_policy_to_comlexPolicy(String user_name, String store_name, int type, int complex_policy_id, int policy_id, String product_name, int min, int max, User user, int max_quantity, int day) {
-        //if (!SystemManage_Facade.is_initialized()) return false;
+    public boolean add_policy_to_complexPolicy(String user_name, String store_name, int type, int complex_policy_id, int policy_id, String product_name, int min, int max, User user, int max_quantity, int day) {
+        my_log.logger.info("Add buy policy to complex buy Policy");
+        if (SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
+            return SubscribersManage_Facade.add_buyPolicy_to_complex_policy(user_name, store_name, type, complex_policy_id,policy_id, product_name, min, max, user, max_quantity,day);
+        }
         return false;
     }
 

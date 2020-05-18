@@ -6,7 +6,7 @@ import DomainLayer.User.User;
 public class PolicyDetailes {
 
     //enum Logicaloperation { or, and, xor};
-    private int type;   //1=buy; 2=product; 3=system; 4=user
+    private int type;   //1=bag; 2=product; 3=system; 4=user
     private int policy_id;
     private String product_name; //product
     private int min;

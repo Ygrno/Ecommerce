@@ -8,13 +8,13 @@ import java.util.List;
 
 public class UserBuyPolicy extends SimpleBuyPolicy {
     private int policy_id;
-    private User user;
+    //private User user;
 
-    public UserBuyPolicy(int policy_id, User user)
+    public UserBuyPolicy(int policy_id)
     {
         super(policy_id);
         this.policy_id = policy_id;
-        this.user=user;
+      //  this.user=user;
     }
 
     @Override
