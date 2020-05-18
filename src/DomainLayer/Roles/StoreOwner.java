@@ -11,5 +11,4 @@ public class StoreOwner extends StoreRole {
         this.store = store;
     }
 
-
 }

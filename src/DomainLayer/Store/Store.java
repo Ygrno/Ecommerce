@@ -57,6 +57,13 @@ public class Store {
     }
 
     public void setIs_open(boolean is_open) {
+        //notification Ahmad
+        for(Role role : roles){
+            if(role instanceof StoreOwner)
+                    ((StoreOwner) role).Upadte("Store is open");
+        }
+        //notification
+
         this.is_open = is_open;
     }
 

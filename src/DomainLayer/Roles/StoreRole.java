@@ -10,7 +10,7 @@ public abstract class StoreRole extends Role {
     public Store store;
     private List<Role> assigned_users = new ArrayList<>();
     private Role assigned_by = null;
-
+    private List<String> Upadtes = new ArrayList<String>();
     public List<Role> getAssigned_users() {
         return assigned_users;
     }
@@ -27,6 +27,7 @@ public abstract class StoreRole extends Role {
         this.assigned_by = assigned_by;
     }
 
+    public void Upadte(String update){Upadtes.add(update);}
 
 
 
