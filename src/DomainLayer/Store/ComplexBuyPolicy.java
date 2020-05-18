@@ -1,16 +1,20 @@
 package DomainLayer.Store;
 
+import DomainLayer.InternalService.Logicaloperation;
 import DomainLayer.Product;
 import DomainLayer.ShoppingBag;
 import DomainLayer.User.User;
 
 import java.util.List;
-
-import DomainLayer.Store.Policy.Logicaloperation.*;
+import DomainLayer.*;
 
 public class ComplexBuyPolicy extends BuyPolicy{
     private List<SimpleBuyPolicy> policies_list;
     private Logicaloperation op;
+
+    public List<SimpleBuyPolicy> getPolicies_list() {
+        return policies_list;
+    }
 
     public ComplexBuyPolicy(int policy_id, Logicaloperation op) {
         super(policy_id);

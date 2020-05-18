@@ -3,9 +3,11 @@ package DomainLayer.InternalService;
 import DomainLayer.Product;
 import DomainLayer.PurchaseProcess;
 import DomainLayer.Roles.*;
-import DomainLayer.Store.Store;
+import DomainLayer.Store.*;
 import DomainLayer.System;
 import DomainLayer.User.Subscriber;
+import DomainLayer.User.User;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -214,4 +216,93 @@ public class SubscribersManage_Facade implements InternalService {
         return history.toString();
     }
 
+    public static boolean create_store_simple_policy(String user_name, String store_name, int type, int policy_id, String product_name, int min, int max, User user, int max_quantity, int day) {
+        BuyPolicy policy;
+        List<Store> store_list= System.getSystem().getStore_list();
+        Store store;
+        switch(type){   //1=bag; 2=product; 3=system; 4=user
+            case 1:
+                policy = new BagBuyPolicy(policy_id, product_name, max_quantity);
+                for (Store s: store_list) {
+                    if(s.getName().equals(store_name))
+                        s.getPurchasePolicies().add(policy);
+                }
+                break;
+            case 2:
+                policy = new ProductBuyPolicy(policy_id,product_name, min, max);
+                for (Store s: store_list) {
+                    if(s.getName().equals(store_name))
+                        s.getPurchasePolicies().add(policy);
+                }
+                break;
+            case 3:
+                policy = new SystemBuyPolicy(policy_id, day);
+                for (Store s: store_list) {
+                    if(s.getName().equals(store_name))
+                        s.getPurchasePolicies().add(policy);
+                }
+                break;
+            case 4:
+                policy = new UserBuyPolicy(policy_id, user);
+                for (Store s: store_list) {
+                    if(s.getName().equals(store_name))
+                        s.getPurchasePolicies().add(policy);
+                }
+                break;
+            default: return false;
+        }
+        return true;
+    }
+
+    public static boolean create_store_complex_policy(String user_name, String store_name, int type, int policy_id, String product_name, int min, int max, User user, int max_quantity,int day, int op) {
+        int_to_logic(op);
+        ComplexBuyPolicy complex_policy = new ComplexBuyPolicy(policy_id, int_to_logic(op));
+        List<Store> store_list= System.getSystem().getStore_list();
+        Store store;
+        SimpleBuyPolicy policy;
+        switch(type){   //1=bag; 2=product; 3=system; 4=user
+            case 1:
+                policy = new BagBuyPolicy(policy_id, product_name, max_quantity);
+
+                break;
+            case 2:
+                policy = new ProductBuyPolicy(policy_id,product_name, min, max);
+
+                break;
+            case 3:
+                policy = new SystemBuyPolicy(policy_id, day);
+
+                break;
+            case 4:
+                policy = new UserBuyPolicy(policy_id, user);
+
+                break;
+            default: policy=null;
+        }
+        complex_policy.getPolicies_list().add(policy);
+        for (Store s: store_list) {
+            if(s.getName().equals(store_name))
+                s.getPurchasePolicies().add(complex_policy);
+    }
+        return true;
+
+
+    }
+
+    private static Logicaloperation int_to_logic(int op) {
+        Logicaloperation logic_op;
+        switch(op){
+            case 1:
+                logic_op= Logicaloperation.and;
+                break;
+            case 2:
+                logic_op= Logicaloperation.or;
+                break;
+            case 3:
+                logic_op= Logicaloperation.xor;
+                break;
+        }
+        return Logicaloperation.and;
+
+    }
 }

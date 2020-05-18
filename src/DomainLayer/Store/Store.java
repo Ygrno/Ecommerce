@@ -20,19 +20,19 @@ public class Store {
     private List<PurchaseProcess> purchase_process_list = new ArrayList<>();
     private List<Role> roles = new ArrayList<>();
     //hila
-    enum Logicaloperation { or, and, xor};
-    private List<Policy> productPurchasePolicies;
+    private List<Policy> purchasePolicies;
 
     public Store(String name) {
         this.name = name;
     }
 
-    public Policy getPurchasePolicy() {
-        return purchasePolicy;
+    public List<Policy> getPurchasePolicies() {
+        return purchasePolicies;
     }
 
     public void setPurchasePolicy(Policy purchasePolicy) {
-        this.purchasePolicy = purchasePolicy;
+        purchasePolicies.add(purchasePolicy);
+        //this.purchasePolicy = purchasePolicy;
     }
 
     public DiscountPolicy getDiscountPolicy() {

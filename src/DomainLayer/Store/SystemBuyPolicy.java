@@ -5,9 +5,11 @@ import DomainLayer.User.User;
 
 public class SystemBuyPolicy extends SimpleBuyPolicy {
 
-    public SystemBuyPolicy (int policy_id)
+    private int day;
+    public SystemBuyPolicy (int policy_id, int day)
     {
         super(policy_id);
+        this.day = day;
     }
 
     @Override
