@@ -260,7 +260,7 @@ public class SystemManage_Facade implements InternalService {
         for (int i = 0; i<size; i++){
             products_arr[i][0]=productList.get(i).getName();
             products_arr[i][1]=String.valueOf(productList.get(i).getPrice());
-            products_arr[i][2]=String.valueOf(productList.get(i).getAmount());
+            products_arr[i][2]=String.valueOf(productList.get(i).getSupplied_amount());
             products_arr[i][3]=productList.get(i).getStore().getName();
         }
         return products_arr;

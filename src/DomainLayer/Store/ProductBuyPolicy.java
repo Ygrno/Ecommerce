@@ -27,9 +27,9 @@ public class ProductBuyPolicy extends SimpleBuyPolicy {
         List<Product> products = shopBag.getProducts();
         for (Product p : products) {
             if (p.getName().equals(this.product_name)) {
-                if (min != 0 && p.getAmount() < min)
+                if (min != 0 && p.getSupplied_amount() < min)
                     return false;
-                if (max != 0 && p.getAmount() > max)
+                if (max != 0 && p.getSupplied_amount() > max)
                     return false;
             }
         }
