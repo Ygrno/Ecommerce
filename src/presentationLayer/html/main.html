@@ -192,7 +192,7 @@
     function process_guest() {
         localStorage.setItem("current_username", "Guest");
         localStorage.setItem("guest", "true");
-        window.location.href = "home.html";
+        Main.getInstance().continueAsAGuest();
     }
 
     function tab_click(tab) {
@@ -223,6 +223,10 @@
                 }else{
                     alert("Can't sign up");
                 }
+            }else if(req === "continue_as_a_guest"){
+                localStorage.setItem("guest", "true");
+                localStorage.setItem("guest_id", response.id);
+                window.location.href = "home.html";
             }
         };
     }

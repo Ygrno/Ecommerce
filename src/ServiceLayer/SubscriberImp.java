@@ -3,6 +3,9 @@ import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
 
 import DomainLayer.PurchaseProcess;
+import netscape.javascript.JSObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 import java.util.HashMap;
@@ -43,7 +46,7 @@ public class SubscriberImp implements ISubscriber {
     }
 
     @Override
-    public List<String> watch_products_in_cart(String userName) {
+    public List<JSONObject> watch_products_in_cart(String userName) throws JSONException {
         my_log.logger.info("watch_products_in_cart");
         if(!SystemManage_Facade.is_initialized())
             return null;

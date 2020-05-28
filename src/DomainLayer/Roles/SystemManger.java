@@ -13,15 +13,15 @@ public class SystemManger extends Role {
     public SystemManger(Subscriber user){
         this.user = user;
     }
-    public List<PurchaseProcess> allPurchases() {
-        List<PurchaseProcess> all_purchases_processes = new ArrayList<>();
-        List<Store> all_stores = SystemManage_Facade.getAllStores();
-        for(Store s :all_stores){
-            for(PurchaseProcess pp : s.getPurchase_process_list())
-                if(pp.isFinished())
-                    all_purchases_processes.add(pp);
-        }
-        return all_purchases_processes;
-    }
+//    public List<PurchaseProcess> allPurchases() {
+//        List<PurchaseProcess> all_purchases_processes = new ArrayList<>();
+//        List<Store> all_stores = SystemManage_Facade.getAllStores();
+//        for(Store s :all_stores){
+//            for(PurchaseProcess pp : s.getPurchase_process_list())
+//                if(pp.isFinished())
+//                    all_purchases_processes.add(pp);
+//        }
+//        return all_purchases_processes;
+//    }
 
 }

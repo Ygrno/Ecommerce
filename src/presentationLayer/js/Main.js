@@ -2,6 +2,7 @@
 function logout() {
     localStorage.removeItem("current_username");
     localStorage.removeItem("guest");
+    localStorage.removeItem("guest_id");
     window.location.href = "main.html";
 
 }
@@ -69,6 +70,10 @@ class Main{
 
     login(username, password){
         this.client.send(JSON.stringify({req:"login", username:username, password:password}));
+    }
+
+    continueAsAGuest(username, password){
+        this.client.send(JSON.stringify({req:"continue_as_a_guest"}));
     }
 
     get_products(name){

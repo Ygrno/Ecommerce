@@ -9,6 +9,8 @@ import DomainLayer.User.ProductReview;
 import DomainLayer.User.Subscriber;
 import DomainLayer.User.User;
 import Encryption.EncryptImp;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,6 +52,7 @@ public class SystemManage_Facade implements InternalService {
 
     public static boolean buy(String[] dd){
         DealDetails dd1=new DealDetails(Integer.parseInt(dd[0]),dd[1],dd[2],dd[3],Integer.parseInt(dd[4]));
+
         return system.getProductFinanceService().tryToBuy(dd1);
     }
 
@@ -115,10 +118,10 @@ public class SystemManage_Facade implements InternalService {
     }
 
 
-    public static List<String> getProductsInCartForGuest(int id){
+    public static List<JSONObject> getProductsInCartForGuest(int id) throws JSONException {
         Guest g=getGuest(id);
         assert g != null;
-        return g.getShoppingCart().getProductsNames();
+        return g.getShoppingCart().getProducts();
     }
 
 
@@ -212,10 +215,10 @@ public class SystemManage_Facade implements InternalService {
         return true;
     }
 
-    public static List<String> getProductsInCartForSubscriber(String id){
+    public static List<JSONObject> getProductsInCartForSubscriber(String id) throws JSONException {
         Subscriber g=get_subscriber(id);
         assert g != null;
-        return g.getShoppingCart().getProductsNames();
+        return g.getShoppingCart().getProducts();
     }
 
     ////////////////////////////////////////////////////////
@@ -265,8 +268,15 @@ public class SystemManage_Facade implements InternalService {
         }
         return products_arr;
     }
-    public static List<Store> getAllStores(){
-        return system.getStore_list();
+    public static List<JSONObject> getAllStores() throws JSONException {
+        List<JSONObject> stores=new ArrayList<>();
+        for(Store s: system.getStore_list()){
+            JSONObject o=new JSONObject();
+            o.put("name",s.getName());
+            o.put("is_open", s.isIs_open());
+            stores.add(o);
+        }
+        return stores;
     }
 
 }

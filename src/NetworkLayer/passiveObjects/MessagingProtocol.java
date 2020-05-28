@@ -31,17 +31,21 @@ public class MessagingProtocol {
 
 
             if(req.equals("login")){
-                MessageProccess.Login(this, request);
+                GuestMessageProccess.Login(this, request);
             }else if(req.equals("get_stores")){
-                MessageProccess.getStores(this, request);
+                GuestMessageProccess.getStores(this, request);
             }else if(req.equals("get_products")){
-                MessageProccess.searchProductStores(this, request);
+                GuestMessageProccess.searchProductStores(this, request);
             }else if(req.equals("get_store")){
-                MessageProccess.getStore(this, request);
+                GuestMessageProccess.getStore(this, request);
             }else if(req.equals("get_product_of_store")){
-                MessageProccess.searchProductsOfStore(this, request);
+                GuestMessageProccess.searchProductsOfStore(this, request);
             }else if(req.equals("signup")){
-                MessageProccess.Signup(this, request);
+                GuestMessageProccess.Signup(this, request);
+            }else if(req.equals("continue_as_a_guest")) {
+                GuestMessageProccess.continueAsAguest(this, request);
+            }else if(req.equals("save_product_for_guest")){
+                GuestMessageProccess.saveProductForGuest(this,request);
             }
         }catch (Exception e){
             System.out.println("Can't process " + msg);

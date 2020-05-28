@@ -1,5 +1,8 @@
 package DomainLayer;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +18,18 @@ public class ShoppingBag {
 
     public List<String> getProducts_names() {
         return products_names;
+    }
+
+    public List<JSONObject> getAllProducts() throws JSONException {
+        List<JSONObject> products=new ArrayList<>();
+        for(Product p:this.products){
+            JSONObject o=new JSONObject();
+            o.put("name",p.getName());
+            o.put("price",p.getPrice());
+            o.put("store",p.getStore());
+            products.add(o);
+        }
+        return products;
     }
 
     public void setProducts_names(List<String> products_names) {
