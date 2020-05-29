@@ -5,6 +5,7 @@ import DomainLayer.PurchaseProcess;
 import DomainLayer.Roles.Role;
 import DomainLayer.Roles.StoreManger;
 import DomainLayer.Roles.StoreOwner;
+import DomainLayer.Roles.StoreRole;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ public class Store {
     private boolean is_open = false;
     private List<Product> product_list = new ArrayList<>();
     private List<PurchaseProcess> purchase_process_list = new ArrayList<>();
-    private List<Role> roles = new ArrayList<>();
+    private List<StoreRole> roles = new ArrayList<>();
 
     //hila
     private List<Policy> purchasePolicies = new ArrayList<>();
@@ -83,14 +84,14 @@ public class Store {
         this.purchase_process_list = purchase_process_list;
     }
 
-    public List<Role> getRoles() {
+    public List<StoreRole> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(List<StoreRole> roles) {
         this.roles = roles;
     }
-    public void removeRole(List<Role> roles) {
+    public void removeRole(List<StoreRole> roles) {
         this.roles = roles;
     }
     public Product getProduct(String product_name){

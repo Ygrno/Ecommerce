@@ -6,6 +6,7 @@ import DomainLayer.Product;
 import DomainLayer.PurchaseProcess;
 import DomainLayer.Roles.Role;
 import DomainLayer.Roles.StoreOwner;
+import DomainLayer.Roles.StoreRole;
 import DomainLayer.ShoppingBag;
 import DomainLayer.Store.Store;
 import DomainLayer.System;
@@ -145,7 +146,7 @@ public class SubscriberImpTest {
         assertTrue(SUBImp.open_store("subscriber","test"));//test if the store func works as expected
         assertTrue(SYS.get_store("test")!=null);//test if the store is actually added to the database
         store=SYS.get_store("test");
-        List<Role> role = (List<Role>) store.getRoles();
+        List<StoreRole> role = store.getRoles();
         StoreOwner storeOwner = new StoreOwner(subscriber, store);
         assertNotNull(role.get(0));//test if the role is actually added to the database
         assertTrue(role.get(0) instanceof StoreOwner);//test if the role is type of storeowner

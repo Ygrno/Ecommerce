@@ -36,7 +36,7 @@ public class SubscribersManage_Facade implements InternalService {
         return System.getSystem().SubImp().open_store(username,name);
     }
 
-    public static List<Role> GetRoles(String store) {
+    public static List<StoreRole> GetRoles(String store) {
         return System.getSystem().get_store(store).getRoles();
     }
     public static StoreOwner StoreOwner(String username,String store) {
@@ -190,13 +190,22 @@ public class SubscribersManage_Facade implements InternalService {
 
         if (store_role instanceof StoreOwner || (store_role instanceof  StoreManger && ((StoreManger) store_role).havePermission("ASSIGN_MANAGER"))) {
             Subscriber manager_to_add = System.getSystem().get_subscriber(user_assign);
-            if(manager_to_add == null) return false;
+            if(manager_to_add == null || requester.equals(manager_to_add)) return false;
+            if (have_role_in_store(store_role, manager_to_add)) return false;
             StoreManger storeManger = new StoreManger(manager_to_add,store_role.store);
             manager_to_add.getRole_list().add(storeManger);
             storeManger.store.getRoles().add(storeManger);
             store_role.getAssigned_users().add(storeManger);
             storeManger.setAssigned_by(store_role);
             return true;
+        }
+        return false;
+    }
+
+    private static boolean have_role_in_store(StoreRole store_role, Subscriber manager_to_add) {
+        Store store = store_role.store;
+        for(StoreRole storeRole: store.getRoles()){
+            if(storeRole.user.getName().equals(manager_to_add.getName())) return true;
         }
         return false;
     }
