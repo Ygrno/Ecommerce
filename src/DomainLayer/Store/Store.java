@@ -26,6 +26,7 @@ public class Store {
 
     public Store(String name) {
         this.name = name;
+        discountPolicy = new DiscountPolicy();
     }
 
     public List<Policy> getPurchasePolicies() {

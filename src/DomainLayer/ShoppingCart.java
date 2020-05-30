@@ -1,5 +1,9 @@
 package DomainLayer;
 
+import DomainLayer.Store.DiscountComponent;
+import DomainLayer.Store.DiscountPolicy;
+import DomainLayer.Store.Store;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,12 +32,38 @@ public class ShoppingCart {
     }
 
     public double getTotalPrice(){
-        double price=0;
+
+        double cartTotalPrice=0;
+
+        //First call will calculate all product based discounts.
+        CalculateDiscounts();
+
+        //Calculate discounted price of each bag (without sum conditions).
         for(ShoppingBag sb : getShopping_bag_list()){
-            for(Product prod : sb.getProducts()){
-                price+=prod.getPrice();
+            sb.calculate_discounted_bag_price();
+        }
+
+        //Second call now Contains discounted bags price so , we can now compute sum discounts we couldn't before.
+        CalculateDiscounts();
+
+
+        for(ShoppingBag sb : getShopping_bag_list()){
+            cartTotalPrice += sb.getDiscounted_bag_price();
+        }
+
+        return cartTotalPrice;
+    }
+
+    private void CalculateDiscounts() {
+        for(ShoppingBag sb: getShopping_bag_list()){
+            if(!sb.getProducts().isEmpty()) {
+                Store store = sb.getProducts().get(0).getStore();
+                DiscountPolicy discountPolicy = store.getDiscountPolicy();
+                List<DiscountComponent> discountComponentList = discountPolicy.getDiscounts();
+                for (DiscountComponent discount : discountComponentList) {
+                    discount.calculate_discount(sb);
+                }
             }
         }
-        return price;
     }
 }

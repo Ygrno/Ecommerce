@@ -47,25 +47,25 @@ public class DiscountsTest {
         productList.add(p1);
         productList.add(p2);
 
-        purchaseProcess = new PurchaseProcess(new Subscriber("moti","loohim"),s,shoppingBag);
+        //purchaseProcess = new PurchaseProcess(new Subscriber("moti","loohim"),s,shoppingBag);
 
     }
 
     @Test
     public void check_validate(){
-        assertTrue(a.validate(purchaseProcess));
-        assertTrue(b.validate(purchaseProcess));
-        assertFalse(c.validate(purchaseProcess));
-        assertTrue(d.validate(purchaseProcess));
+        assertTrue(a.validate(shoppingBag));
+        assertTrue(b.validate(shoppingBag));
+        assertFalse(c.validate(shoppingBag));
+        assertTrue(d.validate(shoppingBag));
 
     }
 
     @Test
     public void check_calculate(){
-        a.calculate_discount(purchaseProcess);
+        a.calculate_discount(shoppingBag);
         assertEquals(5,((VisibleDiscount)a).getFinal_price(),0.001);
 
-        d.calculate_discount(purchaseProcess);
+        d.calculate_discount(shoppingBag);
         assertNotEquals(5, c.getFinal_price());
         assertEquals(7.5,b.getFinal_price(),0.001);
 

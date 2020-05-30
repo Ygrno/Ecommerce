@@ -128,11 +128,11 @@ public class SubscriberImpTest {
 
     @Test
     public void buy_products_in_cart() {
-        assertTrue(SUBImp.buy_products_in_cart("subscriber","mahmoud","1234123412341234","11/26",999,0));
-        assertFalse(SUBImp.buy_products_in_cart("subscriber1","mahmoud","1234123412341234","11/26",999,0));
-        assertFalse(SUBImp.buy_products_in_cart("subscriber","mahmoud","1234123412341234","11/26",999,2));
-        assertFalse(SUBImp.buy_products_in_cart("subscriber","mahmoud","12341234123412341","11/26",999,0));
-        assertFalse(SUBImp.buy_products_in_cart("subscriber","mahmoud","1234123412341234","11/261",999,0));
+        assertTrue(SUBImp.buy_products_in_cart("subscriber","mahmoud","1234123412341234","11/26",999));
+        assertFalse(SUBImp.buy_products_in_cart("subscriber1","mahmoud","1234123412341234","11/26",999));
+        assertFalse(SUBImp.buy_products_in_cart("subscriber","mahmoud","1234123412341234","11/26",999));
+        assertFalse(SUBImp.buy_products_in_cart("subscriber","mahmoud","12341234123412341","11/26",999));
+        assertFalse(SUBImp.buy_products_in_cart("subscriber","mahmoud","1234123412341234","11/261",999));
     }
 
     @Test
