@@ -2,24 +2,20 @@ package DomainLayer.Store;
 
 import DomainLayer.Product;
 import DomainLayer.PurchaseProcess;
+import DomainLayer.ShoppingBag;
 
 public class VisibleDiscount extends DiscountComponent {
 
     private String discount_name;
-    private double discount_percentage, final_price = -1;
+    private double discount_percentage;
     private int end_of_use_date; // { Format 12062020 = 12/06/2020 }
     private Product product;
-
 
     public VisibleDiscount(String discount_name, double discount_percentage, int end_of_use_date, Product product) {
         this.discount_name = discount_name;
         this.discount_percentage = discount_percentage;
         this.end_of_use_date = end_of_use_date;
         this.product = product;
-    }
-
-    public double getFinal_price() {
-        return final_price;
     }
 
     public double getDiscount_percentage() {
@@ -43,12 +39,20 @@ public class VisibleDiscount extends DiscountComponent {
     }
 
     @Override
-    public boolean validate(PurchaseProcess purchaseProcess) {
+    public boolean validate(ShoppingBag shoppingBag) {
         return true;
     }
 
     @Override
-    public void calculate_discount(PurchaseProcess purchaseProcess) {
-        this.final_price = product.getPrice() - (discount_percentage * product.getPrice());
+    public void calculate_discount(ShoppingBag shoppingBag) {
+
+        if(!isCalculated()) {
+            final_price = product.getPrice() - (discount_percentage * product.getPrice());
+            Product discountedProduct = new Product(product.getName(),final_price , product.getSupplied_amount(), product.getStore());
+            shoppingBag.getProducts().remove(product);
+            shoppingBag.getProducts().add(discountedProduct);
+            setCalculated(true);
+        }
+
     }
 }

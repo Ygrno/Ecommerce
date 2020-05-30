@@ -52,13 +52,13 @@ public class SubscriberImp implements ISubscriber {
     }
 
     @Override
-    public boolean buy_products_in_cart(String id, String buyerName, String creditCardNumber, String expireDate, int cvv, double discount) {
+    public boolean buy_products_in_cart(String id, String buyerName, String creditCardNumber, String expireDate, int cvv) {
         my_log.logger.info("buy_products_in_cart");
         if(!SystemManage_Facade.is_initialized())
             return false;
-        if(discount > 1 || discount < 0){
-            return false;
-        }
+//        if(discount > 1 || discount < 0){
+//            return false;
+//        }
         if(expireDate.length() != 5){
             return false;
         }
@@ -66,8 +66,8 @@ public class SubscriberImp implements ISubscriber {
             return false;
         if(cvv>=1000)
             return false;
-        double price=SystemManage_Facade.getPriceOfCart(id,discount);
-        String[] dealDetails={String.valueOf(price),buyerName,creditCardNumber,expireDate, String.valueOf(cvv)};
+        double price=SystemManage_Facade.getPriceOfCart(id);
+        String[] dealDetails = {id,String.valueOf(price),buyerName,creditCardNumber,expireDate, String.valueOf(cvv)};
         return SystemManage_Facade.buy(dealDetails);
     }
 
