@@ -41,6 +41,17 @@ public class SubscriberMessageProccess {
     }
 
     public static void buyCart(MessagingProtocol protocol, JSONObject request) throws Exception{
-        
+        String username = request.getString("username");
+        String buyerName=request.getString("buyer_name");
+        String creditCardNumber=request.getString("creditCardNumber");
+        String expireDate=request.getString("expireDate");
+        int cvv=request.getInt("cvv");
+        double discount =request.getDouble("discount");
+
+        boolean b = subscriber.buy_products_in_cart(username,buyerName,creditCardNumber,expireDate,cvv,discount);
+        JSONObject o=new JSONObject();
+        o.put("req", request.get("req"));
+        o.put("success", b);
+        protocol.send(o);
     }
 }
