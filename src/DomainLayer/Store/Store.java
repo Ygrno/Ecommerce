@@ -24,6 +24,7 @@ public class Store {
     private List<Policy> purchasePolicies = new ArrayList<>();
 
     public Store(String name) {
+        //TODO: require policy
         this.name = name;
     }
 

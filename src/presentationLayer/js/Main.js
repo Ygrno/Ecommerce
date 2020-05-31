@@ -20,6 +20,86 @@ function searchProduct(ele){
 
 }
 
+function ViewCart(products) {
+    /**display cart popup**/
+
+    let productList = products["productsInCart"];
+
+    let div = document.createElement("div");
+
+    let prodcutHTMLList = new HTMLList(div);
+
+    const cellBuilder = (product)=>{
+        //DESIGN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        let d = document.createElement("div");
+        d.innerHTML = "<b>"+JSON.stringify(product)+"</b>";
+        return d;
+    };
+
+    productList.forEach((p)=> prodcutHTMLList.addElement(p));
+    prodcutHTMLList.render(cellBuilder);
+
+    popUp(div);
+}
+
+function popUp(content_div) {
+    let modal_pop_up = document.getElementById("modal_pop_up");
+    modal_pop_up.style.display = "block";
+    let modal_content = document.getElementById("modal_content");
+    if(modal_content === null) return;
+    modal_content.appendChild(content_div);
+
+}
+
+function closePOP() {
+    let modal_pop_up = document.getElementById("modal_pop_up");
+    if (modal_pop_up === null) return;
+    let modal_content = document.getElementById("modal_content");
+    modal_content.innerHTML = '';
+    modal_pop_up.style.display = "none";
+}
+
+function includeHeader() {
+    var z, i, elmnt, file, xhttp;
+    /* Loop through a collection of all HTML elements: */
+    z = document.getElementsByTagName("*");
+    for (i = 0; i < z.length; i++) {
+        elmnt = z[i];
+        /*search for elements with a certain atrribute:*/
+        file = elmnt.getAttribute("w3-include-html");
+        if (file) {
+            /* Make an HTTP request using the attribute value as the file name: */
+            xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4) {
+                    if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+                    if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+                    /* Remove the attribute, and call this function once more: */
+                    elmnt.removeAttribute("w3-include-html");
+                    includeHeader();
+                }
+            }
+            xhttp.open("GET", file, false);
+            xhttp.send();
+            setLoggedUserLabel();
+        }
+    }
+}
+
+function setLoggedUserLabel() {
+    let current_username = localStorage.getItem("current_username");
+    document.getElementById("logged_as").innerHTML = current_username;
+}
+
+function isGuest(){
+    let b=localStorage.getItem("guest");
+    return b==="true";
+}
+
+
+function viewCartProduct(product){
+
+}
 class Main{
 
     static getInstance(){
@@ -97,6 +177,44 @@ class Main{
     Signup(username, password){
         this.client.send(JSON.stringify({req:"signup", username:username, password:password}));
     }
+
+    saveProduct(storeName,productName){
+        const guestSaveProduct=()=>{
+            let id=localStorage.getItem("guest_id");
+            this.client.send(JSON.stringify({req:"save_product_for_guest",id:id,store:storeName,product:productName}));
+        };
+
+        const SubscriberSaveProduct=()=>{
+            let username = localStorage.getItem("current_username");
+            this.client.send(JSON.stringify({req:"save_product_for_subscriber",username:username,store:storeName,product:productName}));
+        };
+
+        if(isGuest()){
+            guestSaveProduct();
+        }else{
+            SubscriberSaveProduct();
+        }
+
+    }
+
+    viewCart(){
+        const viewGuestCart = ()=>{
+            let id = localStorage.getItem("guest_id");
+            this.client.send(JSON.stringify({req:"view_cart_guest",id:id}));
+        };
+
+        const viewSubscriberCart = ()=>{
+            let username = localStorage.getItem("current_username");
+            this.client.send(JSON.stringify({req:"view_cart_subscriber",username:username}));
+        };
+
+        if(isGuest()){
+            viewGuestCart();
+        }else {
+            viewSubscriberCart();
+        }
+    }
+
 }
 
 let instance = new Main();

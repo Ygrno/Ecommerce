@@ -26,7 +26,7 @@ public class ShoppingBag {
             JSONObject o=new JSONObject();
             o.put("name",p.getName());
             o.put("price",p.getPrice());
-            o.put("store",p.getStore());
+            o.put("store",p.getStore().getName());
             products.add(o);
         }
         return products;

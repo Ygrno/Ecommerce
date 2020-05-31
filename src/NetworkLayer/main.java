@@ -16,7 +16,7 @@ public class main {
 
         Esimulation.Init();
         try {
-            ServerSocket server = new ServerSocket(8112, 100);
+            ServerSocket server = new ServerSocket(8112, 200);
 
             while (true){
                 connectionHandler client = new connectionHandler(server.accept());
@@ -25,7 +25,7 @@ public class main {
                         System.out.println("Serving client");
                         client.serve();
                     }catch (Exception e){
-                        e.printStackTrace();
+
                     }
                 }).start();
             }

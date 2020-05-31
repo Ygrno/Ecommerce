@@ -12,6 +12,9 @@ public class ExternalFinanceServiceStub implements ExternalFinanceService {
 
     @Override
     public boolean purchase(String accName, String ccn, String expireDate, int cvv) {
+        /**
+         * logic
+         * **/
         return true;
     }
 

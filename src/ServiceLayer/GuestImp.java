@@ -142,6 +142,9 @@ public class GuestImp implements IGuest {
             return false;
         if(cvv>=1000)
             return false;
+
+        //check product availability
+
         double price=SystemManage_Facade.getPriceOfCart(String.valueOf(id),discount);
         String[] dealDetails={String.valueOf(price),buyerName,creditCardNumber,expireDate, String.valueOf(cvv)};
         return SystemManage_Facade.buy(dealDetails);

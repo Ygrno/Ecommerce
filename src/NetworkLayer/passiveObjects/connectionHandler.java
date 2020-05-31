@@ -1,8 +1,11 @@
 package NetworkLayer.passiveObjects;
 
 import java.io.*;
+import java.lang.reflect.Array;
+import java.math.BigInteger;
 import java.net.Socket;
 import java.security.MessageDigest;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -55,15 +58,28 @@ public class connectionHandler {
         send(msg.getBytes());
     }
 
+    private byte[] intToByte(int n){
+        BigInteger bi = BigInteger.valueOf(n);
+        return bi.toByteArray();
+    }
+
     private void send(byte[] msg){
+
         try {
-            byte[] send = new byte[2 + msg.length];
-            send[0] = (byte)0x81; // last frame, text
-            send[1] = (byte)msg.length; // not masked
-            for(int i=0;i<msg.length;i++){
-                send[i+2] = msg[i];
+            ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+            byteStream.write(0x81);
+
+            byte[] length_bytes = intToByte(msg.length);
+            if(length_bytes.length > 1){
+                byteStream.write(126);
             }
-            out.write(send, 0, send.length); // nwStream = client.GetStream(), client is a TcpClient
+
+            byteStream.write(length_bytes);
+            byteStream.write(msg);
+
+            byte[] res = byteStream.toByteArray();
+
+            out.write(res, 0, res.length);
             out.flush();
         }catch (Exception e){
             e.printStackTrace();

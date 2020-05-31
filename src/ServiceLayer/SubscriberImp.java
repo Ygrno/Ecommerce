@@ -3,7 +3,6 @@ import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
 
 import DomainLayer.PurchaseProcess;
-import netscape.javascript.JSObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 

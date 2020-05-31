@@ -238,7 +238,6 @@
         let current_username = localStorage.getItem("current_username");
         let isGuest = localStorage.getItem("guest");
 
-
         if(current_username === null){
 
             if(isGuest === null){
@@ -252,7 +251,6 @@
             //Already logged in
             window.location.href = "home.html";
         }
-
     }
 
     run();

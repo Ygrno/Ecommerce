@@ -1,7 +1,6 @@
 package ServiceLayer;
 
 import DomainLayer.PurchaseProcess;
-import netscape.javascript.JSObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 

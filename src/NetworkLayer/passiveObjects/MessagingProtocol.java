@@ -1,4 +1,5 @@
 package NetworkLayer.passiveObjects;
+import DomainLayer.User.Guest;
 import org.json.JSONObject;
 
 
@@ -44,8 +45,18 @@ public class MessagingProtocol {
                 GuestMessageProccess.Signup(this, request);
             }else if(req.equals("continue_as_a_guest")) {
                 GuestMessageProccess.continueAsAguest(this, request);
-            }else if(req.equals("save_product_for_guest")){
-                GuestMessageProccess.saveProductForGuest(this,request);
+            }else if(req.indexOf("save_product_for") >= 0){
+                if(req.equals("save_product_for_guest")) {
+                    GuestMessageProccess.saveProductForGuest(this, request);
+                }else if(req.equals("save_product_for_subscriber")){
+                    SubscriberMessageProccess.saveProductForSubscriber(this, request);
+                }
+            }else if(req.indexOf("view_cart") >= 0){
+                if(req.equals("view_cart_guest")) {
+                    GuestMessageProccess.viewCart(this, request);
+                }else if(req.equals("view_cart_subscriber")){
+                    SubscriberMessageProccess.viewCart(this, request);
+                }
             }
         }catch (Exception e){
             System.out.println("Can't process " + msg);

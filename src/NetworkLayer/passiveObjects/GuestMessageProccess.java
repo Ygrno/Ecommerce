@@ -2,11 +2,14 @@ package NetworkLayer.passiveObjects;
 
 import ServiceLayer.GuestImp;
 import ServiceLayer.IGuest;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class GuestMessageProccess {
 
@@ -106,7 +109,7 @@ public class GuestMessageProccess {
     public static void saveProductForGuest(MessagingProtocol protocol, JSONObject request) throws Exception{
         String storeName = request.getString("store");
         String productName = request.getString("product");
-        int id = request.getInt("id");
+        int id = Integer.parseInt(request.getString("id"));
         boolean b=guestImp.save_products(id,productName,storeName);
         JSONObject o=new JSONObject();
         o.put("req", request.get("req"));
@@ -115,13 +118,25 @@ public class GuestMessageProccess {
     }
 
 
+
     public  static void viewCart(MessagingProtocol protocol, JSONObject request) throws Exception{
+
         int id = request.getInt("id");
         List<JSONObject> products=guestImp.watch_products_in_cart(id);
-        for(JSONObject o:products){
-            o.put("req", request.get("req"));
-            protocol.send(o);
+
+        if(products == null) return;
+
+
+        JSONArray jarr = new JSONArray();
+        for(JSONObject o : products){
+            jarr.put(o);
         }
+
+        JSONObject l = new JSONObject();
+        l.put("productsInCart", jarr);
+        l.put("req", request.get("req"));
+
+        protocol.send(l);
     }
 
 
@@ -133,7 +148,7 @@ public class GuestMessageProccess {
         int cvv=request.getInt("cvv");
         double discount =request.getDouble("discount");
 
-        boolean b=guestImp.buy_products_in_cart(id,buyerName,creditCardNumber,expireDate,cvv,discount);
+        boolean b = guestImp.buy_products_in_cart(id,buyerName,creditCardNumber,expireDate,cvv,discount);
         JSONObject o=new JSONObject();
         o.put("req", request.get("req"));
         o.put("success", b);

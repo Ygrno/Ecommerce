@@ -21,6 +21,7 @@ public class SubscribersManage_Facade implements InternalService {
         if(System.getSystem().get_subscriber(username)== null)
             return false;
         subscriber_login_state(username, true);
+        //check password
         return true;
     }
 
