@@ -1,5 +1,6 @@
 package DomainLayer.Store;
 
+import DomainLayer.PurchaseProcess;
 import DomainLayer.ShoppingBag;
 import DomainLayer.User.User;
 
@@ -13,7 +14,7 @@ public class SystemBuyPolicy extends SimpleBuyPolicy {
     }
 
     @Override
-    public boolean validate (ShoppingBag shopBag, User user) {
+    public boolean validate (PurchaseProcess purchaseProcess) {
         return true;
     }
 

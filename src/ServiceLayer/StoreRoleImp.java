@@ -65,24 +65,24 @@ public class StoreRoleImp implements IStoreRole {
         return false;
     }
 
-    public boolean add_store_simple_buyPolicy(String user_name, String store_name, int type, int policy_id, String product_name, int min, int max, int max_quantity, int day) {
+    public boolean add_store_simple_buyPolicy(String user_name, String store_name, int policy_type, int policy_id, String product_name, int minProducts, int maxProducts,int minCost,int maxCost, int min_quantity, int max_quantity, int day) {
         my_log.logger.info("Add simple buy Policy");
         if (SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
-            return SubscribersManage_Facade.create_store_simple_policy(user_name, store_name, type, policy_id, product_name, min, max, max_quantity, day);
+            return SubscribersManage_Facade.create_store_simple_policy(user_name, store_name, policy_type, policy_id, product_name, minProducts, maxProducts,minCost,maxCost, min_quantity, max_quantity, day);
         }
         return false;
     }
-    public boolean add_store_complex_buyPolicy(String user_name, String store_name, int type, int policy_id, String product_name, int min, int max, User user, int max_quantity, int day, int op) {
-        my_log.logger.info("Add comlex buy Policy");
+    public boolean add_store_complex_buyPolicy(String user_name, String store_name, int policy_type, int policy_id, String product_name, int minProducts, int maxProducts,int minCost,int maxCost, int min_quantity, int max_quantity,int day, int op) {
+        my_log.logger.info("Add complex buy Policy");
         if (SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
-            return SubscribersManage_Facade.create_store_complex_policy(user_name, store_name, type, policy_id, product_name, min, max, user, max_quantity,day, op);
+            return SubscribersManage_Facade.create_store_complex_policy(user_name, store_name, policy_type, policy_id, product_name, minProducts, maxProducts,minCost,maxCost, min_quantity, max_quantity,day, op);
         }
         return false;
     }
-    public boolean add_policy_to_complexPolicy(String user_name, String store_name, int type, int complex_policy_id, int policy_id, String product_name, int min, int max, User user, int max_quantity, int day) {
+    public boolean add_simple_policy_to_complexPolicy(String user_name, String store_name, int policy_type, int policy_id, String product_name, int minProducts, int maxProducts,int minCost,int maxCost, int min_quantity, int max_quantity, int day) {
         my_log.logger.info("Add buy policy to complex buy Policy");
         if (SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
-            return SubscribersManage_Facade.add_buyPolicy_to_complex_policy(user_name, store_name, type, complex_policy_id,policy_id, product_name, min, max, user, max_quantity,day);
+            return SubscribersManage_Facade.add_simple_buyPolicy_to_complex_policy(user_name, store_name, policy_type, policy_id, product_name, minProducts, maxProducts,minCost,maxCost, min_quantity, max_quantity, day);
         }
         return false;
     }

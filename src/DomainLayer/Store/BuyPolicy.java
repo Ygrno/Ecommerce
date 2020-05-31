@@ -1,6 +1,7 @@
 package DomainLayer.Store;
 
 import DomainLayer.Product;
+import DomainLayer.PurchaseProcess;
 import DomainLayer.ShoppingBag;
 import DomainLayer.User.User;
 
@@ -17,7 +18,7 @@ public class BuyPolicy implements Policy {
     }
 
     @Override
-    public boolean validate(ShoppingBag shopBag, User user) {
+    public boolean validate(PurchaseProcess purchaseProcess) {
         return true;
     }
 
