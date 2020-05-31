@@ -78,7 +78,7 @@ public class SubscribersManage_FacadeTest {
         }
         SubscribersManage_Facade.add_product_to_store("test_sub", "test_store", "test_product", 2,3);
 
-        SubscribersManage_Facade.create_store_simple_policy("test_sub", "test_store", 2, 1, "test_product", 1, 5,  -1, -1);
+        SubscribersManage_Facade.create_store_simple_policy("test_sub", "test_store", 2, 1, "test_product", 1, 5,  -1, -1,0,100,-1);
         List<Policy> policies = s.getPurchasePolicies();
         assert policies != null;
         assert policies.size()==1;

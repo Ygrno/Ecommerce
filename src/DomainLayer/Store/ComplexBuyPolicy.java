@@ -9,10 +9,10 @@ import java.util.List;
 import DomainLayer.*;
 
 public class ComplexBuyPolicy extends BuyPolicy{
-    private List<SimpleBuyPolicy> policies_list;
+    private List<BuyPolicy> policies_list;
     private Logicaloperation op;
 
-    public List<SimpleBuyPolicy> getPolicies_list() {
+    public List<BuyPolicy> getPolicies_list() {
         return policies_list;
     }
 
@@ -22,13 +22,13 @@ public class ComplexBuyPolicy extends BuyPolicy{
     }
 
     @Override
-    public boolean validate(ShoppingBag shopBag, User user) {
+    public boolean validate(PurchaseProcess purchaseProcess) {
         switch (this.op){
             case and:
-                validate_and(shopBag, user);
+                validate_and(purchaseProcess);
                 break;
             case or:
-                validate_or(shopBag, user);
+                validate_or(purchaseProcess);
                 break;
             case xor://todo hila
                 return true;
@@ -36,18 +36,18 @@ public class ComplexBuyPolicy extends BuyPolicy{
         return false;
     }
 
-    private boolean validate_and(ShoppingBag shopBag, User user) {
-        for(SimpleBuyPolicy p : policies_list){
-            if(p.validate(shopBag, user) == false){
+    private boolean validate_and(PurchaseProcess purchaseProcess) {
+        for(BuyPolicy p : policies_list){
+            if(p.validate(purchaseProcess) == false){
                 return false;
             }
         }
         return true;
     }
 
-    private boolean validate_or(ShoppingBag shopBag, User user) {
-        for(SimpleBuyPolicy p : policies_list){
-            if(p.validate(shopBag, user)){
+    private boolean validate_or(PurchaseProcess purchaseProcess) {
+        for(BuyPolicy p : policies_list){
+            if(p.validate(purchaseProcess)){
                 return true;
             }
         }
