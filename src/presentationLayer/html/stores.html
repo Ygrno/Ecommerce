@@ -77,18 +77,6 @@
             margin-left: 2%;
         }
 
-        .addProductToCart{
-            background-color: #4CAF50; /* Green */
-            border: none;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 50px;
-            cursor: pointer;
-            width:50px;
-            float: right;
-        }
 
     </style>
 </head>
@@ -131,7 +119,10 @@
         let br = document.createElement("br");
 
         let addProductToCart = document.createElement("div");
-        addProductToCart.className = "addProductToCart";
+        addProductToCart.className = "Green_beautiful_div";
+        addProductToCart.style.width = '50px';
+        addProductToCart.style.fontSize = '50px';
+
         addProductToCart.innerHTML = "<b>+</b>";
         addProductToCart.onclick = function (){
             Main.getInstance().saveProduct(Main.getInstance().getUrlVars()["s"],product_name)

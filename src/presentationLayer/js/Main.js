@@ -9,7 +9,6 @@ function logout() {
 
 function home(){
     window.location.href = "home.html";
-
 }
 
 function searchProduct(ele){
@@ -24,8 +23,9 @@ function ViewCart(products) {
     /**display cart popup**/
 
     let productList = products["productsInCart"];
-
+    if (productList.length == 0) return;
     let div = document.createElement("div");
+    div.style.overflow = 'auto';
 
     let prodcutHTMLList = new HTMLList(div);
 
@@ -39,6 +39,48 @@ function ViewCart(products) {
     productList.forEach((p)=> prodcutHTMLList.addElement(p));
     prodcutHTMLList.render(cellBuilder);
 
+    let BuyButton = document.createElement("div");
+    BuyButton.className = "Green_beautiful_div";
+    BuyButton.innerHTML = '<b>Buy</b>';
+    BuyButton.style.fontSize = '40px';
+    BuyButton.style.width = '100px';
+    BuyButton.style.marginTop = '3%';
+    BuyButton.onclick = function(){
+        buyThings(products);
+    };
+
+    div.appendChild(BuyButton);
+
+
+    popUp(div);
+}
+
+function buyThings(products){
+    clearPopUp();
+
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+    let productList = products["productsInCart"];
+
+    let cost = productList.reduce((acc,curr)=>acc + curr["price"],0);
+
+    let priceDiv = document.createElement("div");
+    priceDiv.innerHTML = "Price : "+cost;
+    priceDiv.className = 'total_price_div';
+    div.appendChild(priceDiv);
+
+    let name = document.createElement("input");
+    let credit_card_number = document.createElement("input");
+    let expire_date = document.createElement("input");
+    let cvv = document.createElement("input");
+
+
+    [name, credit_card_number, expire_date, cvv].forEach((d)=>{
+       d.className = 'text_input';
+       div.appendChild(d);
+       div.style.cssFloat = 'left';
+    });
+
     popUp(div);
 }
 
@@ -49,6 +91,12 @@ function popUp(content_div) {
     if(modal_content === null) return;
     modal_content.appendChild(content_div);
 
+}
+
+function clearPopUp(){
+    let modal_content = document.getElementById("modal_content");
+    if(modal_content === null) return;
+    modal_content.innerHTML = '';
 }
 
 function closePOP() {

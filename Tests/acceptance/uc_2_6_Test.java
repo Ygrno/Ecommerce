@@ -47,12 +47,15 @@ public class uc_2_6_Test {
         gi.save_products(1,"twix","store3");
         gi.save_products(1,"chips","store2");
 
+        try {
+            assert gi.watch_products_in_cart(1).contains("bmba");
+            assert gi.watch_products_in_cart(1).contains("twix");
+            assert gi.watch_products_in_cart(1).contains("chips");
+        }catch (Exception e){
 
-        assert gi.watch_products_in_cart(1).contains("bmba");
-        assert gi.watch_products_in_cart(1).contains("twix");
-        assert gi.watch_products_in_cart(1).contains("chips");
-
+        }
     }
+
     @Test
     public void failScenario1(){
         assert !gi.save_products(1,"bmba","store2");

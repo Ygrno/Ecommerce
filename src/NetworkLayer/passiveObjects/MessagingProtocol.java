@@ -26,10 +26,8 @@ public class MessagingProtocol {
     public void proccess(String msg){
         //TODO: implement msg protocol
         try {
-
             JSONObject request = new JSONObject(msg);
             String req = (String) request.get("req");
-
 
             if(req.equals("login")){
                 GuestMessageProccess.Login(this, request);
