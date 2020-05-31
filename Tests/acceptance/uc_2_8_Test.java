@@ -42,14 +42,14 @@ public class uc_2_8_Test {
     }
     @Test
     public void successScenario(){
-        assertTrue(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/26",999,0));
+        assertTrue(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/26",999));
 
     }
     @Test
     public void failScenario1(){
-        assertFalse(gi.buy_products_in_cart(0,"mahmoud","1234123412341234","11/26",999,0));
-        assertFalse(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/26",999,2));
-        assertFalse(gi.buy_products_in_cart(1,"mahmoud","12341234123412341","11/26",999,0));
-        assertFalse(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/261",999,0));
+        assertFalse(gi.buy_products_in_cart(0,"mahmoud","1234123412341234","11/26",999));
+        assertFalse(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/26",999));
+        assertFalse(gi.buy_products_in_cart(1,"mahmoud","12341234123412341","11/26",999));
+        assertFalse(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/261",999));
     }
 }

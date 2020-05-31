@@ -35,11 +35,11 @@ public class SubscriberImp implements ISubscriber {
     }
 
     @Override
-    public boolean save_products(String userName,String product_name, String store_name) {
+    public boolean save_products(String userName,String product_name, String store_name, int amount) {
         my_log.logger.info("save_products");
         if(!SystemManage_Facade.is_initialized())
             return false;
-        return SystemManage_Facade.saveProductForSubscriber(userName,product_name,store_name);
+        return SystemManage_Facade.saveProductForSubscriber(userName,product_name,store_name, amount);
     }
 
     @Override

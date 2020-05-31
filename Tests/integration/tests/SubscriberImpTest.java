@@ -96,9 +96,9 @@ public class SubscriberImpTest {
 
     @Test
     public void save_products() {
-        SUBImp.save_products("subscriber","bmba","store1");
-        SUBImp.save_products("subscriber","twix","store3");
-        SUBImp.save_products("subscriber","chips","store2");
+        SUBImp.save_products("subscriber","bmba","store1",1);
+        SUBImp.save_products("subscriber","twix","store3",1);
+        SUBImp.save_products("subscriber","chips","store2",1);
         boolean b1=false,b2=false,b3=false;
         for(ShoppingBag sb:subscriber.getShoppingCart().getShopping_bag_list()) {
             if (sb.getProducts_names().contains("bmba"))
@@ -116,9 +116,9 @@ public class SubscriberImpTest {
 
     @Test
     public void watch_products_in_cart() {
-        SUBImp.save_products("subscriber","bmba","store1");
-        SUBImp.save_products("subscriber","twix","store3");
-        SUBImp.save_products("subscriber","chips","store2");
+        SUBImp.save_products("subscriber","bmba","store1",1);
+        SUBImp.save_products("subscriber","twix","store3",1);
+        SUBImp.save_products("subscriber","chips","store2",1);
 
         assertTrue(SUBImp.watch_products_in_cart("subscriber").contains("bmba"));
         assertTrue(SUBImp.watch_products_in_cart("subscriber").contains("twix"));

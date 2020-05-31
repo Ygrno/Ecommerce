@@ -44,9 +44,9 @@ public class uc_2_7_Test {
 
     @Test
     public void successScenario(){
-        gi.save_products(1,"bmba","store1");
-        gi.save_products(1,"twix","store3");
-        gi.save_products(1,"chips","store2");
+        gi.save_products(1,"bmba","store1",1);
+        gi.save_products(1,"twix","store3",1);
+        gi.save_products(1,"chips","store2",1);
 
         assertTrue(gi.watch_products_in_cart(1).contains("bmba"));
         assertTrue(gi.watch_products_in_cart(1).contains("twix"));
