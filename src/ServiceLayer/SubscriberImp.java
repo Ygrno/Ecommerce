@@ -138,7 +138,7 @@ public class SubscriberImp implements ISubscriber {
     }
 
     @Override
-    public List<PurchaseProcess> view_purchase_history(String user_name) {
+    public List<JSONObject> view_purchase_history(String user_name) throws JSONException {
         my_log.logger.info("view_purchase_history");
         if(!SystemManage_Facade.is_initialized())
             return null;

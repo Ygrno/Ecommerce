@@ -10,6 +10,7 @@ import DomainLayer.System;
 import DomainLayer.User.Guest;
 import DomainLayer.User.Subscriber;
 import DomainLayer.User.User;
+import org.json.JSONException;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -49,7 +50,7 @@ public class SystemManage_FacadeTest {
     }
 
     @Test
-    public void view_purchase() {
+    public void view_purchase() throws JSONException {
         Subscriber s1=new Subscriber("mahmoud","123");
         Subscriber s2=new Subscriber("ahmd","123");
         Store st1=new Store("store1");

@@ -7,6 +7,7 @@ import DomainLayer.Store.Store;
 import DomainLayer.System;
 import DomainLayer.User.Guest;
 import ServiceLayer.GuestImp;
+import org.json.JSONException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -112,7 +113,7 @@ public class GuestImpTest {
     }
 
     @Test
-    public void watch_products_in_cart() {
+    public void watch_products_in_cart() throws JSONException {
         gi.save_products(1,"bmba","store1");
         gi.save_products(1,"twix","store3");
         gi.save_products(1,"chips","store2");

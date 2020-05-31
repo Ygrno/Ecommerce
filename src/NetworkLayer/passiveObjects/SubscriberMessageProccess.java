@@ -54,4 +54,73 @@ public class SubscriberMessageProccess {
         o.put("success", b);
         protocol.send(o);
     }
+
+
+    public static void signOut(MessagingProtocol protocol, JSONObject request) throws Exception{
+        String username = request.getString("username");
+        boolean b=subscriber.sign_out(username);
+        JSONObject o=new JSONObject();
+        o.put("req", request.get("req"));
+        o.put("success", b);
+        protocol.send(o);
+    }
+
+
+    public static void open_store(MessagingProtocol protocol, JSONObject request) throws Exception {
+        String userName = request.getString("username");
+        String storeName = request.getString("username");
+
+        boolean b = subscriber.open_store(userName,storeName);
+        JSONObject o=new JSONObject();
+        o.put("req", request.get("req"));
+        o.put("success", b);
+        protocol.send(o);
+    }
+
+    public static void writeReview(MessagingProtocol protocol, JSONObject request) throws Exception {
+        String userName = request.getString("username");
+        String storeName = request.getString("username");
+        String productName = request.getString("product_name");
+        String review_data = request.getString("review_data");
+        int rank = request.getInt("rank");
+
+        boolean b = subscriber.write_review(userName,productName,storeName,review_data,rank);
+
+        JSONObject o=new JSONObject();
+        o.put("req", request.get("req"));
+        o.put("success", b);
+        protocol.send(o);
+    }
+
+    public static void send_query_to_store(MessagingProtocol protocol, JSONObject request) throws Exception {
+        String userName = request.getString("username");
+        String query = request.getString("query");
+
+        boolean b = subscriber.send_query_to_store(userName,query);
+
+        JSONObject o=new JSONObject();
+        o.put("req", request.get("req"));
+        o.put("success", b);
+        protocol.send(o);
+    }
+
+    public static void view_purchase_history(MessagingProtocol protocol, JSONObject request) throws Exception{
+        String username = request.getString("username");
+        List<JSONObject> l = subscriber.view_purchase_history(username);
+
+        if(l == null) return;
+
+        JSONArray jarr = new JSONArray();
+        for(JSONObject o : l){
+            jarr.put(o);
+        }
+
+        JSONObject o = new JSONObject();
+        o.put("req", request.get("req"));
+        o.put("productsInCart", jarr);
+
+        protocol.send(o);
+    }
+
+
 }

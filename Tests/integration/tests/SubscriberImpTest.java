@@ -11,6 +11,8 @@ import DomainLayer.Store.Store;
 import DomainLayer.System;
 import DomainLayer.User.Subscriber;
 import ServiceLayer.SubscriberImp;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -114,7 +116,7 @@ public class SubscriberImpTest {
     }
 
     @Test
-    public void watch_products_in_cart() {
+    public void watch_products_in_cart() throws JSONException {
         SUBImp.save_products("subscriber","bmba","store1");
         SUBImp.save_products("subscriber","twix","store3");
         SUBImp.save_products("subscriber","chips","store2");
@@ -180,12 +182,12 @@ public class SubscriberImpTest {
     }
 
     @Test
-    public void view_purchase_history() {
+    public void view_purchase_history() throws JSONException {
         store = SYS.get_store("test");
         List<String> strings = new ArrayList<String>();
         PurchaseProcess purchaseProcess = new PurchaseProcess(subscriber,store,new ShoppingBag(strings));
         subscriber.getPurchaseProcesslist().add(purchaseProcess);
-        List<PurchaseProcess> purchase = SUBImp.view_purchase_history("subscriber");
+        List<JSONObject> purchase = SUBImp.view_purchase_history("subscriber");
         assertNotNull(purchase);//the purchase added successfully
         assertEquals(purchase.get(0),purchaseProcess);
     }

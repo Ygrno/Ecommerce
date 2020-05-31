@@ -9,6 +9,7 @@ import DomainLayer.Store.Store;
 import DomainLayer.System;
 import DomainLayer.User.Subscriber;
 import ServiceLayer.SubscriberImp;
+import org.json.JSONException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import java.util.ArrayList;
@@ -31,14 +32,14 @@ public class uc_3_7_view_purchase_history {
     }
 
     @Test
-    public void success_scenario() {
+    public void success_scenario() throws JSONException {
         SUB.purchaseListAdd("subscriber" ,"test",new ArrayList<String>());
         assertNotNull(SYS.View_purchase("subscriber"));
     }
 
 
     @Test
-    public void failure_scenario() {
+    public void failure_scenario() throws JSONException {
         System.getSystem().get_subscriber("subscriber").setLogged_in(false);
         assertNotNull(SYS.View_purchase("subscriber"));
     }

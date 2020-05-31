@@ -9,6 +9,7 @@ import DomainLayer.User.ProductReview;
 import DomainLayer.User.Subscriber;
 import DomainLayer.User.User;
 import Encryption.EncryptImp;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -152,9 +153,22 @@ public class SystemManage_Facade implements InternalService {
         system.getUser_list().add(subscriber);
     }
 
-    public static  List<PurchaseProcess> View_purchase(String user_name) { //3.7
+    public static  List<JSONObject> View_purchase(String user_name) throws JSONException { //3.7
         Subscriber subscriber = system.get_subscriber(user_name);
-        return subscriber.getPurchaseProcesslist();
+        List<JSONObject> l = new ArrayList<>();
+        for(PurchaseProcess pp : subscriber.getPurchaseProcesslist()){
+            JSONObject o = new JSONObject();
+            JSONArray lProducts = new JSONArray();
+            o.put("store_name",pp.getStore().getName());
+            for(String p : pp.getShoppingBag().getProducts_names()){
+                JSONObject o1 =new JSONObject();
+                o1.put("product_name",p);
+                lProducts.put(o1);
+            }
+            o.put("products",lProducts);
+            l.add(o);
+        }
+        return l;
     }
 
     public static void Add_Query(String user_name,String query) { //3.5  -- #TODO add test that the query inserted

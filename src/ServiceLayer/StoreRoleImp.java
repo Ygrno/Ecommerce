@@ -17,7 +17,7 @@ public class StoreRoleImp implements IStoreRole {
 
     Log my_log = Log.getLogger();
 
-    public StoreRoleImp() throws IOException {
+    public StoreRoleImp() {
     }
 
 
