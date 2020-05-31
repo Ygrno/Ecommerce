@@ -88,14 +88,14 @@ public class GuestImp implements IGuest {
     }
 
     @Override
-    public boolean save_products(int id,String product_name, String store_name) {
+    public boolean save_products(int id,String product_name, String store_name, int amount) {
         my_log.logger.info("save_products");
         if(!SystemManage_Facade.is_initialized()) {
             my_log.logger.warning("System not initialized");
             return false;
         }
 
-        return SystemManage_Facade.saveProductForGuest(id,product_name,store_name);
+        return SystemManage_Facade.saveProductForGuest(id,product_name,store_name,amount);
     }
 
     @Override
@@ -112,15 +112,15 @@ public class GuestImp implements IGuest {
     }
 
     @Override
-    public boolean buy_products_in_cart(int id,String buyerName,String creditCardNumber,String expireDate,int cvv,double discount) {
+    public boolean buy_products_in_cart(int id,String buyerName,String creditCardNumber,String expireDate,int cvv) {
         my_log.logger.info("buy_products_in_cart");
         if(!SystemManage_Facade.is_initialized()) {
             my_log.logger.warning("System not initialized");
             return false;
         }
-        if(discount > 1 || discount < 0){
-            return false;
-        }
+//        if(discount > 1 || discount < 0){
+//            return false;
+//        }
         if(expireDate.length() != 5){
             return false;
         }
@@ -129,7 +129,7 @@ public class GuestImp implements IGuest {
         if(cvv>=1000)
             return false;
         double price=SystemManage_Facade.getPriceOfCart(String.valueOf(id));
-        String[] dealDetails={String.valueOf(price),buyerName,creditCardNumber,expireDate, String.valueOf(cvv)};
+        String[] dealDetails={String.valueOf(id),String.valueOf(price),buyerName,creditCardNumber,expireDate, String.valueOf(cvv)};
         return SystemManage_Facade.buy(dealDetails);
     }
 }

@@ -60,6 +60,13 @@ public class SystemManage_Facade implements InternalService {
                     Store store = purchase.getStore();
                     store.getPurchase_process_list().add(purchase); //Store now contains that history purchase.
 
+                    //Update the supply amount of products in store
+                    ShoppingBag shoppingBag = purchase.getShoppingBag();
+                    for(Product prod: shoppingBag.getProducts()){
+                        Product store_product = getProductInStore(prod.getName(),store);
+                        store_product.setSupplied_amount(store_product.getSupplied_amount() - prod.getBuy_amount());
+                    }
+
                     //User bought his saved products so shopping bag no longer exists with store.
                     purchase.getUser().getShoppingCart().getShopping_bag_list().remove(purchase.getShoppingBag());
                 }
@@ -110,7 +117,7 @@ public class SystemManage_Facade implements InternalService {
         return stores;
     }
 
-    public static boolean saveProductForGuest(int id,String product_name, String store_name){
+    public static boolean saveProductForGuest(int id,String product_name, String store_name,int amount){
 
         Guest g=SystemManage_Facade.getGuest(id);
         if(g==null)
@@ -119,26 +126,40 @@ public class SystemManage_Facade implements InternalService {
         Product product=null;
         Store s = SystemManage_Facade.get_store(store_name);
 
-        for(Product prod: s.getProduct_list()){
-            if(prod.getName().equals(product_name)){
-                product=prod;
-            }
-        }
+        product = getProductInStore(product_name, s);
+
+        if(product == null || amount > product.getSupplied_amount()) return false;
+
+        Product buy_product = new Product(product.getName(),product.getPrice(),product.getSupplied_amount(),product.getStore());
+        buy_product.setBuy_amount(amount);
+
+
         for(PurchaseProcess p:g.getPurchaseProcesslist()){
             if(p.getStore().getName().equals(store_name)){
                 p.getShoppingBag().getProducts_names().add(product_name);
-                p.getShoppingBag().getProducts().add(product);
+                p.getShoppingBag().getProducts().add(buy_product);
                 processExist=true;
             }
         }
+
         if(!processExist){
             PurchaseProcess p=new PurchaseProcess(g,SystemManage_Facade.get_store(store_name),new ShoppingBag(new ArrayList<>()));
             g.getShoppingCart().getShopping_bag_list().add(p.getShoppingBag());
             p.getShoppingBag().getProducts_names().add(product_name);
-            p.getShoppingBag().getProducts().add(product);
+            p.getShoppingBag().getProducts().add(buy_product);
 
         }
         return true;
+    }
+
+    private static Product getProductInStore(String product_name, Store s) {
+        Product product = null;
+        for (Product prod : s.getProduct_list()) {
+            if (prod.getName().equals(product_name)) {
+                product = prod;
+            }
+        }
+        return product;
     }
 
 
@@ -181,6 +202,7 @@ public class SystemManage_Facade implements InternalService {
         Subscriber subscriber = system.get_subscriber(user_name);
         subscriber.getQuries().add(query);
     }
+
     public static boolean addProductReview(String user_name, String product_name, String store_name, String review_data, int rank) {
         Subscriber subscriber = system.get_subscriber(user_name);
         Product reviewedProduct = system.get_store(store_name).getProduct(product_name);
@@ -197,17 +219,14 @@ public class SystemManage_Facade implements InternalService {
                         isPurchased = true;
                         product_review = new ProductReview(subscriber,rank,review_data);
                         reviewedProduct.addReview(product_review);
-
                     }
-
             }
-
         }
         return isPurchased;
     }
 
 
-    public static boolean saveProductForSubscriber(String userName,String product_name, String store_name){
+    public static boolean saveProductForSubscriber(String userName,String product_name, String store_name,int amount){
 
         Subscriber s = SystemManage_Facade.get_subscriber(userName);
         boolean processExist = false;
@@ -215,23 +234,26 @@ public class SystemManage_Facade implements InternalService {
         Store store = SystemManage_Facade.get_store(store_name);
         if(store == null) return false;
 
-        for(Product prod : store.getProduct_list()) {
-            if (prod.getName().equals(product_name))
-                product = prod;
-        }
+        product = getProductInStore(product_name, store);
+
+        if(product == null || amount > product.getSupplied_amount()) return false;
+
+        Product buy_product = new Product(product.getName(),product.getPrice(),product.getSupplied_amount(),product.getStore());
+        buy_product.setBuy_amount(amount);
 
         for(PurchaseProcess p:s.getPurchaseProcesslist()){
             if(!p.isFinished() && p.getStore().getName().equals(store_name)){
                 p.getShoppingBag().getProducts_names().add(product_name);
-                p.getShoppingBag().getProducts().add(product);
+                p.getShoppingBag().getProducts().add(buy_product);
                 processExist=true;
             }
         }
+
         if(!processExist){
             PurchaseProcess p = new PurchaseProcess(s,store,new ShoppingBag(new ArrayList<>()));
             s.getShoppingCart().getShopping_bag_list().add(p.getShoppingBag());
             p.getShoppingBag().getProducts_names().add(product_name);
-            p.getShoppingBag().getProducts().add(product);
+            p.getShoppingBag().getProducts().add(buy_product);
             s.getPurchaseProcesslist().add(p);
         }
         return true;

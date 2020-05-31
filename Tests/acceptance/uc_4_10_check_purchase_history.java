@@ -34,7 +34,7 @@ public class uc_4_10_check_purchase_history {
         guestImp.login("s1", "password");
         SUBImp.open_store("Admin","store");
         storeRoleImp.add_store_product("Admin","store","bamba",3,2);
-        SUBImp.save_products("s1","bamba","store");
+        SUBImp.save_products("s1","bamba","store",1);
         SUBImp.buy_products_in_cart("s1","noam","1234567891234567","22019",120);
 
 
@@ -81,10 +81,10 @@ public class uc_4_10_check_purchase_history {
         storeRoleImp.add_store_product("Admin","store","bisli",6,8);
 
 
-        SUBImp.save_products("s1","bisli","store");
-        SUBImp.save_products("s1","PC","Computer Store");
-        SUBImp.save_products("s1","mouse","Computer Store");
-        SUBImp.save_products("s1","keyboard","Computer Store");
+        SUBImp.save_products("s1","bisli","store",1);
+        SUBImp.save_products("s1","PC","Computer Store",1);
+        SUBImp.save_products("s1","mouse","Computer Store",1);
+        SUBImp.save_products("s1","keyboard","Computer Store",1);
         SUBImp.buy_products_in_cart("s1","noam","1234567891234567","22019",120);
 
 
