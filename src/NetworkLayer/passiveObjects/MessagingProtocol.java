@@ -27,10 +27,8 @@ public class MessagingProtocol {
     public void proccess(String msg){
         //TODO: implement msg protocol
         try {
-
             JSONObject request = new JSONObject(msg);
             String req = (String) request.get("req");
-
 
             if(req.equals("login")){
                 GuestMessageProccess.Login(this, request);
@@ -64,15 +62,15 @@ public class MessagingProtocol {
                 }else if(req.equals("buy_cart_subscriber")){
                     SubscriberMessageProccess.buyCart(this, request);
                 }
-            }else if(req.equals("sign_out")){
+            }else if(req.equals("sign_out")){   //done
                 SubscriberMessageProccess.signOut(this,request);
-            }else if(req.equals("open_store")){
+            }else if(req.equals("open_store")){ //done
                 SubscriberMessageProccess.open_store(this,request);
-            }else if(req.equals("write_review")){
+            }else if(req.equals("write_review")){  //done
                 SubscriberMessageProccess.writeReview(this,request);
             }else if(req.equals("send_query_to_store")){
                 SubscriberMessageProccess.send_query_to_store(this,request);
-            }else if(req.equals("view_purchase_history")){
+            }else if(req.equals("view_purchase_history")){  //done
                 SubscriberMessageProccess.view_purchase_history(this,request);
             }else if(req.equals("close_store_permanently")){
                 ManagerMessageProccess.close_store_permanently(this,request);

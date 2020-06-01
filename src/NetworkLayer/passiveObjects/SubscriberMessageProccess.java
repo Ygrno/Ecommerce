@@ -68,7 +68,7 @@ public class SubscriberMessageProccess {
 
     public static void open_store(MessagingProtocol protocol, JSONObject request) throws Exception {
         String userName = request.getString("username");
-        String storeName = request.getString("username");
+        String storeName = request.getString("store_name");
 
         boolean b = subscriber.open_store(userName,storeName);
         JSONObject o=new JSONObject();
@@ -79,7 +79,7 @@ public class SubscriberMessageProccess {
 
     public static void writeReview(MessagingProtocol protocol, JSONObject request) throws Exception {
         String userName = request.getString("username");
-        String storeName = request.getString("username");
+        String storeName = request.getString("store_name");
         String productName = request.getString("product_name");
         String review_data = request.getString("review_data");
         int rank = request.getInt("rank");
@@ -107,9 +107,7 @@ public class SubscriberMessageProccess {
     public static void view_purchase_history(MessagingProtocol protocol, JSONObject request) throws Exception{
         String username = request.getString("username");
         List<JSONObject> l = subscriber.view_purchase_history(username);
-
         if(l == null) return;
-
         JSONArray jarr = new JSONArray();
         for(JSONObject o : l){
             jarr.put(o);
@@ -117,7 +115,7 @@ public class SubscriberMessageProccess {
 
         JSONObject o = new JSONObject();
         o.put("req", request.get("req"));
-        o.put("productsInCart", jarr);
+        o.put("products_in_history", jarr);
 
         protocol.send(o);
     }

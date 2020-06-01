@@ -64,8 +64,8 @@ public class SubscriberImp implements ISubscriber {
         if(expireDate.length() != 5){
             return false;
         }
-        if(creditCardNumber.length()!=16)
-            return false;
+//        if(creditCardNumber.length()!=16)
+//            return false;
         if(cvv>=1000)
             return false;
         double price=SystemManage_Facade.getPriceOfCart(id,discount);
@@ -91,7 +91,7 @@ public class SubscriberImp implements ISubscriber {
         my_log.logger.info("open_store");
         if(!SystemManage_Facade.is_initialized()) return false;
 
-        if(SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)){
+        if(SystemManage_Facade.find_subscriber(user_name) /*&& SubscribersManage_Facade.check_if_logged_in(user_name)*/){
             SubscribersManage_Facade.create_store(user_name,store_name);
             return true;
         }

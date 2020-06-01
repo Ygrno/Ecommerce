@@ -139,6 +139,12 @@
                 ViewCart(response);
             }else if (req==="view_cart_subscriber"){
                 ViewCart(response);
+            }else if (req.indexOf("buy_cart") >= 0){
+                buyResponse(response);
+            }else if (req==="open_store"){
+                openStoreResponse(response);
+            }else if (req === "view_purchase_history"){
+                viewPurchaseHistory(response);
             }
         };
 

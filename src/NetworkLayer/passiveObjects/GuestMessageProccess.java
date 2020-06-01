@@ -126,7 +126,6 @@ public class GuestMessageProccess {
 
         if(products == null) return;
 
-
         JSONArray jarr = new JSONArray();
         for(JSONObject o : products){
             jarr.put(o);

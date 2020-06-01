@@ -52,7 +52,7 @@ public class SystemManage_Facade implements InternalService {
 
 
     public static boolean buy(String[] dd){
-        DealDetails dd1=new DealDetails(Integer.parseInt(dd[0]),dd[1],dd[2],dd[3],Integer.parseInt(dd[4]));
+        DealDetails dd1=new DealDetails(Double.parseDouble(dd[0]),dd[1],dd[2],dd[3],Integer.parseInt(dd[4]));
 
         return system.getProductFinanceService().tryToBuy(dd1);
     }
@@ -88,7 +88,6 @@ public class SystemManage_Facade implements InternalService {
     }
 
     public static boolean saveProductForGuest(int id,String product_name, String store_name){
-
         Guest g=SystemManage_Facade.getGuest(id);
         if(g==null)
             g=SystemManage_Facade.addGuest();
@@ -108,13 +107,14 @@ public class SystemManage_Facade implements InternalService {
                 processExist=true;
             }
         }
+
         if(!processExist){
             PurchaseProcess p=new PurchaseProcess(g,SystemManage_Facade.get_store(store_name),new ShoppingBag(new ArrayList<>()));
             g.getShoppingCart().getShopping_bag_list().add(p.getShoppingBag());
             p.getShoppingBag().getProducts_names().add(product_name);
             p.getShoppingBag().getProducts().add(product);
-
         }
+
         return true;
     }
 
