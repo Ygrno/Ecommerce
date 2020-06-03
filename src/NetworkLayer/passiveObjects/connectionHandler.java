@@ -4,6 +4,7 @@ import java.io.*;
 import java.lang.reflect.Array;
 import java.math.BigInteger;
 import java.net.Socket;
+import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.Base64;
@@ -100,11 +101,21 @@ public class connectionHandler {
         while (start_byte != 129){
             start_byte = in.read();
         }
+
+
         if(start_byte != 129){
             throw new Exception("first byte not 129 ");
         }
 
+        //[0x81=129, 126, l, l, msg]...
+
         int size_byte = in.read() - 128;
+        if(size_byte == 126){
+            byte[] arr = { (byte)in.read(), (byte)in.read()};
+            ByteBuffer wrapped = ByteBuffer.wrap(arr); // big-endian by default
+            short num = wrapped.getShort(); // 1
+            size_byte = num;
+        }
         byte[] key = new byte[] { (byte) in.read(), (byte) in.read(), (byte) in.read(), (byte) in.read() };
         byte[] encoded = new byte[size_byte];
 
