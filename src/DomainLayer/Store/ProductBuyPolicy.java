@@ -2,6 +2,7 @@ package DomainLayer.Store;
 
 import DomainLayer.InternalService.Logicaloperation;
 import DomainLayer.Product;
+import DomainLayer.PurchaseProcess;
 import DomainLayer.ShoppingBag;
 import DomainLayer.User.User;
 
@@ -14,16 +15,17 @@ public class ProductBuyPolicy extends SimpleBuyPolicy {
     private Logicaloperation op;
 
 
-    public ProductBuyPolicy (int policy_id, String name, int min, int max)
+    public ProductBuyPolicy (int policy_id, String name, int minProducts, int maxProducts)
     {
         super(policy_id);
         this.product_name = name;
-        this.min = min;
-        this.max = max;
+        this.min = minProducts;
+        this.max = maxProducts;
     }
 
     @Override
-    public boolean validate(ShoppingBag shopBag, User user) {
+    public boolean validate(PurchaseProcess purchaseProcess) {
+        ShoppingBag shopBag= purchaseProcess.getShoppingBag();
         List<Product> products = shopBag.getProducts();
         for (Product p : products) {
             if (p.getName().equals(this.product_name)) {

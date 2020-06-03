@@ -1,42 +1,44 @@
 package acceptance;
 
 import DomainLayer.InternalService.SystemManage_Facade;
-import DomainLayer.System;
-import DomainLayer.User.Subscriber;
 import ServiceLayer.GuestImp;
+import ServiceLayer.StoreRoleImp;
+import ServiceLayer.SubscriberImp;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import java.io.IOException;
+
+
 
 public class uc_2_2_signup_guest_test {
 
 
     private static GuestImp guestImp ;
+    private static GuestImp guestImp2 ;
 
     @BeforeClass
     public static void before() throws IOException {
-        SystemManage_Facade.init_system();
         guestImp = new GuestImp();
+        guestImp2 = new GuestImp();
+        guestImp.login("Admin","Password"); //initiate the system
+        guestImp.sign_up("manager", "password");
+        guestImp2.sign_up("user2", "password");
+        guestImp2.sign_up("user2", "another_password");
+        guestImp2.login("user2", "password");
     }
 
 
     @Test
     public void success_scenario(){
-        Subscriber s = new Subscriber("user", "password");
-        guestImp.sign_up(s.getName(), s.getPassword());
-        assert System.getSystem().getUser_list().contains(s);
+        assertTrue(SystemManage_Facade.find_subscriber("manager"));
+        assertTrue(SystemManage_Facade.find_subscriber("user2"));
     }
 
 
     @Test
     public void failure_scenario(){
-        Subscriber s1 = new Subscriber("user", "password");
-        Subscriber s2 = new Subscriber("user", "another_password");
-        guestImp.sign_up(s1.getName(), s1.getPassword());
-        guestImp.sign_up(s2.getName(), s2.getPassword());
-
-        assert !System.getSystem().getUser_list().contains(s2);
-
+        assertFalse (SystemManage_Facade.find_subscriber("user2")==false);
     }
 }

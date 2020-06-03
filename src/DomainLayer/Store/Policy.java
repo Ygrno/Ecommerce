@@ -1,13 +1,13 @@
 package DomainLayer.Store;
 
 import DomainLayer.Product;
-import DomainLayer.ShoppingBag;
-import DomainLayer.User.User;
+import DomainLayer.PurchaseProcess;
+
 
 import java.util.List;
 
 public interface Policy {
     //enum Logicaloperation { or, and, xor};
-    public boolean validate (ShoppingBag shopBag, User user);
+    public boolean validate (PurchaseProcess purchaseProcess);
     public int getPolicy_id();
 }
