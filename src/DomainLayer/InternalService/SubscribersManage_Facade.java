@@ -169,13 +169,33 @@ public class SubscribersManage_Facade implements InternalService {
 
         if (store_role instanceof StoreOwner) {
             Subscriber to_remove = System.getSystem().get_subscriber(user_assign);
-            if(to_remove == null) return false;
+            if(to_remove == null) return false; //User wasn't found in the system.
             StoreOwner storeOwner2 = ((StoreOwner)store_role).store.find_store_owner_by_name(to_remove.getName());
-            if(storeOwner2 == null) return false;
-            if(!store_role.getAssigned_users().contains(storeOwner2)) return false;
+            if(storeOwner2 == null) return false; //User wasn't found in the store as a Store Owner.
+            if(!store_role.getAssigned_users().contains(storeOwner2)) return false; //Requester can't remove this store Owner cause he wasn't assigned by him.
+
+
+            List<Role> assigned_users = storeOwner2.getAssigned_users();
+            for(Role role: assigned_users){
+                if(role instanceof StoreRole){
+                    Store store = ((StoreRole) role).store;
+                    if(store.getName().equals(store_name)){
+                        if(role instanceof StoreOwner)
+                        {
+                            remove_owner_from_store(storeOwner2.user.getName(),store_name,role.user.getName());
+                        }
+
+                        else if(role instanceof  StoreManger)
+                        {
+                            remove_manager_from_store(storeOwner2.user.getName(),store_name,role.user.getName());
+                        }
+                    }
+                }
+            }
             store_role.store.getRoles().remove(storeOwner2);
             store_role.getAssigned_users().remove(storeOwner2);
             storeOwner2.setAssigned_by(null);
+
             return true;
         }
         return false;
