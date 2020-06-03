@@ -1,5 +1,6 @@
 package acceptance;
 
+import DomainLayer.InternalService.SystemManage_Facade;
 import ServiceLayer.GuestImp;
 import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
@@ -22,7 +23,7 @@ public class uc_2_6_Test {
         gi=new GuestImp();
         SubscriberImp si = new SubscriberImp();
         StoreRoleImp sri = new StoreRoleImp();
-
+        SystemManage_Facade.init_system();
         gi.sign_up("mhmod","123");
         gi.login("mhmod","123");
         si.open_store("mhmod","store1");
@@ -49,17 +50,16 @@ public class uc_2_6_Test {
         gi.save_products(1,"chips","store2");
 
         try {
-            assert gi.watch_products_in_cart(1).contains("bmba");
-            assert gi.watch_products_in_cart(1).contains("twix");
-            assert gi.watch_products_in_cart(1).contains("chips");
+            assert gi.watch_products_in_cart(1).get(0).getString("name").equals("twix");
+            assert gi.watch_products_in_cart(1).get(1).getString("name").equals("chips");
         }catch (Exception e){
 
         }
     }
 
     @Test
-    public void failScenario1(){
-        assert !gi.save_products(1,"bmba","store2");
+    public void failScenario1() throws JSONException {
+        assert gi.watch_products_in_cart(1)==null;
     }
 
 }

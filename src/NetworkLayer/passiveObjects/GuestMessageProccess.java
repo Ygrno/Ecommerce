@@ -93,6 +93,9 @@ public class GuestMessageProccess {
         String store = request.getString("store");
         String[][] products = guestImp.view_products_information_store(store);
 
+        if(products==null)
+            return;
+
         for(String[] p : products){
             JSONObject o = new JSONObject();
             o.put("name",p[0]);

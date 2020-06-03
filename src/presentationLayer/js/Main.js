@@ -17,9 +17,47 @@ function buyResponse(response){
     alert(JSON.stringify(response));
 }
 
+function add_store_product_response(response) {
+    alert(JSON.stringify(response));
+}
+
+function remove_store_product_response(response) {
+    alert(JSON.stringify(response));
+}
+
+function edit_store_product_response(response) {
+    alert(JSON.stringify(response));
+}
+
+function assign_store_manager_response(response) {
+    alert(JSON.stringify(response));
+}
+
+function remove_store_manager_response(response) {
+    alert(JSON.stringify(response));
+}
+
+function assign_store_owner_response(response) {
+    alert(JSON.stringify(response));
+}
+
+function remove_store_owner_response(response) {
+    alert(JSON.stringify(response));
+}
+
+function close_store_response(response) {
+    alert(JSON.stringify(response));
+}
+
 function openStoreResponse(response) {
     alert(response);
 }
+
+function send_query_to_store_response(response) {
+    alert(JSON.stringify(response));
+}
+
+
 function searchProduct(ele){
     if(event.key === 'Enter') {
         let product = ele.value;
@@ -159,18 +197,70 @@ function viewPurchaseHistory(products){
 
 }
 
+function askStoreQuestion() {
+    if(isGuest()){
+        alert("You should sign in first");
+        return;
+    }
+
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+
+    let introDiv = document.createElement("div");
+    introDiv.innerHTML = "Ask us a question";
+    introDiv.className = 'total_price_div';
+    div.appendChild(introDiv);
+
+    let question = document.createElement("input");
+    question.placeholder="Enter yor question";
+
+
+
+    [question].forEach((d)=>{
+        d.className = 'text_input';
+        div.appendChild(d);
+    });
+
+    let finish = document.createElement("div");
+    finish.className = 'Green_beautiful_div';
+    finish.innerHTML = '<b>Send</b>';
+    finish.style.fontSize = '30px';
+    finish.style.width = '100px';
+    finish.style.marginTop = '3%';
+    finish.onclick = function(){
+        let qes = question.value;
+
+        if(qes === ""){
+            alert("please enter the question");
+            return;
+        }
+
+        instance.sendStoreReview({
+            username:localStorage.getItem("current_username"),
+            query:qes,
+            req:"send_query_to_store"
+        });
+    };
+    div.appendChild(finish);
+
+    popUp(div);
+}
 
 function addStoreReview() {
+    if(isGuest()){
+        alert("You should sign in first");
+        return;
+    }
     let vars = instance.getUrlVars();
     let store_name = vars["s"];
 
     let div = document.createElement("div");
     div.style.overflow = 'auto';
 
-    let priceDiv = document.createElement("div");
-    priceDiv.innerHTML = "Write review for "+store_name+" store";
-    priceDiv.className = 'total_price_div';
-    div.appendChild(priceDiv);
+    let introDiv = document.createElement("div");
+    introDiv.innerHTML = "Write review for "+store_name+" store";
+    introDiv.className = 'total_price_div';
+    div.appendChild(introDiv);
 
     let product_name = document.createElement("input");
     product_name.placeholder="Enter product name";
@@ -211,11 +301,13 @@ function addStoreReview() {
             return;
         }
 
-        instance.send_process_details({
+        instance.sendStoreReview({
+            username:localStorage.getItem("current_username"),
             store_name: store_name,
             product_name: pName,
             review_data: com,
             rank: ra,
+            req:"write_review"
         });
     };
     div.appendChild(finish);
@@ -323,6 +415,416 @@ function isGuest(){
 function viewCartProduct(product){
 
 }
+
+function edit_product(){
+    let vars = instance.getUrlVars();
+    let store_name = vars["s"];
+
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+
+    let introDiv = document.createElement("div");
+    introDiv.innerHTML = "Edit a product in "+store_name+" store";
+    introDiv.className = 'total_price_div';
+    div.appendChild(introDiv);
+
+    let product_name = document.createElement("input");
+    product_name.placeholder="Enter product name";
+
+    let new_product_name = document.createElement("input");
+    new_product_name.placeholder="Enter new product name (optional)";
+
+    let product_price = document.createElement("input");
+    product_price.placeholder="Enter the price of the product";
+
+    let product_amount = document.createElement("input");
+    product_amount.placeholder="Enter the amount of the product";
+
+
+    [product_name, new_product_name,product_price, product_amount].forEach((d)=>{
+        d.className = 'text_input';
+        div.appendChild(d);
+    });
+
+    let finish = document.createElement("div");
+    finish.className = 'Green_beautiful_div';
+    finish.innerHTML = '<b>Finish</b>';
+    finish.style.fontSize = '30px';
+    finish.style.width = '100px';
+    finish.style.marginTop = '3%';
+    finish.onclick = function(){
+        let name = product_name.value;
+        let newname = new_product_name.value;
+        let price = product_price.value;
+        let amount = product_amount.value;
+
+        if(name === ""){
+            alert("please enter the product name");
+            return;
+        }
+        if(newname===""){
+            newname=name;
+        }
+        if(price=== "") {
+            alert("please enter the price");
+            return;
+        }
+        if(amount=== "") {
+            alert("please enter the amount");
+            return;
+        }
+
+        instance.edit_store_product({
+            user_name: localStorage.getItem("current_username"),
+            store: store_name,
+            product: name,
+            newp: newname,
+            price: price,
+            amount: amount,
+            req: "edit_store_product",
+        });
+    };
+    div.appendChild(finish);
+
+    popUp(div);
+}
+
+function watch_store_history(){
+    let vars = instance.getUrlVars();
+    let store_name = vars["s"];
+    instance.edit_store_product({
+        user_name: localStorage.getItem("current_username"),
+        store: store_name,
+        req: "watch_store_history",
+    });
+}
+
+function watch_store_history_respond(products) {
+    let productList = products["store_history"];
+    if (productList.length === 0) return;
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+
+    let prodcutHTMLList = new HTMLList(div);
+
+    const cellBuilder = (product)=>{
+        //DESIGN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        let d = document.createElement("div");
+        d.innerHTML = "<b>"+JSON.stringify(product)+"</b>";
+        return d;
+    };
+
+    alert(1);
+    productList.forEach((p)=> prodcutHTMLList.addElement(p));
+    prodcutHTMLList.render(cellBuilder);
+    popUp(div);
+}
+
+function close_store() {
+    let vars = instance.getUrlVars();
+    let store_name = vars["s"];
+
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+
+    let introDiv = document.createElement("div");
+    introDiv.innerHTML = "Are you sure you want to close "+store_name+" store?";
+    introDiv.className = 'total_price_div';
+    div.appendChild(introDiv);
+
+
+    let finish = document.createElement("div");
+    finish.className = 'Green_beautiful_div';
+    finish.innerHTML = '<b>Yes</b>';
+    finish.style.fontSize = '30px';
+    finish.style.width = '100px';
+    finish.style.marginTop = '3%';
+    finish.onclick = function(){
+
+        instance.close_store({
+            user_name: localStorage.getItem("current_username"),
+            store_name: store_name,
+            req: "close_store"
+        });
+    };
+    div.appendChild(finish);
+
+    popUp(div);
+}
+
+function remove_owner() {
+    let vars = instance.getUrlVars();
+    let store_name = vars["s"];
+
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+
+    let introDiv = document.createElement("div");
+    introDiv.innerHTML = "Remove owner from "+store_name+" store";
+    introDiv.className = 'total_price_div';
+    div.appendChild(introDiv);
+
+    let user_assign = document.createElement("input");
+    user_assign.placeholder="Enter owner user name";
+    user_assign.className = 'text_input';
+    div.appendChild(user_assign);
+    let finish = document.createElement("div");
+    finish.className = 'Green_beautiful_div';
+    finish.innerHTML = '<b>Send</b>';
+    finish.style.fontSize = '30px';
+    finish.style.width = '100px';
+    finish.style.marginTop = '3%';
+    finish.onclick = function(){
+        let name = user_assign.value;
+        if(name === ""){
+            alert("please enter the manager user name");
+            return;
+        }
+
+        instance.remove_store_manager({
+            user_name: localStorage.getItem("current_username"),
+            store_name: store_name,
+            user_assign: name,
+            req: "remove_store_owner"
+        });
+    };
+    div.appendChild(finish);
+
+    popUp(div);
+}
+
+function assign_owner() {
+    let vars = instance.getUrlVars();
+    let store_name = vars["s"];
+
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+
+    let introDiv = document.createElement("div");
+    introDiv.innerHTML = "Assign new owner to "+store_name+" store";
+    introDiv.className = 'total_price_div';
+    div.appendChild(introDiv);
+
+    let user_assign = document.createElement("input");
+    user_assign.placeholder="Enter owner user name";
+    user_assign.className = 'text_input';
+    div.appendChild(user_assign);
+    let finish = document.createElement("div");
+    finish.className = 'Green_beautiful_div';
+    finish.innerHTML = '<b>Send</b>';
+    finish.style.fontSize = '30px';
+    finish.style.width = '100px';
+    finish.style.marginTop = '3%';
+    finish.onclick = function(){
+        let name = user_assign.value;
+        if(name === ""){
+            alert("please enter the owner user name");
+            return;
+        }
+
+        instance.assign_store_owner({
+            user_name: localStorage.getItem("current_username"),
+            store_name: store_name,
+            user_assign: name,
+            req: "assign_store_owner"
+        });
+    };
+    div.appendChild(finish);
+
+    popUp(div);
+}
+
+function remove_manager(){
+    let vars = instance.getUrlVars();
+    let store_name = vars["s"];
+
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+
+    let introDiv = document.createElement("div");
+    introDiv.innerHTML = "remove a manager from "+store_name+" store";
+    introDiv.className = 'total_price_div';
+    div.appendChild(introDiv);
+
+    let user_assign = document.createElement("input");
+    user_assign.placeholder="Enter manager user name";
+    user_assign.className = 'text_input';
+    div.appendChild(user_assign);
+    let finish = document.createElement("div");
+    finish.className = 'Green_beautiful_div';
+    finish.innerHTML = '<b>Send</b>';
+    finish.style.fontSize = '30px';
+    finish.style.width = '100px';
+    finish.style.marginTop = '3%';
+    finish.onclick = function(){
+        let name = user_assign.value;
+        if(name === ""){
+            alert("please enter the manager user name");
+            return;
+        }
+
+        instance.remove_store_manager({
+            user_name: localStorage.getItem("current_username"),
+            store_name: store_name,
+            user_assign: name,
+            req: "remove_store_manager"
+        });
+    };
+    div.appendChild(finish);
+
+    popUp(div);
+}
+
+
+
+function assign_manager(){
+    let vars = instance.getUrlVars();
+    let store_name = vars["s"];
+
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+
+    let introDiv = document.createElement("div");
+    introDiv.innerHTML = "Assign new manager to "+store_name+" store";
+    introDiv.className = 'total_price_div';
+    div.appendChild(introDiv);
+
+    let user_assign = document.createElement("input");
+    user_assign.placeholder="Enter manager user name";
+    user_assign.className = 'text_input';
+    div.appendChild(user_assign);
+    let finish = document.createElement("div");
+    finish.className = 'Green_beautiful_div';
+    finish.innerHTML = '<b>Send</b>';
+    finish.style.fontSize = '30px';
+    finish.style.width = '100px';
+    finish.style.marginTop = '3%';
+    finish.onclick = function(){
+        let name = user_assign.value;
+        if(name === ""){
+            alert("please enter the manager user name");
+            return;
+        }
+
+        instance.assign_store_manager({
+            user_name: localStorage.getItem("current_username"),
+            store_name: store_name,
+            user_assign: name,
+            req: "assign_store_manager"
+        });
+    };
+    div.appendChild(finish);
+
+    popUp(div);
+}
+
+function remove_product(){
+    let vars = instance.getUrlVars();
+    let store_name = vars["s"];
+
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+
+    let introDiv = document.createElement("div");
+    introDiv.innerHTML = "Remove product from "+store_name+" store";
+    introDiv.className = 'total_price_div';
+    div.appendChild(introDiv);
+
+    let product_name = document.createElement("input");
+    product_name.placeholder="Enter product name";
+    product_name.className = 'text_input';
+    div.appendChild(product_name);
+    let finish = document.createElement("div");
+    finish.className = 'Green_beautiful_div';
+    finish.innerHTML = '<b>Send</b>';
+    finish.style.fontSize = '30px';
+    finish.style.width = '100px';
+    finish.style.marginTop = '3%';
+    finish.onclick = function(){
+        let name = product_name.value;
+        if(name === ""){
+            alert("please enter the product name");
+            return;
+        }
+
+        instance.remove_store_product({
+            user_name: localStorage.getItem("current_username"),
+            store_name: store_name,
+            product_name: name,
+            req: "remove_store_product"
+        });
+    };
+    div.appendChild(finish);
+
+    popUp(div);
+}
+
+function add_product(){
+    let vars = instance.getUrlVars();
+    let store_name = vars["s"];
+
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+
+    let introDiv = document.createElement("div");
+    introDiv.innerHTML = "Add new product to "+store_name+" store";
+    introDiv.className = 'total_price_div';
+    div.appendChild(introDiv);
+
+    let product_name = document.createElement("input");
+    product_name.placeholder="Enter product name";
+
+    let product_price = document.createElement("input");
+    product_price.placeholder="Enter the price of the product";
+
+    let product_amount = document.createElement("input");
+    product_amount.placeholder="Enter the amount of the product";
+
+
+    [product_name, product_price, product_amount].forEach((d)=>{
+        d.className = 'text_input';
+        div.appendChild(d);
+    });
+
+    let finish = document.createElement("div");
+    finish.className = 'Green_beautiful_div';
+    finish.innerHTML = '<b>Send</b>';
+    finish.style.fontSize = '30px';
+    finish.style.width = '100px';
+    finish.style.marginTop = '3%';
+    finish.onclick = function(){
+        let name = product_name.value;
+        let price = product_price.value;
+        let amount = product_amount.value;
+
+        if(name === ""){
+            alert("please enter the product name");
+            return;
+        }
+        if(price=== "") {
+            alert("please enter the price");
+            return;
+        }
+        if(amount=== "") {
+            alert("please enter the amount");
+            return;
+        }
+
+        instance.add_store_product({
+            user_name: localStorage.getItem("current_username"),
+            store_names: store_name,
+            product_names: name,
+            product_price: price,
+            product_amount: amount,
+            req: "add_store_product",
+        });
+    };
+    div.appendChild(finish);
+
+    popUp(div);
+}
+
+
 class Main{
 
     static getInstance(){
@@ -473,6 +975,51 @@ class Main{
         if(!isGuest()){
             this.client.send(JSON.stringify({req:"view_purchase_history",username:localStorage.getItem("current_username")}));
         }
+    }
+
+    sendStoreReview(details){
+        this.client.send(JSON.stringify(details));
+    }
+
+    add_store_product(details){
+        let msg = {
+            req: details.req,
+            user_name: details.user_name,
+            store_name: details.store_names,
+            product: details.product_names,
+            price: details.product_price,
+            amount: details.product_amount
+        };
+        this.client.send(JSON.stringify(msg));
+    }
+
+    remove_store_product(details){
+
+        this.client.send(JSON.stringify(details));
+    }
+
+    edit_store_product(details){
+        this.client.send(JSON.stringify(details));
+    }
+
+    assign_store_manager(details){
+        this.client.send(JSON.stringify(details));
+    }
+
+    remove_store_manager(details){
+        this.client.send(JSON.stringify(details));
+    }
+
+    assign_store_owner(details){
+        this.client.send(JSON.stringify(details));
+    }
+
+    close_store(details){
+        this.client.send(JSON.stringify(details));
+    }
+
+    watch_store_history(details){
+        this.client.send(JSON.stringify(details));
     }
 
 }

@@ -138,8 +138,8 @@ public class GuestImp implements IGuest {
         if(expireDate.length() != 5){
             return false;
         }
-//        if(creditCardNumber.length()!=16)
-//            return false;
+        if(creditCardNumber.length()!=16)
+            return false;
         if(cvv>=1000)
             return false;
 

@@ -14,9 +14,9 @@ public class StoreRoleMessageProccess {
     public static void add_store_product(MessagingProtocol protocol, JSONObject request) throws Exception{
         String username = request.getString("user_name");
         String storename = request.getString("store_name");
-        String productname = request.getString("product_name");
-        int price = request.getInt("product_price");
-        int amount = request.getInt("product_amount");
+        String productname = request.getString("product");
+        int price = request.getInt("price");
+        int amount = request.getInt("amount");
 
         boolean b = storeRole.add_store_product(username,storename,productname,price,amount);
 
@@ -29,11 +29,11 @@ public class StoreRoleMessageProccess {
 
     public static void edit_store_product(MessagingProtocol protocol, JSONObject request) throws Exception{
         String username = request.getString("user_name");
-        String storename = request.getString("store_name");
-        String productname = request.getString("product_name");
-        String newProductname = request.getString("new_product_name");
-        int price = request.getInt("product_price");
-        int amount = request.getInt("product_amount");
+        String storename = request.getString("store");
+        String productname = request.getString("product");
+        String newProductname = request.getString("newp");
+        int price = request.getInt("price");
+        int amount = request.getInt("amount");
 
         boolean b = storeRole.edit_store_product(username,storename,productname,newProductname,price,amount);
 
@@ -172,7 +172,7 @@ public class StoreRoleMessageProccess {
 
     public static void watch_store_history(MessagingProtocol protocol, JSONObject request) throws Exception{
         String username = request.getString("user_name");
-        String storename = request.getString("store_name");
+        String storename = request.getString("store");
 
         String s = storeRole.watch_store_history(username,storename);
 

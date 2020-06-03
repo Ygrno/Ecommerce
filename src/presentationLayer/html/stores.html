@@ -96,6 +96,7 @@
         <br />
         <span id="store_name"></span>
         <img id="store_review" src="../images/store_review.png" style="width: 40px; height: 40px; cursor: pointer" onclick="addStoreReview()">
+        <img id="ask_question" src="../images/ask_question.png" style="width: 40px; height: 40px; cursor: pointer" onclick="askStoreQuestion()">
 
         <br />
         <span id="store_open"></span>
@@ -175,6 +176,26 @@
                 buyResponse(response);
             }else if (req === "view_purchase_history"){
                 viewPurchaseHistory(response);
+            }else if (req === "add_store_product"){
+                add_store_product_response(response);
+            }else if (req === "remove_store_product"){
+                remove_store_product_response(response);
+            }else if (req === "edit_store_product"){
+                edit_store_product_response(response);
+            }else if (req === "assign_store_manager"){
+                assign_store_manager_response(response);
+            }else if (req === "remove_store_manager"){
+                remove_store_manager_response(response);
+            }else if (req === "assign_store_owner"){
+                assign_store_owner_response(response);
+            }else if (req === "remove_store_owner"){
+                remove_store_owner_response(response);
+            }else if (req === "close_store"){
+                close_store_response(response);
+            }else if (req === "watch_store_history"){
+                watch_store_history_respond(response);
+            }else if (req === "send_query_to_store"){
+                send_query_to_store_response(response);
             }
         };
 

@@ -107,7 +107,6 @@ public class SystemManage_Facade implements InternalService {
                 processExist=true;
             }
         }
-
         if(!processExist){
             PurchaseProcess p=new PurchaseProcess(g,SystemManage_Facade.get_store(store_name),new ShoppingBag(new ArrayList<>()));
             g.getShoppingCart().getShopping_bag_list().add(p.getShoppingBag());
@@ -271,7 +270,8 @@ public class SystemManage_Facade implements InternalService {
             if (s.getName().equals(store_name))
                 productList = s.getProduct_list();
         }
-
+        if(productList==null)
+            return null;
         int size = productList.size();
         String[][] products_arr = new String[size][4];
         for (int i = 0; i<size; i++){

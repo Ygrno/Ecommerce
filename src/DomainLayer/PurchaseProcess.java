@@ -8,6 +8,7 @@ public class PurchaseProcess {
     private User user;
     private Store store;
     private ShoppingBag shoppingBag;
+    private boolean isDone;
 
     public DealDetails getDetails() {
         return details;
@@ -23,7 +24,7 @@ public class PurchaseProcess {
         isDone = done;
     }
 
-    boolean isDone;
+
 
     public PurchaseProcess(User user, Store store, ShoppingBag shoppingBag) {
         this.user = user;
