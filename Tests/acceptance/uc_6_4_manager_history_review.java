@@ -16,13 +16,14 @@ public class uc_6_4_manager_history_review {
     private static SubscriberImp SUBImp;
     private static GuestImp guestImp;
     private static StoreRoleImp storeRoleImp;
-    private static ManagerImp MANIMP;
+    private static ManagerImp managerImp;
 
     @BeforeClass
     public static void before() throws IOException {
         SUBImp = new SubscriberImp();
         guestImp = new GuestImp();
         storeRoleImp = new StoreRoleImp();
+        managerImp = new ManagerImp();
         guestImp.login("Admin","Password");
         guestImp.sign_up("subscriber", "subscriber");
         guestImp.login("subscriber","subscriber");
@@ -38,8 +39,8 @@ public class uc_6_4_manager_history_review {
 
     @Test
     public void success_scenario() {
-        assertTrue(MANIMP.view_history_store("store1"));
-        assertTrue(MANIMP.view_history_costumer("buyer"));
+        assertEquals(managerImp.view_history_store("store1"),"");
+        assertEquals(managerImp.view_history_costumer("buyer"),"");
 
 
     }
@@ -47,8 +48,8 @@ public class uc_6_4_manager_history_review {
 
     @Test
     public void failure_scenario() {
-        assertFalse(MANIMP.view_history_store("store2"));
-        assertFalse(MANIMP.view_history_costumer("buyer1"));
+        assertEquals(managerImp.view_history_store("store2"),"");
+        assertEquals(managerImp.view_history_costumer("buyer1"),"");
 
 
     }

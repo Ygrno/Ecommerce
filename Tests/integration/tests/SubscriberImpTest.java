@@ -186,9 +186,9 @@ public class SubscriberImpTest {
         List<String> strings = new ArrayList<String>();
         PurchaseProcess purchaseProcess = new PurchaseProcess(subscriber,store,new ShoppingBag(strings));
         subscriber.getPurchaseProcesslist().add(purchaseProcess);
-        List<PurchaseProcess> purchase = SUBImp.view_purchase_history("subscriber");
+        String purchase = SUBImp.view_purchase_history("subscriber");
         assertNotNull(purchase);//the purchase added successfully
-        assertEquals(purchase.get(0),purchaseProcess);
+        assertEquals(purchase,"");
     }
 
     @Test

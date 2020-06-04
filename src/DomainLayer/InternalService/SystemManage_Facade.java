@@ -302,13 +302,13 @@ public class SystemManage_Facade implements InternalService {
         }
         return history.toString();
     }
-    public static String  get_subscriber_purchase_process(String user_name) {
+    public static String get_subscriber_purchase_process(String user_name) {
         StringBuilder history = new StringBuilder();
         Subscriber sub = system.get_subscriber(user_name);
         if (sub != null) {
             for(PurchaseProcess purchase: sub.getPurchaseProcesslist()){
                 if(purchase.isFinished())
-                    history.append("\n").append("Customer Name: ").append(purchase.getDetails().getBuyer_name()).append("\nList of products: ").append(purchase.getShoppingBag().getProducts_names().toString()).append("\n sum: ").append(purchase.getDetails().getPrice());
+                    history.append("\n").append("Customer Name: ").append(purchase.getDetails().getBuyer_name()).append("Store Name: ").append(purchase.getStore().getName()).append("\nList of products: ").append(purchase.getShoppingBag().getProducts_names().toString()).append("\n sum: ").append(purchase.getDetails().getPrice());
             }
         }
         return history.toString();
