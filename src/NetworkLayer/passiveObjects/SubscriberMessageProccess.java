@@ -14,7 +14,7 @@ public class SubscriberMessageProccess {
         String storeName = request.getString("store");
         String userName = request.getString("username");
         String productName = request.getString("product");
-        boolean b= subscriber.save_products(userName,productName,storeName);
+        boolean b= subscriber.save_products(userName,productName,storeName,1);
         JSONObject o=new JSONObject();
         System.out.println(request.get("req"));
         o.put("success", b);
@@ -48,7 +48,7 @@ public class SubscriberMessageProccess {
         int cvv=request.getInt("cvv");
         double discount =request.getDouble("discount");
 
-        boolean b = subscriber.buy_products_in_cart(username,buyerName,creditCardNumber,expireDate,cvv,discount);
+        boolean b = subscriber.buy_products_in_cart(username,buyerName,creditCardNumber,expireDate,cvv);
         JSONObject o=new JSONObject();
         o.put("req", request.get("req"));
         o.put("success", b);
@@ -106,16 +106,11 @@ public class SubscriberMessageProccess {
 
     public static void view_purchase_history(MessagingProtocol protocol, JSONObject request) throws Exception{
         String username = request.getString("username");
-        List<JSONObject> l = subscriber.view_purchase_history(username);
-        if(l == null) return;
-        JSONArray jarr = new JSONArray();
-        for(JSONObject o : l){
-            jarr.put(o);
-        }
+        String l = subscriber.view_purchase_history(username);
 
         JSONObject o = new JSONObject();
         o.put("req", request.get("req"));
-        o.put("products_in_history", jarr);
+        o.put("products_in_history", l);
 
         protocol.send(o);
     }

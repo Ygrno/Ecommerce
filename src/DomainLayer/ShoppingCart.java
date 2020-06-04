@@ -1,4 +1,7 @@
 package DomainLayer;
+import DomainLayer.Store.DiscountComponent;
+import DomainLayer.Store.DiscountPolicy;
+import DomainLayer.Store.Store;
 import org.json.JSONObject;
 import org.json.JSONException;
 import java.util.ArrayList;
@@ -70,6 +73,5 @@ public class ShoppingCart {
                 }
             }
         }
-        return price;
     }
 }

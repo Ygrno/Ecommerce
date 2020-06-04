@@ -3,6 +3,7 @@ package acceptance;
 import ServiceLayer.GuestImp;
 import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
+import org.json.JSONException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -43,7 +44,7 @@ public class uc_2_7_Test {
 
 
     @Test
-    public void successScenario(){
+    public void successScenario() throws JSONException {
         gi.save_products(1,"bmba","store1",1);
         gi.save_products(1,"twix","store3",1);
         gi.save_products(1,"chips","store2",1);
@@ -55,7 +56,7 @@ public class uc_2_7_Test {
 
     }
     @Test
-    public void failScenario1(){
+    public void failScenario1() throws JSONException {
 
         assert null == gi.watch_products_in_cart(2);
     }

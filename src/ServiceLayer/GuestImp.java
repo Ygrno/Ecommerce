@@ -82,6 +82,11 @@ public class GuestImp implements IGuest {
     }
 
     @Override
+    public List<JSONObject> getAllStores() throws JSONException {
+        return null;
+    }
+
+    @Override
     public HashMap<String, Double> search_products(String product_name) {
         my_log.logger.info("search_products");
         if(!SystemManage_Facade.is_initialized()) {
@@ -91,6 +96,12 @@ public class GuestImp implements IGuest {
         return SystemManage_Facade.searchProductStores(product_name);
 
     }
+
+    @Override
+    public int addGuest() {
+        return 0;
+    }
+
 
     @Override
     public boolean save_products(int id,String product_name, String store_name, int amount) {
@@ -104,7 +115,7 @@ public class GuestImp implements IGuest {
     }
 
     @Override
-    public List<String> watch_products_in_cart(int id) {
+    public List<JSONObject> watch_products_in_cart(int id) throws JSONException {
         my_log.logger.info("watch_products_in_cart");
         if(!SystemManage_Facade.is_initialized()) {
             my_log.logger.warning("System not initialized");
@@ -117,15 +128,15 @@ public class GuestImp implements IGuest {
     }
 
     @Override
-    public boolean buy_products_in_cart(int id,String buyerName,String creditCardNumber,String expireDate,int cvv,double discount) {
+    public boolean buy_products_in_cart(int id,String buyerName,String creditCardNumber,String expireDate,int cvv) throws JSONException {
         my_log.logger.info("buy_products_in_cart");
         if(!SystemManage_Facade.is_initialized()) {
             my_log.logger.warning("System not initialized");
             return false;
         }
-        if(discount > 1 || discount < 0){
-            return false;
-        }
+//        if(discount > 1 || discount < 0){
+//            return false;
+//        }
         if(expireDate.length() != 5){
             return false;
         }
@@ -136,7 +147,7 @@ public class GuestImp implements IGuest {
 
         //check product availability
 
-        double price=SystemManage_Facade.getPriceOfCart(String.valueOf(id),discount);
+        double price=SystemManage_Facade.getPriceOfCart(String.valueOf(id));
         String[] dealDetails={String.valueOf(price),buyerName,creditCardNumber,expireDate, String.valueOf(cvv)};
         return SystemManage_Facade.buy(dealDetails);
     }

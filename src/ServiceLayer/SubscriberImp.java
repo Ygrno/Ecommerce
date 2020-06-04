@@ -53,6 +53,8 @@ public class SubscriberImp implements ISubscriber {
         return SystemManage_Facade.getProductsInCartForSubscriber(userName);
     }
 
+
+
     @Override
     public boolean buy_products_in_cart(String id, String buyerName, String creditCardNumber, String expireDate, int cvv) throws JSONException {
         my_log.logger.info("buy_products_in_cart");

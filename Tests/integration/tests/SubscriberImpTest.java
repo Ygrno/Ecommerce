@@ -117,7 +117,7 @@ public class SubscriberImpTest {
     }
 
     @Test
-    public void watch_products_in_cart() {
+    public void watch_products_in_cart() throws JSONException {
         SUBImp.save_products("subscriber","bmba","store1",1);
         SUBImp.save_products("subscriber","twix","store3",1);
         SUBImp.save_products("subscriber","chips","store2",1);
@@ -188,9 +188,9 @@ public class SubscriberImpTest {
         List<String> strings = new ArrayList<String>();
         PurchaseProcess purchaseProcess = new PurchaseProcess(subscriber,store,new ShoppingBag(strings));
         subscriber.getPurchaseProcesslist().add(purchaseProcess);
-        List<PurchaseProcess> purchase = SUBImp.view_purchase_history("subscriber");
+        String purchase = SUBImp.view_purchase_history("subscriber");
         assertNotNull(purchase);//the purchase added successfully
-        assertNull(purchase.get(0).getShoppingBag().getProducts_names());
+        assertEquals(purchase,"");
     }
 
     @Test

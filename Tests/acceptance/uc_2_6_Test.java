@@ -45,9 +45,9 @@ public class uc_2_6_Test {
     }
     @Test
     public void successScenario() throws JSONException {
-        gi.save_products(1,"bmba","store1");
-        gi.save_products(1,"twix","store3");
-        gi.save_products(1,"chips","store2");
+        gi.save_products(1,"bmba","store1",1);
+        gi.save_products(1,"twix","store3",1);
+        gi.save_products(1,"chips","store2",1);
 
         try {
             assert gi.watch_products_in_cart(1).get(0).getString("name").equals("twix");

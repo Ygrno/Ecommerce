@@ -113,7 +113,7 @@ public class GuestMessageProccess {
         String storeName = request.getString("store");
         String productName = request.getString("product");
         int id = Integer.parseInt(request.getString("id"));
-        boolean b=guestImp.save_products(id,productName,storeName);
+        boolean b=guestImp.save_products(id,productName,storeName,1);
         JSONObject o=new JSONObject();
         o.put("req", request.get("req"));
         o.put("success", b);
@@ -150,7 +150,7 @@ public class GuestMessageProccess {
         int cvv=request.getInt("cvv");
         double discount =request.getDouble("discount");
 
-        boolean b = guestImp.buy_products_in_cart(id,buyerName,creditCardNumber,expireDate,cvv,discount);
+        boolean b = guestImp.buy_products_in_cart(id,buyerName,creditCardNumber,expireDate,cvv);
         JSONObject o=new JSONObject();
         o.put("req", request.get("req"));
         o.put("success", b);
