@@ -3,6 +3,7 @@ import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
 
 import DomainLayer.PurchaseProcess;
+import org.json.JSONException;
 
 
 import java.util.HashMap;
@@ -52,7 +53,7 @@ public class SubscriberImp implements ISubscriber {
     }
 
     @Override
-    public boolean buy_products_in_cart(String id, String buyerName, String creditCardNumber, String expireDate, int cvv) {
+    public boolean buy_products_in_cart(String id, String buyerName, String creditCardNumber, String expireDate, int cvv) throws JSONException {
         my_log.logger.info("buy_products_in_cart");
         if(!SystemManage_Facade.is_initialized())
             return false;
