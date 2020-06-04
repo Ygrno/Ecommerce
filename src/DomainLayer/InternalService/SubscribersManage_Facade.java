@@ -9,6 +9,7 @@ import DomainLayer.Store.DiscountPolicy;
 import DomainLayer.Store.Store;
 import DomainLayer.Store.VisibleDiscount;
 import DomainLayer.System;
+import DomainLayer.User.ProductReview;
 import DomainLayer.User.Subscriber;
 import DomainLayer.User.User;
 
@@ -70,6 +71,113 @@ public class SubscribersManage_Facade implements InternalService {
     public static boolean check_if_logged_in(String user_name) {
         if (System.initialized) {
             return System.getSystem().get_subscriber(user_name).isLogged_in();
+        }
+        return false;
+    }
+    public static boolean addProductReview(String user_name, String product_name, String store_name, String review_data, int rank) {
+        Subscriber subscriber = System.getSystem().get_subscriber(user_name);
+        Product reviewedProduct = System.getSystem().get_store(store_name).getProduct(product_name);
+        List<PurchaseProcess> purchedlist = new ArrayList<>();
+        ProductReview product_review;
+        boolean isPurchased = false;
+        ShoppingBag currentShoppingBag;
+        if (subscriber != null && subscriber.isLogged_in() && reviewedProduct != null) {
+            purchedlist = subscriber.getPurchaseProcesslist();
+            for (PurchaseProcess pp : purchedlist) {
+                currentShoppingBag = pp.getShoppingBag();
+                for (String p : currentShoppingBag.getProducts_names())
+                    if (p.equals(product_name) && pp.getStore().getName().equals(store_name)&&pp.isFinished()) {
+                        isPurchased = true;
+                        product_review = new ProductReview(subscriber,rank,review_data);
+                        reviewedProduct.addReview(product_review);
+                    }
+            }
+        }
+        return isPurchased;
+    }
+    public static boolean delete_discount(String user_name, String store_name, String discount_name) {
+        Subscriber requester = System.getSystem().get_subscriber(user_name);
+
+        StoreRole store_role = requester.get_role_at_store(store_name);
+        if(store_role == null ) return false;
+        Store store_to_add = store_role.store;
+        if (store_role instanceof StoreOwner || (store_role instanceof  StoreManger && ((StoreManger) store_role).havePermission("ADD_DISCOUNT"))) {
+            DiscountPolicy discountPolicy = store_to_add.getDiscountPolicy();
+            if(!discountPolicy.check_if_unique(discount_name)) {
+                discountPolicy.delete_discount(discount_name);
+                return true;
+            }
+        }
+        return false;
+
+    }
+    public static boolean add_visible_discount_to_product(String user_name, String store_name, String product_name, String discount_name, double discount_percentage, int due_date) {
+        Subscriber requester = System.getSystem().get_subscriber(user_name);
+
+        StoreRole store_role = requester.get_role_at_store(store_name);
+        if(store_role == null ) return false;
+        Store store_to_add = store_role.store;
+        Product p = store_to_add.getProduct(product_name);
+        if(p == null) return false;
+
+        if (store_role instanceof StoreOwner || (store_role instanceof  StoreManger && ((StoreManger) store_role).havePermission("ADD_DISCOUNT"))) {
+            DiscountPolicy discountPolicy = store_to_add.getDiscountPolicy();
+            if(discountPolicy.check_if_unique(discount_name)) {
+                discountPolicy.add_discount(new VisibleDiscount(discount_name, discount_percentage, due_date, p));
+                return true;
+            }
+        }
+        return false;
+
+    }
+    public static boolean add_conditioned_discount_to_product(String user_name, String store_name, String product_name, String discount_name, double discount_percentage, int due_date,int amount,int sum) {
+        Subscriber requester = System.getSystem().get_subscriber(user_name);
+
+        StoreRole store_role = requester.get_role_at_store(store_name);
+        if(store_role == null ) return false;
+        Store store_to_add = store_role.store;
+        Product p = store_to_add.getProduct(product_name);
+        if(p == null) return false;
+
+        if (store_role instanceof StoreOwner || (store_role instanceof  StoreManger && ((StoreManger) store_role).havePermission("ADD_DISCOUNT"))) {
+            DiscountPolicy discountPolicy = store_to_add.getDiscountPolicy();
+            if(discountPolicy.check_if_unique(discount_name)) {
+                if (amount > 0) {
+                    discountPolicy.add_discount(new ConditionedDiscount(discount_name, discount_percentage, due_date, Condition.IF_NUMBER_OF_PRODUCTS, store_to_add, p, amount, sum));
+                    return true;
+                }
+                if (sum > 0) {
+                    discountPolicy.add_discount(new ConditionedDiscount(discount_name, discount_percentage, due_date, Condition.IF_SUM_GREATER_THAN, store_to_add, p, amount, sum));
+                    return true;
+                }
+                return false;
+            }
+        }
+        return false;
+
+    }
+    public static boolean add_complex_discount(String user_name, String store_name, String discount_name, String[] discounts, String type, int end_of_use_date) {
+        Subscriber requester = System.getSystem().get_subscriber(user_name);
+        StoreRole store_role = requester.get_role_at_store(store_name);
+        if(store_role == null ) return false;
+        Store store_to_add = store_role.store;
+        if (store_role instanceof StoreOwner || (store_role instanceof  StoreManger && ((StoreManger) store_role).havePermission("ADD_DISCOUNT"))) {
+            DiscountPolicy discountPolicy = store_to_add.getDiscountPolicy();
+            for(String dc :discounts) // see if all the discount are real (in the store)
+                if(discountPolicy.check_if_unique(dc)) {
+                    return false;
+
+                }
+            ArrayList<DiscountComponent> discounts_comp = new ArrayList<>();
+            for(String name : discounts){
+                DiscountComponent dc=discountPolicy.get_discount_by_name(name);
+                if(dc!=null)
+                    discounts_comp.add(dc);
+                else{
+                    return false;
+                }
+            }
+            discountPolicy.add_discount(new ComplexDiscount(discount_name,discounts_comp,type,end_of_use_date));
         }
         return false;
     }
@@ -230,23 +338,7 @@ public class SubscribersManage_Facade implements InternalService {
         return false;
     }
 
-    public static boolean add_visible_discount_to_product(String user_name, String store_name, String product_name, String discount_name, double discount_percentage, int due_date) {
-        Subscriber requester = System.getSystem().get_subscriber(user_name);
 
-        StoreRole store_role = requester.get_role_at_store(store_name);
-        if(store_role == null ) return false;
-        Store store_to_add = store_role.store;
-        Product p = store_to_add.getProduct(product_name);
-        if(p == null) return false;
-
-        if (store_role instanceof StoreOwner || (store_role instanceof  StoreManger && ((StoreManger) store_role).havePermission("ADD_DISCOUNT"))) {
-            DiscountPolicy discountPolicy = store_to_add.getDiscountPolicy();
-            discountPolicy.add_discount(new VisibleDiscount(discount_name,discount_percentage,due_date,p));
-            return true;
-        }
-        return false;
-
-    }
 
     public static boolean remove_manager_from_store(String user_name, String store_name, String user_assign) {
         Subscriber requester = System.getSystem().get_subscriber(user_name);

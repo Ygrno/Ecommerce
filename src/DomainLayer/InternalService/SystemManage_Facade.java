@@ -203,27 +203,6 @@ public class SystemManage_Facade implements InternalService {
         subscriber.getQuries().add(query);
     }
 
-    public static boolean addProductReview(String user_name, String product_name, String store_name, String review_data, int rank) {
-        Subscriber subscriber = system.get_subscriber(user_name);
-        Product reviewedProduct = system.get_store(store_name).getProduct(product_name);
-        List<PurchaseProcess> purchedlist = new ArrayList<>();
-        ProductReview product_review;
-        boolean isPurchased = false;
-        ShoppingBag currentShoppingBag;
-        if (subscriber != null && subscriber.isLogged_in() && reviewedProduct != null) {
-            purchedlist = subscriber.getPurchaseProcesslist();
-            for (PurchaseProcess pp : purchedlist) {
-                currentShoppingBag = pp.getShoppingBag();
-                for (String p : currentShoppingBag.getProducts_names())
-                    if (p.equals(product_name) && pp.getStore().getName().equals(store_name)&&pp.isFinished()) {
-                        isPurchased = true;
-                        product_review = new ProductReview(subscriber,rank,review_data);
-                        reviewedProduct.addReview(product_review);
-                    }
-            }
-        }
-        return isPurchased;
-    }
 
 
     public static boolean saveProductForSubscriber(String userName,String product_name, String store_name,int amount){
@@ -311,6 +290,28 @@ public class SystemManage_Facade implements InternalService {
             products_arr[i][3]=productList.get(i).getStore().getName();
         }
         return products_arr;
+    }
+    public static String get_store_purchase_process(String store_name) {
+        StringBuilder history = new StringBuilder();
+        Store store = system.get_store(store_name);
+        if (store != null) {
+            for(PurchaseProcess purchase: store.getPurchase_process_list()){
+                if(purchase.isFinished())
+                    history.append("\n").append("Store Name: ").append(purchase.getStore().getName()).append("\nList of products: ").append(purchase.getShoppingBag().getProducts_names().toString()).append("\n sum: ").append(purchase.getDetails().getPrice());
+            }
+        }
+        return history.toString();
+    }
+    public static String  get_subscriber_purchase_process(String user_name) {
+        StringBuilder history = new StringBuilder();
+        Subscriber sub = system.get_subscriber(user_name);
+        if (sub != null) {
+            for(PurchaseProcess purchase: sub.getPurchaseProcesslist()){
+                if(purchase.isFinished())
+                    history.append("\n").append("Customer Name: ").append(purchase.getDetails().getBuyer_name()).append("\nList of products: ").append(purchase.getShoppingBag().getProducts_names().toString()).append("\n sum: ").append(purchase.getDetails().getPrice());
+            }
+        }
+        return history.toString();
     }
     public static List<Store> getAllStores(){
         return system.getStore_list();
