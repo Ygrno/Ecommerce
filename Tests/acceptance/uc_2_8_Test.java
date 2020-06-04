@@ -42,12 +42,12 @@ public class uc_2_8_Test {
 
     }
     @Test
-    public void successScenario() throws JSONException {
+    public void successScenario() throws Exception {
         assertTrue(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/26",999));
 
     }
     @Test
-    public void failScenario1() throws JSONException {
+    public void failScenario1() throws Exception {
         assertFalse(gi.buy_products_in_cart(0,"mahmoud","1234123412341234","11/26",999));
         assertFalse(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/26",999));
         assertFalse(gi.buy_products_in_cart(1,"mahmoud","12341234123412341","11/26",999));

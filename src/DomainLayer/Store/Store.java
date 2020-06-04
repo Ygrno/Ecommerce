@@ -6,6 +6,7 @@ import DomainLayer.Roles.Role;
 import DomainLayer.Roles.StoreManger;
 import DomainLayer.Roles.StoreOwner;
 import DomainLayer.Roles.StoreRole;
+import Observer.Observer;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -61,7 +62,7 @@ public class Store {
         return is_open;
     }
 
-    public void setIs_open(boolean is_open) throws JSONException {
+    public void setIs_open(boolean is_open) throws Exception {
         //notification Ahmad
         for(Role role : roles){
             if(role instanceof StoreOwner) {
@@ -69,7 +70,7 @@ public class Store {
                 o.put("username",role.user.getName());
                 o.put("message", "store: "+this.name+" is open");
                 role.user.notifications().add(o);
-                ((StoreOwner) role).observer().update(o);
+                Observer.update(o);
             }
         }
         //notification

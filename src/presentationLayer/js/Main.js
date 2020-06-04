@@ -65,6 +65,35 @@ function searchProduct(ele){
     }
 
 }
+function newNotification(){
+    alert("YOU HAVE NEW NOTIFICATION!");
+}
+function get_notifications(response){
+    if(isGuest()){
+            alert("You should sign in first");
+            return;
+        }
+        alert(JSON.stringify(response));
+         let notifications = response["notifications"];
+         if (notifications.length === 0) return;
+         let div = document.createElement("div");
+         div.style.overflow = 'auto';
+
+         let notificationHTMLList = new HTMLList(div);
+
+         const cellBuilder = (product)=>{
+         //DESIGN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            let d = document.createElement("div");
+            d.innerHTML = "<b>"+JSON.stringify(product)+"</b>";
+             return d;
+         };
+
+            notifications.forEach((p)=> notificationHTMLList.addElement(p));
+            notificationHTMLList.render(cellBuilder);
+            div.appendChild(BuyButton);
+            popUp(div);
+}
+
 
 function ViewCart(products) {
     /**display cart popup**/
@@ -1104,6 +1133,10 @@ class Main{
 
     add_store_visible_discount(details){
         this.client.send(JSON.stringify(details));
+    }
+
+    get_notifications(){
+        this.client.send(JSON.stringify({req:"get_notifications",username:localStorage.getItem("current_username")}));
     }
 
 }

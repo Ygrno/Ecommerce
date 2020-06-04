@@ -125,7 +125,7 @@ public class GuestImpTest {
     }
 
     @Test
-    public void buy_products_in_cart() throws JSONException {
+    public void buy_products_in_cart() throws Exception {
         assertTrue(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/26",999));
         assertFalse(gi.buy_products_in_cart(0,"mahmoud","1234123412341234","11/26",999));
         assertFalse(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/26",999));

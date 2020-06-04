@@ -6,7 +6,16 @@ import org.json.JSONObject;
 
 public class MessagingProtocol {
 
-    private connectionHandler connectionHandler;
+    private static MessagingProtocol instance;
+    private static NetworkLayer.passiveObjects.connectionHandler connectionHandler;
+
+    public static MessagingProtocol getInstance(){
+        if(instance==null){
+            instance=new MessagingProtocol(connectionHandler);
+        }
+        return instance;
+    }
+
 
     public MessagingProtocol(connectionHandler connectionHandler){
         this.connectionHandler = connectionHandler;
@@ -108,6 +117,8 @@ public class MessagingProtocol {
                 StoreRoleMessageProccess.view_and_respond_to_questions(this,request);
             }else if(req.equals("watch_store_history")){  //done
                 StoreRoleMessageProccess.watch_store_history(this,request);
+            }else if(req.equals("get_notifications")){
+              SubscriberMessageProccess.getNotifications(this,request);
             }
 
         }catch (Exception e){

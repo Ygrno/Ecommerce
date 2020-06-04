@@ -129,7 +129,7 @@ public class SubscriberImpTest {
     }
 
     @Test
-    public void buy_products_in_cart() throws JSONException {
+    public void buy_products_in_cart() throws Exception {
         assertTrue(SUBImp.buy_products_in_cart("subscriber","mahmoud","1234123412341234","11/26",999));
         assertFalse(SUBImp.buy_products_in_cart("subscriber1","mahmoud","1234123412341234","11/26",999));
         assertFalse(SUBImp.buy_products_in_cart("subscriber","mahmoud","1234123412341234","11/26",999));

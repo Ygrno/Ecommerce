@@ -12,6 +12,9 @@ import DomainLayer.System;
 import DomainLayer.User.ProductReview;
 import DomainLayer.User.Subscriber;
 import DomainLayer.User.User;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -532,5 +535,16 @@ public class SubscribersManage_Facade implements InternalService {
 
     public static boolean add_buyPolicy_to_complex_policy(String user_name, String store_name, int type, int complex_policy_id, int policy_id, String product_name, int min, int max, User user, int max_quantity, int day) {
     return true;
+    }
+
+    public static List<JSONObject> getNotifications(String userName){
+        Subscriber requester = System.getSystem().get_subscriber(userName);
+        return requester.notifications();
+    }
+
+    public static void addNotification(JSONObject o) throws JSONException {
+        String userName=o.getString("username");
+        Subscriber requester = System.getSystem().get_subscriber(userName);
+        requester.notifications().add(o);
     }
 }

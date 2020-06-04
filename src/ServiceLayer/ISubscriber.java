@@ -15,7 +15,7 @@ public interface ISubscriber {
     public boolean save_products(String userName,String product_name, String store_name,int amount); //2.6
     public List<JSONObject> watch_products_in_cart(String userName) throws JSONException;  //2.7.1
     //remove_product_from cart                //2.7.2
-    public boolean buy_products_in_cart(String id,String buyerName,String creditCardNumber,String expireDate,int cvv) throws JSONException;   //2.8 //7
+    public boolean buy_products_in_cart(String id,String buyerName,String creditCardNumber,String expireDate,int cvv) throws Exception;   //2.8 //7
 
     public boolean sign_out(String user_name);  //3.1
     public boolean open_store(String user_name, String store_name); //3.2
@@ -31,6 +31,6 @@ public interface ISubscriber {
     public boolean add_conditioned_discount(String user_name, String store_name, String product_name, String discount_name, double discount_percentage, int due_date, int amount, int sum);//4.2
     public boolean add_complex_discount(String user_name, String store_name, String discount_name, String[]discounts, String type, int end_of_use_date);
     public boolean delete_discount(String user_name, String store_name, String discount_name);
-
+    public List<JSONObject> getNotifications(String userName);
 
 }

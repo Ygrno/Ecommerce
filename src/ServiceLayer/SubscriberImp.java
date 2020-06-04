@@ -56,7 +56,7 @@ public class SubscriberImp implements ISubscriber {
 
 
     @Override
-    public boolean buy_products_in_cart(String id, String buyerName, String creditCardNumber, String expireDate, int cvv) throws JSONException {
+    public boolean buy_products_in_cart(String id, String buyerName, String creditCardNumber, String expireDate, int cvv) throws Exception {
         my_log.logger.info("buy_products_in_cart");
         if(!SystemManage_Facade.is_initialized())
             return false;
@@ -157,6 +157,17 @@ public class SubscriberImp implements ISubscriber {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<JSONObject> getNotifications(String userName) {
+        my_log.logger.info("getNotifications");
+        if (!SystemManage_Facade.is_initialized()) return null;
+
+        if (SystemManage_Facade.find_subscriber(userName) && SubscribersManage_Facade.check_if_logged_in(userName)) {
+            return  SubscribersManage_Facade.getNotifications(userName);
+        }
+        return null;
     }
 
 

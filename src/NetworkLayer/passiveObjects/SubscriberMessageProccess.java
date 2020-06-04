@@ -115,5 +115,30 @@ public class SubscriberMessageProccess {
         protocol.send(o);
     }
 
+    public static void getNotifications(MessagingProtocol protocol, JSONObject request) throws Exception{
+        String username = request.getString("username");
+        List<JSONObject> l = subscriber.getNotifications(username);
+        if(l == null) return;
+
+        JSONArray jarr = new JSONArray();
+        for(JSONObject o : l){
+            jarr.put(o);
+        }
+
+        JSONObject o = new JSONObject();
+        o.put("notifications", jarr);
+        o.put("req", request.get("req"));
+
+        protocol.send(o);
+    }
+
+    public static void send_notification(MessagingProtocol protocol) throws Exception{
+        System.out.println("new notify");
+        JSONObject o = new JSONObject();
+        o.put("req","new_notification");
+        protocol.send(o);
+    }
+
+
 
 }

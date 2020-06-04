@@ -4,6 +4,7 @@ import DomainLayer.Roles.Role;
 import DomainLayer.Roles.StoreOwner;
 import DomainLayer.Store.Store;
 import DomainLayer.User.User;
+import Observer.Observer;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,7 +24,7 @@ public class PurchaseProcess {
         this.details = details;
     }
 
-    public void setDone(boolean done, DealDetails dealDetails) throws JSONException {
+    public void setDone(boolean done, DealDetails dealDetails) throws Exception {
 
         update_details(dealDetails);
         isDone = done;
@@ -32,8 +33,7 @@ public class PurchaseProcess {
                 JSONObject o = new JSONObject();
                 o.put("username", role.user.getName());
                 o.put("message", "Pruchase Process is done");
-                role.user.notifications().add(o);
-                role.user.observer().update(o);
+                Observer.update(o);
             }
         }
     }

@@ -17,7 +17,7 @@ public abstract class User {
     public User(){
         purchaseProcesslist = new ArrayList<>();
         shoppingCart = new ShoppingCart();
-        notifications= null;
+        notifications= new ArrayList<>();
     }
 
     public ShoppingCart getShoppingCart() {

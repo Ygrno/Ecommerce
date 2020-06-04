@@ -129,7 +129,7 @@ public class GuestImp implements IGuest {
     }
 
     @Override
-    public boolean buy_products_in_cart(int id,String buyerName,String creditCardNumber,String expireDate,int cvv) throws JSONException {
+    public boolean buy_products_in_cart(int id,String buyerName,String creditCardNumber,String expireDate,int cvv) throws Exception {
         my_log.logger.info("buy_products_in_cart");
         if(!SystemManage_Facade.is_initialized()) {
             my_log.logger.warning("System not initialized");

@@ -196,6 +196,10 @@
                 watch_store_history_respond(response);
             }else if (req === "send_query_to_store"){
                 send_query_to_store_response(response);
+            }else if (req === "get_notifications"){
+                get_notifications(response);
+            }else if (req === "new_notification"){
+                newNotification();
             }
         };
 
