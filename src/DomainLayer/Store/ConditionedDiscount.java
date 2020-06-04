@@ -19,6 +19,10 @@ public class ConditionedDiscount extends DiscountComponent {
        // return final_price;
    // }
 
+    public String getDiscount_name() {
+        return discount_name;
+    }
+
     public ConditionedDiscount(String discount_name, double discount_percentage, int end_of_use_date, Condition condition, Store store, Product product, int required_amount, int required_sum) {
         this.discount_name = discount_name;
         this.discount_percentage = discount_percentage;

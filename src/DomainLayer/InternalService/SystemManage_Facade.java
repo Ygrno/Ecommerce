@@ -203,27 +203,6 @@ public class SystemManage_Facade implements InternalService {
         subscriber.getQuries().add(query);
     }
 
-    public static boolean addProductReview(String user_name, String product_name, String store_name, String review_data, int rank) {
-        Subscriber subscriber = system.get_subscriber(user_name);
-        Product reviewedProduct = system.get_store(store_name).getProduct(product_name);
-        List<PurchaseProcess> purchedlist = new ArrayList<>();
-        ProductReview product_review;
-        boolean isPurchased = false;
-        ShoppingBag currentShoppingBag;
-        if (subscriber != null && subscriber.isLogged_in() && reviewedProduct != null) {
-            purchedlist = subscriber.getPurchaseProcesslist();
-            for (PurchaseProcess pp : purchedlist) {
-                currentShoppingBag = pp.getShoppingBag();
-                for (String p : currentShoppingBag.getProducts_names())
-                    if (p.equals(product_name) && pp.getStore().getName().equals(store_name)&&pp.isFinished()) {
-                        isPurchased = true;
-                        product_review = new ProductReview(subscriber,rank,review_data);
-                        reviewedProduct.addReview(product_review);
-                    }
-            }
-        }
-        return isPurchased;
-    }
 
 
     public static boolean saveProductForSubscriber(String userName,String product_name, String store_name,int amount){

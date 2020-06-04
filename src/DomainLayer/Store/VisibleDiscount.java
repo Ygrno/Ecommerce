@@ -55,4 +55,8 @@ public class VisibleDiscount extends DiscountComponent {
         }
 
     }
+
+    public String getDiscount_name() {
+        return discount_name;
+    }
 }

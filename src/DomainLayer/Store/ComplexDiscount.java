@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class ComplexDiscount extends DiscountComponent {
 
     private String discount_name;
-
+    private int end_of_use_date;
     public String getDiscount_name() {
         return discount_name;
     }
@@ -17,10 +17,20 @@ public class ComplexDiscount extends DiscountComponent {
         this.discount_name = discount_name;
     }
 
-    public ComplexDiscount(String discount_name){
+    public ComplexDiscount(String discount_name,ArrayList<DiscountComponent> discounts , String type, int end_of_use_date){
         this.discount_name = discount_name;
-    }
+        this.end_of_use_date=end_of_use_date;
+        if(type.equals("and")){
+            this.and_discountComponents=discounts;
+        }
+        if(type.equals("or")){
+            this.or_discountComponents=discounts;
+        }
+        if(type.equals("one")){
+            this.onlyOne_discountComponents=discounts;
+        }
 
+    }
     ArrayList<DiscountComponent> and_discountComponents = new ArrayList<>();
     ArrayList<DiscountComponent> or_discountComponents = new ArrayList<>();
     ArrayList<DiscountComponent> onlyOne_discountComponents = new ArrayList<>();
