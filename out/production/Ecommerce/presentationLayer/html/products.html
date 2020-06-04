@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <script src="../js/HTMLList.js"></script>
+    <script src="../js/EcommerceClient.js"></script>
+    <script src="../js/Main.js"></script>
+
+    <title>Products</title>
+
+    <style>
+        body{
+            background-image: url('../images/home_bg.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            font-family: Monospaced;
+        }
+
+
+        #products_intro{
+            width: 80%;
+            margin-top: 2%;
+            margin-left: 2%;
+        }
+
+
+        .list_div{
+            width: 32%;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            margin-top: 2%;
+            height : 100px;
+            overflow: auto;
+            float: left;
+            margin-left: 1%;
+            cursor: pointer;
+            background-color: white;
+            border-radius: 2%;
+        }
+        .list_div:hover{
+            background-color: #cccccc;
+        }
+
+
+        .product_store_span{
+            font-size: 40px;
+            margin-left: 2%;
+        }
+
+        .product_name_span{
+
+            font-size: 40px;
+            margin-left: 2%;
+        }
+
+        .price_span{
+            margin-left: 2%;
+
+        }
+
+        .product_img{
+            float: left;
+            width: 70px;
+            height:60px;
+            margin-top: 15px;
+            margin-left: 1%;
+        }
+
+    </style>
+</head>
+<body>
+
+<div w3-include-html="header.html"></div>
+
+
+<div class="container">
+
+    <div id="products_intro">
+
+    </div>
+</div>
+
+
+
+<script>
+    const ProductDivCreator = (product)=>{
+        let store = product.store;
+        let product_name = product.product;
+        let price = product.price;
+
+        let div = document.createElement("div");
+        div.className = "list_div";
+
+        let img = document.createElement("img");
+        img.src = "../images/store.png";
+        img.className = "product_img";
+
+        let product_span = document.createElement("span");
+        product_span.innerHTML = product_name;
+        product_span.className = "product_name_span";
+
+        let store_span = document.createElement("span");
+        store_span.innerHTML = store;
+        store_span.className = "product_store_span";
+
+        let price_span = document.createElement("span");
+        price_span.innerHTML = "Price : "+price;
+        price_span.className = "price_span";
+
+        let br = document.createElement("br");
+
+        div.appendChild(img);
+        div.appendChild(product_span);
+        div.appendChild(br);
+        div.appendChild(store_span);
+        div.appendChild(br);
+        div.appendChild(price_span);
+
+        div.onclick = function () {
+            window.location.href = "stores.html?s="+store;
+        };
+
+        return div;
+    };
+
+    let productsList = new HTMLList(document.getElementById("products_intro"));
+
+    function addProduct(product) {
+        productsList.addElement(product);
+        productsList.rerender(ProductDivCreator);
+    }
+
+    function setMessageHandler() {
+        Main.prototype.messageHandler = function(msg){
+            let response = JSON.parse(msg);
+            let req = response.req;
+            console.log(response);
+            if(req === "get_products"){
+                addProduct(response);
+            }
+        };
+
+        return Main.getInstance();
+    }
+
+    function run() {
+        let main = setMessageHandler();
+
+        let current_username = localStorage.getItem("current_username");
+        let isGuest = localStorage.getItem("guest");
+
+        if (current_username === null && isGuest === null) {
+            window.location.href = "main.html";
+        }
+
+
+
+        let vars = main.getUrlVars();
+        if(Object.keys(vars).length === 0){
+            return;
+        }else{
+            main.init(() => {
+                includeHeader();
+                main.get_products(vars["p"]);
+            });
+        }
+    }
+
+    run();
+
+</script>
+</body>
+</html>
