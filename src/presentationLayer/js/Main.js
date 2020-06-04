@@ -182,17 +182,9 @@ function viewPurchaseHistory(products){
     let div = document.createElement("div");
     div.style.overflow = 'auto';
 
-    let prodcutHTMLList = new HTMLList(div);
-
-    const cellBuilder = (product)=>{
-        //DESIGN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        let d = document.createElement("div");
-        d.innerHTML = "<b>"+JSON.stringify(product)+"</b>";
-        return d;
-    };
-
-    productList.forEach((p)=> prodcutHTMLList.addElement(p));
-    prodcutHTMLList.render(cellBuilder);
+    productList.innerHTML = productList;
+    productList.className = 'total_price_div';
+    div.appendChild(productList);
     popUp(div);
 
 }
