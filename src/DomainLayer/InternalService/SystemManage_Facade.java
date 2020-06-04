@@ -291,6 +291,22 @@ public class SystemManage_Facade implements InternalService {
         }
         return products_arr;
     }
+    public static List<PurchaseProcess> get_store_purchase_process(String store_name) {
+        Store store = system.get_store(store_name);
+        List<PurchaseProcess> ps = null;
+        if (store != null) {
+            ps = store.getPurchase_process_list();
+        }
+        return ps;
+    }
+    public static List<PurchaseProcess> get_subscriber_purchase_process(String user_name) {
+        Subscriber sub = system.get_subscriber(user_name);
+        List<PurchaseProcess> ps = null;
+        if (sub != null) {
+            ps = sub.getPurchaseProcesslist();
+        }
+        return ps;
+    }
     public static List<Store> getAllStores(){
         return system.getStore_list();
     }
