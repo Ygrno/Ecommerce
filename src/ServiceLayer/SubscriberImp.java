@@ -2,6 +2,8 @@ package ServiceLayer;
 import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
 
+import DomainLayer.PurchaseProcess;
+
 
 import java.util.HashMap;
 import java.util.List;
@@ -184,12 +186,12 @@ public class SubscriberImp implements ISubscriber {
     }
 
     @Override
-    public String view_purchase_history(String user_name) {
+    public List<PurchaseProcess> view_purchase_history(String user_name) {
         my_log.logger.info("view_purchase_history");
         if(!SystemManage_Facade.is_initialized())
             return null;
         if(SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)){
-            return SystemManage_Facade.get_subscriber_purchase_process(user_name);
+            return SystemManage_Facade.View_purchase(user_name);
         }
         return null;
     }

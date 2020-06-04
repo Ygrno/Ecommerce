@@ -1,5 +1,7 @@
 package ServiceLayer;
 
+import DomainLayer.PurchaseProcess;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,10 +22,7 @@ public interface ISubscriber {
     public boolean rank_store();   //3.4
     public boolean send_query_to_store(String user_name,String Query);//3.5
     public boolean fill_complaint();      //3.6
-
-    public String view_purchase_history(String user_name);  //3.7    //changed the return boolean type to List<PurchaseProcess> and the input from none to string user_name
-
-
+    public List<PurchaseProcess> view_purchase_history(String user_name);  //3.7    //changed the return boolean type to List<PurchaseProcess> and the input from none to string user_name
     public boolean edit_account();     //3.8
     public boolean add_visible_discount(String user_name, String store_name, String discount_name, double discount_percentage, int end_of_use_date, String product_name);//4.2
 

@@ -7,6 +7,7 @@ import DomainLayer.Store.Store;
 import DomainLayer.System;
 import DomainLayer.User.Guest;
 import ServiceLayer.GuestImp;
+import org.json.JSONException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -124,7 +125,7 @@ public class GuestImpTest {
     }
 
     @Test
-    public void buy_products_in_cart() {
+    public void buy_products_in_cart() throws JSONException {
         assertTrue(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/26",999));
         assertFalse(gi.buy_products_in_cart(0,"mahmoud","1234123412341234","11/26",999));
         assertFalse(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/26",999));
