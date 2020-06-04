@@ -13,6 +13,9 @@ package acceptance;
         import static org.junit.Assert.*;
 
 public class uc_6_4_manager_history_review {
+
+    //TODO: Fix This Test
+
     private static SubscriberImp SUBImp;
     private static GuestImp guestImp;
     private static StoreRoleImp storeRoleImp;
