@@ -1,7 +1,7 @@
 package DomainLayer.User;
 
 import DomainLayer.User.Subscriber;
-
+//persistence
 public class ProductReview {
 
     String review_data = "";

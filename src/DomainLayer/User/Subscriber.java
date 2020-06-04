@@ -9,7 +9,7 @@ import DomainLayer.User.User;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//persistence
 public class Subscriber extends User {
 
     private String name;

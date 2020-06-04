@@ -1,5 +1,5 @@
 package DomainLayer;
-
+//persistence
 public class DealDetails {
     private double price;
     private String user_id;
