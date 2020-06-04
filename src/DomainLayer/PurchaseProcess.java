@@ -6,7 +6,7 @@ import DomainLayer.Store.Store;
 import DomainLayer.User.User;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+//persistent
 public class PurchaseProcess {
 
     private User user;

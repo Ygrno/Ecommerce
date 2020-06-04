@@ -6,7 +6,7 @@ import DomainLayer.Store.Store;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//persistent
 public class ShoppingCart {
 
     private List<ShoppingBag> shopping_bag_list;

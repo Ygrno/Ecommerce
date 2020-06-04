@@ -5,7 +5,7 @@ import DomainLayer.User.ProductReview;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//persistent
 public class Product {
 
     private String name;

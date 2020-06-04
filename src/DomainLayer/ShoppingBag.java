@@ -2,7 +2,7 @@ package DomainLayer;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//persistent
 public class ShoppingBag {
 
     private List<String> products_names;
