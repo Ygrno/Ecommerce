@@ -84,7 +84,7 @@ public class GuestImp implements IGuest {
 
     @Override
     public List<JSONObject> getAllStores() throws JSONException {
-        return null;
+        return SystemManage_Facade.getAllStores();
     }
 
     @Override
