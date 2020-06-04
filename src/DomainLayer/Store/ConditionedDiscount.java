@@ -1,22 +1,26 @@
 package DomainLayer.Store;
 
 import DomainLayer.Product;
-import DomainLayer.PurchaseProcess;
+import DomainLayer.ShoppingBag;
 
 import java.util.List;
 
 public class ConditionedDiscount extends DiscountComponent {
 
     private String discount_name;
-    private double discount_percentage, final_price = -1;
+    private double discount_percentage;
     private int end_of_use_date;     // { Format 12062020 = 12/06/2020 }
     private Condition condition;
     private Store store;
     private Product product;
     private int required_amount, required_sum;
 
-    public double getFinal_price() {
-        return final_price;
+    //public double getFinal_price() {
+       // return final_price;
+   // }
+
+    public String getDiscount_name() {
+        return discount_name;
     }
 
     public ConditionedDiscount(String discount_name, double discount_percentage, int end_of_use_date, Condition condition, Store store, Product product, int required_amount, int required_sum) {
@@ -57,8 +61,8 @@ public class ConditionedDiscount extends DiscountComponent {
     }
 
     @Override
-    public boolean validate(PurchaseProcess purchaseProcess) {
-        List<Product> products = purchaseProcess.getShoppingBag().getProducts();
+    public boolean validate(ShoppingBag shoppingBag) {
+        List<Product> products = shoppingBag.getProducts();
         switch(condition){
             case IF_NUMBER_OF_PRODUCTS:
             {
@@ -73,7 +77,7 @@ public class ConditionedDiscount extends DiscountComponent {
             }
             case IF_SUM_GREATER_THAN:
             {
-                if(purchaseProcess.getShoppingBag().get_SumPrice() >= required_sum)
+                if(shoppingBag.getDiscounted_bag_price() >= required_sum)
                     return true;
                 break;
             }
@@ -84,19 +88,28 @@ public class ConditionedDiscount extends DiscountComponent {
     }
 
     @Override
-    public void calculate_discount(PurchaseProcess purchaseProcess) {
-        switch(condition){
-            case IF_NUMBER_OF_PRODUCTS:
-            {
-                this.final_price = product.getPrice() - (discount_percentage * product.getPrice());
+    public void calculate_discount(ShoppingBag shoppingBag) {
+        if(!isCalculated() && this.validate(shoppingBag)) {
+            setCalculated(true);
+            switch (condition) {
+                case IF_NUMBER_OF_PRODUCTS: {
+
+                    final_price = product.getPrice() - (discount_percentage * product.getPrice());
+                    Product discountedProduct = new Product(product.getName(),final_price , product.getSupplied_amount(), product.getStore());
+                    shoppingBag.getProducts().remove(product);
+                    shoppingBag.getProducts().add(discountedProduct);
+
+                }
+                case IF_SUM_GREATER_THAN: {
+
+                    double sum_price = shoppingBag.getDiscounted_bag_price();
+                    final_price = sum_price - (discount_percentage * sum_price);
+                    shoppingBag.setDiscounted_bag_price(final_price);
+
+                }
+                default:
+                    throw new UnsupportedOperationException();
             }
-            case IF_SUM_GREATER_THAN:
-            {
-                double sum_price = purchaseProcess.getShoppingBag().get_SumPrice();
-                this.final_price = sum_price - (discount_percentage * sum_price);
-            }
-            default:
-                throw new UnsupportedOperationException();
         }
     }
 }

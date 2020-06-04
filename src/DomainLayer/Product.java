@@ -10,6 +10,7 @@ public class Product {
 
     private String name;
     private double price;
+
     private int supplied_amount;
     private int Buy_amount;
     private Store store;
@@ -24,7 +25,7 @@ public class Product {
         Buy_amount = buy_amount;
     }
 
-    public Product(String name, int price, int supplied_amount, Store store) {
+    public Product(String name, double price, int supplied_amount, Store store) {
         this.name = name;
         this.price = price;
         this.supplied_amount = supplied_amount;

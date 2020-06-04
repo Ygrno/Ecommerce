@@ -15,7 +15,7 @@ public class Subscriber extends User {
     private String name;
     private String password;
     private List<Role> role_list;
-    private List<PurchaseProcess> purchaseProcesslist;
+
     private boolean logged_in = false;
     private List<String> Quries; //3.5
 
@@ -24,7 +24,7 @@ public class Subscriber extends User {
         this.password = password;
         this.name = user_name;
         role_list = new ArrayList<>();
-        purchaseProcesslist = new ArrayList<>();
+
         Quries= new ArrayList<>();
     }
 
@@ -40,9 +40,7 @@ public class Subscriber extends User {
         return role_list;
     }
 
-    public List<PurchaseProcess> getPurchaseProcesslist() {
-        return purchaseProcesslist;
-    }
+
 
     public boolean isLogged_in() {
         return logged_in;

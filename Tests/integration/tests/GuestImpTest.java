@@ -93,9 +93,9 @@ public class GuestImpTest {
 
     @Test
     public void save_products() {
-        gi.save_products(1,"bmba","store1");
-        gi.save_products(1,"twix","store3");
-        gi.save_products(1,"chips","store2");
+        gi.save_products(1,"bmba","store1",1);
+        gi.save_products(1,"twix","store3",1);
+        gi.save_products(1,"chips","store2",1);
         boolean b1=false,b2=false,b3=false;
         for(ShoppingBag sb:guest.getShoppingCart().getShopping_bag_list()) {
             if (sb.getProducts_names().contains("bmba"))
@@ -113,27 +113,23 @@ public class GuestImpTest {
 
     @Test
     public void watch_products_in_cart() {
-        try {
-            gi.save_products(1, "bmba", "store1");
-            gi.save_products(1, "twix", "store3");
-            gi.save_products(1, "chips", "store2");
+        gi.save_products(1,"bmba","store1",1);
+        gi.save_products(1,"twix","store3",1);
+        gi.save_products(1,"chips","store2",1);
 
-            assertTrue(gi.watch_products_in_cart(1).contains("bmba"));
-            assertTrue(gi.watch_products_in_cart(1).contains("twix"));
-            assertTrue(gi.watch_products_in_cart(1).contains("chips"));
-            assertFalse(gi.watch_products_in_cart(1).contains("besli"));
-        }catch (Exception e){
-
-        }
+        assertTrue(gi.watch_products_in_cart(1).contains("bmba"));
+        assertTrue(gi.watch_products_in_cart(1).contains("twix"));
+        assertTrue(gi.watch_products_in_cart(1).contains("chips"));
+        assertFalse(gi.watch_products_in_cart(1).contains("besli"));
     }
 
     @Test
-    public void buy_products_in_cart() {
-        assertTrue(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/26",999,0));
-        assertFalse(gi.buy_products_in_cart(0,"mahmoud","1234123412341234","11/26",999,0));
-        assertFalse(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/26",999,2));
-        assertFalse(gi.buy_products_in_cart(1,"mahmoud","12341234123412341","11/26",999,0));
-        assertFalse(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/261",999,0));
+    public void buy_products_in_cart() throws JSONException {
+        assertTrue(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/26",999));
+        assertFalse(gi.buy_products_in_cart(0,"mahmoud","1234123412341234","11/26",999));
+        assertFalse(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/26",999));
+        assertFalse(gi.buy_products_in_cart(1,"mahmoud","12341234123412341","11/26",999));
+        assertFalse(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/261",999));
     }
 
 

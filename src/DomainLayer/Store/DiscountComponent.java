@@ -1,9 +1,18 @@
 package DomainLayer.Store;
 
 import DomainLayer.PurchaseProcess;
+import DomainLayer.ShoppingBag;
 
 public abstract class DiscountComponent {
 
+    private boolean calculated = false;
+    public double final_price = -1;
+
+    public double getFinal_price() { return final_price; }
+
+    public boolean isCalculated() { return calculated; }
+
+    public void setCalculated(boolean calculated) { this.calculated = calculated; }
 
     public void add_and(DiscountComponent newDiscountComponent) {
         throw new UnsupportedOperationException();
@@ -29,16 +38,11 @@ public abstract class DiscountComponent {
         throw new UnsupportedOperationException();
     }
 
-    public double getFinal_price() {
+    public boolean validate(ShoppingBag shoppingBag){
         throw new UnsupportedOperationException();
     }
 
-
-    public boolean validate(PurchaseProcess purchaseProcess){
-        throw new UnsupportedOperationException();
-    }
-
-    public void calculate_discount(PurchaseProcess purchaseProcess){
+    public void calculate_discount(ShoppingBag shoppingBag){
         throw new UnsupportedOperationException();
     }
 

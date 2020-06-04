@@ -37,11 +37,11 @@ public class SubscriberImp implements ISubscriber {
     }
 
     @Override
-    public boolean save_products(String userName,String product_name, String store_name) {
+    public boolean save_products(String userName,String product_name, String store_name, int amount) {
         my_log.logger.info("save_products");
         if(!SystemManage_Facade.is_initialized())
             return false;
-        return SystemManage_Facade.saveProductForSubscriber(userName,product_name,store_name);
+        return SystemManage_Facade.saveProductForSubscriber(userName,product_name,store_name, amount);
     }
 
     @Override
@@ -54,22 +54,22 @@ public class SubscriberImp implements ISubscriber {
     }
 
     @Override
-    public boolean buy_products_in_cart(String id, String buyerName, String creditCardNumber, String expireDate, int cvv, double discount) {
+    public boolean buy_products_in_cart(String id, String buyerName, String creditCardNumber, String expireDate, int cvv) throws JSONException {
         my_log.logger.info("buy_products_in_cart");
         if(!SystemManage_Facade.is_initialized())
             return false;
-        if(discount > 1 || discount < 0){
-            return false;
-        }
+//        if(discount > 1 || discount < 0){
+//            return false;
+//        }
         if(expireDate.length() != 5){
             return false;
         }
-//        if(creditCardNumber.length()!=16)
-//            return false;
+        if(creditCardNumber.length()!=16)
+            return false;
         if(cvv>=1000)
             return false;
-        double price=SystemManage_Facade.getPriceOfCart(id,discount);
-        String[] dealDetails={String.valueOf(price),buyerName,creditCardNumber,expireDate, String.valueOf(cvv)};
+        double price=SystemManage_Facade.getPriceOfCart(id);
+        String[] dealDetails = {id,String.valueOf(price),buyerName,creditCardNumber,expireDate, String.valueOf(cvv)};
         return SystemManage_Facade.buy(dealDetails);
     }
 
@@ -91,7 +91,7 @@ public class SubscriberImp implements ISubscriber {
         my_log.logger.info("open_store");
         if(!SystemManage_Facade.is_initialized()) return false;
 
-        if(SystemManage_Facade.find_subscriber(user_name) /*&& SubscribersManage_Facade.check_if_logged_in(user_name)*/){
+        if(SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)){
             SubscribersManage_Facade.create_store(user_name,store_name);
             return true;
         }
@@ -104,9 +104,59 @@ public class SubscriberImp implements ISubscriber {
         if(!SystemManage_Facade.is_initialized())
             return false;
         if(SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name))
-            return SystemManage_Facade.addProductReview( user_name,  product_name,  store_name,  review_data, rank);
+            return SubscribersManage_Facade.addProductReview( user_name,  product_name,  store_name,  review_data, rank);
         return false;
     }
+    @Override
+    public boolean add_visible_discount(String user_name, String store_name, String discount_name, double discount_percentage, int end_of_use_date, String product_name) {
+        my_log.logger.info("create_visible_discount");
+        if (!SystemManage_Facade.is_initialized()) return false;
+
+        if (SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
+            SubscribersManage_Facade.add_visible_discount_to_product(user_name,store_name,product_name,discount_name,discount_percentage,end_of_use_date);
+
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean add_conditioned_discount(String user_name, String store_name, String product_name, String discount_name, double discount_percentage, int due_date, int amount, int sum) {
+        my_log.logger.info("create_conditioned_discount");
+        if (!SystemManage_Facade.is_initialized()) return false;
+
+        if (SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
+            SubscribersManage_Facade.add_conditioned_discount_to_product(user_name, store_name, product_name, discount_name, discount_percentage, due_date, amount, sum);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean add_complex_discount(String user_name, String store_name, String discount_name, String[]discounts, String type, int end_of_use_date) {
+        my_log.logger.info("create_conditioned_discount");
+        if (!SystemManage_Facade.is_initialized()) return false;
+        if (discounts.length == 0) return false;
+        if (SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
+            SubscribersManage_Facade.add_complex_discount(user_name, store_name, discount_name, discounts, type,end_of_use_date);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean delete_discount(String user_name, String store_name, String discount_name) {
+        my_log.logger.info("delete_discount");
+
+        if (!SystemManage_Facade.is_initialized()) return false;
+
+        if (SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
+            SubscribersManage_Facade.delete_discount(user_name, store_name, discount_name);
+            return true;
+        }
+        return false;
+    }
+
 
     @Override
     public boolean rank_product() {
@@ -138,12 +188,12 @@ public class SubscriberImp implements ISubscriber {
     }
 
     @Override
-    public List<JSONObject> view_purchase_history(String user_name) throws JSONException {
+    public String view_purchase_history(String user_name) {
         my_log.logger.info("view_purchase_history");
         if(!SystemManage_Facade.is_initialized())
             return null;
         if(SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)){
-            return SystemManage_Facade.View_purchase(user_name);
+            return SystemManage_Facade.get_subscriber_purchase_process(user_name);
         }
         return null;
     }

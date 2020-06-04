@@ -1,13 +1,14 @@
 package DomainLayer.Store;
 
 import DomainLayer.PurchaseProcess;
+import DomainLayer.ShoppingBag;
 
 import java.util.ArrayList;
 
 public class ComplexDiscount extends DiscountComponent {
 
     private String discount_name;
-
+    private int end_of_use_date;
     public String getDiscount_name() {
         return discount_name;
     }
@@ -16,10 +17,20 @@ public class ComplexDiscount extends DiscountComponent {
         this.discount_name = discount_name;
     }
 
-    public ComplexDiscount(String discount_name){
+    public ComplexDiscount(String discount_name,ArrayList<DiscountComponent> discounts , String type, int end_of_use_date){
         this.discount_name = discount_name;
-    }
+        this.end_of_use_date=end_of_use_date;
+        if(type.equals("and")){
+            this.and_discountComponents=discounts;
+        }
+        if(type.equals("or")){
+            this.or_discountComponents=discounts;
+        }
+        if(type.equals("one")){
+            this.onlyOne_discountComponents=discounts;
+        }
 
+    }
     ArrayList<DiscountComponent> and_discountComponents = new ArrayList<>();
     ArrayList<DiscountComponent> or_discountComponents = new ArrayList<>();
     ArrayList<DiscountComponent> onlyOne_discountComponents = new ArrayList<>();
@@ -57,7 +68,7 @@ public class ComplexDiscount extends DiscountComponent {
     }
 
     @Override
-    public boolean validate(PurchaseProcess purchaseProcess) {
+    public boolean validate(ShoppingBag shoppingBag) {
         boolean and_predicate = true;
         boolean or_predicate = false;
         boolean or_predicate2 = false;
@@ -66,19 +77,19 @@ public class ComplexDiscount extends DiscountComponent {
         int count3 = 0;
 
         for(DiscountComponent discountComponent: and_discountComponents){
-            boolean validate = discountComponent.validate(purchaseProcess);
+            boolean validate = discountComponent.validate(shoppingBag);
             if(validate) valid_and_discountComponents.add(discountComponent);
             and_predicate = and_predicate && validate;
             count1++;
         }
         for(DiscountComponent discountComponent: or_discountComponents){
-            boolean validate = discountComponent.validate(purchaseProcess);
+            boolean validate = discountComponent.validate(shoppingBag);
             if(validate) valid_or_discountComponents.add(discountComponent);
             or_predicate = or_predicate || validate;
             count2++;
         }
         for(DiscountComponent discountComponent: onlyOne_discountComponents){
-            boolean validate = discountComponent.validate(purchaseProcess);
+            boolean validate = discountComponent.validate(shoppingBag);
             if(validate) valid_onlyOne_discountComponents.add(discountComponent);
             or_predicate2 = or_predicate2 || validate;
             count3++;
@@ -92,21 +103,21 @@ public class ComplexDiscount extends DiscountComponent {
     }
 
 
-    public void calculate_discount(PurchaseProcess purchaseProcess) {
-        if(this.validate(purchaseProcess)){
+    public void calculate_discount(ShoppingBag shoppingBag) {
+        if(this.validate(shoppingBag)){
 
             //Calculate all from And
             for(DiscountComponent discountComponent: valid_and_discountComponents){
-                discountComponent.calculate_discount(purchaseProcess);
+                discountComponent.calculate_discount(shoppingBag);
             }
 
             //Calculate all from Or
             for(DiscountComponent discountComponent: valid_or_discountComponents){
-                discountComponent.calculate_discount(purchaseProcess);
+                discountComponent.calculate_discount(shoppingBag);
             }
 
             //Calculate exactly one from Only One
-            valid_onlyOne_discountComponents.get(0).calculate_discount(purchaseProcess);
+            valid_onlyOne_discountComponents.get(0).calculate_discount(shoppingBag);
 
         }
 

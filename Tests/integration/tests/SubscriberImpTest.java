@@ -6,6 +6,7 @@ import DomainLayer.Product;
 import DomainLayer.PurchaseProcess;
 import DomainLayer.Roles.Role;
 import DomainLayer.Roles.StoreOwner;
+import DomainLayer.Roles.StoreRole;
 import DomainLayer.ShoppingBag;
 import DomainLayer.Store.Store;
 import DomainLayer.System;
@@ -97,9 +98,9 @@ public class SubscriberImpTest {
 
     @Test
     public void save_products() {
-        SUBImp.save_products("subscriber","bmba","store1");
-        SUBImp.save_products("subscriber","twix","store3");
-        SUBImp.save_products("subscriber","chips","store2");
+        SUBImp.save_products("subscriber","bmba","store1",1);
+        SUBImp.save_products("subscriber","twix","store3",1);
+        SUBImp.save_products("subscriber","chips","store2",1);
         boolean b1=false,b2=false,b3=false;
         for(ShoppingBag sb:subscriber.getShoppingCart().getShopping_bag_list()) {
             if (sb.getProducts_names().contains("bmba"))
@@ -117,27 +118,23 @@ public class SubscriberImpTest {
 
     @Test
     public void watch_products_in_cart() {
-        try {
-            SUBImp.save_products("subscriber", "bmba", "store1");
-            SUBImp.save_products("subscriber", "twix", "store3");
-            SUBImp.save_products("subscriber", "chips", "store2");
+        SUBImp.save_products("subscriber","bmba","store1",1);
+        SUBImp.save_products("subscriber","twix","store3",1);
+        SUBImp.save_products("subscriber","chips","store2",1);
 
-            assertTrue(SUBImp.watch_products_in_cart("subscriber").contains("bmba"));
-            assertTrue(SUBImp.watch_products_in_cart("subscriber").contains("twix"));
-            assertTrue(SUBImp.watch_products_in_cart("subscriber").contains("chips"));
-            assertFalse(SUBImp.watch_products_in_cart("subscriber").contains("besli"));
-        }catch (Exception e){
-
-        }
+        assertTrue(SUBImp.watch_products_in_cart("subscriber").contains("bmba"));
+        assertTrue(SUBImp.watch_products_in_cart("subscriber").contains("twix"));
+        assertTrue(SUBImp.watch_products_in_cart("subscriber").contains("chips"));
+        assertFalse(SUBImp.watch_products_in_cart("subscriber").contains("besli"));
     }
 
     @Test
-    public void buy_products_in_cart() {
-        assertTrue(SUBImp.buy_products_in_cart("subscriber","mahmoud","1234123412341234","11/26",999,0));
-        assertFalse(SUBImp.buy_products_in_cart("subscriber1","mahmoud","1234123412341234","11/26",999,0));
-        assertFalse(SUBImp.buy_products_in_cart("subscriber","mahmoud","1234123412341234","11/26",999,2));
-        assertFalse(SUBImp.buy_products_in_cart("subscriber","mahmoud","12341234123412341","11/26",999,0));
-        assertFalse(SUBImp.buy_products_in_cart("subscriber","mahmoud","1234123412341234","11/261",999,0));
+    public void buy_products_in_cart() throws JSONException {
+        assertTrue(SUBImp.buy_products_in_cart("subscriber","mahmoud","1234123412341234","11/26",999));
+        assertFalse(SUBImp.buy_products_in_cart("subscriber1","mahmoud","1234123412341234","11/26",999));
+        assertFalse(SUBImp.buy_products_in_cart("subscriber","mahmoud","1234123412341234","11/26",999));
+        assertFalse(SUBImp.buy_products_in_cart("subscriber","mahmoud","12341234123412341","11/26",999));
+        assertFalse(SUBImp.buy_products_in_cart("subscriber","mahmoud","1234123412341234","11/261",999));
     }
 
     @Test
@@ -151,7 +148,7 @@ public class SubscriberImpTest {
         assertTrue(SUBImp.open_store("subscriber","test"));//test if the store func works as expected
         assertTrue(SYS.get_store("test")!=null);//test if the store is actually added to the database
         store=SYS.get_store("test");
-        List<Role> role = (List<Role>) store.getRoles();
+        List<StoreRole> role = store.getRoles();
         StoreOwner storeOwner = new StoreOwner(subscriber, store);
         assertNotNull(role.get(0));//test if the role is actually added to the database
         assertTrue(role.get(0) instanceof StoreOwner);//test if the role is type of storeowner
@@ -186,14 +183,14 @@ public class SubscriberImpTest {
     }
 
     @Test
-    public void view_purchase_history() throws JSONException {
+    public void view_purchase_history() {
         store = SYS.get_store("test");
         List<String> strings = new ArrayList<String>();
         PurchaseProcess purchaseProcess = new PurchaseProcess(subscriber,store,new ShoppingBag(strings));
         subscriber.getPurchaseProcesslist().add(purchaseProcess);
-        List<JSONObject> purchase = SUBImp.view_purchase_history("subscriber");
+        List<PurchaseProcess> purchase = SUBImp.view_purchase_history("subscriber");
         assertNotNull(purchase);//the purchase added successfully
-        assertEquals(purchase.get(0),purchaseProcess);
+        assertNull(purchase.get(0).getShoppingBag().getProducts_names());
     }
 
     @Test

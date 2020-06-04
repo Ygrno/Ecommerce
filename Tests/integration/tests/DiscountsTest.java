@@ -9,6 +9,9 @@ import DomainLayer.User.Subscriber;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -24,7 +27,9 @@ public class DiscountsTest {
 
     @BeforeClass
     public static void init(){
-
+        SimpleDateFormat format = new SimpleDateFormat("ddMMyyyy");
+        String dateString = format.format( new Date()   );
+        System.out.println(dateString);
         s =new Store("food");
 
         p1 = new Product("bamba",10,2,s);
@@ -32,13 +37,12 @@ public class DiscountsTest {
 
         a = new VisibleDiscount("a",0.5,12062020,p1);
         b = new VisibleDiscount("b",0.25,12062020,p2);
-
         p1.setBuy_amount(2);
         c = new ConditionedDiscount("c",0.5,12062020, Condition.IF_NUMBER_OF_PRODUCTS,s,p1,3,0);
-
-        d = new ComplexDiscount("d");
-        d.add_OnlyOne(c);
-        d.add_OnlyOne(b);
+        ArrayList<DiscountComponent> only_one = new ArrayList<>();
+        only_one.add(c);
+        only_one.add(b);
+        d = new ComplexDiscount("d",only_one,"one",12062020);
 
 
         shoppingBag = new ShoppingBag(null);
@@ -47,25 +51,25 @@ public class DiscountsTest {
         productList.add(p1);
         productList.add(p2);
 
-        purchaseProcess = new PurchaseProcess(new Subscriber("moti","loohim"),s,shoppingBag);
+        //purchaseProcess = new PurchaseProcess(new Subscriber("moti","loohim"),s,shoppingBag);
 
     }
 
     @Test
     public void check_validate(){
-        assertTrue(a.validate(purchaseProcess));
-        assertTrue(b.validate(purchaseProcess));
-        assertFalse(c.validate(purchaseProcess));
-        assertTrue(d.validate(purchaseProcess));
+        assertTrue(a.validate(shoppingBag));
+        assertTrue(b.validate(shoppingBag));
+        assertFalse(c.validate(shoppingBag));
+        assertTrue(d.validate(shoppingBag));
 
     }
 
     @Test
     public void check_calculate(){
-        a.calculate_discount(purchaseProcess);
+        a.calculate_discount(shoppingBag);
         assertEquals(5,((VisibleDiscount)a).getFinal_price(),0.001);
 
-        d.calculate_discount(purchaseProcess);
+        d.calculate_discount(shoppingBag);
         assertNotEquals(5, c.getFinal_price());
         assertEquals(7.5,b.getFinal_price(),0.001);
 

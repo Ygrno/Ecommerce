@@ -9,6 +9,7 @@ import Encryption.EncryptImp;
 import netscape.javascript.JSObject;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -81,11 +82,6 @@ public class GuestImp implements IGuest {
     }
 
     @Override
-    public List<JSONObject> getAllStores() throws JSONException {
-        return SystemManage_Facade.getAllStores();
-    }
-
-    @Override
     public HashMap<String, Double> search_products(String product_name) {
         my_log.logger.info("search_products");
         if(!SystemManage_Facade.is_initialized()) {
@@ -97,23 +93,18 @@ public class GuestImp implements IGuest {
     }
 
     @Override
-    public int addGuest() {
-        return SystemManage_Facade.addGuest().getId();
-    }
-
-    @Override
-    public boolean save_products(int id,String product_name, String store_name) {
+    public boolean save_products(int id,String product_name, String store_name, int amount) {
         my_log.logger.info("save_products");
         if(!SystemManage_Facade.is_initialized()) {
             my_log.logger.warning("System not initialized");
             return false;
         }
 
-        return SystemManage_Facade.saveProductForGuest(id,product_name,store_name);
+        return SystemManage_Facade.saveProductForGuest(id,product_name,store_name,amount);
     }
 
     @Override
-    public List<JSONObject> watch_products_in_cart(int id) throws JSONException {
+    public List<String> watch_products_in_cart(int id) {
         my_log.logger.info("watch_products_in_cart");
         if(!SystemManage_Facade.is_initialized()) {
             my_log.logger.warning("System not initialized");

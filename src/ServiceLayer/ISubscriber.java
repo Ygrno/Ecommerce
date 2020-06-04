@@ -12,7 +12,7 @@ public interface ISubscriber {
     public String[][] view_products_information_store (String store_name); //2.4
     public HashMap<String, Double> search_products(String product_name);  //2.5 (Right now, search via name only).
 
-    public boolean save_products(String userName,String product_name, String store_name); //2.6
+    public boolean save_products(String userName,String product_name, String store_name,int amount); //2.6
     public List<JSONObject> watch_products_in_cart(String userName) throws JSONException;  //2.7.1
     //remove_product_from cart                //2.7.2
     public boolean buy_products_in_cart(String id,String buyerName,String creditCardNumber,String expireDate,int cvv,double discount);   //2.8 //7
@@ -24,8 +24,13 @@ public interface ISubscriber {
     public boolean rank_store();   //3.4
     public boolean send_query_to_store(String user_name,String Query);//3.5
     public boolean fill_complaint();      //3.6
-    public List<JSONObject> view_purchase_history(String user_name) throws JSONException;  //3.7    //changed the return boolean type to List<PurchaseProcess> and the input from none to string user_name
+    public String view_purchase_history(String user_name);  //3.7    //changed the return boolean type to List<PurchaseProcess> and the input from none to string user_name
     public boolean edit_account();     //3.8
+    public boolean add_visible_discount(String user_name, String store_name, String discount_name, double discount_percentage, int end_of_use_date, String product_name);//4.2
+
+    public boolean add_conditioned_discount(String user_name, String store_name, String product_name, String discount_name, double discount_percentage, int due_date, int amount, int sum);//4.2
+    public boolean add_complex_discount(String user_name, String store_name, String discount_name, String[]discounts, String type, int end_of_use_date);
+    public boolean delete_discount(String user_name, String store_name, String discount_name);
 
 
 }

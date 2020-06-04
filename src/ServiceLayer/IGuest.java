@@ -4,6 +4,8 @@ import netscape.javascript.JSObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import org.json.JSONException;
+
 import java.util.HashMap;
 import java.util.List;
 

@@ -1,10 +1,10 @@
 package acceptance;
 
 
-import DomainLayer.InternalService.SystemManage_Facade;
 import ServiceLayer.GuestImp;
 import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
+import org.json.JSONException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,10 +22,9 @@ public class uc_2_8_Test {
         gi=new GuestImp();
         SubscriberImp si = new SubscriberImp();
         StoreRoleImp sri = new StoreRoleImp();
-        SystemManage_Facade.init_system();
-        SystemManage_Facade.addGuest();
-//        gi.sign_up("mhmod","123");
-//        gi.login("mhmod","123");
+
+        gi.sign_up("mhmod","123");
+        gi.login("mhmod","123");
         si.open_store("mhmod","store1");
         sri.add_store_product("mhmod","store1","bmba",1,2);
         sri.add_store_product("mhmod","store1","besli",12,2);
@@ -43,16 +42,15 @@ public class uc_2_8_Test {
 
     }
     @Test
-    public void successScenario(){
-        SystemManage_Facade.addGuest();
-        assertTrue(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/26",999,0));
+    public void successScenario() throws JSONException {
+        assertTrue(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/26",999));
 
     }
     @Test
-    public void failScenario1(){
-        SystemManage_Facade.addGuest();
-        assertFalse(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/26",999,2));
-        assertFalse(gi.buy_products_in_cart(1,"mahmoud","12341234123412341","11/26",999,0));
-        assertFalse(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/261",999,0));
+    public void failScenario1() throws JSONException {
+        assertFalse(gi.buy_products_in_cart(0,"mahmoud","1234123412341234","11/26",999));
+        assertFalse(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/26",999));
+        assertFalse(gi.buy_products_in_cart(1,"mahmoud","12341234123412341","11/26",999));
+        assertFalse(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/261",999));
     }
 }
