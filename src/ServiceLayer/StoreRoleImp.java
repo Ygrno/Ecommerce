@@ -1,8 +1,6 @@
 package ServiceLayer;
 import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
-import DomainLayer.Store.Policy;
-import DomainLayer.User.User;
 
 import java.io.IOException;
 import java.util.ArrayList;

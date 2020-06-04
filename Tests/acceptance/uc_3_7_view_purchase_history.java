@@ -17,6 +17,8 @@ import static org.junit.Assert.*;
 
 public class uc_3_7_view_purchase_history {
 
+    //  TODO: 3.7 test update is needed
+
     private  static SubscribersManage_Facade SUB;
     private static SystemManage_Facade SYS;
 

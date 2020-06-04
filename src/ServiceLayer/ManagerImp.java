@@ -2,7 +2,6 @@ package ServiceLayer;
 
 import DomainLayer.InternalService.SystemManage_Facade;
 
-import java.util.List;
 
 public class ManagerImp implements IManager {
 

@@ -1,6 +1,5 @@
 package ServiceLayer;
 
-import DomainLayer.PurchaseProcess;
 
 import java.util.ArrayList;
 import java.util.List;
