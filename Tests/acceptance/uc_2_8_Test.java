@@ -4,6 +4,7 @@ package acceptance;
 import ServiceLayer.GuestImp;
 import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
+import org.json.JSONException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -41,12 +42,12 @@ public class uc_2_8_Test {
 
     }
     @Test
-    public void successScenario(){
+    public void successScenario() throws JSONException {
         assertTrue(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/26",999));
 
     }
     @Test
-    public void failScenario1(){
+    public void failScenario1() throws JSONException {
         assertFalse(gi.buy_products_in_cart(0,"mahmoud","1234123412341234","11/26",999));
         assertFalse(gi.buy_products_in_cart(1,"mahmoud","1234123412341234","11/26",999));
         assertFalse(gi.buy_products_in_cart(1,"mahmoud","12341234123412341","11/26",999));

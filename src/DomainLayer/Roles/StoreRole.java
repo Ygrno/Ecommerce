@@ -1,6 +1,7 @@
 package DomainLayer.Roles;
 
 import DomainLayer.Store.Store;
+import Observer.Observer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ public abstract class StoreRole extends Role {
     public List<Role> getAssigned_users() {
         return assigned_users;
     }
+    protected Observer observer;//notification
 
     public void setAssigned_users(List<Role> assigned_users) {
         this.assigned_users = assigned_users;
@@ -28,8 +30,7 @@ public abstract class StoreRole extends Role {
     }
 
     //Notification
-    public void Upadte(String update){Upadtes.add(update);}
-
+    public Observer observer(){return observer;}
 
 
 

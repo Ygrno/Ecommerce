@@ -9,6 +9,7 @@ import DomainLayer.User.ProductReview;
 import DomainLayer.User.Subscriber;
 import DomainLayer.User.User;
 import Encryption.EncryptImp;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,7 +49,7 @@ public class SystemManage_Facade implements InternalService {
 
 
 
-    public static boolean buy(String[] dd){
+    public static boolean buy(String[] dd) throws JSONException {
         DealDetails dd1 = new DealDetails(dd[0],Double.parseDouble(dd[1]),dd[2],dd[3],dd[4],Integer.parseInt(dd[5]));
         if (system.getProductFinanceService().tryToBuy(dd1)) {
             User u = getUser(dd[0]);

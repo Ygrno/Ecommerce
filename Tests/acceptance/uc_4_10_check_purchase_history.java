@@ -3,6 +3,7 @@ package acceptance;
 import ServiceLayer.GuestImp;
 import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
+import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -24,7 +25,7 @@ public class uc_4_10_check_purchase_history {
     private static ArrayList<String> permissions = new ArrayList<>();
 
     @BeforeClass
-    public static void before() throws IOException {
+    public static void before() throws IOException, JSONException {
         permissions.add("ADD_PRODUCT");
         guestImp = new GuestImp();
         SUBImp = new SubscriberImp();
@@ -41,7 +42,7 @@ public class uc_4_10_check_purchase_history {
     }
 
     @Test
-    public void success_scenario(){
+    public void success_scenario() throws JSONException {
 
         String purchase1  = storeRoleImp.watch_store_history("Admin","store");
         Assert.assertEquals("\n" +
@@ -71,7 +72,7 @@ public class uc_4_10_check_purchase_history {
         //assertTrue(storeRoleImp.edit_manager_permissions("Admin","store","manager",permissions));
     }
 
-    private void addProductsFromDifferentStores() {
+    private void addProductsFromDifferentStores() throws JSONException {
 
         SUBImp.open_store("Admin","Computer Store");
         storeRoleImp.add_store_product("Admin","Computer Store","PC",1500,2);

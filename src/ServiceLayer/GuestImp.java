@@ -6,6 +6,7 @@ import DomainLayer.InternalService.SystemManage_Facade;
 
 
 import Encryption.EncryptImp;
+import org.json.JSONException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -112,7 +113,7 @@ public class GuestImp implements IGuest {
     }
 
     @Override
-    public boolean buy_products_in_cart(int id,String buyerName,String creditCardNumber,String expireDate,int cvv) {
+    public boolean buy_products_in_cart(int id,String buyerName,String creditCardNumber,String expireDate,int cvv) throws JSONException {
         my_log.logger.info("buy_products_in_cart");
         if(!SystemManage_Facade.is_initialized()) {
             my_log.logger.warning("System not initialized");
