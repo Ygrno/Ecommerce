@@ -291,21 +291,27 @@ public class SystemManage_Facade implements InternalService {
         }
         return products_arr;
     }
-    public static List<PurchaseProcess> get_store_purchase_process(String store_name) {
+    public static String get_store_purchase_process(String store_name) {
+        StringBuilder history = new StringBuilder();
         Store store = system.get_store(store_name);
-        List<PurchaseProcess> ps = null;
         if (store != null) {
-            ps = store.getPurchase_process_list();
+            for(PurchaseProcess purchase: store.getPurchase_process_list()){
+                if(purchase.isFinished())
+                    history.append("\n").append("Store Name: ").append(purchase.getStore().getName()).append("\nList of products: ").append(purchase.getShoppingBag().getProducts_names().toString()).append("\n sum: ").append(purchase.getDetails().getPrice());
+            }
         }
-        return ps;
+        return history.toString();
     }
-    public static List<PurchaseProcess> get_subscriber_purchase_process(String user_name) {
+    public static String  get_subscriber_purchase_process(String user_name) {
+        StringBuilder history = new StringBuilder();
         Subscriber sub = system.get_subscriber(user_name);
-        List<PurchaseProcess> ps = null;
         if (sub != null) {
-            ps = sub.getPurchaseProcesslist();
+            for(PurchaseProcess purchase: sub.getPurchaseProcesslist()){
+                if(purchase.isFinished())
+                    history.append("\n").append("Customer Name: ").append(purchase.getDetails().getBuyer_name()).append("\nList of products: ").append(purchase.getShoppingBag().getProducts_names().toString()).append("\n sum: ").append(purchase.getDetails().getPrice());
+            }
         }
-        return ps;
+        return history.toString();
     }
     public static List<Store> getAllStores(){
         return system.getStore_list();

@@ -1,7 +1,6 @@
 package ServiceLayer;
 
 import DomainLayer.InternalService.SystemManage_Facade;
-import DomainLayer.PurchaseProcess;
 
 import java.util.List;
 
@@ -28,7 +27,7 @@ public class ManagerImp implements IManager {
     @Override
     public boolean view_history_store(String store_name) {
         if(!SystemManage_Facade.is_initialized()) return false;
-        List<PurchaseProcess> ps = SystemManage_Facade.get_store_purchase_process(store_name);
+        String ps = SystemManage_Facade.get_store_purchase_process(store_name);
         if(ps!= null){
             return true;
         }
@@ -38,7 +37,7 @@ public class ManagerImp implements IManager {
     @Override
     public boolean view_history_costumer(String user_name) {
         if(!SystemManage_Facade.is_initialized()) return false;
-        List<PurchaseProcess> ps = SystemManage_Facade.get_subscriber_purchase_process(user_name);
+        String  ps = SystemManage_Facade.get_subscriber_purchase_process(user_name);
         if(ps!= null){
             return true;
         }
