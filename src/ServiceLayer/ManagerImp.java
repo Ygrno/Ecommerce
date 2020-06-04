@@ -25,23 +25,18 @@ public class ManagerImp implements IManager {
     }
 
     @Override
-    public boolean view_history_store(String store_name) {
-        if(!SystemManage_Facade.is_initialized()) return false;
-        String ps = SystemManage_Facade.get_store_purchase_process(store_name);
-        if(ps!= null){
-            return true;
-        }
-        return false;
+    public String view_history_store(String store_name) {
+        if(!SystemManage_Facade.is_initialized()) return null;
+        return SystemManage_Facade.get_store_purchase_process(store_name);
+
+
     }
 
     @Override
-    public boolean view_history_costumer(String user_name) {
-        if(!SystemManage_Facade.is_initialized()) return false;
-        String  ps = SystemManage_Facade.get_subscriber_purchase_process(user_name);
-        if(ps!= null){
-            return true;
-        }
-        return false;
+    public String view_history_costumer(String user_name) {
+        if(!SystemManage_Facade.is_initialized()) return null;
+        return SystemManage_Facade.get_subscriber_purchase_process(user_name);
+
     }
 
     @Override
