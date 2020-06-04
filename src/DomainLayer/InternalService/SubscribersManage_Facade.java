@@ -88,6 +88,8 @@ public class SubscribersManage_Facade implements InternalService {
         store.getRoles().add(storeOwner);
 
         System.getSystem().getStore_list().add(store);
+
+
     }
 
     public static boolean add_product_to_store(String user_name, String store_name, String product_name, int product_price, int product_amount) {

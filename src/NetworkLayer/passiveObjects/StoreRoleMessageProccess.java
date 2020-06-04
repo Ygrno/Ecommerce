@@ -60,10 +60,10 @@ public class StoreRoleMessageProccess {
 
     public static void add_store_visible_discount(MessagingProtocol protocol, JSONObject request) throws Exception{
         String username = request.getString("user_name");
-        String storename = request.getString("store_name");
-        String productname = request.getString("product_name");
-        String discountName = request.getString("discount_name");
-        double discountPerc = request.getDouble("discount_percentage");
+        String storename = request.getString("store");
+        String productname = request.getString("product");
+        String discountName = request.getString("name");
+        double discountPerc = request.getDouble("percentage");
         int dueDate = request.getInt("due_date");
 
         boolean b = storeRole.add_store_visible_discount(username,storename,productname,discountName,discountPerc,dueDate);

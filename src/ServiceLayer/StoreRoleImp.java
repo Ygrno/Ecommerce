@@ -3,9 +3,11 @@ import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
 import DomainLayer.Store.Policy;
 import DomainLayer.User.User;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class StoreRoleImp implements IStoreRole {
@@ -127,6 +129,11 @@ public class StoreRoleImp implements IStoreRole {
             return SubscribersManage_Facade.change_permissions_of_manager(user_name, store_name,user_assign , permissions);
         }
         return false;
+    }
+
+    @Override
+    public List<JSONObject> get_permissions(String user_name) {
+        return null;
     }
 
 
