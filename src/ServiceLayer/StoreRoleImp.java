@@ -26,7 +26,9 @@ public class StoreRoleImp implements IStoreRole {
     @Override
     public boolean add_store_product(String user_name, String store_name, String product_name, int product_price, int product_amount) {
         my_log.logger.info("add_store_product");
-        if (!SystemManage_Facade.is_initialized() || product_amount == 0) return false;
+        if (!SystemManage_Facade.is_initialized() || product_amount == 0){
+
+            return false;}
         if (SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
             return SubscribersManage_Facade.add_product_to_store(user_name, store_name, product_name, product_price, product_amount);
         }

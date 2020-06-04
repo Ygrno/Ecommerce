@@ -104,6 +104,8 @@ public class SubscribersManage_Facade implements InternalService {
                 store_role.store.getProduct_list().add(new Product(product_name, product_price, product_amount, store_role.store));
             return true;
         }
+        java.lang.System.out.println("her2");
+
         return false;
     }
 

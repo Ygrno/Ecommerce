@@ -41,6 +41,7 @@ public class GuestImp implements IGuest {
 
         if(!SystemManage_Facade.find_subscriber(user_name)) {
             SystemManage_Facade.add_subscriber(user_name, password);
+            this.login(user_name,password);
             return true;
         }
 
