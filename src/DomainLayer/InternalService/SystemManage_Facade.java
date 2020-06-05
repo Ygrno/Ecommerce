@@ -54,6 +54,7 @@ public class SystemManage_Facade implements InternalService {
     public static boolean buy(String[] dd) throws Exception {
         DealDetails dd1 = new DealDetails(dd[0],Double.parseDouble(dd[1]),dd[2],dd[3],dd[4],Integer.parseInt(dd[5]));
         if (system.getProductFinanceService().tryToBuy(dd1)) {
+
             User u = getUser(dd[0]);
 
             for(PurchaseProcess purchase: u.getPurchaseProcesslist()){
@@ -69,6 +70,9 @@ public class SystemManage_Facade implements InternalService {
                         Product store_product = getProductInStore(prod.getName(),store);
                         store_product.setSupplied_amount(store_product.getSupplied_amount() - prod.getBuy_amount());
                     }
+
+                    //validate buy policies of store
+                    store.validatePurchasePolicies(shoppingBag,u);
 
                     //User bought his saved products so shopping bag no longer exists with store.
                     purchase.getUser().getShoppingCart().getShopping_bag_list().remove(purchase.getShoppingBag());

@@ -24,9 +24,9 @@ public class ProductBuyPolicy extends SimpleBuyPolicy {
     }
 
     @Override
-    public boolean validate(PurchaseProcess purchaseProcess) {
-        ShoppingBag shopBag= purchaseProcess.getShoppingBag();
-        List<Product> products = shopBag.getProducts();
+    public boolean validate(ShoppingBag shoppingBag, User user) {
+        //ShoppingBag shopBag= purchaseProcess.getShoppingBag();
+        List<Product> products = shoppingBag.getProducts();
         for (Product p : products) {
             if (p.getName().equals(this.product_name)) {
                 if (min != 0 && p.getSupplied_amount() < min)

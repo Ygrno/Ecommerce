@@ -24,10 +24,10 @@ public class BagBuyPolicy extends SimpleBuyPolicy {
     }
 
     @Override
-    public boolean validate(PurchaseProcess purchaseProcess) {
+    public boolean validate(ShoppingBag shoppingBag, User user) {
 
-        ShoppingBag shopBag= purchaseProcess.getShoppingBag();
-        List<Product> products = shopBag.getProducts();
+        //ShoppingBag shopBag= purchaseProcess.getShoppingBag();
+        List<Product> products = shoppingBag.getProducts();
         if(products.size() < min_quantity)
             return false;
         if(products.size() > max_quantity)
@@ -36,7 +36,8 @@ public class BagBuyPolicy extends SimpleBuyPolicy {
     }
 
 
-
-
-
+    //@Override
+   // public boolean validate(ShoppingBag shoppingBag, User user) {
+       // return false;
+    //}
 }

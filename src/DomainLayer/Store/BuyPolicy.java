@@ -18,7 +18,7 @@ public class BuyPolicy implements Policy {
     }
 
     @Override
-    public boolean validate(PurchaseProcess purchaseProcess) {
+    public boolean validate(ShoppingBag shoppingBag, User user) {
         return true;
     }
 

@@ -22,13 +22,13 @@ public class ComplexBuyPolicy extends BuyPolicy{
     }
 
     @Override
-    public boolean validate(PurchaseProcess purchaseProcess) {
+    public boolean validate(ShoppingBag shoppingBag, User user) {
         switch (this.op){
             case and:
-                validate_and(purchaseProcess);
+                validate_and(shoppingBag, user);
                 break;
             case or:
-                validate_or(purchaseProcess);
+                validate_or(shoppingBag, user);
                 break;
             case xor://todo hila
                 return true;
@@ -36,18 +36,18 @@ public class ComplexBuyPolicy extends BuyPolicy{
         return false;
     }
 
-    private boolean validate_and(PurchaseProcess purchaseProcess) {
+    private boolean validate_and(ShoppingBag shoppingBag, User user) {
         for(BuyPolicy p : policies_list){
-            if(p.validate(purchaseProcess) == false){
+            if(p.validate(shoppingBag, user) == false){
                 return false;
             }
         }
         return true;
     }
 
-    private boolean validate_or(PurchaseProcess purchaseProcess) {
+    private boolean validate_or(ShoppingBag shoppingBag, User user) {
         for(BuyPolicy p : policies_list){
-            if(p.validate(purchaseProcess)){
+            if(p.validate(shoppingBag, user)){
                 return true;
             }
         }
