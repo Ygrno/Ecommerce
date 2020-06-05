@@ -6,8 +6,6 @@ import DomainLayer.Roles.Role;
 import DomainLayer.Roles.StoreManger;
 import DomainLayer.Roles.StoreOwner;
 import DomainLayer.Roles.StoreRole;
-import DomainLayer.ShoppingBag;
-import DomainLayer.User.User;
 import Observer.Observer;
 import org.json.JSONException;
 import org.json.JSONObject;
