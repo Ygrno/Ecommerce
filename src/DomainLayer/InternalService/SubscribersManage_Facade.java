@@ -15,6 +15,7 @@ import DomainLayer.User.User;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -263,21 +264,36 @@ public class SubscribersManage_Facade implements InternalService {
         return false;
     }
 
-    public static boolean add_owner_to_store(String user_name, String store_name, String user_assign) {
-        Subscriber subscriber1 = System.getSystem().get_subscriber(user_name);
-        StoreRole store_role = subscriber1.get_role_at_store(store_name);
-        if (store_role instanceof StoreOwner) {
-            Subscriber subscriber2 = System.getSystem().get_subscriber(user_assign);
-            if(subscriber2 == null || store_role.store.find_store_owner_by_name(user_assign) != null) return false;
-            StoreOwner storeOwner = new StoreOwner(subscriber2,store_role.store);
-            subscriber2.getRole_list().add(storeOwner);
-            storeOwner.store.getRoles().add(storeOwner);
-            store_role.getAssigned_users().add(storeOwner);
-            storeOwner.setAssigned_by(store_role);
-            return true;
-        }
-        return false;
+
+    public static boolean add_owner_to_store(String store_name, String user_assign) throws JSONException {
+        List<StoreRole> Owners= GetRoles(store_name);
+        Subscriber subscriber = System.getSystem().get_subscriber(user_assign);
+        if(subscriber == null) return false;
+        if(!checkStoreoOwnersResponse(store_name))
+            return false;
+        StoreOwner storeOwner = new StoreOwner(subscriber,System.getSystem().get_store(store_name));
+        subscriber.getRole_list().add(storeOwner);
+        storeOwner.store.getRoles().add(storeOwner);
+        AssignStoreOwners(storeOwner, store_name);
+        return true;
     }
+
+    public static boolean checkStoreoOwnersResponse(String store_name) throws JSONException {
+        for(StoreOwner store_role : System.getSystem().get_store(store_name).GetStoreOwners())
+            for(JSONObject json : ((StoreOwner)store_role).getResponse()){
+                if(json.getString("response")== "no")
+                    return false;
+            }
+        return true;
+    }
+
+    public static void AssignStoreOwners(StoreOwner storeOwner,String store_name) throws JSONException {
+        for (StoreOwner StoreOwners : System.getSystem().get_store(store_name).GetStoreOwners()) {
+            StoreOwners.getAssigned_users().add(storeOwner);
+            storeOwner.setAssigned_by(StoreOwners);
+        }
+    }
+
 
     public static boolean remove_owner_from_store(String user_name, String store_name, String user_assign) {
         Subscriber requester = System.getSystem().get_subscriber(user_name);

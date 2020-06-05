@@ -1,6 +1,8 @@
 package ServiceLayer;
 
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +20,7 @@ public interface IStoreRole {
 //    public boolean remove_store_buying_policy(String user_name, String store_name);    //4.2 //5.1
 
 
-    public boolean assign_store_owner(String user_name, String store_name, String user_assign); //4.3
+    public boolean assign_store_owner(String store_name, String user_assign) throws JSONException; //4.3
     public boolean remove_store_owner(String user_name, String store_name, String user_assign); //4.4
     public boolean assign_store_manager(String user_name, String store_name, String user_assign); //4.5
     public boolean edit_manager_permissions(String user_name, String store_name,String user_assign , ArrayList<String> permissions); //4.6

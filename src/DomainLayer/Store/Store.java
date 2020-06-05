@@ -139,5 +139,12 @@ public class Store {
         return true;
     }
 
-
+    public List<StoreOwner> GetStoreOwners() {
+        List<StoreOwner> Roles = null;
+        for (Role store_role : roles)
+            if (store_role instanceof StoreOwner) {
+                Roles.add((StoreOwner)store_role);
+            }
+        return Roles;
+    }
 }

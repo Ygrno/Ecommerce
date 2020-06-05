@@ -1,6 +1,7 @@
 package ServiceLayer;
 import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -86,13 +87,10 @@ public class StoreRoleImp implements IStoreRole {
     }
 
     @Override
-    public boolean assign_store_owner(String user_name, String store_name, String user_assign) {
+    public boolean assign_store_owner(String store_name, String user_assign) throws JSONException {
         my_log.logger.info("assign_store_owner");
         if (!SystemManage_Facade.is_initialized()) return false;
-        if (SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
-            return SubscribersManage_Facade.add_owner_to_store(user_name, store_name, user_assign);
-        }
-        return false;
+            return SubscribersManage_Facade.add_owner_to_store(store_name, user_assign);
     }
 
     @Override
