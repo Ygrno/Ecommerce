@@ -2,7 +2,6 @@ package DomainLayer.InternalService;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
@@ -58,7 +57,7 @@ public class InitSystemState {
                 case "add_manager_to_store":
                     return SubscribersManage_Facade.add_manager_to_store(method_args[0],method_args[1],method_args[2]);
                 case "create_store_simple_policy":
-                    return SubscribersManage_Facade.create_store_simple_policy(method_args[0],method_args[1],Integer.valueOf(method_args[2]), Integer.valueOf(method_args[3]),method_args[4],Integer.valueOf(method_args[5]),Integer.valueOf(method_args[6]), Integer.valueOf(method_args[7]), Integer.valueOf(method_args[8]), Integer.valueOf(method_args[9]), Integer.valueOf(method_args[10]), Integer.valueOf(method_args[11]));
+                    return SubscribersManage_Facade.create_store_simple_buyPolicy(method_args[0],method_args[1],Integer.valueOf(method_args[2]), Integer.valueOf(method_args[3]),method_args[4],Integer.valueOf(method_args[5]),Integer.valueOf(method_args[6]), Integer.valueOf(method_args[7]), Integer.valueOf(method_args[8]), Integer.valueOf(method_args[9]), Integer.valueOf(method_args[10]), Integer.valueOf(method_args[11]));
                 case "saveProductForGuest":
                     return SystemManage_Facade.saveProductForGuest(Integer.valueOf(method_args[0]),method_args[1],method_args[2], Integer.valueOf(method_args[3]));
                 case "saveProductForSubscriber":

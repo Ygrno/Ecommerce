@@ -2,7 +2,6 @@ package ServiceLayer;
 import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -63,27 +62,52 @@ public class StoreRoleImp implements IStoreRole {
         return false;
     }
 
-    public boolean add_store_simple_buyPolicy(String user_name, String store_name, int policy_type, int policy_id, String product_name, int minProducts, int maxProducts,int minCost,int maxCost, int min_quantity, int max_quantity, int day) {
-        my_log.logger.info("Add simple buy Policy");
+
+    public boolean create_store_simple_buyPolicy(String user_name, String store_name, int policy_type, int policy_id, String product_name, int minProducts, int maxProducts, int minCost, int maxCost, int min_quantity, int max_quantity, int day) {
+        my_log.logger.info("create simple buy Policy");
         if (SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
-            return SubscribersManage_Facade.create_store_simple_policy(user_name, store_name, policy_type, policy_id, product_name, minProducts, maxProducts,minCost,maxCost, min_quantity, max_quantity, day);
+            return SubscribersManage_Facade.create_store_simple_buyPolicy(user_name, store_name, policy_type, policy_id, product_name, minProducts, maxProducts,minCost,maxCost, min_quantity, max_quantity, day);
         }
         return false;
     }
-    public boolean add_store_complex_buyPolicy(String user_name, String store_name, int policy_type, int policy_id, String product_name, int minProducts, int maxProducts,int minCost,int maxCost, int min_quantity, int max_quantity,int day, int op) {
-        my_log.logger.info("Add complex buy Policy");
+    public boolean create_store_complex_buyPolicy(String user_name, String store_name, int policy_id, int[] policy_ids, int op) {
+        my_log.logger.info("create complex buy Policy");
         if (SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
-            return SubscribersManage_Facade.create_store_complex_policy(user_name, store_name, policy_type, policy_id, product_name, minProducts, maxProducts,minCost,maxCost, min_quantity, max_quantity,day, op);
+            return SubscribersManage_Facade.create_store_complex_buyPolicy(user_name, store_name, policy_id, policy_ids, op);
         }
         return false;
     }
-    public boolean add_simple_policy_to_complexPolicy(String user_name, String store_name, int policy_type, int policy_id, String product_name, int minProducts, int maxProducts,int minCost,int maxCost, int min_quantity, int max_quantity, int day) {
-        my_log.logger.info("Add buy policy to complex buy Policy");
+
+    public boolean edit_store_simple_buyPolicy(String user_name, String store_name, int type, int policy_id, String product_name, int minProducts, int maxProducts, int minCost, int maxCost, int min_quantity, int max_quantity, int day){
+        my_log.logger.info("edit simple buy Policy");
         if (SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
-            return SubscribersManage_Facade.add_simple_buyPolicy_to_complex_policy(user_name, store_name, policy_type, policy_id, product_name, minProducts, maxProducts,minCost,maxCost, min_quantity, max_quantity, day);
+            return SubscribersManage_Facade.edit_store_simple_buyPolicy(user_name, store_name, type, policy_id, product_name, minProducts, maxProducts, minCost, maxCost, min_quantity, max_quantity, day);
         }
         return false;
     }
+    public boolean edit_store_complex_buyPolicy(String user_name, String store_name, int policy_id, int new_policy_id, String act){
+        my_log.logger.info("edit complex buy Policy");
+        if (SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
+            return SubscribersManage_Facade.edit_store_complex_buyPolicy(user_name, store_name, policy_id, new_policy_id, act);
+        }
+        return false;
+    }
+
+    public boolean remove_store_buyPolicy(String user_name, String store_name, int policy_id){
+        my_log.logger.info("remove buy Policy");
+        if (SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
+            return SubscribersManage_Facade.remove_store_buyPolicy(user_name, store_name, policy_id);
+        }
+        return false;
+    }
+
+//    public boolean add_simple_policy_to_complexPolicy(String user_name, String store_name, int policy_type, int policy_id, String product_name, int minProducts, int maxProducts,int minCost,int maxCost, int min_quantity, int max_quantity, int day) {
+//        my_log.logger.info("Add buy policy to complex buy Policy");
+//        if (SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
+//            return SubscribersManage_Facade.add_simple_buyPolicy_to_complex_policy(user_name, store_name, policy_type, policy_id, product_name, minProducts, maxProducts,minCost,maxCost, min_quantity, max_quantity, day);
+//        }
+//        return false;
+//    }
 
     @Override
     public boolean assign_store_owner(String user_name, String store_name, String user_assign) {
