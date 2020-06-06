@@ -27,7 +27,7 @@ public class Store {
     private List<StoreRole> roles = new ArrayList<>();
 
     //hila
-    private List<Policy> purchasePolicies = new ArrayList<>();
+    private List<BuyPolicy> buyPolicyList = new ArrayList<>();
 
     public Store(String name) {
         //TODO: require policy
@@ -35,15 +35,18 @@ public class Store {
         discountPolicy = new DiscountPolicy();
     }
 
-    public List<Policy> getPurchasePolicies() {
-        return purchasePolicies;
+    public List<BuyPolicy> getBuyPolicyList() {
+        return buyPolicyList;
     }
 
 
-    public void setPurchasePolicy(Policy purchasePolicy) {
-        purchasePolicies.add(purchasePolicy);
-        //this.purchasePolicy = purchasePolicy;
+    public void setPurchasePolicy(BuyPolicy buyPolicy) {
+        buyPolicyList.add(buyPolicy);
     }
+    public void removePurchasePolicy(BuyPolicy buyPolicy) {
+        buyPolicyList.remove(buyPolicy);
+    }
+
 
     public DiscountPolicy getDiscountPolicy() {
         return discountPolicy;
@@ -132,7 +135,7 @@ public class Store {
     }
 
     public boolean validatePurchasePolicies(ShoppingBag shoppingBag, User user) {
-        for(Policy p: purchasePolicies){
+        for(Policy p: buyPolicyList){
             if (!p.validate(shoppingBag, user))
                 return false;
         }
