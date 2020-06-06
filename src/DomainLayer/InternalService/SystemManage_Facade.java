@@ -2,6 +2,9 @@ package DomainLayer.InternalService;
 
 import DomainLayer.*;
 import DomainLayer.Roles.Permission;
+import DomainLayer.Roles.StoreManger;
+import DomainLayer.Roles.StoreOwner;
+import DomainLayer.Roles.StoreRole;
 import DomainLayer.Store.Store;
 import DomainLayer.System;
 import DomainLayer.User.Guest;
@@ -295,14 +298,35 @@ public class SystemManage_Facade implements InternalService {
         return password_dyc.equals(encryptImp.decrypt(password));
     }
 
+    public static List<String> get_user_permissions(String username, String store){
+
+        Subscriber s = system.get_subscriber(username);
+        StoreRole storeRole = s.get_role_at_store(store);
+
+        if(storeRole instanceof StoreManger){
+            StoreManger MstoreRole = (StoreManger)storeRole;
+            List<Permission> pms = MstoreRole.getPermissions();
+            List<String> res = new ArrayList<>();
+            for(Permission p : pms){
+                res.add(permissionToString(p));
+            }
+            return res;
+        }else{
+            return null;
+        }
+    }
+
     public static Permission string_to_permission(String s) {
         Permission permission[] = Permission.values();
         for (Permission p : permission)
             if (s.equalsIgnoreCase(String.valueOf(p)))
                 return p;
 
-
         return null;
+    }
+
+    public static String permissionToString(Permission p){
+        return p.toString();
     }
 
     public static List<Permission> strings_to_permissions(List<String> strings) {

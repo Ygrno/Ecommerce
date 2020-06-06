@@ -1,6 +1,9 @@
 package ServiceLayer;
 
 
+
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +25,8 @@ public interface IStoreRole {
     public boolean remove_store_owner(String user_name, String store_name, String user_assign); //4.4
     public boolean assign_store_manager(String user_name, String store_name, String user_assign); //4.5
     public boolean edit_manager_permissions(String user_name, String store_name,String user_assign , ArrayList<String> permissions); //4.6
+    public List<JSONObject> get_user_permissions(String username, String store) throws Exception;
+
 
     public boolean remove_store_manager(String user_name, String store_name, String user_assign); //4.7
     public boolean close_store(String user_name, String store_name); //4.8

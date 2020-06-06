@@ -370,7 +370,9 @@ public class SubscribersManage_Facade implements InternalService {
     public static boolean change_permissions_of_manager(String user_name, String store_name,String user_assign , ArrayList<String> permissions) {
         Subscriber requester = System.getSystem().get_subscriber(user_name);
         StoreRole store_role = requester.get_role_at_store(store_name);
-        if(store_role == null) return false;
+        if(store_role == null) return false; //bug
+
+
         if (store_role instanceof StoreOwner) {
             Subscriber to_edit_permissions = System.getSystem().get_subscriber(user_assign);
             if(to_edit_permissions == null) return false;

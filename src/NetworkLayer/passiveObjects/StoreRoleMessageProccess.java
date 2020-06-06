@@ -1,5 +1,6 @@
 package NetworkLayer.passiveObjects;
 
+import DomainLayer.InternalService.SubscribersManage_Facade;
 import ServiceLayer.IStoreRole;
 import ServiceLayer.StoreRoleImp;
 import org.json.JSONArray;
@@ -7,6 +8,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class StoreRoleMessageProccess {
     private static IStoreRole storeRole= new StoreRoleImp();
@@ -130,6 +132,9 @@ public class StoreRoleMessageProccess {
 
         boolean b = storeRole.edit_manager_permissions(username,storename,user_assign,pms);
 
+        System.out.println(b);
+
+
         JSONObject o=new JSONObject();
         o.put("req", request.get("req"));
         o.put("success", b);
@@ -137,7 +142,24 @@ public class StoreRoleMessageProccess {
 
     }
 
+    public static void get_user_permissions(MessagingProtocol protocol, JSONObject request) throws Exception {
+        String username = request.getString("username");
+        String store = request.getString("store");
 
+        List<JSONObject> pms = storeRole.get_user_permissions(username, store);
+
+        JSONArray arr = new JSONArray();
+        for(JSONObject p : pms){
+            arr.put(p);
+        }
+
+        JSONObject o = new JSONObject();
+        o.put("req", request.get("req"));
+        o.put("username", username);
+        o.put("store", store);
+        o.put("permissions", arr);
+        protocol.send(o);
+    }
     public static void remove_store_manager(MessagingProtocol protocol, JSONObject request) throws Exception{
         String username = request.getString("user_name");
         String storename = request.getString("store_name");

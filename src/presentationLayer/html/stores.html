@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
 
+    <script src="../js/Controllers/HeaderController.js"></script>
     <script src="../js/HTMLList.js"></script>
     <script src="../js/EcommerceClient.js"></script>
+    <script src="../js/Controllers/StoreMenuController.js"></script>
     <script src="../js/Main.js"></script>
 
     <title>Store</title>
@@ -87,8 +89,8 @@
 </head>
 <body>
 
-<div w3-include-html="header.html"></div>
-<div w3-include-html="store_menu.html"></div>
+<div w3-include-html="includes/header.html"></div>
+<div w3-include-html="includes/store_menu.html"></div>
 
 <div class="container">
 
@@ -200,6 +202,8 @@
                 get_notifications(response);
             }else if (req === "new_notification"){
                 newNotification();
+            }else if(req === "get_user_permissions"){
+                on_permissions_recieved(response);
             }
         };
 

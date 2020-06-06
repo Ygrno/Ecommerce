@@ -118,7 +118,9 @@ public class MessagingProtocol {
             }else if(req.equals("watch_store_history")){  //done
                 StoreRoleMessageProccess.watch_store_history(this,request);
             }else if(req.equals("get_notifications")){
-              SubscriberMessageProccess.getNotifications(this,request);
+                SubscriberMessageProccess.getNotifications(this,request);
+            }else if(req.equals("get_user_permissions")){
+                StoreRoleMessageProccess.get_user_permissions(this, request);
             }
 
         }catch (Exception e){
