@@ -8,9 +8,10 @@ import DomainLayer.Store.Store;
 
 public class Esimulation {
     public static void Init(){
+        
         Subscriber tamer = new Subscriber("tamer","tamer");
         Subscriber ahmad = new Subscriber("ahmad","ahmad");
-        Subscriber adi = new Subscriber("adi","adi");
+        Subscriber mahmoud = new Subscriber("mahmoud","mahmoud");
         Subscriber noor = new Subscriber("noor","noor");
         Subscriber yakir = new Subscriber("yakir","yakir");
         Subscriber adam = new Subscriber("adam","adam");
@@ -18,7 +19,7 @@ public class Esimulation {
 
         System.getSystem().getUser_list().add(tamer);
         System.getSystem().getUser_list().add(ahmad);
-        System.getSystem().getUser_list().add(adi);
+        System.getSystem().getUser_list().add(mahmoud);
         System.getSystem().getUser_list().add(yakir);
         System.getSystem().getUser_list().add(noor);
         System.getSystem().getUser_list().add(adam);
@@ -106,7 +107,7 @@ public class Esimulation {
         Japanika.getRoles().add(new StoreOwner(tamer,Japanika));
         BicycleStore.getRoles().add(new StoreOwner(ahmad,BicycleStore));
         Toyota.getRoles().add(new StoreOwner(noor,Toyota));
-        BicycleStore.getRoles().add(new StoreOwner(adi,BicycleStore));
+        BicycleStore.getRoles().add(new StoreOwner(mahmoud,BicycleStore));
         Black.getRoles().add(new StoreOwner(yakir,Black));
         BBB.getRoles().add(new StoreOwner(adam,BBB));
         Agadir.getRoles().add(new StoreOwner(tamer,Agadir));

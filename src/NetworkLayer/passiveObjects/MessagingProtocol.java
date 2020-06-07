@@ -39,15 +39,15 @@ public class MessagingProtocol {
             JSONObject request = new JSONObject(msg);
             String req = (String) request.get("req");
 
-            if(req.equals("login")){   //done
+            if(req.equals("login")){
                 GuestMessageProccess.Login(this, request);
-            }else if(req.equals("get_stores")){  //done
+            }else if(req.equals("get_stores")){
                 GuestMessageProccess.getStores(this, request);
-            }else if(req.equals("get_products")){ //done
+            }else if(req.equals("get_products")){
                 GuestMessageProccess.searchProductStores(this, request);
-            }else if(req.equals("get_store")){  //done
+            }else if(req.equals("get_store")){
                 GuestMessageProccess.getStore(this, request);
-            }else if(req.equals("get_product_of_store")){  //done
+            }else if(req.equals("get_product_of_store")){
                 GuestMessageProccess.searchProductsOfStore(this, request);
             }else if(req.equals("signup")){
                 GuestMessageProccess.Signup(this, request);
@@ -71,15 +71,15 @@ public class MessagingProtocol {
                 }else if(req.equals("buy_cart_subscriber")){
                     SubscriberMessageProccess.buyCart(this, request);
                 }
-            }else if(req.equals("sign_out")){   //done
+            }else if(req.equals("sign_out")){
                 SubscriberMessageProccess.signOut(this,request);
-            }else if(req.equals("open_store")){ //done
+            }else if(req.equals("open_store")){
                 SubscriberMessageProccess.open_store(this,request);
-            }else if(req.equals("write_review")){  //done
+            }else if(req.equals("write_review")){
                 SubscriberMessageProccess.writeReview(this,request);
-            }else if(req.equals("send_query_to_store")){  //done
+            }else if(req.equals("send_query_to_store")){
                 SubscriberMessageProccess.send_query_to_store(this,request);
-            }else if(req.equals("view_purchase_history")){  //done
+            }else if(req.equals("view_purchase_history")){
                 SubscriberMessageProccess.view_purchase_history(this,request);
             }else if(req.equals("close_store_permanently")){
                 ManagerMessageProccess.close_store_permanently(this,request);
@@ -93,29 +93,29 @@ public class MessagingProtocol {
                 ManagerMessageProccess.view_history_costumer(this,request);
             }else if(req.equals("watch_system_log")){
                 ManagerMessageProccess.watch_system_log(this,request);
-            }else if(req.equals("add_store_product")){   //done
+            }else if(req.equals("add_store_product")){
                 StoreRoleMessageProccess.add_store_product(this,request);
-            }else if(req.equals("edit_store_product")){ //done
+            }else if(req.equals("edit_store_product")){
                 StoreRoleMessageProccess.edit_store_product(this,request);
-            }else if(req.equals("remove_store_product")){  //done
+            }else if(req.equals("remove_store_product")){
                 StoreRoleMessageProccess.remove_store_product(this,request);
             }else if(req.equals("add_store_visible_discount")){
                 StoreRoleMessageProccess.add_store_visible_discount(this,request);
-            }else if(req.equals("assign_store_owner")){   // done
+            }else if(req.equals("assign_store_owner")){
                 StoreRoleMessageProccess.assign_store_owner(this,request);
-            }else if(req.equals("remove_store_owner")){     // done
+            }else if(req.equals("remove_store_owner")){
                 StoreRoleMessageProccess.remove_store_owner(this,request);
-            }else if(req.equals("assign_store_manager")){  //done
+            }else if(req.equals("assign_store_manager")){
                 StoreRoleMessageProccess.assign_store_manager(this,request);
             }else if(req.equals("edit_manager_permissions")){
                 StoreRoleMessageProccess.edit_manager_permissions(this,request);
-            }else if(req.equals("remove_store_manager")){  //done
+            }else if(req.equals("remove_store_manager")){
                 StoreRoleMessageProccess.remove_store_manager(this,request);
-            }else if(req.equals("close_store")){   //done
+            }else if(req.equals("close_store")){
                 StoreRoleMessageProccess.close_store(this,request);
             }else if(req.equals("view_and_respond_to_questions")){
                 StoreRoleMessageProccess.view_and_respond_to_questions(this,request);
-            }else if(req.equals("watch_store_history")){  //done
+            }else if(req.equals("watch_store_history")){
                 StoreRoleMessageProccess.watch_store_history(this,request);
             }else if(req.equals("get_notifications")){
                 SubscriberMessageProccess.getNotifications(this,request);
