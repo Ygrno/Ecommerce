@@ -33,7 +33,7 @@ public class ManagerImp implements IManager {
 
     @Override
     public String view_history_costumer(String user_name) {
-        if(!SystemManage_Facade.is_initialized()) return null;
+        if(!SystemManage_Facade.is_initialized()) return  null;
         return SystemManage_Facade.get_subscriber_purchase_process(user_name);
 
     }
@@ -42,5 +42,19 @@ public class ManagerImp implements IManager {
     public boolean watch_system_log() {
         if(!SystemManage_Facade.is_initialized()) return false;
         return false;
+    }
+
+    @Override
+    public String today_revenue() {
+        if(!SystemManage_Facade.is_initialized()) return null;
+        return SystemManage_Facade.today_revenue();
+
+    }
+
+    @Override
+    public String date_revenue(String date) {
+        if(!SystemManage_Facade.is_initialized()) return null;
+        return SystemManage_Facade.date_revenue(date);
+
     }
 }

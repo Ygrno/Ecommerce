@@ -8,6 +8,8 @@ public interface IManager {
     public String view_history_store(String store_name);      //6.4
     public String view_history_costumer(String user_name);    //6.4
     public boolean watch_system_log(); //6.5
+    public String  today_revenue();// version 3 d
+    public String  date_revenue(String date);// version 3 d
 
 
 

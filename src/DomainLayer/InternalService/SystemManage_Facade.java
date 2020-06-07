@@ -13,7 +13,9 @@ import org.json.JSONException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -370,4 +372,32 @@ public class SystemManage_Facade implements InternalService {
         return history.toString();
     }
 
+    public static String today_revenue() {
+        double sum = 0;
+        SimpleDateFormat format = new SimpleDateFormat("ddMMyyyy");
+        String dateString = format.format( new Date()   );
+        int today=Integer.parseInt(dateString);
+        List<Store> stores =system.getStore_list(); // TODO in to get the information from date base for today
+        for(Store store : stores){
+            List<PurchaseProcess> purchases = store.getPurchase_process_list();
+            for( PurchaseProcess ps : purchases){
+                if(ps.isFinished()&& ps.getFinished_date()==today);
+                    sum = sum+ps.getShoppingBag().getDiscounted_bag_price();
+            }
+        }
+        return String.valueOf(sum);
+    }
+    public static String date_revenue(String date) {
+        double sum=0;
+        int today=Integer.parseInt(date);
+        List<Store> stores =system.getStore_list();  // TODO in to get the information from date base for specific date
+        for(Store store : stores){
+            List<PurchaseProcess> purchases = store.getPurchase_process_list();
+            for( PurchaseProcess ps : purchases){
+                if(ps.isFinished()&& ps.getFinished_date()==today);
+                sum = sum+ps.getShoppingBag().getDiscounted_bag_price();
+            }
+        }
+        return String.valueOf(sum);
+    }
 }

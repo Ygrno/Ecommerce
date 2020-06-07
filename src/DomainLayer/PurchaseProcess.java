@@ -8,6 +8,9 @@ import Observer.Observer;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class PurchaseProcess {
 
     private User user;
@@ -15,6 +18,7 @@ public class PurchaseProcess {
     private ShoppingBag shoppingBag;
     private boolean isDone;
     private DealDetails details;
+    private int finished_date;
 
     public DealDetails getDetails() {
         return details;
@@ -36,9 +40,17 @@ public class PurchaseProcess {
                 Observer.update(o);
             }
         }
+        SimpleDateFormat format = new SimpleDateFormat("ddMMyyyy");
+        String dateString = format.format( new Date()   );
+        finished_date=Integer.parseInt(dateString);
+
     }
 
 
+
+    public int getFinished_date() {
+        return finished_date;
+    }
 
     private void update_details(DealDetails dealDetails){
 
