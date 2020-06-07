@@ -1,0 +1,15 @@
+login(Admin,Password);
+signup(hila,pass);
+signup(user1,pass1);
+signup(user2,pass2);
+login(hila,pass);
+login(user1,pass1);
+login(user2,pass2);
+openstore(hila,shoes);
+add_product_to_store(hila,shoes,bamba,3,10);
+add_owner_to_store(hila,shoes,user1);
+add_manager_to_store(hila,shoes,user2);
+create_store_simple_policy(hila,shoes,1,1,bamba,-1,-1,-1,-1,0,2,-1);
+saveProductForGuest(1,bamba,shoes,1);
+saveProductForSubscriber(hila,bamba,shoes,1);
+add_subscriber(gil,pass);

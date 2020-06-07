@@ -197,9 +197,10 @@ public class SystemManage_Facade implements InternalService {
         return system.get_subscriber(user_name);
     }
 
-    public static void add_subscriber(String user_name, String password) {
+    public static boolean add_subscriber(String user_name, String password) {
         Subscriber subscriber = new Subscriber(user_name, password);
         system.getUser_list().add(subscriber);
+        return true;
     }
 
     public static  List<JSONObject> View_purchase(String user_name) throws JSONException { //3.7

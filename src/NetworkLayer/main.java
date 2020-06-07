@@ -1,5 +1,6 @@
 package NetworkLayer;
 
+import DomainLayer.InternalService.InitSystemState;
 import DomainLayer.InternalService.SystemManage_Facade;
 import NetworkLayer.passiveObjects.connectionHandler;
 import Stubs.Esimulation;
@@ -13,6 +14,9 @@ public class main {
 
         if(!SystemManage_Facade.is_initialized()) {
             SystemManage_Facade.init_system();
+            if (!InitSystemState.init()) {
+                System.out.println("failed to init system");
+            }
         }
 
         Esimulation.Init();
