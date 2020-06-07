@@ -69,7 +69,7 @@ public class initSystemTest {
     @Test
     public void add_store_simple_buyPolicy() {
         Store s = System.getSystem().get_store("shoes");
-        List<Policy> policies = s.getPurchasePolicies();
+        List<BuyPolicy> policies = s.getBuyPolicyList();
         assert policies != null;
         assert policies.size()==1;
         for (Policy p: policies){
@@ -80,14 +80,14 @@ public class initSystemTest {
     @Test
     public void add_owner_to_store() {
         Store s = System.getSystem().get_store("shoes");
-        List<Policy> policies = s.getPurchasePolicies();
+        List<BuyPolicy> policies = s.getBuyPolicyList();
         StoreOwner owner = s.find_store_owner_by_name("hila");
         assert owner.user.getName().equals("hila");
     }
     @Test
     public void add_manager_to_store() {
         Store s = System.getSystem().get_store("shoes");
-        List<Policy> policies = s.getPurchasePolicies();
+        List<BuyPolicy> policies = s.getBuyPolicyList();
         StoreManger manager = s.find_store_manager_by_name("user2");
         assert manager.user.getName().equals("user2");
     }
