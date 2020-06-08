@@ -6,18 +6,27 @@ import DomainLayer.Roles.StoreManger;
 import DomainLayer.Roles.StoreOwner;
 import DomainLayer.Roles.StoreRole;
 import DomainLayer.User.User;
-
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 //persistence
+@Entity
+@Table(name="subscribers")
 public class Subscriber extends User {
 
+    @Id
+    @Column(name="user_name")
     private String name;
+    @Column(name="password")
     private String password;
+    //    @OneToMany(mappedBy = "roles")
+    @Transient
     private List<Role> role_list;
-
+    @Transient
     private boolean logged_in = false;
+    @Transient
     private List<String> Quries; //3.5
+
 
     public Subscriber(String user_name, String password) {
         super();
@@ -26,6 +35,9 @@ public class Subscriber extends User {
         role_list = new ArrayList<>();
 
         Quries= new ArrayList<>();
+    }
+
+    public Subscriber() {
     }
 
     public String getName() {
