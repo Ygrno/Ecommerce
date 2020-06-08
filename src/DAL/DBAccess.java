@@ -2,6 +2,7 @@ package DAL;
 
 import DomainLayer.User.Subscriber;
 import com.fasterxml.classmate.AnnotationConfiguration;
+//import com.mysql.cj.xdevapi.SessionFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
@@ -38,9 +39,6 @@ public class DBAccess {
             //entityManager=entityManagerFactory.createEntityManager();
             session = sessionFactory.openSession();
             session.getTransaction().begin();
-            Subscriber s =new Subscriber("aaaaa","as");
-            session.saveOrUpdate(s);
-            session.getTransaction().commit();
         }
         catch (Exception e){
             System.out.println("Unable to open session");
