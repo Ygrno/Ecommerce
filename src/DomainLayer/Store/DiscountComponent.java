@@ -61,7 +61,7 @@ public abstract class DiscountComponent {
     }
 
 
-    private int id;
+    protected int id;
 
     @Id
     public int getId() {

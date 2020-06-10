@@ -23,6 +23,7 @@ public class ShoppingBag {
     public ShoppingBag(List<String> products_names) {
         this.products_names = products_names;
         this.products=new ArrayList<>();
+        this.id=System.nextShoppingBagId++;
     }
 
     public ShoppingBag() {

@@ -1,6 +1,7 @@
 package DomainLayer.Roles;
 
 import DomainLayer.Store.Store;
+import DomainLayer.System;
 import DomainLayer.User.Subscriber;
 
 import javax.persistence.*;
@@ -25,6 +26,8 @@ public class StoreManger extends StoreRole {
         permissions = new ArrayList<>();
         permissions.add(Permission.VIEW_AND_RESPOND_TO_USERS);
         permissions.add(Permission.VIEW_STORE_HISTORY);
+        this.id= System.nextManagerId;
+        System.nextManagerId++;
     }
 
     public StoreManger() {

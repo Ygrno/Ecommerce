@@ -57,7 +57,7 @@ public class DiscountPolicy {
     }
 
     @Id
-    private int id;
+    protected int id;
 
     public int getId() {
         return id;

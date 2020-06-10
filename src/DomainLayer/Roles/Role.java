@@ -17,7 +17,7 @@ public abstract class Role {
     }
     @Id
     @Column(name ="id")
-    private int id;
+    protected int id;
 
 
     public int getId() {
