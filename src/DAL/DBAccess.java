@@ -1,9 +1,8 @@
 package DAL;
 
-import DomainLayer.Product;
-import DomainLayer.Roles.StoreManger;
 import DomainLayer.User.Subscriber;
 import com.fasterxml.classmate.AnnotationConfiguration;
+//import com.mysql.cj.xdevapi.SessionFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
@@ -40,14 +39,10 @@ public class DBAccess {
             //entityManager=entityManagerFactory.createEntityManager();
             session = sessionFactory.openSession();
             session.getTransaction().begin();
-            //session.getTransaction().commit();
         }
         catch (Exception e){
             System.out.println("Unable to open session");
         }
-//        Product s =new Product("qw",12,0,null);
-//        session.saveOrUpdate(s);
-//        session.getTransaction().commit();
     }
 
     /**

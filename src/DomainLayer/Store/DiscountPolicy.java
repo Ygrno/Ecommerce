@@ -20,6 +20,7 @@ public class DiscountPolicy {
     public void add_discount(DiscountComponent discountComponent) {
         discounts.add(discountComponent);
     }
+
     public boolean check_if_unique(String discount_name){
         for(DiscountComponent dc : discounts){
             if(dc instanceof VisibleDiscount && ((VisibleDiscount) dc).getDiscount_name().equals(discount_name))
@@ -31,6 +32,8 @@ public class DiscountPolicy {
         }
         return true;
     }
+
+
     public DiscountComponent get_discount_by_name(String discount_name){
         for(DiscountComponent dc : discounts){
             if(dc instanceof VisibleDiscount && ((VisibleDiscount) dc).getDiscount_name().equals(discount_name))
