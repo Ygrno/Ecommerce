@@ -8,17 +8,30 @@ import Observer.Observer;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+@Entity
+@Table(name = "purchases_processes")
 public class PurchaseProcess {
 
+    @Id
+    private int id;
+    @OneToOne(targetEntity = User.class)
     private User user;
+    @OneToOne(targetEntity = Store.class)
     private Store store;
+    @OneToOne(targetEntity = ShoppingBag.class)
     private ShoppingBag shoppingBag;
+    @Column
     private boolean isDone;
+    @Transient
     private DealDetails details;
+    @Column
     private int finished_date;
+
+    public PurchaseProcess() {
+    }
 
     public DealDetails getDetails() {
         return details;
@@ -62,7 +75,7 @@ public class PurchaseProcess {
         this.store = store;
         this.shoppingBag = shoppingBag;
         this.isDone = false;
-
+        this.id= System.nextPurchaseProcessId++;
     }
 
     public User getUser() {
@@ -91,5 +104,13 @@ public class PurchaseProcess {
 
     public boolean isFinished(){
         return isDone;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

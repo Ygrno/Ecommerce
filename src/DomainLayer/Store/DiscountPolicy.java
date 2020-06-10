@@ -1,12 +1,19 @@
 package DomainLayer.Store;
 
-import java.util.ArrayList;
+import jdk.jfr.Enabled;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "Discount_policies")
 public class DiscountPolicy {
 
-    ArrayList<DiscountComponent> discounts = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    List<DiscountComponent> discounts = new ArrayList<>();
 
-    public ArrayList<DiscountComponent> getDiscounts() {
+    public List<DiscountComponent> getDiscounts() {
         return discounts;
     }
 
@@ -49,4 +56,14 @@ public class DiscountPolicy {
         }
     }
 
+    @Id
+    protected int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

@@ -5,15 +5,21 @@ import DomainLayer.ShoppingCart;
 import Observer.Observer;
 import org.json.JSONObject;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "users")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class User {
 
+    @OneToOne(targetEntity = ShoppingCart.class,cascade = CascadeType.ALL)
     private ShoppingCart shoppingCart;
+    @OneToMany(cascade = CascadeType.ALL)
     private List<PurchaseProcess> purchaseProcesslist;
+    @Transient
     private List<JSONObject> notifications;
-    private Observer observer;
     public User(){
         purchaseProcesslist = new ArrayList<>();
         shoppingCart = new ShoppingCart();
@@ -28,7 +34,18 @@ public abstract class User {
         return purchaseProcesslist;
     }
 
-    public Observer observer(){return observer;}
 
     public List<JSONObject> notifications(){return notifications;}
+
+
+    @Id
+    protected int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

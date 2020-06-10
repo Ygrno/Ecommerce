@@ -14,13 +14,14 @@ import java.util.List;
 @Table(name="subscribers")
 public class Subscriber extends User {
 
-    @Id
+
     @Column(name="user_name")
     private String name;
     @Column(name="password")
     private String password;
     //    @OneToMany(mappedBy = "roles")
-    @Transient
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="user_id")
     private List<Role> role_list;
     @Transient
     private boolean logged_in = false;

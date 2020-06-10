@@ -5,6 +5,8 @@ import DomainLayer.PurchaseProcess;
 import DomainLayer.Store.Store;
 import DomainLayer.User.Subscriber;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,8 @@ public class SystemManger extends Role {
     public SystemManger(Subscriber user){
         this.user = user;
     }
+
+
 //    public List<PurchaseProcess> allPurchases() {
 //        List<PurchaseProcess> all_purchases_processes = new ArrayList<>();
 //        List<Store> all_stores = SystemManage_Facade.getAllStores();

@@ -3,11 +3,21 @@ package DomainLayer.Store;
 import DomainLayer.PurchaseProcess;
 import DomainLayer.ShoppingBag;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "discount_components")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class DiscountComponent {
 
+    @Column
     private boolean calculated = false;
+    @Column
     public double final_price = -1;
 
+    public void setFinal_price(int final_price){
+        this.final_price=final_price;
+    }
     public double getFinal_price() { return final_price; }
 
     public boolean isCalculated() { return calculated; }
@@ -51,4 +61,14 @@ public abstract class DiscountComponent {
     }
 
 
+    protected int id;
+
+    @Id
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

@@ -149,7 +149,7 @@ public class GuestImp implements IGuest {
         //check product availability
 
         double price=SystemManage_Facade.getPriceOfCart(String.valueOf(id));
-        String[] dealDetails={String.valueOf(price),buyerName,creditCardNumber,expireDate, String.valueOf(cvv)};
+        String[] dealDetails={String.valueOf(id),String.valueOf(price),buyerName,creditCardNumber,expireDate, String.valueOf(cvv)};
         return SystemManage_Facade.buy(dealDetails);
     }
 }
