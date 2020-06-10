@@ -86,7 +86,7 @@ public class SubscriberMessageProccess {
 
         boolean b = subscriber.write_review(userName,productName,storeName,review_data,rank);
 
-        JSONObject o=new JSONObject();
+        JSONObject o = new JSONObject();
         o.put("req", request.get("req"));
         o.put("success", b);
         protocol.send(o);
