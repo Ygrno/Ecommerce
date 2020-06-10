@@ -17,7 +17,9 @@ public class ShoppingCart {
     private List<ShoppingBag> shopping_bag_list;
 
     public ShoppingCart(){
+
         shopping_bag_list = new ArrayList<>();
+        this.id=System.nextShoppingCartId++;
     }
 
     public List<ShoppingBag> getShopping_bag_list() {

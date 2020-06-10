@@ -75,7 +75,7 @@ public class PurchaseProcess {
         this.store = store;
         this.shoppingBag = shoppingBag;
         this.isDone = false;
-
+        this.id= System.nextPurchaseProcessId++;
     }
 
     public User getUser() {

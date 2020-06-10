@@ -3,6 +3,7 @@ package DomainLayer.Store;
 import DomainLayer.Product;
 import DomainLayer.PurchaseProcess;
 import DomainLayer.ShoppingBag;
+import DomainLayer.System;
 
 import javax.persistence.*;
 
@@ -22,6 +23,7 @@ public class VisibleDiscount extends DiscountComponent {
         this.discount_percentage = discount_percentage;
         this.end_of_use_date = end_of_use_date;
         this.product = product;
+        this.id= System.nextVisibleDiscountId++;
     }
 
     public VisibleDiscount() {
@@ -52,7 +54,7 @@ public class VisibleDiscount extends DiscountComponent {
     }
 
     public void displayDiscountInfo(){
-        System.out.println("This product has discount percentage of: " + getDiscount_percentage() + " Due date: " + getEnd_of_use_date());
+        java.lang.System.out.println("This product has discount percentage of: " + getDiscount_percentage() + " Due date: " + getEnd_of_use_date());
     }
 
     @Override

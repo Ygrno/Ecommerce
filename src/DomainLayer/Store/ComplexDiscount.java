@@ -2,6 +2,7 @@ package DomainLayer.Store;
 
 import DomainLayer.PurchaseProcess;
 import DomainLayer.ShoppingBag;
+import DomainLayer.System;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class ComplexDiscount extends DiscountComponent {
         if(type.equals("one")){
             this.onlyOne_discountComponents=discounts;
         }
+        this.id= System.nextComplexDiscountId++;
 
     }
     @OneToMany(cascade = CascadeType.ALL)

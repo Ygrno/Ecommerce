@@ -2,6 +2,7 @@ package DomainLayer.Store;
 
 import DomainLayer.Product;
 import DomainLayer.ShoppingBag;
+import DomainLayer.System;
 
 import javax.persistence.*;
 import java.util.List;
@@ -59,6 +60,7 @@ public class ConditionedDiscount extends DiscountComponent {
         this.product = product;
         this.required_amount = required_amount;
         this.required_sum = required_sum;
+        this.id= System.nextConditionedDiscountId++;
     }
 
     public void setCond(Condition c){
@@ -87,7 +89,7 @@ public class ConditionedDiscount extends DiscountComponent {
 
 
     public void displayDiscountInfo(){
-        System.out.println("This product has discount percentage of: " + getDiscount_percentage() + " Due date: " + getEnd_of_use_date() + " Only if: " + getCond().toString());
+        java.lang.System.out.println("This product has discount percentage of: " + getDiscount_percentage() + " Due date: " + getEnd_of_use_date() + " Only if: " + getCond().toString());
     }
 
     @Override

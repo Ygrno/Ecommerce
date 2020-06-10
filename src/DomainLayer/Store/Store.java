@@ -7,6 +7,7 @@ import DomainLayer.Roles.StoreManger;
 import DomainLayer.Roles.StoreOwner;
 import DomainLayer.Roles.StoreRole;
 import DomainLayer.ShoppingBag;
+import DomainLayer.System;
 import DomainLayer.User.User;
 import Observer.Observer;
 import org.json.JSONException;
@@ -41,6 +42,7 @@ public class Store {
         //TODO: require policy
         this.name = name;
         discountPolicy = new DiscountPolicy();
+        discountPolicy.setId(System.nextdiscountPolicyId++);
     }
 
     public Store() {
