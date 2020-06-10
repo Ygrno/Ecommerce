@@ -5,13 +5,21 @@ import DomainLayer.Product;
 import DomainLayer.ShoppingBag;
 import DomainLayer.User.User;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.List;
 
+@Entity
+@Table(name = "product_buy_policies")
 public class ProductBuyPolicy extends SimpleBuyPolicy {
     private String product_name;
     private int minProducts;
     private int maxProducts;
+
     private Logicaloperation op;
+
+    public ProductBuyPolicy() {
+    }
 
     public String getProduct_name() {
         return product_name;

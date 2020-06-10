@@ -1,11 +1,19 @@
 package DomainLayer.User;
 
 import DomainLayer.User.Subscriber;
-//persistence
-public class ProductReview {
 
+import javax.persistence.*;
+import java.lang.annotation.Target;
+
+//persistence
+@Entity
+@Table(name = "products_reviews")
+public class ProductReview {
+    @Column
     String review_data = "";
+    @Column
     int rank;
+    @OneToOne(targetEntity = Subscriber.class,cascade = CascadeType.ALL)
     Subscriber subscriber;
 
 
@@ -13,6 +21,9 @@ public class ProductReview {
         this.review_data = review_data;
         this.rank = rank;
         this.subscriber = subscriber;
+    }
+
+    public ProductReview() {
     }
 
     public String getReview_data() {
@@ -25,5 +36,16 @@ public class ProductReview {
 
     public Subscriber getSubscriber() {
         return subscriber;
+    }
+
+    @Id
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

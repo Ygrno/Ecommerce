@@ -4,11 +4,17 @@ import DomainLayer.Product;
 import DomainLayer.PurchaseProcess;
 import DomainLayer.ShoppingBag;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "visible_discount")
+
 public class VisibleDiscount extends DiscountComponent {
 
     private String discount_name;
     private double discount_percentage;
     private int end_of_use_date; // { Format 12062020 = 12/06/2020 }
+    @OneToOne(targetEntity = Product.class,cascade = CascadeType.ALL)
     private Product product;
 
     public VisibleDiscount(String discount_name, double discount_percentage, int end_of_use_date, Product product) {
@@ -16,6 +22,17 @@ public class VisibleDiscount extends DiscountComponent {
         this.discount_percentage = discount_percentage;
         this.end_of_use_date = end_of_use_date;
         this.product = product;
+    }
+
+    public VisibleDiscount() {
+    }
+
+    public void setDiscount_name(String discount_name){
+        this.discount_name=discount_name;
+    }
+
+    public void setProduct(Product p){
+        this.product=p;
     }
 
     public double getDiscount_percentage() {

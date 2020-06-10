@@ -9,9 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 import DomainLayer.*;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "complex_buy_policies")
 public class ComplexBuyPolicy extends BuyPolicy{
+    @OneToMany(cascade = CascadeType.ALL)
     private List<BuyPolicy> policies_list;
     private Logicaloperation op;
+
+    public ComplexBuyPolicy() {
+    }
 
     public List<BuyPolicy> getPolicies_list() {
         return policies_list;
@@ -36,6 +47,11 @@ public class ComplexBuyPolicy extends BuyPolicy{
                 return true;
         }
         return false;
+    }
+
+    @Override
+    public int getPolicy_id() {
+        return super.id;
     }
 
     private boolean validate_and(ShoppingBag shoppingBag, User user) {

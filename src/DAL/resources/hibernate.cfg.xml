@@ -5,7 +5,7 @@
     <session-factory>
 
         <property name = "hibernate.dialect">
-            org.hibernate.dialect.MySQLDialect
+            org.hibernate.dialect.MySQL5Dialect
         </property>
 
         <property name = "hibernate.connection.driver_class">
@@ -25,10 +25,49 @@
         <property name = "hibernate.connection.password">
             root
         </property>
-
+        <property name="hibernate.connection.CharSet" >
+                  utf8
+        </property>
+        <property name="hibernate.connection.characterEncoding" >
+            utf8
+        </property>
+        <property name="hibernate.connection.useUnicode">
+            true
+        </property>
+        <property name="hibernate.show_sql" >
+            false
+        </property>
+        <property name="hibernate.hbm2ddl.auto" >
+            update
+        </property>
+        <property name="hibernate.connection.autocommit">true</property>
         <!-- List of XML mapping files -->
         <mapping class = "DomainLayer.User.Subscriber"/>
         <mapping class = "DomainLayer.Roles.Role"/>
+        <mapping class = "DomainLayer.Roles.StoreRole"/>
+        <mapping class = "DomainLayer.Roles.StoreOwner"/>
+        <mapping class = "DomainLayer.Roles.StoreManger"/>
+        <mapping class = "DomainLayer.Roles.SystemManger"/>
+        <mapping class = "DomainLayer.Product"/>
+        <mapping class = "DomainLayer.User.ProductReview"/>
+        <mapping class = "DomainLayer.Store.Store"/>
+        <mapping class = "DomainLayer.ShoppingCart"/>
+        <mapping class = "DomainLayer.ShoppingBag"/>
+        <mapping class = "DomainLayer.PurchaseProcess"/>
+        <mapping class = "DomainLayer.Store.Policy"/>
+        <mapping class = "DomainLayer.Store.BuyPolicy"/>
+        <mapping class = "DomainLayer.Store.BagBuyPolicy"/>
+        <mapping class = "DomainLayer.Store.ComplexBuyPolicy"/>
+        <mapping class = "DomainLayer.Store.ProductBuyPolicy"/>
+        <mapping class = "DomainLayer.Store.SimpleBuyPolicy"/>
+        <mapping class = "DomainLayer.Store.SystemBuyPolicy"/>
+        <mapping class = "DomainLayer.Store.UserBuyPolicy"/>
+        <mapping class = "DomainLayer.Store.DiscountPolicy"/>
+        <mapping class = "DomainLayer.Store.DiscountComponent"/>
+        <mapping class = "DomainLayer.Store.ComplexDiscount"/>
+        <mapping class = "DomainLayer.Store.ConditionedDiscount"/>
+        <mapping class = "DomainLayer.Store.VisibleDiscount"/>
+
 
     </session-factory>
 </hibernate-configuration>

@@ -12,27 +12,38 @@ import Observer.Observer;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
+@Entity
+@Table(name = "stores")
 public class Store {
 
-
+    @OneToOne(targetEntity = Policy.class,cascade = CascadeType.ALL)
     private Policy purchasePolicy;
+    @OneToOne(targetEntity = DiscountPolicy.class,cascade = CascadeType.ALL)
     private DiscountPolicy discountPolicy;
+    @Id
     private String name;
     private boolean is_open = false;
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Product> product_list = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL)
     private List<PurchaseProcess> purchase_process_list = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL)
     private List<StoreRole> roles = new ArrayList<>();
 
     //hila
+    @Transient
     private List<BuyPolicy> buyPolicyList = new ArrayList<>();
 
     public Store(String name) {
         //TODO: require policy
         this.name = name;
         discountPolicy = new DiscountPolicy();
+    }
+
+    public Store() {
     }
 
     public List<BuyPolicy> getBuyPolicyList() {

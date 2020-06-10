@@ -5,16 +5,23 @@ import DomainLayer.PurchaseProcess;
 import DomainLayer.ShoppingBag;
 import DomainLayer.User.User;
 
+import javax.persistence.*;
 import java.util.List;
 
-public class BuyPolicy implements Policy {
+@Entity
+@Table(name = "buy_policies")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class BuyPolicy extends Policy {
 
    // enum Logicaloperation { or, and, xor};
-    private int policy_id;
+
 
     public BuyPolicy(int policy_id)
     {
-        this.policy_id = policy_id;
+        super.id = policy_id;
+    }
+
+    public BuyPolicy() {
     }
 
     @Override
@@ -22,8 +29,11 @@ public class BuyPolicy implements Policy {
         return true;
     }
 
-    public int getPolicy_id(){
-        return policy_id;
-    }
+//    public int getPolicy_id(){
+//        return policy_id;
+//    }
+//    public void setPolicy_id(int id){
+//        this.policy_id=id;
+//    }
 
 }

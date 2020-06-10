@@ -4,11 +4,16 @@ import DomainLayer.Store.DiscountPolicy;
 import DomainLayer.Store.Store;
 import org.json.JSONObject;
 import org.json.JSONException;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "shopping_carts")
 public class ShoppingCart {
 
+    @OneToMany(cascade = CascadeType.ALL)
     private List<ShoppingBag> shopping_bag_list;
 
     public ShoppingCart(){
@@ -73,5 +78,16 @@ public class ShoppingCart {
                 }
             }
         }
+    }
+
+    @Id
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

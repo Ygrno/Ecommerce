@@ -3,18 +3,31 @@ package DomainLayer;
 import DomainLayer.Store.Store;
 import DomainLayer.User.ProductReview;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 //persistence
+
+@Entity
+@Table(name="products")
 public class Product {
 
+    @Id
+    @Column(name = "name")
     private String name;
+    @Column
     private double price;
-
+    @Column
     private int supplied_amount;
+    @Column
     private int Buy_amount;
+    @OneToOne(targetEntity = Store.class,cascade = CascadeType.ALL)
     private Store store;
+    @OneToMany(cascade = CascadeType.ALL)
     private List<ProductReview> product_review_list;
+
+    public Product() {
+    }
 
 
     public int getBuy_amount() {
@@ -67,4 +80,7 @@ public class Product {
     public void  addReview(ProductReview pr){
         product_review_list.add(pr);
     }
+
+
+
 }

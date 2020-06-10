@@ -3,22 +3,49 @@ package DomainLayer.Store;
 import DomainLayer.Product;
 import DomainLayer.ShoppingBag;
 
+import javax.persistence.*;
 import java.util.List;
-
+@Entity
+@Table(name = "conditioned_discounts")
 public class ConditionedDiscount extends DiscountComponent {
 
     private String discount_name;
     private double discount_percentage;
     private int end_of_use_date;     // { Format 12062020 = 12/06/2020 }
-    private Condition condition;
+    @Column(name = "cond")
+    private Condition cond;
+    @OneToOne(targetEntity = Store.class,cascade = CascadeType.ALL)
     private Store store;
+    @OneToOne(targetEntity = Product.class,cascade = CascadeType.ALL)
     private Product product;
     private int required_amount, required_sum;
+
+    public ConditionedDiscount() {
+    }
 
     //public double getFinal_price() {
        // return final_price;
    // }
 
+    public void setStore(Store s){
+        this.store=s;
+    }
+
+    public void setProduct(Product p){
+        this.product=p;
+    }
+
+    public void setRequired_amount(int required_amount){
+        this.required_amount=required_amount;
+    }
+
+    public void setRequired_sum(int required_sum){
+        this.required_sum=required_sum;
+    }
+
+    public void setDiscount_name(String name){
+        this.discount_name=name;
+    }
     public String getDiscount_name() {
         return discount_name;
     }
@@ -27,16 +54,19 @@ public class ConditionedDiscount extends DiscountComponent {
         this.discount_name = discount_name;
         this.discount_percentage = discount_percentage;
         this.end_of_use_date = end_of_use_date;
-        this.condition = condition;
+        this.cond = condition;
         this.store = store;
         this.product = product;
         this.required_amount = required_amount;
         this.required_sum = required_sum;
     }
 
+    public void setCond(Condition c){
+        this.cond =c;
+    }
 
-    public Condition getCondition() {
-        return condition;
+    public Condition getCond() {
+        return cond;
     }
 
     public double getDiscount_percentage() {
@@ -57,13 +87,13 @@ public class ConditionedDiscount extends DiscountComponent {
 
 
     public void displayDiscountInfo(){
-        System.out.println("This product has discount percentage of: " + getDiscount_percentage() + " Due date: " + getEnd_of_use_date() + " Only if: " + getCondition().toString());
+        System.out.println("This product has discount percentage of: " + getDiscount_percentage() + " Due date: " + getEnd_of_use_date() + " Only if: " + getCond().toString());
     }
 
     @Override
     public boolean validate(ShoppingBag shoppingBag) {
         List<Product> products = shoppingBag.getProducts();
-        switch(condition){
+        switch(cond){
             case IF_NUMBER_OF_PRODUCTS:
             {
                 for(Product p:products){
@@ -91,7 +121,7 @@ public class ConditionedDiscount extends DiscountComponent {
     public void calculate_discount(ShoppingBag shoppingBag) {
         if(!isCalculated() && this.validate(shoppingBag)) {
             setCalculated(true);
-            switch (condition) {
+            switch (cond) {
                 case IF_NUMBER_OF_PRODUCTS: {
 
                     final_price = product.getPrice() - (discount_percentage * product.getPrice());
