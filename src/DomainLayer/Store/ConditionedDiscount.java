@@ -17,7 +17,7 @@ public class ConditionedDiscount extends DiscountComponent {
 
     //public double getFinal_price() {
        // return final_price;
-   // }
+    //}
 
     public String getDiscount_name() {
         return discount_name;
