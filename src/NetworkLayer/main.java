@@ -1,5 +1,6 @@
 package NetworkLayer;
 
+import DAL.DBAccess;
 import DomainLayer.InternalService.InitSystemState;
 import DomainLayer.InternalService.SystemManage_Facade;
 import NetworkLayer.passiveObjects.connectionHandler;
@@ -8,10 +9,10 @@ import Stubs.Esimulation;
 import java.net.ServerSocket;
 
 public class main {
-
+    private static DBAccess db;
     public static void main(String[] args){
         //start the database
-
+        db=DBAccess.getInstance();
         if(!SystemManage_Facade.is_initialized()) {
             SystemManage_Facade.init_system();
             if (!InitSystemState.init()) {

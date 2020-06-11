@@ -1,18 +1,26 @@
 package DomainLayer.Store;
 
-import java.util.ArrayList;
+import jdk.jfr.Enabled;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "Discount_policies")
 public class DiscountPolicy {
 
-    ArrayList<DiscountComponent> discounts = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    List<DiscountComponent> discounts = new ArrayList<>();
 
-    public ArrayList<DiscountComponent> getDiscounts() {
+    public List<DiscountComponent> getDiscounts() {
         return discounts;
     }
 
     public void add_discount(DiscountComponent discountComponent) {
         discounts.add(discountComponent);
     }
+
     public boolean check_if_unique(String discount_name){
         for(DiscountComponent dc : discounts){
             if(dc instanceof VisibleDiscount && ((VisibleDiscount) dc).getDiscount_name().equals(discount_name))
@@ -24,6 +32,8 @@ public class DiscountPolicy {
         }
         return true;
     }
+
+
     public DiscountComponent get_discount_by_name(String discount_name){
         for(DiscountComponent dc : discounts){
             if(dc instanceof VisibleDiscount && ((VisibleDiscount) dc).getDiscount_name().equals(discount_name))
@@ -46,4 +56,14 @@ public class DiscountPolicy {
         }
     }
 
+    @Id
+    protected int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

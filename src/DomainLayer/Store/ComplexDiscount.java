@@ -2,13 +2,22 @@ package DomainLayer.Store;
 
 import DomainLayer.PurchaseProcess;
 import DomainLayer.ShoppingBag;
+import DomainLayer.System;
 
+import javax.persistence.*;
 import java.util.ArrayList;
-
+@Entity
+@Table(name = "complex_discounts")
 public class ComplexDiscount extends DiscountComponent {
 
+    @Column
     private String discount_name;
+    @Column
     private int end_of_use_date;
+
+    public ComplexDiscount() {
+    }
+
     public String getDiscount_name() {
         return discount_name;
     }
@@ -29,14 +38,20 @@ public class ComplexDiscount extends DiscountComponent {
         if(type.equals("one")){
             this.onlyOne_discountComponents=discounts;
         }
+        this.id= System.nextComplexDiscountId++;
 
     }
+    @OneToMany(cascade = CascadeType.ALL)
     ArrayList<DiscountComponent> and_discountComponents = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL)
     ArrayList<DiscountComponent> or_discountComponents = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL)
     ArrayList<DiscountComponent> onlyOne_discountComponents = new ArrayList<>();
-
+    @OneToMany(cascade = CascadeType.ALL)
     ArrayList<DiscountComponent> valid_and_discountComponents = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL)
     ArrayList<DiscountComponent> valid_or_discountComponents = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL)
     ArrayList<DiscountComponent> valid_onlyOne_discountComponents = new ArrayList<>();
 
     //FORMAT {[A,B,C]} => { (A && B && C) }
