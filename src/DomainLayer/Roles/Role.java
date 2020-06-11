@@ -5,8 +5,7 @@ import DomainLayer.User.Subscriber;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "roles")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Role {
 
     @ManyToOne(cascade = CascadeType.ALL)

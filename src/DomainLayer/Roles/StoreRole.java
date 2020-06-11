@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name="store_roles")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 
 //@AttributeOverrides({
 //        @AttributeOverride(name="id",column = @Column(name="id"))

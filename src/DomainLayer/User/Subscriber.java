@@ -5,6 +5,7 @@ import DomainLayer.Roles.Role;
 import DomainLayer.Roles.StoreManger;
 import DomainLayer.Roles.StoreOwner;
 import DomainLayer.Roles.StoreRole;
+import DomainLayer.System;
 import DomainLayer.User.User;
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class Subscriber extends User {
         this.password = password;
         this.name = user_name;
         role_list = new ArrayList<>();
-
+        this.id= System.nextUserId++;
         Quries= new ArrayList<>();
     }
 

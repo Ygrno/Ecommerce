@@ -407,7 +407,7 @@ public class SubscribersManage_Facade implements InternalService {
 
             List<Permission> fixPermissions = SystemManage_Facade.strings_to_permissions(permissions);
             storeManger.setPermissions(fixPermissions);
-            dB.updateAndCommit(fixPermissions);
+            dB.updateAndCommit(storeManger);
             return true;
         }
         return false;
