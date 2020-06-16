@@ -129,6 +129,16 @@ public class GuestImp implements IGuest {
     }
 
     @Override
+    public boolean remove_product_from_cart(int id, String product_name, String store_name) {
+        my_log.logger.info("remove_product_from_cart");
+        if(!SystemManage_Facade.is_initialized()) {
+            my_log.logger.warning("System not initialized");
+            return false;
+        }
+        return SystemManage_Facade.removeProductFromCart(String.valueOf(id),product_name,store_name);
+    }
+
+    @Override
     public boolean buy_products_in_cart(int id,String buyerName,String creditCardNumber,String expireDate,int cvv) throws Exception {
         my_log.logger.info("buy_products_in_cart");
         if(!SystemManage_Facade.is_initialized()) {

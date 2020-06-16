@@ -1,10 +1,12 @@
 package acceptance;
 
+import DomainLayer.InternalService.SystemManage_Facade;
 import ServiceLayer.GuestImp;
 import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
 import org.json.JSONException;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -13,15 +15,15 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class uc_2_7_Test {
-    private GuestImp gi;
+    private static GuestImp gi;
 
 
-    @Before
-    public void setUp() throws IOException {
+    @BeforeClass
+    public static void setUp() throws IOException {
         gi=new GuestImp();
         SubscriberImp si = new SubscriberImp();
         StoreRoleImp sri = new StoreRoleImp();
-
+        SystemManage_Facade.init_system();
         gi.sign_up("mhmod","123");
         gi.login("mhmod","123");
         si.open_store("mhmod","store1");
@@ -48,11 +50,9 @@ public class uc_2_7_Test {
         gi.save_products(1,"bmba","store1",1);
         gi.save_products(1,"twix","store3",1);
         gi.save_products(1,"chips","store2",1);
-
-        assertTrue(gi.watch_products_in_cart(1).contains("bmba"));
-        assertTrue(gi.watch_products_in_cart(1).contains("twix"));
-        assertTrue(gi.watch_products_in_cart(1).contains("chips"));
-        assertFalse(gi.watch_products_in_cart(1).contains("besli"));
+        assert gi.watch_products_in_cart(1).get(0).getString("name").equals("twix");
+        assert gi.watch_products_in_cart(1).get(1).getString("name").equals("chips");
+        assert !gi.watch_products_in_cart(1).get(1).getString("name").equals("besli");
 
     }
     @Test

@@ -24,7 +24,7 @@ public class System {
     private SubscriberImp SubImp;
     private List<Subscriber> user_list;
     private List<Guest> guest_list;
-    private int nextGuestId;
+    private int nextGuestId=0;
     public static int nextManagerId=0;
     public static int nextOwnerId=0;
     public static int nextComplexDiscountId=0;
@@ -35,6 +35,7 @@ public class System {
     public static int nextShoppingBagId=0;
     public static int nextShoppingCartId=0;
     public static int nextUserId=0;
+    public static int nextProductId=0;
     private List<Store> store_list;
     public static boolean initialized = false;
     private ProductSupplyService productSupplyService;

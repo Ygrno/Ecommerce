@@ -41,6 +41,8 @@
             update
         </property>
         <property name="hibernate.connection.autocommit">true</property>
+        <!-- Drop and re-create the database schema on startup -->
+        <property name="hbm2ddl.auto">create-drop</property>
         <!-- List of XML mapping files -->
         <mapping class = "DomainLayer.User.Subscriber"/>
         <mapping class = "DomainLayer.Roles.Role"/>

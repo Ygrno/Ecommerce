@@ -113,7 +113,7 @@ public class SystemManage_Facade implements InternalService {
 
     public static Guest addGuest(){
         Guest guest=new Guest(system.getNextGuestId());
-        dB.updateAndCommit(guest);
+//        dB.updateAndCommit(guest);
         system.getGuest_list().add(guest);
         system.increaseGuestId();
         return guest;
@@ -159,7 +159,7 @@ public class SystemManage_Facade implements InternalService {
 
         if(!processExist){
             PurchaseProcess p=new PurchaseProcess(g,SystemManage_Facade.get_store(store_name),new ShoppingBag(new ArrayList<>()));
-            dB.updateAndCommit(p);
+//            dB.updateAndCommit(p);
             g.getShoppingCart().getShopping_bag_list().add(p.getShoppingBag());
             p.getShoppingBag().getProducts_names().add(product_name);
             p.getShoppingBag().getProducts().add(buy_product);
@@ -414,4 +414,19 @@ public class SystemManage_Facade implements InternalService {
         }
         return String.valueOf(sum);
     }
+
+    public static boolean removeProductFromCart(String id, String product_name, String store_name) {
+        User g= getUser(id);
+        for(PurchaseProcess pp:g.getPurchaseProcesslist()){
+            if(pp.getStore().getName().equals(store_name)){
+                for (Product p : pp.getShoppingBag().getProducts()){
+                    if(p.getName().equals(product_name))
+                        pp.getShoppingBag().getProducts().remove(p);
+                }
+            }
+        }
+        return true;
+    }
+
+
 }

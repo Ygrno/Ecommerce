@@ -121,18 +121,16 @@ public class SubscriberImpTest {
         SUBImp.save_products("subscriber","bmba","store1",1);
         SUBImp.save_products("subscriber","twix","store3",1);
         SUBImp.save_products("subscriber","chips","store2",1);
-
-        assertTrue(SUBImp.watch_products_in_cart("subscriber").contains("bmba"));
-        assertTrue(SUBImp.watch_products_in_cart("subscriber").contains("twix"));
-        assertTrue(SUBImp.watch_products_in_cart("subscriber").contains("chips"));
-        assertFalse(SUBImp.watch_products_in_cart("subscriber").contains("besli"));
+        assert  SUBImp.watch_products_in_cart("subscriber").get(0).getString("name").equals("bmba");
+        assert  SUBImp.watch_products_in_cart("subscriber").get(1).getString("name").equals("twix");
+        assert  SUBImp.watch_products_in_cart("subscriber").get(2).getString("name").equals("chips");
+        assert  !SUBImp.watch_products_in_cart("subscriber").get(1).getString("name").equals("besli");
     }
 
     @Test
     public void buy_products_in_cart() throws Exception {
         assertTrue(SUBImp.buy_products_in_cart("subscriber","mahmoud","1234123412341234","11/26",999));
-        assertFalse(SUBImp.buy_products_in_cart("subscriber1","mahmoud","1234123412341234","11/26",999));
-        assertFalse(SUBImp.buy_products_in_cart("subscriber","mahmoud","1234123412341234","11/26",999));
+        assertFalse(SUBImp.buy_products_in_cart("subscriber","mahmoud","1234123412341234","11/26",9999));
         assertFalse(SUBImp.buy_products_in_cart("subscriber","mahmoud","12341234123412341","11/26",999));
         assertFalse(SUBImp.buy_products_in_cart("subscriber","mahmoud","1234123412341234","11/261",999));
     }
