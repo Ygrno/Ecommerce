@@ -38,10 +38,38 @@
             cursor: pointer;
 
         }
+        .tex_input{
+            width: 50%;
+            padding: 20px 30px;
+            display: inline-block;
+            border: 2px solid #ccc;
+            border-radius: 1px;
+            box-sizing: border-box;
+            float:left;
+            margin-top:4%;
 
+            font-size: 25px;
+        }
         .MenuBtn:hover{
             background-color: #cccccc;
 
+        }
+        .Green_beautiful_div{
+            background-color: #4CAF50; /* Green */
+            border: 2px solid #ccc;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+            float: left;
+            margin-top:4%;
+
+            margin-left: 10%;
+        }
+        .entro_div{
+            font-size: 50px;
+            float: left;
         }
 
         #container{
@@ -63,13 +91,13 @@
 <div class="LeftMenu">
 
     <div class="MenuBtn" onclick="menuListener('remove_subscriber')"> Remove Subscriber </div>
-    <div class="MenuBtn"> Respond to Complains </div>
-    <div class="MenuBtn"> View History Store </div>
-    <div class="MenuBtn"> View Customer History </div>
-    <div class="MenuBtn"> Watch System Lock </div>
-    <div class="MenuBtn"> Today Revenue </div>
-    <div class="MenuBtn"> Date Revenue </div>
-    <div class="MenuBtn"> Logout </div>
+    <div class="MenuBtn" onclick="menuListener('respond_to_complaints')"> Respond to Complains </div>
+    <div class="MenuBtn" onclick="menuListener('view_history_store')"> View Store History</div>
+    <div class="MenuBtn" onclick="menuListener('view_customer_history')"> View Customer History </div>
+    <div class="MenuBtn" onclick="menuListener('watch_system_Log')"> Watch System Log </div>
+    <div class="MenuBtn" onclick="menuListener('today_revenue')"> Today Revenue </div>
+    <div class="MenuBtn" onclick="menuListener('data_revenue')"> Date Revenue </div>
+    <div class="MenuBtn" onclick="menuListener('logout')"> Logout </div>
 
 </div>
 
@@ -89,6 +117,20 @@
     function menuListener(option) {
         if(option === "remove_subscriber"){
             _AdminInstance.removeSubscriber(content);
+        }else if(option ==="respond_to_complaints"){
+
+        }else if(option ==="view_history_store"){
+            _AdminInstance.view_history_store(content);
+        }else if(option ==="view_customer_history"){
+            _AdminInstance.view_customer_history(parent);
+        }else if(option ==="watch_system_Log"){
+
+        }else if(option ==="today_revenue"){
+            _AdminInstance.today_revenue(parent);
+        }else if(option ==="data_revenue"){
+            _AdminInstance.data_revenue(parent);
+        }else if(option ==="logout"){
+            instance.sign_out(localStorage.getItem("current_username"));
         }
     }
     

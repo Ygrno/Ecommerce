@@ -34,14 +34,45 @@ public class ManagerMessageProccess {
     }
 
     public static void view_history_store(MessagingProtocol protocol, JSONObject request) throws Exception{
+        String store=request.getString("store_name");
 
+        String s=manager.view_history_store(store);
+        JSONObject o=new JSONObject();
+        o.put("req", request.get("req"));
+        o.put("history", s);
+        protocol.send(o);
     }
 
     public static void view_history_costumer(MessagingProtocol protocol, JSONObject request) throws Exception{
+        String store=request.getString("user_name");
 
+        String s=manager.view_history_costumer(store);
+        JSONObject o=new JSONObject();
+        o.put("req", request.get("req"));
+        o.put("history", s);
+        protocol.send(o);
     }
 
     public static void watch_system_log(MessagingProtocol protocol, JSONObject request) throws Exception{
 
     }
+
+    public static void today_revenue(MessagingProtocol protocol, JSONObject request) throws Exception{
+        String s =manager.today_revenue();
+        JSONObject o=new JSONObject();
+        o.put("req", request.get("req"));
+        o.put("today_rev", s);
+        protocol.send(o);
+    }
+
+    public static void date_revenue(MessagingProtocol protocol, JSONObject request) throws Exception{
+        String date = request.getString("date");
+        String s =manager.today_revenue();
+        JSONObject o=new JSONObject();
+        o.put("req", request.get("req"));
+        o.put("date_rev", s);
+        protocol.send(o);
+    }
+
+
 }

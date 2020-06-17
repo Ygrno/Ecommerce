@@ -295,6 +295,21 @@ class Main{
         this.client.send(JSON.stringify({req:"get_user_permissions",username:user, store:store}));
     }
 
+    view_customer_history(details){
+        this.client.send(JSON.stringify(details));
+    }
+
+    view_history_store(details){
+        this.client.send(JSON.stringify(details));
+    }
+
+    today_revenue(){
+        this.client.send(JSON.stringify({req:"today_revenue"}));
+    }
+
+    date_revenue(){
+        this.client.send(JSON.stringify(details));
+    }
     edit_manager_permissions(store, assigned_user, permissions){
         this.client.send(JSON.stringify({
             req: "edit_manager_permissions",
