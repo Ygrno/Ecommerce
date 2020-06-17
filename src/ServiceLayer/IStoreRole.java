@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IStoreRole {
 
-    public boolean add_store_product(String user_name, String store_name, String product_name, int product_price, int product_amount); //4.1 //5.1
+    public boolean add_store_product(String user_name, String store_name, String product_name, double product_price, int product_amount); //4.1 //5.1
     public boolean edit_store_product(String user_name, String store_name, String product_name,String new_product_name ,int product_price, int product_amount); //4.1 //5.1
     public boolean remove_store_product(String user_name, String store_name, String product_name);  //4.1 //5.1
 

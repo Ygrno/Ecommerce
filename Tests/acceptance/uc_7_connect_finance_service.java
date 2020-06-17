@@ -16,7 +16,7 @@ public class uc_7_connect_finance_service {
 
     @BeforeClass
     public static void setUp() throws Exception {
-        SystemManage_Facade.init_system();
+        SystemManage_Facade.init_system(false);
         productFinanceService = new ProductFinanceService(new ExternalFinanceService() {
             @Override
             public boolean connect() throws Exception {

@@ -201,7 +201,7 @@ public class SubscribersManage_Facade implements InternalService {
 
     }
 
-    public static boolean add_product_to_store(String user_name, String store_name, String product_name, int product_price, int product_amount) {
+    public static boolean add_product_to_store(String user_name, String store_name, String product_name, double product_price, int product_amount) {
         Subscriber subscriber = System.getSystem().get_subscriber(user_name);
         StoreRole store_role = subscriber.get_role_at_store(store_name);
         if (store_role instanceof StoreOwner) {

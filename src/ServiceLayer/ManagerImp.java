@@ -6,6 +6,12 @@ import DomainLayer.InternalService.SystemManage_Facade;
 public class ManagerImp implements IManager {
 
     @Override
+    public boolean init_system(boolean file) {
+        SystemManage_Facade.init_system(file);
+        return true;
+    }
+
+    @Override
     public boolean close_store_permanently(String store_name) {
         if(!SystemManage_Facade.is_initialized()) return false;
         return false;
