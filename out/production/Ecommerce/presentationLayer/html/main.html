@@ -219,7 +219,11 @@
                 if(res === "true") {
                     localStorage.setItem("current_username", response.username);
                     localStorage.setItem("guest", "false");
-                    window.location.href = "home.html";
+                    if(response.username === "Admin"){
+                        window.location.href = "AdminPage.html";
+                    }else {
+                        window.location.href = "home.html";
+                    }
                 }else{
                     alert("Can't sign up");
                 }
