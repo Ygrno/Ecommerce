@@ -27,8 +27,6 @@ public class ManagerImp implements IManager {
     public String view_history_store(String store_name) {
         if(!SystemManage_Facade.is_initialized()) return null;
         return SystemManage_Facade.get_store_purchase_process(store_name);
-
-
     }
 
     @Override
