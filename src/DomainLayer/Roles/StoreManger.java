@@ -16,7 +16,7 @@ import java.util.List;
 public class StoreManger extends StoreRole {
     @ElementCollection(targetClass = Permission.class)
     @JoinTable(name = "manager_permissions", joinColumns = @JoinColumn(name = "manager_id"))
-    @Column(name = "permissions", nullable = false)
+    //@Column(name = "permissions", nullable = false)
     @Enumerated(EnumType.STRING)
     private List<Permission> permissions;
 
