@@ -2,6 +2,7 @@ package DomainLayer.User;
 
 import DomainLayer.PurchaseProcess;
 import DomainLayer.ShoppingCart;
+import DomainLayer.System;
 import Observer.Observer;
 import org.json.JSONObject;
 
@@ -24,6 +25,7 @@ public abstract class User {
         purchaseProcesslist = new ArrayList<>();
         shoppingCart = new ShoppingCart();
         notifications= new ArrayList<>();
+        this.id = System.nextUserId++;
     }
 
     public ShoppingCart getShoppingCart() {

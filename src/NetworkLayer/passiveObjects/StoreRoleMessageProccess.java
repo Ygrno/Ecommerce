@@ -204,4 +204,22 @@ public class StoreRoleMessageProccess {
         protocol.send(o);
     }
 
+    public static void add_store_conditioned_discount(MessagingProtocol protocol, JSONObject request) throws Exception{
+        String username = request.getString("user_name");
+        String storename = request.getString("store");
+        String productname = request.getString("product");
+        String discountName = request.getString("name");
+        double discountPerc = request.getDouble("percentage");
+        int amount = request.getInt("amount");
+        int sum = request.getInt("sum");
+        int dueDate = request.getInt("due_date");
+
+        boolean b = storeRole.add_conditioned_discount(username,storename,productname,discountName,discountPerc,dueDate,amount,sum);
+
+        JSONObject o=new JSONObject();
+        o.put("req", request.get("req"));
+        o.put("success", b);
+        protocol.send(o);
+    }
+
 }

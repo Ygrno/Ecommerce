@@ -9,9 +9,7 @@ import DomainLayer.Store.Store;
 import DomainLayer.System;
 import DomainLayer.User.Guest;
 import DomainLayer.User.Subscriber;
-import DomainLayer.User.User;
 import org.json.JSONException;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -27,7 +25,7 @@ public class SystemManage_FacadeTest {
 
     @BeforeClass
     public static void setUp() throws Exception {
-        SystemManage_Facade.init_system();
+        SystemManage_Facade.init_system(false);
         system = System.getSystem();
     }
 
@@ -70,7 +68,7 @@ public class SystemManage_FacadeTest {
         Subscriber s1=new Subscriber("mahmoud","123");
         system.getUser_list().add(s1);
         SystemManage_Facade.Add_Query("mahmoud","asdf");
-        assertTrue(s1.getQuries().contains("asdf"));
+        assertTrue(s1.getQueries().contains("asdf"));
     }
 
     @Test

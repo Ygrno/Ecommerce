@@ -16,7 +16,7 @@ import java.util.List;
 public class StoreManger extends StoreRole {
     @ElementCollection(targetClass = Permission.class)
     @JoinTable(name = "manager_permissions", joinColumns = @JoinColumn(name = "manager_id"))
-    @Column(name = "permissions", nullable = false)
+    //@Column(name = "permissions", nullable = false)
     @Enumerated(EnumType.STRING)
     private List<Permission> permissions;
 
@@ -26,8 +26,8 @@ public class StoreManger extends StoreRole {
         permissions = new ArrayList<>();
         permissions.add(Permission.VIEW_AND_RESPOND_TO_USERS);
         permissions.add(Permission.VIEW_STORE_HISTORY);
-        this.id= System.nextManagerId;
-        System.nextManagerId++;
+        this.id = System.nextOwnerId;
+        System.nextOwnerId++;
     }
 
     public StoreManger() {

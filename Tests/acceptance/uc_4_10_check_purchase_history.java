@@ -1,6 +1,7 @@
 package acceptance;
 
 import ServiceLayer.GuestImp;
+import ServiceLayer.ManagerImp;
 import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
 import org.json.JSONException;
@@ -23,6 +24,7 @@ public class uc_4_10_check_purchase_history {
     private static SubscriberImp SUBImp;
     private static StoreRoleImp storeRoleImp;
     private static ArrayList<String> permissions = new ArrayList<>();
+    private static ManagerImp managerImp;
 
     @BeforeClass
     public static void before() throws Exception {
@@ -30,6 +32,8 @@ public class uc_4_10_check_purchase_history {
         guestImp = new GuestImp();
         SUBImp = new SubscriberImp();
         storeRoleImp =  new StoreRoleImp();
+        managerImp = new ManagerImp();
+        managerImp.init_system(false);
         guestImp.login("Admin","Password");
         guestImp.sign_up("s1", "password");
         guestImp.login("s1", "password");

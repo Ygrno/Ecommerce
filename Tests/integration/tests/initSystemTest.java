@@ -34,7 +34,7 @@ public class initSystemTest {
 
     @BeforeClass
     public static void setUp() throws Exception {
-        SystemManage_Facade.init_system();
+        SystemManage_Facade.init_system(false);
         InitSystemState.init();
     }
 

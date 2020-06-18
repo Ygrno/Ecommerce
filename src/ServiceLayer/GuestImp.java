@@ -54,7 +54,7 @@ public class GuestImp implements IGuest {
     public boolean login(String user_name, String password) {
         my_log.logger.info("Login");
 
-        if(user_name.equals("Admin") && password.equals("Password")) SystemManage_Facade.init_system();
+        //if(user_name.equals("Admin") && password.equals("Password")) SystemManage_Facade.init_system();
         if(!SystemManage_Facade.is_initialized()) {
             my_log.logger.warning("System not initialized");
             return false;

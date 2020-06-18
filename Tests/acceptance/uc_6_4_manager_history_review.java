@@ -27,6 +27,7 @@ public class uc_6_4_manager_history_review {
         guestImp = new GuestImp();
         storeRoleImp = new StoreRoleImp();
         managerImp = new ManagerImp();
+        managerImp.init_system(false);
         guestImp.login("Admin","Password");
         guestImp.sign_up("subscriber", "subscriber");
         guestImp.login("subscriber","subscriber");

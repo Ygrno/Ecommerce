@@ -29,13 +29,15 @@ public class System {
     public static int nextOwnerId=0;
     public static int nextComplexDiscountId=0;
     public static int nextConditionedDiscountId=0;
-    public static int nextdiscountPolicyId=0;
+    public static int nextDiscountPolicyId = 0;
     public static int nextVisibleDiscountId=0;
     public static int nextPurchaseProcessId=0;
     public static int nextShoppingBagId=0;
     public static int nextShoppingCartId=0;
     public static int nextUserId=0;
     public static int nextProductId=0;
+    public static int nextStoreId = 0;
+
     private List<Store> store_list;
     public static boolean initialized = false;
     private ProductSupplyService productSupplyService;

@@ -9,9 +9,9 @@ import java.lang.annotation.Target;
 @Entity
 @Table(name = "products_reviews")
 public class ProductReview {
-    @Column
+    @Column(length = 50)
     String review_data = "";
-    @Column
+    @Column(name = "ranking")
     int rank;
     @OneToOne(targetEntity = Subscriber.class,cascade = CascadeType.ALL)
     Subscriber subscriber;
