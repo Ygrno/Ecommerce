@@ -24,7 +24,7 @@ public class System {
     private SubscriberImp SubImp;
     private List<Subscriber> user_list;
     private List<Guest> guest_list;
-    private int nextGuestId;
+    private int nextGuestId=0;
     public static int nextManagerId=0;
     public static int nextOwnerId=0;
     public static int nextComplexDiscountId=0;

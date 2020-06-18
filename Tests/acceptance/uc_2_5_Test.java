@@ -1,21 +1,22 @@
 package acceptance;
 
+import DAL.DBAccess;
 import DomainLayer.InternalService.SystemManage_Facade;
 import ServiceLayer.GuestImp;
 import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.HashMap;
 
 public class uc_2_5_Test {
-    private GuestImp gi;
-
-
-    @Before
-    public void setUp() throws IOException {
+    private static GuestImp gi;
+    private DBAccess db;
+    @BeforeClass
+    public static void setUp() throws IOException {
         gi=new GuestImp();
         SubscriberImp si = new SubscriberImp();
         StoreRoleImp sri = new StoreRoleImp();
