@@ -4,7 +4,6 @@ import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
 import DomainLayer.Product;
 import DomainLayer.PurchaseProcess;
-import DomainLayer.Roles.Role;
 import DomainLayer.Roles.StoreOwner;
 import DomainLayer.Roles.StoreRole;
 import DomainLayer.ShoppingBag;
@@ -13,7 +12,6 @@ import DomainLayer.System;
 import DomainLayer.User.Subscriber;
 import ServiceLayer.SubscriberImp;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -36,7 +34,7 @@ public class SubscriberImpTest {
         SUBImp= new SubscriberImp();
         SUB= new SubscribersManage_Facade();
         SYS= new SystemManage_Facade();
-        SYS.init_system();
+        SYS.init_system(false);
         SYS.is_initialized();
         SYS.add_subscriber("subscriber","subscriber");
         subscriber= System.getSystem().get_subscriber("subscriber");
@@ -170,7 +168,7 @@ public class SubscriberImpTest {
     public void send_query_to_store() {
         store=SYS.get_store("test");
         SUBImp.send_query_to_store("subscriber","test");
-        List<String> query = (List<String>) subscriber.getQuries();
+        List<String> query = (List<String>) subscriber.getQueries();
         assertNotNull(query);
         PrintStream myout =  new PrintStream(new FileOutputStream(FileDescriptor.out));
         myout.print(query);

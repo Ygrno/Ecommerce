@@ -10,7 +10,6 @@ import DomainLayer.ShoppingBag;
 import DomainLayer.System;
 import DomainLayer.User.User;
 import Observer.Observer;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.persistence.*;
@@ -20,11 +19,13 @@ import java.util.List;
 @Table(name = "stores")
 public class Store {
 
+
+    @Id
+    private int id;
     @OneToOne(targetEntity = Policy.class,cascade = CascadeType.ALL)
     private Policy purchasePolicy;
     @OneToOne(targetEntity = DiscountPolicy.class,cascade = CascadeType.ALL)
     private DiscountPolicy discountPolicy;
-    @Id
     @Column(length = 50)
     private String name;
     private boolean is_open = false;
@@ -35,6 +36,14 @@ public class Store {
     @OneToMany(cascade = CascadeType.ALL)
     private List<StoreRole> roles = new ArrayList<>();
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     //hila
     @Transient
     private List<BuyPolicy> buyPolicyList = new ArrayList<>();
@@ -42,8 +51,9 @@ public class Store {
     public Store(String name) {
         //TODO: require policy
         this.name = name;
+        this.id = System.nextStoreId++;
         discountPolicy = new DiscountPolicy();
-        discountPolicy.setId(System.nextdiscountPolicyId++);
+        discountPolicy.setId(System.nextDiscountPolicyId++);
     }
 
     public Store() {

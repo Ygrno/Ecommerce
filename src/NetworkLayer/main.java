@@ -5,6 +5,7 @@ import DomainLayer.InternalService.InitSystemState;
 import DomainLayer.InternalService.SystemManage_Facade;
 import NetworkLayer.passiveObjects.connectionHandler;
 import Stubs.Esimulation;
+import ServiceLayer.ManagerImp;
 
 import java.net.ServerSocket;
 
@@ -13,12 +14,8 @@ public class main {
     public static void main(String[] args){
         //start the database
         db=DBAccess.getInstance();
-        if(!SystemManage_Facade.is_initialized()) {
-            SystemManage_Facade.init_system();
-            if (!InitSystemState.init()) {
-                System.out.println("failed to init system");
-            }
-        }
+        ManagerImp managerImp = new ManagerImp();
+        managerImp.init_system(false);
 
         Esimulation.Init();
         try {

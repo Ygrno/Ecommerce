@@ -4,12 +4,10 @@ import DAL.DBAccess;
 import DomainLayer.*;
 import DomainLayer.Roles.Permission;
 import DomainLayer.Roles.StoreManger;
-import DomainLayer.Roles.StoreOwner;
 import DomainLayer.Roles.StoreRole;
 import DomainLayer.Store.Store;
 import DomainLayer.System;
 import DomainLayer.User.Guest;
-import DomainLayer.User.ProductReview;
 import DomainLayer.User.Subscriber;
 import DomainLayer.User.User;
 import Encryption.EncryptImp;
@@ -28,8 +26,13 @@ public class SystemManage_Facade implements InternalService {
     public static System system;
     private static DBAccess dB = DBAccess.getInstance();
 
-    public static void init_system() {
+    public static void init_system(boolean file) {
         system = System.getSystem();
+        if(file) {
+            if (!InitSystemState.init()) {
+                java.lang.System.out.println("failed to init system");
+            }
+        }
     }
 
     public static boolean is_initialized() {
@@ -237,7 +240,7 @@ public class SystemManage_Facade implements InternalService {
     //todo - DB
     public static void Add_Query(String user_name,String query) { //3.5  -- #TODO add test that the query inserted
         Subscriber subscriber = system.get_subscriber(user_name);
-        subscriber.getQuries().add(query);
+        subscriber.getQueries().add(query);
     }
     //todo - check updates DB
     public static boolean saveProductForSubscriber(String userName,String product_name, String store_name,int amount){

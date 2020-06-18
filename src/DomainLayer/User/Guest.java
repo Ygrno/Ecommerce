@@ -1,28 +1,50 @@
 package DomainLayer.User;
 
-import DomainLayer.PurchaseProcess;
-import DomainLayer.User.User;
 
-import java.util.ArrayList;
-import java.util.List;
+import DomainLayer.System;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name="Guests")
 public class Guest extends User {
 
+    @Id
+    private int id;
 
-    private List<PurchaseProcess> purchaseProcesslist;
+    public Guest()
+    {
+
+    }
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
+
+//private List<PurchaseProcess> purchaseProcesslist;
 
     public Guest(int id) {
         super();
-        super.id=id;
-        purchaseProcesslist = new ArrayList<>();
+        this.id= System.nextUserId++;
+       // purchaseProcesslist = new ArrayList<>();
 
     }
 
 
 
-    public List<PurchaseProcess> getPurchaseProcesslist() {
+/*    public List<PurchaseProcess> getPurchaseProcesslist() {
         return purchaseProcesslist;
-    }
+    }*/
 
 
 }
