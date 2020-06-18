@@ -12,7 +12,7 @@ import java.util.List;
 @Table(name="products")
 public class Product {
 
-    @Id
+
     @Column(name = "name")
     private String name;
     @Column
@@ -44,6 +44,7 @@ public class Product {
         this.supplied_amount = supplied_amount;
         this.store = store;
         product_review_list = new ArrayList<>();
+        this.id= System.nextProductId++;
     }
 
     public String getName() {
@@ -82,5 +83,14 @@ public class Product {
     }
 
 
+    @Id
+    private int id;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

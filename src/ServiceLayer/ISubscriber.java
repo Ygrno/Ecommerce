@@ -26,11 +26,8 @@ public interface ISubscriber {
     public boolean fill_complaint();      //3.6
     public String view_purchase_history(String user_name);  //3.7    //changed the return boolean type to List<PurchaseProcess> and the input from none to string user_name
     public boolean edit_account();     //3.8
-    public boolean add_visible_discount(String user_name, String store_name, String discount_name, double discount_percentage, int end_of_use_date, String product_name);//4.2
 
-    public boolean add_conditioned_discount(String user_name, String store_name, String product_name, String discount_name, double discount_percentage, int due_date, int amount, int sum);//4.2
-    public boolean add_complex_discount(String user_name, String store_name, String discount_name, String[]discounts, String type, int end_of_use_date);
-    public boolean delete_discount(String user_name, String store_name, String discount_name);
+
     public List<JSONObject> getNotifications(String userName);
 
 }

@@ -68,7 +68,7 @@ public class StoreRoleMessageProccess {
         double discountPerc = request.getDouble("percentage");
         int dueDate = request.getInt("due_date");
 
-        boolean b = storeRole.add_store_visible_discount(username,storename,productname,discountName,discountPerc,dueDate);
+        boolean b = storeRole.add_visible_discount(username,storename,discountName,discountPerc,dueDate,productname);
 
         JSONObject o=new JSONObject();
         o.put("req", request.get("req"));

@@ -208,6 +208,11 @@ function add_discount() {
     productName.className = 'text_input';
     div.appendChild(productName);
 
+    let discountName = document.createElement("input");
+    discountName.placeholder="Enter discount name";
+    discountName.className = 'text_input';
+    div.appendChild(discountName);
+
     let percentage = document.createElement("input");
     percentage.placeholder="Enter discount percentage (from 0 to 1)";
     percentage.className = 'text_input';
@@ -240,12 +245,16 @@ function add_discount() {
             alert("please enter the product name");
             return;
         }
-        //add discount type
+        let discount_name = discountName.value;
+        if(discount_name === "") {
+            alert("please enter the discount name");
+            //add discount type
+        }
         instance.add_store_visible_discount({
             user_name: localStorage.getItem("current_username"),
             store: store_name,
             product: product,
-            name: "", //add discount type
+            name: discount_name, //add discount type
             percentage: perc,
             due_date: date,
             req: "add_store_visible_discount"

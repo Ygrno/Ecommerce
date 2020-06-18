@@ -35,6 +35,7 @@ public class System {
     public static int nextShoppingBagId=0;
     public static int nextShoppingCartId=0;
     public static int nextUserId=0;
+    public static int nextProductId=0;
     private List<Store> store_list;
     public static boolean initialized = false;
     private ProductSupplyService productSupplyService;

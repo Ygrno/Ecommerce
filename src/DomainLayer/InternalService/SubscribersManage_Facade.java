@@ -226,6 +226,7 @@ public class SubscribersManage_Facade implements InternalService {
         StoreRole store_role = subscriber.get_role_at_store(store_name);
         if (store_role instanceof StoreOwner) {
             Product product = new Product(product_name, product_price, product_amount, store_role.store);
+
             dB.updateAndCommit(product);
             store_role.store.getProduct_list().add(product);
             return true;
