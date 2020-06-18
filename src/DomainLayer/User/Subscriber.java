@@ -1,12 +1,9 @@
 package DomainLayer.User;
 
-import DomainLayer.PurchaseProcess;
 import DomainLayer.Roles.Role;
-import DomainLayer.Roles.StoreManger;
-import DomainLayer.Roles.StoreOwner;
 import DomainLayer.Roles.StoreRole;
 import DomainLayer.System;
-import DomainLayer.User.User;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +12,8 @@ import java.util.List;
 @Table(name="subscribers")
 public class Subscriber extends User {
 
+    @Id
+    private int id;
 
     @Column(name="user_name")
     private String name;
@@ -27,7 +26,7 @@ public class Subscriber extends User {
     @Transient
     private boolean logged_in = false;
     @Transient
-    private List<String> Quries; //3.5
+    private List<String> Queries; //3.5
 
 
     public Subscriber(String user_name, String password) {
@@ -36,7 +35,7 @@ public class Subscriber extends User {
         this.name = user_name;
         role_list = new ArrayList<>();
         this.id= System.nextUserId++;
-        Quries= new ArrayList<>();
+        Queries = new ArrayList<>();
     }
 
     public Subscriber() {
@@ -74,7 +73,7 @@ public class Subscriber extends User {
         return role_to_return;
     }
 
-    public List<String> getQuries() {
-        return Quries;
+    public List<String> getQueries() {
+        return Queries;
     }
 }
