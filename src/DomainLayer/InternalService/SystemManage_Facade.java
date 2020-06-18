@@ -95,8 +95,9 @@ public class SystemManage_Facade implements InternalService {
 
     private static User getUser(String id){
         User u;
-        if(id.charAt(0)>='0' && id.charAt(0)<='9')
-            u=getGuest(Integer.parseInt(id));
+        if(id.charAt(0)>='0' && id.charAt(0)<='9') {
+            u = getGuest(Integer.parseInt(id));
+        }
         else
             u=get_subscriber(id);
         return u;
@@ -108,6 +109,7 @@ public class SystemManage_Facade implements InternalService {
 
     public static Guest getGuest(int id){
         for(Guest g : system.getGuest_list()){
+
             if(g.getId()==id)
                 return g;
         }

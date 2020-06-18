@@ -43,11 +43,12 @@ public class uc_2_8_Test {
         sri.add_store_product("mhmod","store3","besli",4,2);
         sri.add_store_product("mhmod","store3","twix",6,2);
 
-        gi.save_products(0,"bmba","store3",1);
+
     }
     @Test
     public void successScenario() throws Exception {
-        assertTrue(gi.buy_products_in_cart(0,"mahmoud","1234123412341234","11/26",999));
+        gi.save_products(0,"bmba","store3",1);
+        assertTrue(gi.buy_products_in_cart(5,"mahmoud","1234123412341234","11/26",999));
 
     }
     @Test
