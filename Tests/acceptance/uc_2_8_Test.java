@@ -25,7 +25,7 @@ public class uc_2_8_Test {
         gi=new GuestImp();
         si= new SubscriberImp();
         StoreRoleImp sri = new StoreRoleImp();
-        SystemManage_Facade.init_system();
+        SystemManage_Facade.init_system(false);
         gi.sign_up("mhmod","123");
         gi.login("mhmod","123");
         si.open_store("mhmod","store1");
