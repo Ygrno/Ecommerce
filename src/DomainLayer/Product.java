@@ -13,7 +13,9 @@ import java.util.List;
 public class Product {
 
     @Id
-    @Column(name = "name")
+    private int id;
+
+    @Column(name = "name", length = 50)
     private String name;
     @Column
     private double price;
@@ -27,8 +29,16 @@ public class Product {
     private List<ProductReview> product_review_list;
 
     public Product() {
+
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getBuy_amount() {
         return Buy_amount;
@@ -44,6 +54,7 @@ public class Product {
         this.supplied_amount = supplied_amount;
         this.store = store;
         product_review_list = new ArrayList<>();
+        this.id = System.nextProductId++;
     }
 
     public String getName() {

@@ -26,8 +26,8 @@ public class StoreManger extends StoreRole {
         permissions = new ArrayList<>();
         permissions.add(Permission.VIEW_AND_RESPOND_TO_USERS);
         permissions.add(Permission.VIEW_STORE_HISTORY);
-        this.id= System.nextManagerId;
-        System.nextManagerId++;
+        this.id = System.nextOwnerId;
+        System.nextOwnerId++;
     }
 
     public StoreManger() {

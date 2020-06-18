@@ -25,6 +25,7 @@ public class Store {
     @OneToOne(targetEntity = DiscountPolicy.class,cascade = CascadeType.ALL)
     private DiscountPolicy discountPolicy;
     @Id
+    @Column(length = 50)
     private String name;
     private boolean is_open = false;
     @OneToMany(cascade = CascadeType.ALL)
