@@ -3,6 +3,7 @@ package acceptance;
 
 import ServiceLayer.GuestImp;
 
+import ServiceLayer.ManagerImp;
 import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
 import org.junit.BeforeClass;
@@ -18,12 +19,16 @@ public class uc_2_4_Test {
     private static GuestImp guestImp;
     private static SubscriberImp SUBImp;
     private static StoreRoleImp storeRoleImp;
+    private static ManagerImp managerImp;
 
     @BeforeClass
     public static void before() throws IOException {
         guestImp = new GuestImp();
         SUBImp = new SubscriberImp();
         storeRoleImp =  new StoreRoleImp();
+        managerImp = new ManagerImp();
+        managerImp.init_system(false);
+
         guestImp.login("Admin","Password"); //initiate the system
         guestImp.sign_up("manager", "password");
         guestImp.login("manager", "password");
@@ -45,6 +50,12 @@ public class uc_2_4_Test {
     public void successScenario(){
         assertTrue ((guestImp.view_products_information_store("store1")).length==2);
         assertTrue ((guestImp.view_products_information_store("store1"))[0][0]=="bamba");
+        assertTrue ((guestImp.view_products_information_store("store1"))[1][0]=="bisli");
+        assertTrue (guestImp.view_products_information_store("store1")[0][1].equals("3.0"));
+        assertTrue (guestImp.view_products_information_store("store1")[0][2].equals("10"));
+        assertTrue (guestImp.view_products_information_store("store1")[0][3].equals("store1"));
+
+
     }
 
 

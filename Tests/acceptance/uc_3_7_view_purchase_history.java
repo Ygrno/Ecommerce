@@ -27,7 +27,7 @@ public class uc_3_7_view_purchase_history {
     @BeforeClass
     public static void before() {
         SYS = new SystemManage_Facade();
-        SYS.init_system();
+        SYS.init_system(false);
         SYS.is_initialized();
         SYS.add_subscriber("subscriber", "subscriber");
         SUB.subscriber_login_state("subscriber",true);
