@@ -6,6 +6,7 @@ import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
 import org.json.JSONException;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -15,11 +16,11 @@ import static org.junit.Assert.assertTrue;
 
 public class uc_2_6_Test {
 
-    private GuestImp gi;
+    private static GuestImp gi;
 
 
-    @Before
-    public void setUp() throws IOException {
+    @BeforeClass
+    public static void setUp() throws IOException {
         gi=new GuestImp();
         SubscriberImp si = new SubscriberImp();
         StoreRoleImp sri = new StoreRoleImp();
