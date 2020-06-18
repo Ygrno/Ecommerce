@@ -23,7 +23,7 @@ public class VisibleDiscount extends DiscountComponent {
         this.discount_percentage = discount_percentage;
         this.end_of_use_date = end_of_use_date;
         this.product = product;
-        this.id= System.nextVisibleDiscountId++;
+        this.id= System.nextDiscountId++;
     }
 
     public VisibleDiscount() {

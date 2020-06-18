@@ -208,7 +208,10 @@
                 visible_discount_response(response);
             }else if (req === "add_store_conditioned_discount"){
                 conditioned_discount_response(response);
+            }else if (req === "add_store_complex_discount"){
+                complex_discount_response(response);
             }
+
         };
 
         return Main.getInstance();

@@ -291,6 +291,10 @@ class Main{
         this.client.send(JSON.stringify(details));
     }
 
+    add_store_complex_discount(details){
+        this.client.send(JSON.stringify(details));
+    }
+
     get_notifications(){
         this.client.send(JSON.stringify({req:"get_notifications",username:localStorage.getItem("current_username")}));
     }

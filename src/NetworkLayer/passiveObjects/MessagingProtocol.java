@@ -123,6 +123,8 @@ public class MessagingProtocol {
                 StoreRoleMessageProccess.get_user_permissions(this, request);
             }else if(req.equals("add_store_conditioned_discount")){
                 StoreRoleMessageProccess.add_store_conditioned_discount(this,request);
+            }else if(req.equals("add_store_complex_discount")){
+                StoreRoleMessageProccess.add_store_complex_discount(this,request);
             }
 
         }catch (Exception e){

@@ -202,9 +202,16 @@
                 get_notifications(response);
             }else if (req === "new_notification"){
                 newNotification();
-            }else if(req === "get_user_permissions"){
+            }else if (req === "get_user_permissions"){
                 on_permissions_recieved(response);
+            }else if (req === "add_store_visible_discount"){
+                visible_discount_response(response);
+            }else if (req === "add_store_conditioned_discount"){
+                conditioned_discount_response(response);
+            }else if (req === "add_store_complex_discount"){
+                complex_discount_response(response);
             }
+
         };
 
         return Main.getInstance();

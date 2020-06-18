@@ -222,4 +222,22 @@ public class StoreRoleMessageProccess {
         protocol.send(o);
     }
 
+    public static void add_store_complex_discount(MessagingProtocol protocol, JSONObject request) throws Exception{
+        String username = request.getString("user_name");
+        String storename = request.getString("store");
+        String discountName = request.getString("name");
+        int dueDate = request.getInt("due_date");
+        String type = request.getString("type");
+        String discounts = request.getString("discounts");
+        String [] dis= discounts.split(" ");
+
+
+        boolean b = storeRole.add_complex_discount(username,storename,discountName,dis,type,dueDate);
+
+        JSONObject o=new JSONObject();
+        o.put("req", request.get("req"));
+        o.put("success", b);
+        protocol.send(o);
+    }
+
 }

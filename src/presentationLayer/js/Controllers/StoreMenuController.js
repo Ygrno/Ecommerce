@@ -371,35 +371,27 @@ function add_complex_discount() {
     introDiv.className = 'total_price_div';
     div.appendChild(introDiv);
 
-    let productName = document.createElement("input");
-    productName.placeholder="Enter product name";
-    productName.className = 'text_input';
-    div.appendChild(productName);
 
     let discountName = document.createElement("input");
     discountName.placeholder="Enter discount name";
     discountName.className = 'text_input';
     div.appendChild(discountName);
 
-    let percentage = document.createElement("input");
-    percentage.placeholder="Enter discount percentage (from 0 to 1)";
-    percentage.className = 'text_input';
-    div.appendChild(percentage);
+    let discounts = document.createElement("input");
+    discounts.placeholder="Enter discounts names (with space between each name)";
+    discounts.className = 'text_input';
+    div.appendChild(discounts);
+
+    let discountType = document.createElement("input");
+    discountType.placeholder="Enter discount type (and, or, one)";
+    discountType.className = 'text_input';
+    div.appendChild(discountType);
 
     let percentageDate = document.createElement("input");
     percentageDate.placeholder="Enter discount due date (ddmmyyyy without /)";
     percentageDate.className = 'text_input';
     div.appendChild(percentageDate);
 
-    let requiredAmount = document.createElement("input");
-    requiredAmount.placeholder="Enter Required Amount";
-    requiredAmount.className = 'text_input';
-    div.appendChild(requiredAmount);
-
-    let requiredSum = document.createElement("input");
-    requiredSum.placeholder="Enter Required Sum";
-    requiredSum.className = 'text_input';
-    div.appendChild(requiredSum);
 
     let finish = document.createElement("div");
     finish.className = 'Green_beautiful_div';
@@ -408,44 +400,33 @@ function add_complex_discount() {
     finish.style.width = '100px';
     finish.style.marginTop = '3%';
     finish.onclick = function(){
-        let product = productName.value;
-        if(product === ""){
-            alert("please enter the product name");
-            return;
-        }
-        let perc = percentage.value;
-        if(perc === ""){
-            alert("please enter the product name");
-            return;
-        }
+
         let date = percentageDate.value;
         if(date === ""){
-            alert("please enter the product name");
+            alert("please enter the date");
             return;
         }
         let discount_name = discountName.value;
         if(discount_name === "") {
             alert("please enter the discount name");
         }
-        let amount = requiredAmount.value;
-        if(amount === "") {
-            alert("please enter the required amount");
+        let discountsNames = discounts.value;
+        if(discountsNames === "") {
+            alert("please enter the discounts names amount");
         }
-        let sum = requiredSum.value;
-        if(sum === "") {
-            alert("please enter the required sum");
+        let type = discountType.value;
+        if(type === "") {
+            alert("please enter the discount type");
         }
 
         instance.add_store_conditioned_discount({
             user_name: localStorage.getItem("current_username"),
             store: store_name,
-            product: product,
             name: discount_name, //add discount type
-            percentage: perc,
+            discounts: discountsNames,
             due_date: date,
-            amount: amount,
-            sum: sum,
-            req: "add_store_conditioned_discount"
+            type: type,
+            req: "add_store_complex_discount"
         });
     };
     div.appendChild(finish);
@@ -947,5 +928,9 @@ function visible_discount_response(response) {
 }
 
 function conditioned_discount_response(response) {
+    alert(JSON.stringify(response));
+}
+
+function complex_discount_response(response) {
     alert(JSON.stringify(response));
 }
