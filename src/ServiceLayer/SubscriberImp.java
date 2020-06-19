@@ -53,6 +53,15 @@ public class SubscriberImp implements ISubscriber {
         return SystemManage_Facade.getProductsInCartForSubscriber(userName);
     }
 
+    @Override
+    public boolean remove_product_from_cart(String id, String product_name, String store_name) {
+        my_log.logger.info("remove_product_from_cart");
+        if(!SystemManage_Facade.is_initialized()) {
+            my_log.logger.warning("System not initialized");
+            return false;
+        }
+        return SystemManage_Facade.removeProductFromCart(id,product_name,store_name);
+    }
 
 
     @Override

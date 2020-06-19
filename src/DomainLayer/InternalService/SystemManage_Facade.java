@@ -5,12 +5,14 @@ import DomainLayer.*;
 import DomainLayer.Roles.Permission;
 import DomainLayer.Roles.StoreManger;
 import DomainLayer.Roles.StoreRole;
+import DomainLayer.Roles.SystemManger;
 import DomainLayer.Store.Store;
 import DomainLayer.System;
 import DomainLayer.User.Guest;
 import DomainLayer.User.Subscriber;
 import DomainLayer.User.User;
-import Encryption.EncryptImp;
+import Encryption.EncryptProxy;
+import Encryption.IEncrypt;
 import org.json.JSONException;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -38,7 +40,6 @@ public class SystemManage_Facade implements InternalService {
     public static boolean is_initialized() {
         return System.initialized;
     }
-
 
     /////////////// store methods///////////////////////////
 
@@ -95,8 +96,9 @@ public class SystemManage_Facade implements InternalService {
 
     private static User getUser(String id){
         User u;
-        if(id.charAt(0)>='0' && id.charAt(0)<='9')
-            u=getGuest(Integer.parseInt(id));
+        if(id.charAt(0)>='0' && id.charAt(0)<='9') {
+            u = getGuest(Integer.parseInt(id));
+        }
         else
             u=get_subscriber(id);
         return u;
@@ -108,6 +110,7 @@ public class SystemManage_Facade implements InternalService {
 
     public static Guest getGuest(int id){
         for(Guest g : system.getGuest_list()){
+
             if(g.getId()==id)
                 return g;
         }
@@ -116,7 +119,7 @@ public class SystemManage_Facade implements InternalService {
 
     public static Guest addGuest(){
         Guest guest=new Guest(system.getNextGuestId());
-        dB.updateAndCommit(guest);
+//        dB.updateAndCommit(guest);
         system.getGuest_list().add(guest);
         system.increaseGuestId();
         return guest;
@@ -162,7 +165,7 @@ public class SystemManage_Facade implements InternalService {
 
         if(!processExist){
             PurchaseProcess p=new PurchaseProcess(g,SystemManage_Facade.get_store(store_name),new ShoppingBag(new ArrayList<>()));
-            dB.updateAndCommit(p);
+//            dB.updateAndCommit(p);
             g.getShoppingCart().getShopping_bag_list().add(p.getShoppingBag());
             p.getShoppingBag().getProducts_names().add(product_name);
             p.getShoppingBag().getProducts().add(buy_product);
@@ -286,10 +289,9 @@ public class SystemManage_Facade implements InternalService {
 
     ////////////////////////////////////////////////////////
     public static boolean check_password(String user_name, String password) {
-        EncryptImp encryptImp = system.getEncryptImp();
         Subscriber subscriber = system.get_subscriber(user_name);
-        String password_dyc = encryptImp.decrypt(subscriber.getPassword());
-        return password_dyc.equals(encryptImp.decrypt(password));
+        String password_dyc = subscriber.getPassword();
+        return password_dyc.equals(password);
     }
 
     public static List<String> get_user_permissions(String username, String store){
@@ -416,5 +418,25 @@ public class SystemManage_Facade implements InternalService {
             }
         }
         return String.valueOf(sum);
+    }
+
+    public static boolean removeProductFromCart(String id, String product_name, String store_name) {
+        User g= getUser(id);
+        for(PurchaseProcess pp:g.getPurchaseProcesslist()){
+            if(pp.getStore().getName().equals(store_name)){
+                for (Product p : pp.getShoppingBag().getProducts()){
+                    if(p.getName().equals(product_name))
+                        pp.getShoppingBag().getProducts().remove(p);
+                }
+            }
+        }
+        return true;
+    }
+
+
+    public static void promote_to_manager(String user_name, String password) {
+        Subscriber admin = get_subscriber(user_name);
+        SystemManger systemManger = new SystemManger(admin);
+        admin.getRole_list().add(systemManger);
     }
 }

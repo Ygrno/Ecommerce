@@ -1,16 +1,9 @@
 package acceptance;
 import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
-import DomainLayer.Roles.Role;
 import DomainLayer.Roles.StoreOwner;
-import DomainLayer.Store.Store;
-import DomainLayer.System;
-import DomainLayer.User.Subscriber;
-import ServiceLayer.SubscriberImp;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import java.util.List;
 
 import static org.junit.Assert.*;
 

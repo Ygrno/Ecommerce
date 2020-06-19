@@ -5,13 +5,10 @@ import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
 
 
-import Encryption.EncryptImp;
-import netscape.javascript.JSObject;
+import Encryption.EncryptProxy;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONException;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,16 +30,21 @@ public class GuestImp implements IGuest {
             my_log.logger.warning("System not initialized");
             return false;
         }
-        EncryptImp encryption = new EncryptImp();
-        if(!encryption.connect()) {
-            my_log.logger.warning("System not initialized");
+
+        EncryptProxy encryption = EncryptionDriver.getEncryption();
+        if(!encryption.init()) {
+            my_log.logger.warning("Encryption not initialized");
             return false;
         }
+
+
         password = encryption.encrypt(password);
 
         if(!SystemManage_Facade.find_subscriber(user_name)) {
+
             SystemManage_Facade.add_subscriber(user_name, password);
-            this.login(user_name,password);
+            if(user_name.equals("Admin")) SystemManage_Facade.promote_to_manager(user_name,password);
+            SubscribersManage_Facade.subscriber_login_state(user_name,true);
             return true;
         }
 
@@ -58,8 +60,16 @@ public class GuestImp implements IGuest {
         if(!SystemManage_Facade.is_initialized()) {
             my_log.logger.warning("System not initialized");
             return false;
-
         }
+
+        EncryptProxy encryption = EncryptionDriver.getEncryption();
+        if(!encryption.init()) {
+            my_log.logger.warning("Encryption not initialized");
+            return false;
+        }
+
+        password = encryption.encrypt(password);
+
         if(SystemManage_Facade.find_subscriber(user_name) && SystemManage_Facade.check_password(user_name,password)){
             SubscribersManage_Facade.subscriber_login_state(user_name,true);
             return true;
@@ -126,6 +136,16 @@ public class GuestImp implements IGuest {
             return null;
 
         return SystemManage_Facade.getProductsInCartForGuest(id);
+    }
+
+    @Override
+    public boolean remove_product_from_cart(int id, String product_name, String store_name) {
+        my_log.logger.info("remove_product_from_cart");
+        if(!SystemManage_Facade.is_initialized()) {
+            my_log.logger.warning("System not initialized");
+            return false;
+        }
+        return SystemManage_Facade.removeProductFromCart(String.valueOf(id),product_name,store_name);
     }
 
     @Override

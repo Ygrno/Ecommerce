@@ -1,10 +1,11 @@
 package acceptance;
 
 import ServiceLayer.GuestImp;
+import ServiceLayer.ManagerImp;
 import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
 import org.json.JSONException;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -13,15 +14,17 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class uc_2_7_Test {
-    private GuestImp gi;
+    private static GuestImp gi;
+    private static ManagerImp managerImp;
 
 
-    @Before
-    public void setUp() throws IOException {
+    @BeforeClass
+    public static void setUp() throws IOException {
         gi=new GuestImp();
+        managerImp = new ManagerImp();
         SubscriberImp si = new SubscriberImp();
         StoreRoleImp sri = new StoreRoleImp();
-
+        managerImp.init_system(false);
         gi.sign_up("mhmod","123");
         gi.login("mhmod","123");
         si.open_store("mhmod","store1");
@@ -46,13 +49,12 @@ public class uc_2_7_Test {
     @Test
     public void successScenario() throws JSONException {
         gi.save_products(1,"bmba","store1",1);
-        gi.save_products(1,"twix","store3",1);
-        gi.save_products(1,"chips","store2",1);
-
-        assertTrue(gi.watch_products_in_cart(1).contains("bmba"));
-        assertTrue(gi.watch_products_in_cart(1).contains("twix"));
-        assertTrue(gi.watch_products_in_cart(1).contains("chips"));
-        assertFalse(gi.watch_products_in_cart(1).contains("besli"));
+        gi.save_products(5,"twix","store3",1);
+        gi.save_products(5,"chips","store2",1);
+        System.out.println(gi.watch_products_in_cart(5).get(0).getString("name"));
+        assert gi.watch_products_in_cart(5).get(0).getString("name").equals("bmba");
+        assert gi.watch_products_in_cart(5).get(1).getString("name").equals("twix");
+        assert !gi.watch_products_in_cart(5).get(1).getString("name").equals("besli");
 
     }
     @Test

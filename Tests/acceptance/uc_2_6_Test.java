@@ -1,29 +1,30 @@
 package acceptance;
 
-import DomainLayer.InternalService.SystemManage_Facade;
 import ServiceLayer.GuestImp;
+import ServiceLayer.ManagerImp;
 import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
 import org.json.JSONException;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
 public class uc_2_6_Test {
 
-    private GuestImp gi;
+    private static GuestImp gi;
+    private static ManagerImp managerImp;
 
 
-    @Before
-    public void setUp() throws IOException {
+    @BeforeClass
+    public static void setUp() throws IOException {
         gi=new GuestImp();
+        managerImp = new ManagerImp();
         SubscriberImp si = new SubscriberImp();
         StoreRoleImp sri = new StoreRoleImp();
-        SystemManage_Facade.init_system(false);
+        managerImp.init_system(false);
         gi.sign_up("mhmod","123");
         gi.login("mhmod","123");
         si.open_store("mhmod","store1");

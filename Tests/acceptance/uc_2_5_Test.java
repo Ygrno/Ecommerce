@@ -1,25 +1,27 @@
 package acceptance;
 
-import DomainLayer.InternalService.SystemManage_Facade;
+import DAL.DBAccess;
 import ServiceLayer.GuestImp;
+import ServiceLayer.ManagerImp;
 import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.HashMap;
 
 public class uc_2_5_Test {
-    private GuestImp gi;
-
-
-    @Before
-    public void setUp() throws IOException {
+    private static GuestImp gi;
+    private static ManagerImp managerImp;
+    private DBAccess db;
+    @BeforeClass
+    public static void setUp() throws IOException {
         gi=new GuestImp();
+        managerImp = new ManagerImp();
         SubscriberImp si = new SubscriberImp();
         StoreRoleImp sri = new StoreRoleImp();
-        SystemManage_Facade.init_system(false);
+        managerImp.init_system(false);
         gi.sign_up("mhmod","123");
         gi.login("mhmod","123");
         si.open_store("mhmod","store1");

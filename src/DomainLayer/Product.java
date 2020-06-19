@@ -4,14 +4,14 @@ import DomainLayer.Store.Store;
 import DomainLayer.User.ProductReview;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 //persistence
 
 @Entity
 @Table(name="products")
-public class Product {
-
+public class Product implements Serializable {
 
     @Column(name = "name")
     private String name;
@@ -44,7 +44,7 @@ public class Product {
         this.supplied_amount = supplied_amount;
         this.store = store;
         product_review_list = new ArrayList<>();
-        this.id= System.nextProductId++;
+        this.id=System.nextProductId++;
     }
 
     public String getName() {

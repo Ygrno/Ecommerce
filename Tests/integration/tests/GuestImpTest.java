@@ -116,12 +116,10 @@ public class GuestImpTest {
     public void watch_products_in_cart() throws JSONException {
         gi.save_products(1,"bmba","store1",1);
         gi.save_products(1,"twix","store3",1);
-        gi.save_products(1,"chips","store2",1);
 
-        assertTrue(gi.watch_products_in_cart(1).contains("bmba"));
-        assertTrue(gi.watch_products_in_cart(1).contains("twix"));
-        assertTrue(gi.watch_products_in_cart(1).contains("chips"));
-        assertFalse(gi.watch_products_in_cart(1).contains("besli"));
+        assert gi.watch_products_in_cart(1).get(0).getString("name").equals("bmba");
+        assert gi.watch_products_in_cart(1).get(1).getString("name").equals("twix");
+        assert !gi.watch_products_in_cart(1).get(1).getString("name").equals("besli");
     }
 
     @Test
