@@ -1,6 +1,5 @@
 package acceptance;
 
-import DomainLayer.InternalService.SystemManage_Facade;
 import ServiceLayer.GuestImp;
 import ServiceLayer.ManagerImp;
 import ServiceLayer.SubscriberImp;
@@ -34,22 +33,15 @@ public class uc_2_3_login_guest_test {
         //admin.login("Admin", "Password");
         managerImp = new ManagerImp();
         managerImp.init_system(false);
-        assertTrue(SystemManage_Facade.is_initialized());
         guestImp.sign_up("user1", "pass");
-        guestImp.login("user1", "pass");
-        assertTrue(SystemManage_Facade.find_subscriber("user1"));
+        assertTrue(guestImp.login("user1", "pass"));
         SUBImp.sign_out("user1");
-        guestImp.login("user1", "pass");
-        assertTrue(SystemManage_Facade.find_subscriber("user1"));
+        assertTrue(guestImp.login("user1", "pass"));
     }
 
 
     @Test
     public void failure_scenario(){
-        guestImp.sign_up("user1", "pass");
-        guestImp.login("user1", "pass");
-        SUBImp.sign_out("user1");
-        assertTrue(SystemManage_Facade.find_subscriber("user1"));
         assertFalse(guestImp.login("user1", "passWrong"));
     }
 }

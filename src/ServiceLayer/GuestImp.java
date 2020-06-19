@@ -23,7 +23,7 @@ public class GuestImp implements IGuest {
     @Override
     public boolean sign_up(String user_name, String password) {
 
-        my_log.logger.info("Sign Up Guest");
+        my_log.logger.info("Sign Up");
 
 
         if(!SystemManage_Facade.is_initialized()) {
@@ -40,12 +40,11 @@ public class GuestImp implements IGuest {
 
         password = encryption.encrypt(password);
 
-
         if(!SystemManage_Facade.find_subscriber(user_name)) {
 
             SystemManage_Facade.add_subscriber(user_name, password);
             if(user_name.equals("Admin")) SystemManage_Facade.promote_to_manager(user_name,password);
-            this.login(user_name,password);
+            SubscribersManage_Facade.subscriber_login_state(user_name,true);
             return true;
         }
 

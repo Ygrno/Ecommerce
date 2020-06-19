@@ -1,8 +1,7 @@
 package acceptance;
 
-
-import DomainLayer.InternalService.SystemManage_Facade;
 import ServiceLayer.GuestImp;
+import ServiceLayer.ManagerImp;
 import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
 import org.junit.BeforeClass;
@@ -16,14 +15,16 @@ import static org.junit.Assert.assertTrue;
 public class uc_2_8_Test {
     private static GuestImp gi;
     private static SubscriberImp si;
+    private static ManagerImp managerImp;
 
 
     @BeforeClass
     public static  void setUp() throws IOException {
         gi=new GuestImp();
         si= new SubscriberImp();
+        managerImp = new ManagerImp();
         StoreRoleImp sri = new StoreRoleImp();
-        SystemManage_Facade.init_system();
+        managerImp.init_system(false);
         gi.sign_up("mhmod","123");
         gi.login("mhmod","123");
         si.open_store("mhmod","store1");
