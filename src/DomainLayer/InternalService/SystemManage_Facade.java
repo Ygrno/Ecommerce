@@ -11,8 +11,7 @@ import DomainLayer.System;
 import DomainLayer.User.Guest;
 import DomainLayer.User.Subscriber;
 import DomainLayer.User.User;
-import Encryption.EncryptProxy;
-import Encryption.IEncrypt;
+
 import org.json.JSONException;
 import org.json.JSONArray;
 import org.json.JSONObject;

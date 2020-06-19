@@ -7,6 +7,7 @@ import DomainLayer.Store.Policy;
 import DomainLayer.Store.Store;
 import DomainLayer.System;
 import ServiceLayer.InitSystemState;
+import ServiceLayer.ManagerImp;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -17,10 +18,13 @@ import DomainLayer.Store.BuyPolicy;
 
 public class initSystemTest {
 
+    public static ManagerImp managerImp;
+
 
     @BeforeClass
     public static void setUp() throws Exception {
-        SystemManage_Facade.init_system();
+        managerImp =  new ManagerImp();
+        managerImp.init_system(true);
         InitSystemState.init();
     }
 
