@@ -26,7 +26,7 @@ public class GuestImpTest {
     public static void setUp(){
             gi = new GuestImp();
             gi2 = new GuestImp();
-            SystemManage_Facade.init_system(false);
+            SystemManage_Facade.init_system();
             system = System.getSystem();
             gi.login("Admin", "Password");
             Store s1 = new Store("store1");

@@ -15,7 +15,7 @@ public class uc_3_1_SignOut {
     @BeforeClass
     public static void before(){
         SYS= new SystemManage_Facade();
-        SYS.init_system(false);
+        SYS.init_system();
         SYS.is_initialized();
         SYS.add_subscriber("subscriber","subscriber");
         SUB.subscriber_login_state("subscriber",true);
