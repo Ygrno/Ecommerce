@@ -23,7 +23,7 @@ public abstract class StoreRole extends Role {
     @OneToOne(targetEntity = Role.class)
     private Role assigned_by = null;
     @Transient
-    private List<String> Upadtes = new ArrayList<String>();
+    private List<String> Updates = new ArrayList<String>();
 
     protected StoreRole() {
     }

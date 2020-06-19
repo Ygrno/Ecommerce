@@ -23,6 +23,7 @@ public class System {
     private List<Guest> guest_list;
     private int nextGuestId=0;
     public static int nextManagerId=0;
+    public static int nextSystemManagerId=0;
     public static int nextOwnerId=0;
     public static int nextComplexDiscountId=0;
     public static int nextDiscountId=0;

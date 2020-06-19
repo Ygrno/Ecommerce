@@ -39,8 +39,6 @@ public class uc_4_10_check_purchase_history {
         storeRoleImp.add_store_product("Admin","store","bamba",3,2);
         SUBImp.save_products("s1","bamba","store",1);
         SUBImp.buy_products_in_cart("s1","noam","1234567891234567","22019",120);
-
-
     }
 
     @Test

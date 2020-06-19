@@ -3,17 +3,25 @@ package DomainLayer.Roles;
 import DomainLayer.InternalService.SystemManage_Facade;
 import DomainLayer.PurchaseProcess;
 import DomainLayer.Store.Store;
+import DomainLayer.System;
 import DomainLayer.User.Subscriber;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
-
+@Entity
+@Table(name="system_managers")
 public class SystemManger extends Role {
 
     public SystemManger(Subscriber user){
+
         this.user = user;
+        this.id = System.nextOwnerId++;
+    }
+
+    public SystemManger(){
+
     }
 
 
