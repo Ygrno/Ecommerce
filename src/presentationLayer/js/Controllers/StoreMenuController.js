@@ -192,7 +192,7 @@ function edit_product(){
     popUp(div);
 }
 
-function add_discount() {
+function add_visible_discount() {
     let vars = instance.getUrlVars();
     let store_name = vars["s"];
     let div = document.createElement("div");
@@ -207,6 +207,11 @@ function add_discount() {
     productName.placeholder="Enter product name";
     productName.className = 'text_input';
     div.appendChild(productName);
+
+    let discountName = document.createElement("input");
+    discountName.placeholder="Enter discount name";
+    discountName.className = 'text_input';
+    div.appendChild(discountName);
 
     let percentage = document.createElement("input");
     percentage.placeholder="Enter discount percentage (from 0 to 1)";
@@ -240,12 +245,16 @@ function add_discount() {
             alert("please enter the product name");
             return;
         }
-        //add discount type
+        let discount_name = discountName.value;
+        if(discount_name === "") {
+            alert("please enter the discount name");
+            //add discount type
+        }
         instance.add_store_visible_discount({
             user_name: localStorage.getItem("current_username"),
             store: store_name,
             product: product,
-            name: "", //add discount type
+            name: discount_name, //add discount type
             percentage: perc,
             due_date: date,
             req: "add_store_visible_discount"
@@ -255,6 +264,217 @@ function add_discount() {
 
     popUp(div);
 
+}
+
+function add_conditioned_discount() {
+    let vars = instance.getUrlVars();
+    let store_name = vars["s"];
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+
+    let introDiv = document.createElement("div");
+    introDiv.innerHTML = "Add discount";
+    introDiv.className = 'total_price_div';
+    div.appendChild(introDiv);
+
+    let productName = document.createElement("input");
+    productName.placeholder="Enter product name";
+    productName.className = 'text_input';
+    div.appendChild(productName);
+
+    let discountName = document.createElement("input");
+    discountName.placeholder="Enter discount name";
+    discountName.className = 'text_input';
+    div.appendChild(discountName);
+
+    let percentage = document.createElement("input");
+    percentage.placeholder="Enter discount percentage (from 0 to 1)";
+    percentage.className = 'text_input';
+    div.appendChild(percentage);
+
+    let percentageDate = document.createElement("input");
+    percentageDate.placeholder="Enter discount due date (ddmmyyyy without /)";
+    percentageDate.className = 'text_input';
+    div.appendChild(percentageDate);
+
+    let requiredAmount = document.createElement("input");
+    requiredAmount.placeholder="Enter Required Product Amount To Get The Discount";
+    requiredAmount.className = 'text_input';
+    div.appendChild(requiredAmount);
+
+    let requiredSum = document.createElement("input");
+    requiredSum.placeholder="Enter Required Shopping Bag Sum To Get The Discount";
+    requiredSum.className = 'text_input';
+    div.appendChild(requiredSum);
+
+    let finish = document.createElement("div");
+    finish.className = 'Green_beautiful_div';
+    finish.innerHTML = '<b>Finish</b>';
+    finish.style.fontSize = '30px';
+    finish.style.width = '100px';
+    finish.style.marginTop = '3%';
+    finish.onclick = function(){
+        let product = productName.value;
+        if(product === ""){
+            alert("please enter the product name");
+            return;
+        }
+        let perc = percentage.value;
+        if(perc === ""){
+            alert("please enter the product name");
+            return;
+        }
+        let date = percentageDate.value;
+        if(date === ""){
+            alert("please enter the product name");
+            return;
+        }
+        let discount_name = discountName.value;
+        if(discount_name === "") {
+            alert("please enter the discount name");
+        }
+        let amount = requiredAmount.value;
+        if(amount === "") {
+            alert("please enter the required amount");
+        }
+        let sum = requiredSum.value;
+        if(sum === "") {
+            alert("please enter the required sum");
+        }
+
+        instance.add_store_conditioned_discount({
+            user_name: localStorage.getItem("current_username"),
+            store: store_name,
+            product: product,
+            name: discount_name, //add discount type
+            percentage: perc,
+            due_date: date,
+            amount: amount,
+            sum: sum,
+            req: "add_store_conditioned_discount"
+        });
+    };
+    div.appendChild(finish);
+
+    popUp(div);
+
+}
+
+function add_complex_discount() {
+    let vars = instance.getUrlVars();
+    let store_name = vars["s"];
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+
+    let introDiv = document.createElement("div");
+    introDiv.innerHTML = "Add discount";
+    introDiv.className = 'total_price_div';
+    div.appendChild(introDiv);
+
+
+    let discountName = document.createElement("input");
+    discountName.placeholder="Enter discount name";
+    discountName.className = 'text_input';
+    div.appendChild(discountName);
+
+    let discounts = document.createElement("input");
+    discounts.placeholder="Enter discounts names (with space between each name)";
+    discounts.className = 'text_input';
+    div.appendChild(discounts);
+
+    let discountType = document.createElement("input");
+    discountType.placeholder="Enter discount type (and, or, one)";
+    discountType.className = 'text_input';
+    div.appendChild(discountType);
+
+    let percentageDate = document.createElement("input");
+    percentageDate.placeholder="Enter discount due date (ddmmyyyy without /)";
+    percentageDate.className = 'text_input';
+    div.appendChild(percentageDate);
+
+
+    let finish = document.createElement("div");
+    finish.className = 'Green_beautiful_div';
+    finish.innerHTML = '<b>Finish</b>';
+    finish.style.fontSize = '30px';
+    finish.style.width = '100px';
+    finish.style.marginTop = '3%';
+    finish.onclick = function(){
+
+        let date = percentageDate.value;
+        if(date === ""){
+            alert("please enter the date");
+            return;
+        }
+        let discount_name = discountName.value;
+        if(discount_name === "") {
+            alert("please enter the discount name");
+        }
+        let discountsNames = discounts.value;
+        if(discountsNames === "") {
+            alert("please enter the discounts names amount");
+        }
+        let type = discountType.value;
+        if(type === "") {
+            alert("please enter the discount type");
+        }
+
+        instance.add_store_conditioned_discount({
+            user_name: localStorage.getItem("current_username"),
+            store: store_name,
+            name: discount_name, //add discount type
+            discounts: discountsNames,
+            due_date: date,
+            type: type,
+            req: "add_store_complex_discount"
+        });
+    };
+    div.appendChild(finish);
+
+    popUp(div);
+
+}
+
+function delete_discount() {
+    let vars = instance.getUrlVars();
+    let store_name = vars["s"];
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+
+    let introDiv = document.createElement("div");
+    introDiv.innerHTML = "Delete discount";
+    introDiv.className = 'total_price_div';
+    div.appendChild(introDiv);
+
+
+    let discountName = document.createElement("input");
+    discountName.placeholder="Enter discount name";
+    discountName.className = 'text_input';
+    div.appendChild(discountName);
+
+
+    let finish = document.createElement("div");
+    finish.className = 'Green_beautiful_div';
+    finish.innerHTML = '<b>Finish</b>';
+    finish.style.fontSize = '30px';
+    finish.style.width = '100px';
+    finish.style.marginTop = '3%';
+    finish.onclick = function(){
+        let discount_name = discountName.value;
+        if(discount_name === "") {
+            alert("please enter the discount name");
+        }
+
+        instance.delete_discount({
+            user_name: localStorage.getItem("current_username"),
+            store: store_name,
+            name: discount_name, //add discount type
+            req: "delete_discount"
+        });
+    };
+    div.appendChild(finish);
+
+    popUp(div);
 }
 
 function edit_permissions() {
@@ -736,9 +956,25 @@ function close_store_response(response) {
 }
 
 function openStoreResponse(response) {
-    alert(response);
+    alert(JSON.stringify(response));
 }
 
 function send_query_to_store_response(response) {
+    alert(JSON.stringify(response));
+}
+
+function visible_discount_response(response) {
+    alert(JSON.stringify(response));
+}
+
+function conditioned_discount_response(response) {
+    alert(JSON.stringify(response));
+}
+
+function complex_discount_response(response) {
+    alert(JSON.stringify(response));
+}
+
+function delete_discount_response(response) {
     alert(JSON.stringify(response));
 }

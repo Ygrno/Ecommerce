@@ -38,7 +38,7 @@ public class ComplexDiscount extends DiscountComponent {
         if(type.equals("one")){
             this.onlyOne_discountComponents=discounts;
         }
-        this.id= System.nextComplexDiscountId++;
+        this.id= System.nextDiscountId++;
 
     }
     @OneToMany(cascade = CascadeType.ALL)

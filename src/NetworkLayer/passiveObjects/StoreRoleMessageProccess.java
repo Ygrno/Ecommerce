@@ -68,7 +68,7 @@ public class StoreRoleMessageProccess {
         double discountPerc = request.getDouble("percentage");
         int dueDate = request.getInt("due_date");
 
-        boolean b = storeRole.add_store_visible_discount(username,storename,productname,discountName,discountPerc,dueDate);
+        boolean b = storeRole.add_visible_discount(username,storename,discountName,discountPerc,dueDate,productname);
 
         JSONObject o=new JSONObject();
         o.put("req", request.get("req"));
@@ -201,6 +201,55 @@ public class StoreRoleMessageProccess {
         JSONObject o=new JSONObject();
         o.put("req", request.get("req"));
         o.put("store_history", s);
+        protocol.send(o);
+    }
+
+    public static void add_store_conditioned_discount(MessagingProtocol protocol, JSONObject request) throws Exception{
+        String username = request.getString("user_name");
+        String storename = request.getString("store");
+        String productname = request.getString("product");
+        String discountName = request.getString("name");
+        double discountPerc = request.getDouble("percentage");
+        int amount = request.getInt("amount");
+        int sum = request.getInt("sum");
+        int dueDate = request.getInt("due_date");
+
+        boolean b = storeRole.add_conditioned_discount(username,storename,productname,discountName,discountPerc,dueDate,amount,sum);
+
+        JSONObject o=new JSONObject();
+        o.put("req", request.get("req"));
+        o.put("success", b);
+        protocol.send(o);
+    }
+
+    public static void add_store_complex_discount(MessagingProtocol protocol, JSONObject request) throws Exception{
+        String username = request.getString("user_name");
+        String storename = request.getString("store");
+        String discountName = request.getString("name");
+        int dueDate = request.getInt("due_date");
+        String type = request.getString("type");
+        String discounts = request.getString("discounts");
+        String [] dis= discounts.split(" ");
+
+
+        boolean b = storeRole.add_complex_discount(username,storename,discountName,dis,type,dueDate);
+
+        JSONObject o=new JSONObject();
+        o.put("req", request.get("req"));
+        o.put("success", b);
+        protocol.send(o);
+    }
+
+    public static void delete_discount(MessagingProtocol protocol, JSONObject request) throws Exception{
+        String username = request.getString("user_name");
+        String storename = request.getString("store");
+        String discountName = request.getString("name");
+
+        boolean b = storeRole.delete_discount(username,storename,discountName);
+
+        JSONObject o=new JSONObject();
+        o.put("req", request.get("req"));
+        o.put("success", b);
         protocol.send(o);
     }
 

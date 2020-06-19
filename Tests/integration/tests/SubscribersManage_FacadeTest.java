@@ -19,7 +19,7 @@ public class SubscribersManage_FacadeTest {
 
     @BeforeClass
     public static void setUp() throws Exception {
-        SystemManage_Facade.init_system();
+        SystemManage_Facade.init_system(false);
         System.getSystem().add_subscriber(new Subscriber("test_sub","test_pass"));
     }
 

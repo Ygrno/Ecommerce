@@ -25,6 +25,7 @@ public class System {
     public static int nextManagerId=0;
     public static int nextOwnerId=0;
     public static int nextComplexDiscountId=0;
+    public static int nextDiscountId=0;
     public static int nextConditionedDiscountId=0;
     public static int nextDiscountPolicyId = 0;
     public static int nextVisibleDiscountId=0;

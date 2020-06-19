@@ -28,8 +28,13 @@ public class SystemManage_Facade implements InternalService {
     public static System system;
     private static DBAccess dB = DBAccess.getInstance();
 
-    public static void init_system() {
+    public static void init_system(boolean file) {
         system = System.getSystem();
+        if(file) {
+            if (!InitSystemState.init()) {
+                java.lang.System.out.println("failed to init system");
+            }
+        }
     }
 
     public static boolean is_initialized() {
