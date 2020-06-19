@@ -34,7 +34,7 @@ public class SubscriberImpTest {
         SUBImp= new SubscriberImp();
         SUB= new SubscribersManage_Facade();
         SYS= new SystemManage_Facade();
-        SYS.init_system(false);
+        SYS.init_system();
         SYS.is_initialized();
         SYS.add_subscriber("subscriber","subscriber");
         subscriber= System.getSystem().get_subscriber("subscriber");

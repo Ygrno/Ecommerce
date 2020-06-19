@@ -1,8 +1,6 @@
 package NetworkLayer;
 
 import DAL.DBAccess;
-import DomainLayer.InternalService.InitSystemState;
-import DomainLayer.InternalService.SystemManage_Facade;
 import NetworkLayer.passiveObjects.connectionHandler;
 import Stubs.Esimulation;
 import ServiceLayer.ManagerImp;
@@ -15,7 +13,7 @@ public class main {
         //start the database
         db=DBAccess.getInstance();
         ManagerImp managerImp = new ManagerImp();
-        managerImp.init_system(false);
+        managerImp.init_system(true);
 
         Esimulation.Init();
         try {

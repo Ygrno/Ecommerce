@@ -1,14 +1,33 @@
 package ServiceLayer;
 
 import DomainLayer.InternalService.SystemManage_Facade;
+import Encryption.EncryptProxy;
 
 
 public class ManagerImp implements IManager {
 
     @Override
     public boolean init_system(boolean file) {
-        SystemManage_Facade.init_system(file);
-        return true;
+        //Init System Flow:
+        //---------------------------
+
+        //Initialize System.
+        SystemManage_Facade.init_system();
+
+        //Sign-Up Admin
+        GuestImp guestImp = new GuestImp();
+        if(!guestImp.sign_up("Admin", "Password")) return false;
+
+        //True = Read File, False = Don't read file
+        if(file) {
+            if (!InitSystemState.init()) {
+                java.lang.System.out.println("failed to init system");
+            }
+        }
+
+        //Connect Real Encryption
+        EncryptProxy iEncrypt = EncryptionDriver.getEncryption();
+        return iEncrypt.init();
     }
 
     @Override

@@ -4,14 +4,12 @@ import ServiceLayer.GuestImp;
 import ServiceLayer.ManagerImp;
 import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
-import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertFalse;
