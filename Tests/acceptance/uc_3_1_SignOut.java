@@ -1,12 +1,6 @@
 package acceptance;
 import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
-import DomainLayer.Store.Store;
-import DomainLayer.System;
-import DomainLayer.User.Subscriber;
-import ServiceLayer.GuestImp;
-import ServiceLayer.IGuest;
-import ServiceLayer.SubscriberImp;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -21,7 +15,7 @@ public class uc_3_1_SignOut {
     @BeforeClass
     public static void before(){
         SYS= new SystemManage_Facade();
-        SYS.init_system(false);
+        SYS.init_system();
         SYS.is_initialized();
         SYS.add_subscriber("subscriber","subscriber");
         SUB.subscriber_login_state("subscriber",true);

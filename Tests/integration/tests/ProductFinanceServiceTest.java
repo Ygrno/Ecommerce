@@ -17,7 +17,7 @@ public class ProductFinanceServiceTest {
 
     @BeforeClass
     public static void setUp() throws Exception {
-        SystemManage_Facade.init_system(false);
+        SystemManage_Facade.init_system();
         productFinanceService = new ProductFinanceService(new ExternalFinanceService() {
             @Override
             public boolean connect() throws Exception {

@@ -5,7 +5,6 @@ import ServiceLayer.ManagerImp;
 import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
 import org.junit.*;
-import org.junit.runners.MethodSorters;
 
 import java.io.IOException;
 

@@ -5,12 +5,14 @@ import DomainLayer.*;
 import DomainLayer.Roles.Permission;
 import DomainLayer.Roles.StoreManger;
 import DomainLayer.Roles.StoreRole;
+import DomainLayer.Roles.SystemManger;
 import DomainLayer.Store.Store;
 import DomainLayer.System;
 import DomainLayer.User.Guest;
 import DomainLayer.User.Subscriber;
 import DomainLayer.User.User;
-import Encryption.EncryptImp;
+import Encryption.EncryptProxy;
+import Encryption.IEncrypt;
 import org.json.JSONException;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -26,19 +28,13 @@ public class SystemManage_Facade implements InternalService {
     public static System system;
     private static DBAccess dB = DBAccess.getInstance();
 
-    public static void init_system(boolean file) {
+    public static void init_system() {
         system = System.getSystem();
-        if(file) {
-            if (!InitSystemState.init()) {
-                java.lang.System.out.println("failed to init system");
-            }
-        }
     }
 
     public static boolean is_initialized() {
         return System.initialized;
     }
-
 
     /////////////// store methods///////////////////////////
 
@@ -288,10 +284,9 @@ public class SystemManage_Facade implements InternalService {
 
     ////////////////////////////////////////////////////////
     public static boolean check_password(String user_name, String password) {
-        EncryptImp encryptImp = system.getEncryptImp();
         Subscriber subscriber = system.get_subscriber(user_name);
-        String password_dyc = encryptImp.decrypt(subscriber.getPassword());
-        return password_dyc.equals(encryptImp.decrypt(password));
+        String password_dyc = subscriber.getPassword();
+        return password_dyc.equals(password);
     }
 
     public static List<String> get_user_permissions(String username, String store){
@@ -434,4 +429,9 @@ public class SystemManage_Facade implements InternalService {
     }
 
 
+    public static void promote_to_manager(String user_name, String password) {
+        Subscriber admin = get_subscriber(user_name);
+        SystemManger systemManger = new SystemManger(admin);
+        admin.getRole_list().add(systemManger);
+    }
 }

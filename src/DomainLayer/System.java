@@ -1,16 +1,13 @@
 package DomainLayer;
 
-import DomainLayer.ExternalSerivce.PassiveObjects.ExternalSupplyService;
 import DomainLayer.ExternalSerivce.ProductFinanceService;
 import DomainLayer.ExternalSerivce.ProductSupplyService;
-import DomainLayer.Roles.Role;
 import DomainLayer.Roles.StoreOwner;
 import DomainLayer.Roles.SystemManger;
 import DomainLayer.Store.Store;
 import DomainLayer.User.Guest;
 import DomainLayer.User.Subscriber;
-import DomainLayer.User.User;
-import Encryption.EncryptImp;
+import Encryption.EncryptProxy;
 import ServiceLayer.SubscriberImp;
 import Stubs.ExternalFinanceServiceStub;
 import Stubs.ExternalSupplyServiceStub;
@@ -42,7 +39,6 @@ public class System {
     public static boolean initialized = false;
     private ProductSupplyService productSupplyService;
     private ProductFinanceService productFinanceService;
-    private EncryptImp encryptImp;
     private StoreOwner storeowner;
 
     private System(){
@@ -54,15 +50,10 @@ public class System {
         store_list.add(new Store("store"));
 
         initialized = true;
-        Subscriber admin = new Subscriber("Admin","Password");
-        SystemManger systemManger = new SystemManger(admin);
-        user_list.add(admin);
 
         productFinanceService = new ProductFinanceService(new ExternalFinanceServiceStub());
         productSupplyService = new ProductSupplyService(new ExternalSupplyServiceStub());
 
-        encryptImp = new EncryptImp();
-        encryptImp.connect();
         productFinanceService.connect();
         productSupplyService.connect();
         nextGuestId=0;
@@ -116,14 +107,6 @@ public class System {
 
     public void setProductFinanceService(ProductFinanceService productFinanceService) {
         this.productFinanceService = productFinanceService;
-    }
-
-    public EncryptImp getEncryptImp() {
-        return encryptImp;
-    }
-
-    public void setEncryptImp(EncryptImp encryptImp) {
-        this.encryptImp = encryptImp;
     }
 
     public List<Guest> getGuest_list() {

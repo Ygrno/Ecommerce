@@ -1,40 +1,26 @@
 package integration.tests;
 
-import DomainLayer.InternalService.*;
 import DomainLayer.Product;
 import DomainLayer.Roles.StoreManger;
 import DomainLayer.Roles.StoreOwner;
 import DomainLayer.Store.Policy;
 import DomainLayer.Store.Store;
 import DomainLayer.System;
-import DomainLayer.User.Subscriber;
+import ServiceLayer.InitSystemState;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.List;
 import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
-import DomainLayer.Product;
 import DomainLayer.Store.BuyPolicy;
-import DomainLayer.Store.Policy;
-import DomainLayer.Store.Store;
-import DomainLayer.System;
-import DomainLayer.User.Subscriber;
-import junit.framework.TestCase;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import java.util.List;
-
-import static org.junit.Assert.*;
 
 public class initSystemTest {
 
 
     @BeforeClass
     public static void setUp() throws Exception {
-        SystemManage_Facade.init_system(false);
+        SystemManage_Facade.init_system();
         InitSystemState.init();
     }
 

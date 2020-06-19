@@ -1,16 +1,9 @@
 package acceptance;
 import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
-import DomainLayer.Roles.Role;
 import DomainLayer.Roles.StoreOwner;
-import DomainLayer.Store.Store;
-import DomainLayer.System;
-import DomainLayer.User.Subscriber;
-import ServiceLayer.SubscriberImp;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -22,7 +15,7 @@ public class uc_3_2_open_store {
     @BeforeClass
     public static void before(){
         SYS= new SystemManage_Facade();
-        SYS.init_system(false);
+        SYS.init_system();
         SYS.is_initialized();
         SYS.add_subscriber("subscriber","subscriber");
     }

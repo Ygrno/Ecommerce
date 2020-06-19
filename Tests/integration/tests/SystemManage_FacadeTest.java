@@ -25,7 +25,7 @@ public class SystemManage_FacadeTest {
 
     @BeforeClass
     public static void setUp() throws Exception {
-        SystemManage_Facade.init_system(false);
+        SystemManage_Facade.init_system();
         system = System.getSystem();
     }
 
