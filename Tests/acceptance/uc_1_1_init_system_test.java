@@ -1,7 +1,5 @@
 package acceptance;
 
-import DomainLayer.InternalService.SubscribersManage_Facade;
-import DomainLayer.InternalService.SystemManage_Facade;
 import ServiceLayer.GuestImp;
 import ServiceLayer.SubscriberImp;
 import org.junit.BeforeClass;
@@ -10,14 +8,16 @@ import ServiceLayer.ManagerImp;
 
 import java.io.IOException;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 public class uc_1_1_init_system_test {
 
 
     private static GuestImp guestImp;
     private static ManagerImp managerImp;
     private static SubscriberImp subscriberImp;
-    private static SubscribersManage_Facade SUB;
-    private static SystemManage_Facade SYS;
+
 
 
     @BeforeClass
@@ -35,19 +35,15 @@ public class uc_1_1_init_system_test {
 
     @Test
     public void success_scenario(){
-        guestImp.login("user", "password");
-        assert SystemManage_Facade.get_subscriber("user").isLogged_in();
-        assert SystemManage_Facade.get_subscriber("user1").isLogged_in();
-
-        subscriberImp.sign_out("user1");
-        assert SystemManage_Facade.get_subscriber("user1").isLogged_in()==false;
+        assertTrue(guestImp.login("user", "password"));
+        assertTrue(subscriberImp.sign_out("user1"));
     }
 
 
     @Test
     public void failure_scenario() {
         //guestImp.login("user1", "wrong_password");
-        assert (SystemManage_Facade.get_subscriber("user2")==null);
+        assertFalse(guestImp.login("user2","hi"));
     }
 
 }
