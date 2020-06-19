@@ -240,4 +240,17 @@ public class StoreRoleMessageProccess {
         protocol.send(o);
     }
 
+    public static void delete_discount(MessagingProtocol protocol, JSONObject request) throws Exception{
+        String username = request.getString("user_name");
+        String storename = request.getString("store");
+        String discountName = request.getString("name");
+
+        boolean b = storeRole.delete_discount(username,storename,discountName);
+
+        JSONObject o=new JSONObject();
+        o.put("req", request.get("req"));
+        o.put("success", b);
+        protocol.send(o);
+    }
+
 }

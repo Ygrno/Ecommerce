@@ -125,6 +125,8 @@ public class MessagingProtocol {
                 StoreRoleMessageProccess.add_store_conditioned_discount(this,request);
             }else if(req.equals("add_store_complex_discount")){
                 StoreRoleMessageProccess.add_store_complex_discount(this,request);
+            }else if(req.equals("delete_discount")){
+                StoreRoleMessageProccess.delete_discount(this,request);
             }
 
         }catch (Exception e){

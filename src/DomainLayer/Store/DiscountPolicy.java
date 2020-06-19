@@ -46,14 +46,16 @@ public class DiscountPolicy {
         return null;
     }
     public void delete_discount(String discount_name){
+        List<DiscountComponent> toRemove = new ArrayList<DiscountComponent>();
         for(DiscountComponent dc : discounts){
             if(dc instanceof VisibleDiscount && ((VisibleDiscount) dc).getDiscount_name().equals(discount_name))
-                discounts.remove(dc);
+                toRemove.add(dc);
             if(dc instanceof ConditionedDiscount && ((ConditionedDiscount) dc).getDiscount_name().equals(discount_name))
-                discounts.remove(dc);
+                toRemove.add(dc);
             if(dc instanceof ComplexDiscount && ((ComplexDiscount) dc).getDiscount_name().equals(discount_name))
-                discounts.remove(dc);
+                toRemove.add(dc);
         }
+        discounts.removeAll(toRemove);
     }
 
     @Id

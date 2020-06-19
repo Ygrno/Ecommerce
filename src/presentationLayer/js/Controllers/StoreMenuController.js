@@ -298,12 +298,12 @@ function add_conditioned_discount() {
     div.appendChild(percentageDate);
 
     let requiredAmount = document.createElement("input");
-    requiredAmount.placeholder="Enter Required Amount";
+    requiredAmount.placeholder="Enter Required Product Amount To Get The Discount";
     requiredAmount.className = 'text_input';
     div.appendChild(requiredAmount);
 
     let requiredSum = document.createElement("input");
-    requiredSum.placeholder="Enter Required Sum";
+    requiredSum.placeholder="Enter Required Shopping Bag Sum To Get The Discount";
     requiredSum.className = 'text_input';
     div.appendChild(requiredSum);
 
@@ -435,7 +435,47 @@ function add_complex_discount() {
 
 }
 
+function delete_discount() {
+    let vars = instance.getUrlVars();
+    let store_name = vars["s"];
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
 
+    let introDiv = document.createElement("div");
+    introDiv.innerHTML = "Delete discount";
+    introDiv.className = 'total_price_div';
+    div.appendChild(introDiv);
+
+
+    let discountName = document.createElement("input");
+    discountName.placeholder="Enter discount name";
+    discountName.className = 'text_input';
+    div.appendChild(discountName);
+
+
+    let finish = document.createElement("div");
+    finish.className = 'Green_beautiful_div';
+    finish.innerHTML = '<b>Finish</b>';
+    finish.style.fontSize = '30px';
+    finish.style.width = '100px';
+    finish.style.marginTop = '3%';
+    finish.onclick = function(){
+        let discount_name = discountName.value;
+        if(discount_name === "") {
+            alert("please enter the discount name");
+        }
+
+        instance.delete_discount({
+            user_name: localStorage.getItem("current_username"),
+            store: store_name,
+            name: discount_name, //add discount type
+            req: "delete_discount"
+        });
+    };
+    div.appendChild(finish);
+
+    popUp(div);
+}
 
 function edit_permissions() {
     let vars = instance.getUrlVars();
@@ -932,5 +972,9 @@ function conditioned_discount_response(response) {
 }
 
 function complex_discount_response(response) {
+    alert(JSON.stringify(response));
+}
+
+function delete_discount_response(response) {
     alert(JSON.stringify(response));
 }

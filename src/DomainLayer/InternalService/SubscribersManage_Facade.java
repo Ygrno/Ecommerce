@@ -116,8 +116,9 @@ public class SubscribersManage_Facade implements InternalService {
         if (store_role instanceof StoreOwner || (store_role instanceof  StoreManger && ((StoreManger) store_role).havePermission("ADD_DISCOUNT"))) {
             DiscountPolicy discountPolicy = store_to_add.getDiscountPolicy();
             if(!discountPolicy.check_if_unique(discount_name)) {
+                DiscountComponent dc=discountPolicy.get_discount_by_name(discount_name);
                 discountPolicy.delete_discount(discount_name);
-                dB.deleteAndCommit(discountPolicy.get_discount_by_name(discount_name));
+                dB.deleteAndCommit(dc);
                 return true;
             }
         }
