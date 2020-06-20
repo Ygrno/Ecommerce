@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 @Entity
 @Table(name = "stores")
@@ -30,11 +31,11 @@ public class Store {
     private String name;
     private boolean is_open = false;
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Product> product_list = new ArrayList<>();
+    private List<Product> product_list = Collections.synchronizedList(new  ArrayList<>());
     @OneToMany(cascade = CascadeType.ALL)
-    private List<PurchaseProcess> purchase_process_list = new ArrayList<>();
+    private List<PurchaseProcess> purchase_process_list = Collections.synchronizedList(new  ArrayList<>());
     @OneToMany(cascade = CascadeType.ALL)
-    private List<StoreRole> roles = new ArrayList<>();
+    private List<StoreRole> roles = Collections.synchronizedList(new  ArrayList<>());
 
     public int getId() {
         return id;
@@ -46,7 +47,7 @@ public class Store {
 
     //hila
     @Transient
-    private List<BuyPolicy> buyPolicyList = new ArrayList<>();
+    private List<BuyPolicy> buyPolicyList = Collections.synchronizedList(new  ArrayList<>());
 
     public Store(String name) {
         //TODO: require policy

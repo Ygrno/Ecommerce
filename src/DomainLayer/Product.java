@@ -6,6 +6,7 @@ import DomainLayer.User.ProductReview;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 //persistence
 
@@ -43,7 +44,7 @@ public class Product implements Serializable {
         this.price = price;
         this.supplied_amount = supplied_amount;
         this.store = store;
-        product_review_list = new ArrayList<>();
+        product_review_list = Collections.synchronizedList(new  ArrayList<>());
         this.id=System.nextProductId++;
     }
 

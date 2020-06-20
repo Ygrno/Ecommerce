@@ -4,6 +4,7 @@ import jdk.jfr.Enabled;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -11,7 +12,7 @@ import java.util.List;
 public class DiscountPolicy {
 
     @OneToMany(cascade = CascadeType.ALL)
-    List<DiscountComponent> discounts = new ArrayList<>();
+    List<DiscountComponent> discounts = Collections.synchronizedList(new  ArrayList<>());
 
     public List<DiscountComponent> getDiscounts() {
         return discounts;

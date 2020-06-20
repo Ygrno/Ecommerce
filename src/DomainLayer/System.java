@@ -10,6 +10,7 @@ import ExternalService.Mockups.ExternalFinanceServiceMock;
 import ExternalService.Mockups.ExternalSupplyServiceMock;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class System {
@@ -41,9 +42,9 @@ public class System {
     private StoreOwner storeowner;
 
     private System(){
-        user_list = new ArrayList<>();
-        guest_list=new ArrayList<>();
-        store_list = new ArrayList<>();
+        user_list = Collections.synchronizedList(new  ArrayList<>());
+        guest_list = Collections.synchronizedList(new  ArrayList<>());
+        store_list = Collections.synchronizedList(new  ArrayList<>());
 
         //dummy
         store_list.add(new Store("store"));

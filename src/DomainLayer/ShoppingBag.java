@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 @Entity
 @Table(name = "shoppings_bags")
@@ -22,14 +23,14 @@ public class ShoppingBag {
 
     public ShoppingBag(List<String> products_names) {
         this.products_names = products_names;
-        this.products=new ArrayList<>();
+        this.products = Collections.synchronizedList(new  ArrayList<>());
         this.id=System.nextShoppingBagId++;
     }
 
     public ShoppingBag() {
     }
 
-    public double getDiscounted_bag_price() {
+    public synchronized double getDiscounted_bag_price() {
         return discounted_bag_price;
     }
     @ElementCollection
@@ -66,7 +67,7 @@ public class ShoppingBag {
         this.discounted_bag_price = discounted_bag_price;
     }
 
-    public void calculate_discounted_bag_price(){
+    public synchronized void calculate_discounted_bag_price(){
         double sum = 0;
         for(Product p: products){
             sum = sum + p.getPrice();
