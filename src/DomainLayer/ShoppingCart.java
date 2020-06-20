@@ -7,6 +7,7 @@ import org.json.JSONException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -18,7 +19,7 @@ public class ShoppingCart {
 
     public ShoppingCart(){
 
-        shopping_bag_list = new ArrayList<>();
+        shopping_bag_list = Collections.synchronizedList(new  ArrayList<>());
         this.id=System.nextShoppingCartId++;
     }
 
@@ -46,7 +47,7 @@ public class ShoppingCart {
         return  res;
     }
 
-    public double getTotalPrice(){
+    public synchronized double getTotalPrice(){
 
         double cartTotalPrice=0;
 
@@ -69,7 +70,7 @@ public class ShoppingCart {
         return cartTotalPrice;
     }
 
-    private void CalculateDiscounts() {
+    private synchronized void CalculateDiscounts() {
         for(ShoppingBag sb: getShopping_bag_list()){
             if(!sb.getProducts().isEmpty()) {
                 Store store = sb.getProducts().get(0).getStore();

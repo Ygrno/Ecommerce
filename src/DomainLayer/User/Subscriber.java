@@ -6,6 +6,7 @@ import DomainLayer.System;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 //persistence
 @Entity
@@ -33,9 +34,9 @@ public class Subscriber extends User {
         super();
         this.password = password;
         this.name = user_name;
-        role_list = new ArrayList<>();
+        role_list = Collections.synchronizedList(new  ArrayList<>());
         this.id= System.nextUserId++;
-        Queries = new ArrayList<>();
+        Queries = Collections.synchronizedList(new  ArrayList<>());
     }
 
     public Subscriber() {

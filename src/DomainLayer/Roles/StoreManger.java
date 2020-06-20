@@ -6,6 +6,8 @@ import DomainLayer.User.Subscriber;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 @Entity
 @Table(name="stores_managers")
@@ -18,12 +20,12 @@ public class StoreManger extends StoreRole {
     @JoinTable(name = "manager_permissions", joinColumns = @JoinColumn(name = "manager_id"))
     //@Column(name = "permissions", nullable = false)
     @Enumerated(EnumType.STRING)
-    private List<Permission> permissions;
+    private   List<Permission> permissions;
 
     public StoreManger(Subscriber user, Store store){
         this.store = store;
         this.user = user;
-        permissions = new ArrayList<>();
+        permissions = Collections.synchronizedList(new  ArrayList<>());
         permissions.add(Permission.VIEW_AND_RESPOND_TO_USERS);
         permissions.add(Permission.VIEW_STORE_HISTORY);
         this.id = System.nextOwnerId;

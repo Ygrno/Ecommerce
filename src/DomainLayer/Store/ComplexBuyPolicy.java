@@ -6,6 +6,7 @@ import DomainLayer.ShoppingBag;
 import DomainLayer.User.User;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import DomainLayer.*;
 
@@ -18,7 +19,7 @@ import javax.persistence.Table;
 @Table(name = "complex_buy_policies")
 public class ComplexBuyPolicy extends BuyPolicy{
     @OneToMany(cascade = CascadeType.ALL)
-    private List<BuyPolicy> policies_list;
+    private List<BuyPolicy> policies_list = Collections.synchronizedList(new  ArrayList<>());
     private Logicaloperation op;
 
     public ComplexBuyPolicy() {
