@@ -6,6 +6,9 @@ import DomainLayer.System;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 @Entity
 @Table(name = "complex_discounts")
 public class ComplexDiscount extends DiscountComponent {
@@ -42,17 +45,17 @@ public class ComplexDiscount extends DiscountComponent {
 
     }
     @OneToMany(cascade = CascadeType.ALL)
-    ArrayList<DiscountComponent> and_discountComponents = new ArrayList<>();
+    List<DiscountComponent> and_discountComponents = Collections.synchronizedList(new  ArrayList<>());
     @OneToMany(cascade = CascadeType.ALL)
-    ArrayList<DiscountComponent> or_discountComponents = new ArrayList<>();
+    List<DiscountComponent> or_discountComponents = Collections.synchronizedList(new  ArrayList<>());
     @OneToMany(cascade = CascadeType.ALL)
-    ArrayList<DiscountComponent> onlyOne_discountComponents = new ArrayList<>();
+    List<DiscountComponent> onlyOne_discountComponents = Collections.synchronizedList(new  ArrayList<>());
     @OneToMany(cascade = CascadeType.ALL)
-    ArrayList<DiscountComponent> valid_and_discountComponents = new ArrayList<>();
+    List<DiscountComponent> valid_and_discountComponents = Collections.synchronizedList(new  ArrayList<>());
     @OneToMany(cascade = CascadeType.ALL)
-    ArrayList<DiscountComponent> valid_or_discountComponents = new ArrayList<>();
+    List<DiscountComponent> valid_or_discountComponents = Collections.synchronizedList(new  ArrayList<>());
     @OneToMany(cascade = CascadeType.ALL)
-    ArrayList<DiscountComponent> valid_onlyOne_discountComponents = new ArrayList<>();
+    List<DiscountComponent> valid_onlyOne_discountComponents = Collections.synchronizedList(new  ArrayList<>());
 
     //FORMAT {[A,B,C]} => { (A && B && C) }
     //FORMAT {[A,B,C], [D,E] , [F,G]} => { (A && B && C) && (D || E) && (F ^ G) }

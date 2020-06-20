@@ -7,6 +7,7 @@ import DomainLayer.Store.Store;
 import DomainLayer.System;
 import DomainLayer.User.Guest;
 import ServiceLayer.GuestImp;
+import ServiceLayer.ManagerImp;
 import org.json.JSONException;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -20,13 +21,15 @@ public class GuestImpTest {
     private static GuestImp gi2;
     private static System system;
     private static Guest guest;
+    private static ManagerImp managerImp;
 
 
     @BeforeClass
     public static void setUp(){
             gi = new GuestImp();
             gi2 = new GuestImp();
-            SystemManage_Facade.init_system();
+            managerImp = new ManagerImp();
+            managerImp.init_system(false);
             system = System.getSystem();
             gi.login("Admin", "Password");
             Store s1 = new Store("store1");

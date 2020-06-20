@@ -4,19 +4,24 @@ import jdk.jfr.Enabled;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
 @Table(name = "Discount_policies")
 public class DiscountPolicy {
 
+
     public void setDiscounts(List<DiscountComponent> discounts) {
         this.discounts = discounts;
     }
 
-    @OneToMany(mappedBy = "discountPolicy",cascade=CascadeType.ALL)
-    private
-    List<DiscountComponent> discounts = new ArrayList<>();
+    
+   
+
+   @OneToMany(mappedBy = "discountPolicy",cascade=CascadeType.ALL)
+    private List<DiscountComponent> discounts = Collections.synchronizedList(new  ArrayList<>());
+
 
     public List<DiscountComponent> getDiscounts() {
         return discounts;

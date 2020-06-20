@@ -1,4 +1,4 @@
-package DomainLayer.ExternalSerivce.PassiveObjects;
+package ExternalService;
 
 public interface ExternalFinanceService {
 

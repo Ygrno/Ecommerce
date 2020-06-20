@@ -2,12 +2,21 @@ package ServiceLayer;
 
 import DomainLayer.InternalService.SystemManage_Facade;
 import Encryption.EncryptProxy;
+import ExternalService.ExternalSupplyService;
+import ExternalService.Mockups.ExternalFinanceServiceMock;
+import ExternalService.Mockups.ExternalSupplyServiceMock;
+import Logs.LogErrors;
+import Logs.LogInfo;
 
 
 public class ManagerImp implements IManager {
+    LogErrors my_logError = LogErrors.getLogger();
+    LogInfo my_logInfo = LogInfo.getLogger();
 
     @Override
     public boolean init_system(boolean file) {
+
+        my_logInfo.logger.info("Init System");
         //Init System Flow:
         //---------------------------
 
@@ -24,6 +33,26 @@ public class ManagerImp implements IManager {
                 java.lang.System.out.println("failed to init system");
             }
         }
+
+        //Connection to external Finance Service:
+        ExternalFinanceServiceMock externalFinanceServiceMock = new ExternalFinanceServiceMock();
+        try {
+            externalFinanceServiceMock.connect();
+        } catch (Exception e) {
+            my_logError.logger.severe("Connection to externalFinanceService Failed!");
+            return false;
+        }
+        //Connection to external supply System:
+        ExternalSupplyService externalSupplyServiceMock = new ExternalSupplyServiceMock();
+        try {
+            externalSupplyServiceMock.connect();
+        } catch (Exception e) {
+            my_logError.logger.severe("Connection to ExternalSupplyService Failed!");
+            return false;
+        }
+        //Providing
+        SystemManage_Facade.setFinanceSystem(externalFinanceServiceMock);
+        SystemManage_Facade.setSupplySystem(externalSupplyServiceMock);
 
         //Connect Real Encryption
         EncryptProxy iEncrypt = EncryptionDriver.getEncryption();

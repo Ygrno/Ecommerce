@@ -12,6 +12,8 @@ import DomainLayer.User.Guest;
 import DomainLayer.User.Subscriber;
 import DomainLayer.User.User;
 
+import ExternalService.ExternalFinanceService;
+import ExternalService.ExternalSupplyService;
 import org.json.JSONException;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -119,6 +121,14 @@ public class SystemManage_Facade implements InternalService {
         return guest;
     }
 
+
+    public static void setFinanceSystem(ExternalFinanceService financeSystemImp){
+        system.getProductFinanceService().setFinanceService(financeSystemImp);
+    }
+
+    public static void setSupplySystem(ExternalSupplyService supplySystemImp){
+        system.getProductSupplyService().setSupplyService(supplySystemImp);
+    }
 
     public static HashMap<String, Double> searchProductStores(String product_name){
         HashMap<String, Double> stores = new HashMap<>();

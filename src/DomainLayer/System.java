@@ -1,26 +1,29 @@
 package DomainLayer;
 
+
 import DAL.DBAccess;
-import DomainLayer.ExternalSerivce.ProductFinanceService;
-import DomainLayer.ExternalSerivce.ProductSupplyService;
+
 import DomainLayer.Roles.StoreOwner;
-import DomainLayer.Roles.SystemManger;
-import DomainLayer.Store.DiscountPolicy;
+
+
+import ExternalService.ProductFinanceServiceAdapter;
+import ExternalService.ProductSupplyServiceAdapter;
+import DomainLayer.Roles.StoreOwner;
+
 import DomainLayer.Store.Store;
 import DomainLayer.User.Guest;
 import DomainLayer.User.Subscriber;
-import Encryption.EncryptProxy;
-import ServiceLayer.SubscriberImp;
-import Stubs.ExternalFinanceServiceStub;
-import Stubs.ExternalSupplyServiceStub;
+import ExternalService.Mockups.ExternalFinanceServiceMock;
+import ExternalService.Mockups.ExternalSupplyServiceMock;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class System {
 
     private static System SYSTEM_SINGLETON = null;
-    private SubscriberImp SubImp;
+    //private SubscriberImp SubImp;
     private List<Subscriber> user_list;
     private List<Guest> guest_list;
     private int nextGuestId=0;
@@ -41,30 +44,27 @@ public class System {
     public static DBAccess dbAccess=DBAccess.getInstance();
     private List<Store> store_list;
     public static boolean initialized = false;
-    private ProductSupplyService productSupplyService;
-    private ProductFinanceService productFinanceService;
+    private ProductSupplyServiceAdapter productSupplyService = new ProductSupplyServiceAdapter();
+    private ProductFinanceServiceAdapter productFinanceService = new ProductFinanceServiceAdapter();
     private StoreOwner storeowner;
 
     private System(){
+
+        user_list = Collections.synchronizedList(new  ArrayList<>());
+        guest_list = Collections.synchronizedList(new  ArrayList<>());
+        store_list = Collections.synchronizedList(new  ArrayList<>());
         user_list = dbAccess.select(Subscriber.class);
         guest_list=new ArrayList<>();
         store_list = dbAccess.select(Store.class);
+
 
         //dummy
         store_list.add(new Store("store"));
 
         initialized = true;
 
-
-
-
-        productFinanceService = new ProductFinanceService(new ExternalFinanceServiceStub());
-        productSupplyService = new ProductSupplyService(new ExternalSupplyServiceStub());
-
-        productFinanceService.connect();
-        productSupplyService.connect();
         nextGuestId=0;
-        SubImp = new SubscriberImp();
+        //SubImp = new SubscriberImp();
     }
 
 
@@ -100,19 +100,19 @@ public class System {
     }
 
 
-    public ProductSupplyService getProductSupplyService() {
+    public ProductSupplyServiceAdapter getProductSupplyService() {
         return productSupplyService;
     }
 
-    public void setProductSupplyService(ProductSupplyService productSupplyService) {
+    public void setProductSupplyService(ProductSupplyServiceAdapter productSupplyService) {
         this.productSupplyService = productSupplyService;
     }
 
-    public ProductFinanceService getProductFinanceService() {
+    public ProductFinanceServiceAdapter getProductFinanceService() {
         return productFinanceService;
     }
 
-    public void setProductFinanceService(ProductFinanceService productFinanceService) {
+    public void setProductFinanceService(ProductFinanceServiceAdapter productFinanceService) {
         this.productFinanceService = productFinanceService;
     }
 
@@ -120,9 +120,9 @@ public class System {
         return guest_list;
     }
 
-    public SubscriberImp SubImp() {
+/*    public SubscriberImp SubImp() {
         return SubImp;
-    }
+    }*/
 
     public int getNextGuestId() {
         return nextGuestId;

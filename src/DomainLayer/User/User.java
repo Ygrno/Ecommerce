@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -22,9 +23,10 @@ public abstract class User {
     @Transient
     private List<JSONObject> notifications;
     public User(){
-        purchaseProcesslist = new ArrayList<>();
+        purchaseProcesslist = Collections.synchronizedList(new  ArrayList<>());
         shoppingCart = new ShoppingCart();
-        notifications= new ArrayList<>();
+        notifications= Collections.synchronizedList(new  ArrayList<>());
+
     }
 
     public ShoppingCart getShoppingCart() {

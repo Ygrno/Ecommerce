@@ -1,8 +1,9 @@
-package Stubs;
+package ExternalService.Mockups;
 
-import DomainLayer.ExternalSerivce.PassiveObjects.ExternalFinanceService;
+import ExternalService.ExternalFinanceService;
+import Logs.LogErrors;
 
-public class ExternalFinanceServiceStub implements ExternalFinanceService {
+public class ExternalFinanceServiceMock implements ExternalFinanceService {
 
 
     @Override

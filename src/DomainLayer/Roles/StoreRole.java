@@ -5,6 +5,7 @@ import Observer.Observer;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -23,7 +24,7 @@ public abstract class StoreRole extends Role {
     private List<Role> assigned_users = new ArrayList<>();
 
     @Transient
-    private List<String> Updates = new ArrayList<String>();
+    private List<String> Updates = Collections.synchronizedList(new  ArrayList<>());
 
     protected StoreRole() {
     }

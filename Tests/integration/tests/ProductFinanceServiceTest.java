@@ -1,10 +1,9 @@
 package integration.tests;
 
 import DomainLayer.DealDetails;
-import DomainLayer.ExternalSerivce.PassiveObjects.ExternalFinanceService;
-import DomainLayer.ExternalSerivce.ProductFinanceService;
+import ExternalService.ExternalFinanceService;
+import ExternalService.ProductFinanceServiceAdapter;
 import DomainLayer.InternalService.SystemManage_Facade;
-import junit.framework.TestCase;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -13,31 +12,16 @@ import static org.junit.Assert.*;
 public class ProductFinanceServiceTest {
 
 
-    private static ProductFinanceService productFinanceService;
+    private static ProductFinanceServiceAdapter productFinanceService;
 
     @BeforeClass
     public static void setUp() throws Exception {
         SystemManage_Facade.init_system();
-        productFinanceService = new ProductFinanceService(new ExternalFinanceService() {
-            @Override
-            public boolean connect() throws Exception {
-                return true;
-            }
-
-            @Override
-            public boolean purchase(String accName, String ccn, String expireDate, int cvv) {
-                if(accName.equals("mahmoud"))
-                    return true;
-                else
-                    return false;
-            }
-        });
-
-
+        productFinanceService = new ProductFinanceServiceAdapter();
     }
 
     @Test
-    public void connect() {
+    public void connect() throws Exception {
         assert productFinanceService.connect();
     }
 
