@@ -16,10 +16,12 @@ import java.util.Date;
 public class PurchaseProcess {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
-    @OneToOne(targetEntity = User.class)
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
-    @OneToOne(targetEntity = Store.class)
+    @ManyToOne(targetEntity = Store.class)
     private Store store;
     @OneToOne(targetEntity = ShoppingBag.class)
     private ShoppingBag shoppingBag;
@@ -75,7 +77,7 @@ public class PurchaseProcess {
         this.store = store;
         this.shoppingBag = shoppingBag;
         this.isDone = false;
-        this.id= System.nextPurchaseProcessId++;
+
     }
 
     public User getUser() {

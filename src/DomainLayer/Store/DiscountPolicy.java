@@ -10,7 +10,12 @@ import java.util.List;
 @Table(name = "Discount_policies")
 public class DiscountPolicy {
 
-    @OneToMany(cascade = CascadeType.ALL)
+    public void setDiscounts(List<DiscountComponent> discounts) {
+        this.discounts = discounts;
+    }
+
+    @OneToMany(mappedBy = "discountPolicy",cascade=CascadeType.ALL)
+    private
     List<DiscountComponent> discounts = new ArrayList<>();
 
     public List<DiscountComponent> getDiscounts() {
@@ -59,6 +64,7 @@ public class DiscountPolicy {
     }
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     protected int id;
 
     public int getId() {

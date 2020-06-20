@@ -13,13 +13,13 @@ import java.util.List;
 @Table(name = "shopping_carts")
 public class ShoppingCart {
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "shoppingCart",cascade=CascadeType.ALL)
     private List<ShoppingBag> shopping_bag_list;
 
     public ShoppingCart(){
 
         shopping_bag_list = new ArrayList<>();
-        this.id=System.nextShoppingCartId++;
+
     }
 
     public List<ShoppingBag> getShopping_bag_list() {
@@ -83,6 +83,7 @@ public class ShoppingCart {
     }
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
 
     public int getId() {

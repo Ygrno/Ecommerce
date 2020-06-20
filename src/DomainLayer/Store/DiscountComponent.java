@@ -15,6 +15,9 @@ public abstract class DiscountComponent {
     @Column
     public double final_price = -1;
 
+
+    protected DiscountPolicy discountPolicy;
+
     public void setFinal_price(int final_price){
         this.final_price=final_price;
     }
@@ -60,10 +63,20 @@ public abstract class DiscountComponent {
         throw new UnsupportedOperationException();
     }
 
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "discountPolicy_id")
+    public DiscountPolicy getDiscountPolicy() {
+        return discountPolicy;
+    }
+
+    public void setDiscountPolicy(DiscountPolicy discountPolicy) {
+        this.discountPolicy = discountPolicy;
+    }
 
     protected int id;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return id;
     }

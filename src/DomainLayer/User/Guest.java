@@ -35,7 +35,7 @@ public class Guest extends User {
 
     public Guest(int id) {
         super();
-        this.id= System.nextUserId++;
+
        // purchaseProcesslist = new ArrayList<>();
 
     }

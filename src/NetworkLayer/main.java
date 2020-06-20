@@ -15,7 +15,7 @@ public class main {
         ManagerImp managerImp = new ManagerImp();
         managerImp.init_system(true);
 
-        Esimulation.Init();
+        //Esimulation.Init();
         try {
             ServerSocket server = new ServerSocket(8112, 200);
 

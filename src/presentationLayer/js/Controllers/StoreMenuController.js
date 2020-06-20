@@ -605,6 +605,7 @@ function watch_store_history_respond(products) {
     let div = document.createElement("div");
     div.style.overflow = 'auto';
     console.log(products);
+    alert(JSON.stringify(products));
     //DESIGN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     let d = document.createElement("div");
     d.innerHTML = "<b> productList </b>";

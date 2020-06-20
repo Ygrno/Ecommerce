@@ -16,19 +16,18 @@ import java.util.List;
 //})
 public abstract class StoreRole extends Role {
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name = "store_id")
     public Store store;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "assigned_by",cascade=CascadeType.ALL)
     private List<Role> assigned_users = new ArrayList<>();
-    @OneToOne(targetEntity = Role.class)
-    private Role assigned_by = null;
+
     @Transient
     private List<String> Updates = new ArrayList<String>();
 
     protected StoreRole() {
     }
 
-    @Transient
     public List<Role> getAssigned_users() {
         return assigned_users;
     }

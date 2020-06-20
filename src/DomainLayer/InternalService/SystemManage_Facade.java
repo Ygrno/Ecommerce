@@ -252,25 +252,37 @@ public class SystemManage_Facade implements InternalService {
 
         if(product == null || amount > product.getSupplied_amount()) return false;
 
-        Product buy_product = new Product(product.getName(),product.getPrice(),product.getSupplied_amount(),product.getStore());
-        dB.updateAndCommit(buy_product); //todo - the product already exists in DB, but not connected to the buyer.
-        buy_product.setBuy_amount(amount);
+        //Product buy_product = new Product(product.getName(),product.getPrice(),product.getSupplied_amount(),product.getStore());
+//        dB.updateAndCommit(buy_product); //todo - the product already exists in DB, but not connected to the buyer.
+//        buy_product.setBuy_amount(amount);
 
         for(PurchaseProcess p:s.getPurchaseProcesslist()){
             if(!p.isFinished() && p.getStore().getName().equals(store_name)){
                 p.getShoppingBag().getProducts_names().add(product_name);
-                p.getShoppingBag().getProducts().add(buy_product);
+                p.getShoppingBag().getProducts().add(product);
                 processExist=true;
+                product.setShoppingBag(p.getShoppingBag());
+                dB.updateAndCommit(s.getShoppingCart());
+                dB.updateAndCommit(p);
+                dB.updateAndCommit(p.getShoppingBag());
+                dB.updateAndCommit(product);
+
             }
         }
 
         if(!processExist){
-            PurchaseProcess p = new PurchaseProcess(s,store,new ShoppingBag(new ArrayList<>()));
-            dB.updateAndCommit(p);
+            ShoppingBag sb= new ShoppingBag(new ArrayList<>());
+            PurchaseProcess p = new PurchaseProcess(s,store,sb);
             s.getShoppingCart().getShopping_bag_list().add(p.getShoppingBag());
             p.getShoppingBag().getProducts_names().add(product_name);
-            p.getShoppingBag().getProducts().add(buy_product);
+            p.getShoppingBag().getProducts().add(product);
             s.getPurchaseProcesslist().add(p);
+            sb.setShoppingCart(s.getShoppingCart());
+            product.setShoppingBag(sb);
+            dB.updateAndCommit(s.getShoppingCart());
+            dB.updateAndCommit(p);
+            dB.updateAndCommit(sb);
+            dB.updateAndCommit(product);
         }
         return true;
     }
@@ -340,6 +352,7 @@ public class SystemManage_Facade implements InternalService {
         if(productList==null)
             return null;
         int size = productList.size();
+
         String[][] products_arr = new String[size][4];
         for (int i = 0; i<size; i++){
             products_arr[i][0]=productList.get(i).getName();
@@ -349,6 +362,7 @@ public class SystemManage_Facade implements InternalService {
         }
         return products_arr;
     }
+
     public static String get_store_purchase_process(String store_name) {
         StringBuilder history = new StringBuilder();
         Store store = system.get_store(store_name);

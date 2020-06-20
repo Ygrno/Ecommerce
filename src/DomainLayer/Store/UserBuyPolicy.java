@@ -12,6 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "user_buy_policies")
 public class UserBuyPolicy extends SimpleBuyPolicy {
+
     private int policy_id;
     //private User user;
 
