@@ -15,7 +15,7 @@ public class LogErrors {
             File f = new File(file_name);
             if (!f.exists()) f.createNewFile();
             fh = new FileHandler(file_name, true);
-            logger = Logger.getLogger("test");
+            logger = Logger.getLogger("log1");
             logger.addHandler(fh);
             SimpleFormatter formatter = new SimpleFormatter();
             fh.setFormatter(formatter);
