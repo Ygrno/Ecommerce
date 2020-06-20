@@ -60,7 +60,7 @@ public class ConditionedDiscount extends DiscountComponent {
         this.product = product;
         this.required_amount = required_amount;
         this.required_sum = required_sum;
-        this.id= System.nextDiscountId++;
+
     }
 
     public void setCond(Condition c){

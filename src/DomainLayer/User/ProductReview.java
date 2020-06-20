@@ -1,5 +1,6 @@
 package DomainLayer.User;
 
+import DomainLayer.Product;
 import DomainLayer.User.Subscriber;
 
 import javax.persistence.*;
@@ -16,8 +17,19 @@ public class ProductReview {
     @OneToOne(targetEntity = Subscriber.class,cascade = CascadeType.ALL)
     Subscriber subscriber;
 
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
-    public ProductReview(Subscriber subscriber,int rank,String review_data)    {
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public ProductReview(Subscriber subscriber, int rank, String review_data)    {
         this.review_data = review_data;
         this.rank = rank;
         this.subscriber = subscriber;

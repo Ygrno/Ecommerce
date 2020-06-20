@@ -21,8 +21,7 @@ public class Subscriber extends User {
     @Column(name="password")
     private String password;
     //    @OneToMany(mappedBy = "roles")
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="user_id")
+    @OneToMany(mappedBy = "user",cascade=CascadeType.ALL)
     private List<Role> role_list;
     @Transient
     private boolean logged_in = false;
@@ -34,9 +33,10 @@ public class Subscriber extends User {
         super();
         this.password = password;
         this.name = user_name;
+
         role_list = Collections.synchronizedList(new  ArrayList<>());
-        this.id= System.nextUserId++;
         Queries = Collections.synchronizedList(new  ArrayList<>());
+
     }
 
     public Subscriber() {

@@ -17,7 +17,7 @@ public class SystemManger extends Role {
     public SystemManger(Subscriber user){
 
         this.user = user;
-        this.id = System.nextOwnerId++;
+
     }
 
     public SystemManger(){

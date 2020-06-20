@@ -41,11 +41,13 @@
             update
         </property>
         <property name="hibernate.connection.autocommit">true</property>
-        <property name="hbm2ddl.auto">create-drop</property>
+
+        <!--<property name="hbm2ddl.auto">create-drop</property>-->
         <!-- List of XML mapping files -->
         <mapping class = "DomainLayer.User.ProductReview"/>
         <mapping class = "DomainLayer.User.Subscriber"/>
         <mapping class = "DomainLayer.User.Guest"/>
+        <mapping class = "DomainLayer.User.User"/>
         <mapping class = "DomainLayer.Roles.Role"/>
         <mapping class = "DomainLayer.Roles.StoreRole"/>
         <mapping class = "DomainLayer.Roles.StoreOwner"/>

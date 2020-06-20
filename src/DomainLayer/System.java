@@ -1,8 +1,15 @@
 package DomainLayer;
 
+
+import DAL.DBAccess;
+
+import DomainLayer.Roles.StoreOwner;
+
+
 import ExternalService.ProductFinanceServiceAdapter;
 import ExternalService.ProductSupplyServiceAdapter;
 import DomainLayer.Roles.StoreOwner;
+
 import DomainLayer.Store.Store;
 import DomainLayer.User.Guest;
 import DomainLayer.User.Subscriber;
@@ -32,9 +39,9 @@ public class System {
     public static int nextShoppingBagId=0;
     public static int nextShoppingCartId=0;
     public static int nextUserId=0;
-    public static int nextProductId=0;
+    static int nextProductId=0;
     public static int nextStoreId = 0;
-
+    public static DBAccess dbAccess=DBAccess.getInstance();
     private List<Store> store_list;
     public static boolean initialized = false;
     private ProductSupplyServiceAdapter productSupplyService = new ProductSupplyServiceAdapter();
@@ -42,14 +49,20 @@ public class System {
     private StoreOwner storeowner;
 
     private System(){
+
         user_list = Collections.synchronizedList(new  ArrayList<>());
         guest_list = Collections.synchronizedList(new  ArrayList<>());
         store_list = Collections.synchronizedList(new  ArrayList<>());
+        user_list = dbAccess.select(Subscriber.class);
+        guest_list=new ArrayList<>();
+        store_list = dbAccess.select(Store.class);
+
 
         //dummy
         store_list.add(new Store("store"));
 
         initialized = true;
+
         nextGuestId=0;
         //SubImp = new SubscriberImp();
     }

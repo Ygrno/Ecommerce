@@ -357,11 +357,12 @@ public class SubscribersManage_Facade implements InternalService {
             if(manager_to_add == null || requester.equals(manager_to_add)) return false;
             if (have_role_in_store(store_role, manager_to_add)) return false;
             StoreManger storeManger = new StoreManger(manager_to_add,store_role.store);
-            dB.updateAndCommit(storeManger);
             manager_to_add.getRole_list().add(storeManger);
             storeManger.store.getRoles().add(storeManger);
             store_role.getAssigned_users().add(storeManger);
             storeManger.setAssigned_by(store_role);
+            dB.updateAndCommit(storeManger);
+            dB.updateAndCommit(store_role);
             return true;
         }
         return false;

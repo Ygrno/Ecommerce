@@ -17,7 +17,7 @@ public class StoreOwner extends StoreRole {
     public StoreOwner(Subscriber user, Store store){
         this.user = user;
         this.store = store;
-        this.id= System.nextOwnerId++;
+
     }
 
     public StoreOwner() {

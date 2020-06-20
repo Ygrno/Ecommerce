@@ -18,7 +18,7 @@ public abstract class User {
 
     @OneToOne(targetEntity = ShoppingCart.class,cascade = CascadeType.ALL)
     private ShoppingCart shoppingCart;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user",cascade=CascadeType.ALL)
     private List<PurchaseProcess> purchaseProcesslist;
     @Transient
     private List<JSONObject> notifications;
@@ -26,7 +26,7 @@ public abstract class User {
         purchaseProcesslist = Collections.synchronizedList(new  ArrayList<>());
         shoppingCart = new ShoppingCart();
         notifications= Collections.synchronizedList(new  ArrayList<>());
-        this.id = System.nextUserId++;
+
     }
 
     public ShoppingCart getShoppingCart() {
@@ -42,6 +42,7 @@ public abstract class User {
 
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     protected int id;
 
     public int getId() {

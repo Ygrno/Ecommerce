@@ -16,6 +16,7 @@ public abstract class Policy {
     public abstract boolean validate (ShoppingBag shoppingBag, User user);
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     protected int id;
 
 

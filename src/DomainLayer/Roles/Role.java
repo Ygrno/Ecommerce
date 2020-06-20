@@ -8,14 +8,20 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Role {
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     public Subscriber user;
-
+    @ManyToOne
+    @JoinColumn(name = "storeRole_id")
+    private StoreRole storeRole;
+    @ManyToOne(targetEntity = StoreRole.class,cascade=CascadeType.ALL)
+    protected Role assigned_by = null;
     public Role() {
 
     }
     @Id
     @Column(name ="id")
+    @GeneratedValue(strategy=GenerationType.AUTO)
     protected int id;
 
 

@@ -18,7 +18,7 @@ public interface IStoreRole {
     public boolean add_conditioned_discount(String user_name, String store_name, String product_name, String discount_name, double discount_percentage, int due_date, int amount, int sum);//4.2
     public boolean add_complex_discount(String user_name, String store_name, String discount_name, String[]discounts, String type, int end_of_use_date);
     public boolean delete_discount(String user_name, String store_name, String discount_name);
-
+//
 //    public boolean remove_store_discount_policy(String user_name, String store_name, String discount_name);    //4.2 //5.1
 //
 //    public boolean add_store_buying_policy(String user_name, String store_name);    //4.2 //5.1
