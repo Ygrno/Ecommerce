@@ -21,7 +21,7 @@ public class ProductFinanceServiceTest {
     }
 
     @Test
-    public void connect() {
+    public void connect() throws Exception {
         assert productFinanceService.connect();
     }
 

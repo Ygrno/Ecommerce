@@ -22,7 +22,7 @@ public class uc_7_connect_finance_service {
     }
 
     @Test
-    public void connect() {
+    public void connect() throws Exception {
         assert productFinanceService.connect();
     }
 

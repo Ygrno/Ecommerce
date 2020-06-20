@@ -6,6 +6,8 @@ import DomainLayer.InternalService.SystemManage_Facade;
 
 
 import Encryption.EncryptProxy;
+import Logs.LogErrors;
+import Logs.LogInfo;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,7 +17,8 @@ import java.util.List;
 
 public class GuestImp implements IGuest {
 
-    Log my_log = Log.getLogger();
+    LogInfo my_logInfo = LogInfo.getLogger();
+    LogErrors my_logError = LogErrors.getLogger();
 
     public GuestImp() {
     }
@@ -23,71 +26,75 @@ public class GuestImp implements IGuest {
     @Override
     public boolean sign_up(String user_name, String password) {
 
-        my_log.logger.info("Sign Up");
+        my_logInfo.logger.info("Sign Up");
 
 
-        if(!SystemManage_Facade.is_initialized()) {
-            my_log.logger.warning("System not initialized");
+        if (!SystemManage_Facade.is_initialized()) {
+            my_logError.logger.severe("System not initialized");
             return false;
         }
 
         EncryptProxy encryption = EncryptionDriver.getEncryption();
         if(!encryption.init()) {
-            my_log.logger.warning("Encryption not initialized");
+            my_logError.logger.severe("Encryption not initialized");
             return false;
         }
 
-
-        password = encryption.encrypt(password);
+        try {
+            password = encryption.encrypt(password);
+        } catch (Exception e) {
+            my_logError.logger.severe("Password Encryption failed");
+        }
 
         if(!SystemManage_Facade.find_subscriber(user_name)) {
-
             SystemManage_Facade.add_subscriber(user_name, password);
             if(user_name.equals("Admin")) SystemManage_Facade.promote_to_manager(user_name,password);
             SubscribersManage_Facade.subscriber_login_state(user_name,true);
             return true;
         }
 
-        my_log.logger.severe("Action Failed");
+        my_logError.logger.severe("Password Encryption failed");
         return false;
     }
 
     @Override
     public boolean login(String user_name, String password) {
-        my_log.logger.info("Login");
+        my_logInfo.logger.info("Login");
 
         //if(user_name.equals("Admin") && password.equals("Password")) SystemManage_Facade.init_system();
-        if(!SystemManage_Facade.is_initialized()) {
-            my_log.logger.warning("System not initialized");
+        if (!SystemManage_Facade.is_initialized()) {
+            my_logError.logger.severe("System not initialized");
             return false;
         }
 
         EncryptProxy encryption = EncryptionDriver.getEncryption();
         if(!encryption.init()) {
-            my_log.logger.warning("Encryption not initialized");
+            my_logError.logger.severe("Encryption not initialized");
             return false;
         }
 
-        password = encryption.encrypt(password);
+        try {
+            password = encryption.encrypt(password);
+        } catch (Exception e) {
+            my_logError.logger.severe("Password Encryption failed");
+        }
 
         if(SystemManage_Facade.find_subscriber(user_name) && SystemManage_Facade.check_password(user_name,password)){
             SubscribersManage_Facade.subscriber_login_state(user_name,true);
             return true;
         }
-        my_log.logger.severe("Action Failed");
+        my_logError.logger.severe("login failed!");
         return false;
     }
 
     @Override
     public String[][] view_products_information_store(String store_name) {
-        my_log.logger.info("view_products_information_store");
-        if(!SystemManage_Facade.is_initialized()) {
-            my_log.logger.warning("System not initialized");
+        my_logInfo.logger.info("view_products_information_store");
+        if (!SystemManage_Facade.is_initialized()) {
+            my_logError.logger.severe("System not initialized");
             return null;
         }
-
         String[][] products_arr;
-        if(!SystemManage_Facade.is_initialized()) return null;
         products_arr = SystemManage_Facade.get_products_of_store(store_name);
         return products_arr;
     }
@@ -99,13 +106,12 @@ public class GuestImp implements IGuest {
 
     @Override
     public HashMap<String, Double> search_products(String product_name) {
-        my_log.logger.info("search_products");
-        if(!SystemManage_Facade.is_initialized()) {
-            my_log.logger.warning("System not initialized");
+        my_logInfo.logger.info("search_products");
+        if (!SystemManage_Facade.is_initialized()) {
+            my_logError.logger.severe("System not initialized");
             return null;
         }
         return SystemManage_Facade.searchProductStores(product_name);
-
     }
 
     @Override
@@ -116,9 +122,9 @@ public class GuestImp implements IGuest {
 
     @Override
     public boolean save_products(int id,String product_name, String store_name, int amount) {
-        my_log.logger.info("save_products");
-        if(!SystemManage_Facade.is_initialized()) {
-            my_log.logger.warning("System not initialized");
+        my_logInfo.logger.info("save_products");
+        if (!SystemManage_Facade.is_initialized()) {
+            my_logError.logger.severe("System not initialized");
             return false;
         }
 
@@ -127,22 +133,23 @@ public class GuestImp implements IGuest {
 
     @Override
     public List<JSONObject> watch_products_in_cart(int id) throws JSONException {
-        my_log.logger.info("watch_products_in_cart");
-        if(!SystemManage_Facade.is_initialized()) {
-            my_log.logger.warning("System not initialized");
+        my_logInfo.logger.info("watch_products_in_cart");
+        if (!SystemManage_Facade.is_initialized()) {
+            my_logError.logger.severe("System not initialized");
             return null;
         }
-        if(SystemManage_Facade.getGuest(id)==null)
+        if(SystemManage_Facade.getGuest(id)==null) {
+            my_logError.logger.severe("Guest wasn't found!");
             return null;
-
+        }
         return SystemManage_Facade.getProductsInCartForGuest(id);
     }
 
     @Override
     public boolean remove_product_from_cart(int id, String product_name, String store_name) {
-        my_log.logger.info("remove_product_from_cart");
-        if(!SystemManage_Facade.is_initialized()) {
-            my_log.logger.warning("System not initialized");
+        my_logInfo.logger.info("remove_product_from_cart");
+        if (!SystemManage_Facade.is_initialized()) {
+            my_logError.logger.severe("System not initialized");
             return false;
         }
         return SystemManage_Facade.removeProductFromCart(String.valueOf(id),product_name,store_name);
@@ -150,22 +157,26 @@ public class GuestImp implements IGuest {
 
     @Override
     public boolean buy_products_in_cart(int id,String buyerName,String creditCardNumber,String expireDate,int cvv) throws Exception {
-        my_log.logger.info("buy_products_in_cart");
-        if(!SystemManage_Facade.is_initialized()) {
-            my_log.logger.warning("System not initialized");
+        my_logInfo.logger.info("buy_products_in_cart");
+        if (!SystemManage_Facade.is_initialized()) {
+            my_logError.logger.severe("System not initialized");
             return false;
         }
 //        if(discount > 1 || discount < 0){
 //            return false;
 //        }
         if(expireDate.length() != 5){
+            my_logError.logger.severe("expireDate length wasn't 5");
             return false;
         }
-        if(creditCardNumber.length()!=16)
+        if(creditCardNumber.length()!=16) {
+            my_logError.logger.severe("creditCardNumber length wasn't 16");
             return false;
-        if(cvv>=1000)
+        }
+        if(cvv>=1000) {
+            my_logError.logger.severe("cvv lower than 1000");
             return false;
-
+        }
         //check product availability
 
         double price=SystemManage_Facade.getPriceOfCart(String.valueOf(id));

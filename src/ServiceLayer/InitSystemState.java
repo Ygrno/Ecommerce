@@ -1,5 +1,7 @@
 package ServiceLayer;
 
+import Logs.LogErrors;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Paths;
@@ -10,6 +12,8 @@ public class InitSystemState {
     private static final SubscriberImp subscriberImp = new SubscriberImp();
     private static final GuestImp guestImp = new GuestImp();
     private static final StoreRoleImp storeRoleImp = new StoreRoleImp();
+
+    private static LogErrors my_logError = LogErrors.getLogger();
 
 
     public static boolean init(){
@@ -38,7 +42,7 @@ public class InitSystemState {
             myReader.close();
         }
         catch (FileNotFoundException e) {
-            System.out.println("init file is missing");
+            my_logError.logger.severe("init file is missing");
         }
         return flag;
     }
@@ -70,8 +74,7 @@ public class InitSystemState {
                     return false;
             }
         }catch(Exception e){
-            System.out.println("invalid init file");
-            e.printStackTrace();
+            my_logError.logger.severe("invalid init file");
             return false;
         }
     }

@@ -57,3 +57,5 @@
 /out/
 /out/production/Ecommerce/DomainLayer/Store/
 /log.txt.lck
+/log_errors.txt
+/log_info.txt

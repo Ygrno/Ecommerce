@@ -19,7 +19,7 @@ public class ProductSupplyServiceTest {
     }
 
     @Test
-    public void connect() {
+    public void connect() throws Exception {
         assert productSupplyService.connect();
     }
 

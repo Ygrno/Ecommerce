@@ -19,7 +19,7 @@ public class uc_8_connect_supply_product {
     }
 
     @Test
-    public void connect() {
+    public void connect() throws Exception {
         assert productSupplyService.connect();
     }
 
