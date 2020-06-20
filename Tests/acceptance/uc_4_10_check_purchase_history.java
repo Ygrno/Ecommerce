@@ -87,11 +87,6 @@ public class uc_4_10_check_purchase_history {
         SUBImp.save_products("s1","mouse","Computer Store",1);
         SUBImp.save_products("s1","keyboard","Computer Store",1);
         SUBImp.buy_products_in_cart("s1","noam","1234567891234567","22019",120);
-
-
-
-
-
     }
 
 

@@ -1,17 +1,20 @@
-package DomainLayer.ExternalSerivce;
+package ExternalService;
 
 import DomainLayer.DealDetails;
-import DomainLayer.ExternalSerivce.PassiveObjects.ExternalFinanceService;
+import ExternalService.Mockups.ExternalFinanceServiceMock;
 
-public class ProductFinanceService implements ExternalService {
+public class ProductFinanceServiceAdapter {
 
     private ExternalFinanceService FinanceService;
 
-    public ProductFinanceService(ExternalFinanceService FinanceService){
-        this.FinanceService = FinanceService;
+    public ProductFinanceServiceAdapter(){
+        this.FinanceService = new ExternalFinanceServiceMock();
     }
 
-    @Override
+    public void setFinanceService(ExternalFinanceService financeService) {
+        FinanceService = financeService;
+    }
+
     public boolean connect() {
         try{
             this.FinanceService.connect();

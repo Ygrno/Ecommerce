@@ -2,6 +2,9 @@ package ServiceLayer;
 
 import DomainLayer.InternalService.SystemManage_Facade;
 import Encryption.EncryptProxy;
+import ExternalService.ExternalSupplyService;
+import ExternalService.Mockups.ExternalFinanceServiceMock;
+import ExternalService.Mockups.ExternalSupplyServiceMock;
 
 
 public class ManagerImp implements IManager {
@@ -24,6 +27,26 @@ public class ManagerImp implements IManager {
                 java.lang.System.out.println("failed to init system");
             }
         }
+
+        //Connection to external Finance Service:
+        ExternalFinanceServiceMock externalFinanceServiceMock = new ExternalFinanceServiceMock();
+        try {
+            externalFinanceServiceMock.connect();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        //Connection to external supply System:
+        ExternalSupplyService externalSupplyServiceMock = new ExternalSupplyServiceMock();
+        try {
+            externalSupplyServiceMock.connect();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        //Providing
+        SystemManage_Facade.setFinanceSystem(externalFinanceServiceMock);
+        SystemManage_Facade.setSupplySystem(externalSupplyServiceMock);
 
         //Connect Real Encryption
         EncryptProxy iEncrypt = EncryptionDriver.getEncryption();

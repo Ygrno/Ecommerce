@@ -27,12 +27,9 @@ public class uc_3_3_write_review {
         SUBImp.open_store("subscriber","store1");
         storeRoleImp.add_store_product("subscriber", "store1", "Bamba", 3, 25);
         storeRoleImp.add_store_product("subscriber", "store1", "chips", 3, 25);
-
         guestImp.sign_up("buyer","buyer");
         guestImp.login("buyer","buyer");
         SUBImp.save_products("buyer","bamba","store1",5);
-
-
     }
 
     @Test

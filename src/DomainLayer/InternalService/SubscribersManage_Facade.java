@@ -40,9 +40,9 @@ public class SubscribersManage_Facade implements InternalService {
         System.getSystem().getUser_list().add(sub);
         return true;
     }
-    public static Boolean openstore(String username,String name) {
+/*    public static Boolean openStore(String username, String name) {
         return System.getSystem().SubImp().open_store(username,name);
-    }
+    }*/
 
     public static List<StoreRole> GetRoles(String store) {
         return System.getSystem().get_store(store).getRoles();

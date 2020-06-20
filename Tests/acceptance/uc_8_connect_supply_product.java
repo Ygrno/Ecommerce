@@ -1,7 +1,7 @@
 package acceptance;
 
-import DomainLayer.ExternalSerivce.PassiveObjects.ExternalSupplyService;
-import DomainLayer.ExternalSerivce.ProductSupplyService;
+import ExternalService.ExternalSupplyService;
+import ExternalService.ProductSupplyServiceAdapter;
 import DomainLayer.OrderDetails;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -10,21 +10,12 @@ import static org.junit.Assert.assertEquals;
 
 public class uc_8_connect_supply_product {
 
-    private static ProductSupplyService productSupplyService;
+    private static ProductSupplyServiceAdapter productSupplyService;
 
     @BeforeClass
     public static void setUp() throws Exception {
-        productSupplyService = new ProductSupplyService(new ExternalSupplyService() {
-            @Override
-            public boolean connect() throws Exception {
-                return true;
-            }
+        productSupplyService = new ProductSupplyServiceAdapter();
 
-            @Override
-            public boolean order(OrderDetails orderDetails) {
-                return true;
-            }
-        });
     }
 
     @Test

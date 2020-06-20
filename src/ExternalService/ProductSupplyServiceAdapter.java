@@ -1,17 +1,20 @@
-package DomainLayer.ExternalSerivce;
+package ExternalService;
 
-import DomainLayer.ExternalSerivce.PassiveObjects.ExternalSupplyService;
 import DomainLayer.OrderDetails;
+import ExternalService.Mockups.ExternalSupplyServiceMock;
 
-public class ProductSupplyService implements ExternalService {
+public class ProductSupplyServiceAdapter {
 
     private ExternalSupplyService SupplyService;
 
-    public ProductSupplyService(ExternalSupplyService SupplyService){
-        this.SupplyService = SupplyService;
+    public ProductSupplyServiceAdapter(){
+        this.SupplyService = new ExternalSupplyServiceMock();
     }
 
-    @Override
+    public void setSupplyService(ExternalSupplyService supplyServiceImp) {
+        this.SupplyService = supplyServiceImp;
+    }
+
     public boolean connect() {
         try{
             this.SupplyService.connect();
