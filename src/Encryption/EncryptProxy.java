@@ -23,29 +23,13 @@ public class EncryptProxy implements IEncrypt {
     }
 
     @Override
-    public String encrypt(String to_encrypt) {
-        if(real != null) {
-            try {
+    public String encrypt(String to_encrypt) throws Exception {
                 return real.encrypt(to_encrypt);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return to_encrypt;
-            }
-        }
-        else return to_encrypt;
     }
 
     @Override
-    public String decrypt(String to_decrypt) {
-        if(real != null) {
-            try {
-                return real.decrypt(to_decrypt);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return to_decrypt;
-            }
-        }
-        else return to_decrypt;
+    public String decrypt(String to_decrypt) throws Exception {
+        return real.decrypt(to_decrypt);
     }
 
 

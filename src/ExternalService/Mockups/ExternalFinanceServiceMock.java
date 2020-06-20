@@ -1,6 +1,7 @@
 package ExternalService.Mockups;
 
 import ExternalService.ExternalFinanceService;
+import Logs.LogErrors;
 
 public class ExternalFinanceServiceMock implements ExternalFinanceService {
 

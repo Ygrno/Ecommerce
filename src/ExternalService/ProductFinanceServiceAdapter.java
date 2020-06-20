@@ -7,6 +7,7 @@ public class ProductFinanceServiceAdapter {
 
     private ExternalFinanceService FinanceService;
 
+
     public ProductFinanceServiceAdapter(){
         this.FinanceService = new ExternalFinanceServiceMock();
     }
@@ -15,13 +16,8 @@ public class ProductFinanceServiceAdapter {
         FinanceService = financeService;
     }
 
-    public boolean connect() {
-        try{
-            this.FinanceService.connect();
-            return true;
-        }catch(Exception e){
-            return false;
-        }
+    public boolean connect() throws Exception {
+            return this.FinanceService.connect();
     }
 
 

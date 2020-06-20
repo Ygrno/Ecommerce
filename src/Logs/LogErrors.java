@@ -1,17 +1,16 @@
-package ServiceLayer;
+package Logs;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-public class Log {
-    private static  Log log_instance = null;
+public class LogErrors {
+    private static LogErrors log_error_instance = null;
     public Logger logger;
     FileHandler fh;
 
-    private Log(String file_name) {
+    private LogErrors(String file_name) {
         try {
             File f = new File(file_name);
             if (!f.exists()) f.createNewFile();
@@ -23,14 +22,10 @@ public class Log {
         }catch (Exception e){
             System.out.println("Log can't be initialized");
         }
-
     }
 
-    public static Log getLogger()  {
-        if(log_instance == null) log_instance = new Log("log.txt");
-        return log_instance;
-
-
+    public static LogErrors getLogger()  {
+        if(log_error_instance == null) log_error_instance = new LogErrors("log_errors.txt");
+        return log_error_instance;
     }
-
 }

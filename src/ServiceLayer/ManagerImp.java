@@ -5,12 +5,18 @@ import Encryption.EncryptProxy;
 import ExternalService.ExternalSupplyService;
 import ExternalService.Mockups.ExternalFinanceServiceMock;
 import ExternalService.Mockups.ExternalSupplyServiceMock;
+import Logs.LogErrors;
+import Logs.LogInfo;
 
 
 public class ManagerImp implements IManager {
+    LogErrors my_logError = LogErrors.getLogger();
+    LogInfo my_logInfo = LogInfo.getLogger();
 
     @Override
     public boolean init_system(boolean file) {
+
+        my_logInfo.logger.info("Init System");
         //Init System Flow:
         //---------------------------
 
@@ -33,7 +39,7 @@ public class ManagerImp implements IManager {
         try {
             externalFinanceServiceMock.connect();
         } catch (Exception e) {
-            e.printStackTrace();
+            my_logError.logger.severe("Connection to externalFinanceService Failed!");
             return false;
         }
         //Connection to external supply System:
@@ -41,7 +47,7 @@ public class ManagerImp implements IManager {
         try {
             externalSupplyServiceMock.connect();
         } catch (Exception e) {
-            e.printStackTrace();
+            my_logError.logger.severe("Connection to ExternalSupplyService Failed!");
             return false;
         }
         //Providing

@@ -15,13 +15,8 @@ public class ProductSupplyServiceAdapter {
         this.SupplyService = supplyServiceImp;
     }
 
-    public boolean connect() {
-        try{
-            this.SupplyService.connect();
-            return true;
-        }catch(Exception e){
-            return false;
-        }
+    public boolean connect() throws Exception {
+           return this.SupplyService.connect();
     }
 
     public boolean order(OrderDetails orderDetails){
