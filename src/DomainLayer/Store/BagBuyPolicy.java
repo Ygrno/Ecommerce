@@ -14,9 +14,9 @@ import java.util.List;
 public class BagBuyPolicy extends SimpleBuyPolicy {
    // private String product_name;
 
-    private int minCost;
+    private int minCost; //minimum cost of bag
     private int maxCost;
-    private int min_quantity;
+    private int min_quantity; //minimum number of products in the bag
     private int max_quantity;
 
     public BagBuyPolicy(int policy_id, int minCost, int maxCost, int min_quantity, int max_quantity)
@@ -34,12 +34,18 @@ public class BagBuyPolicy extends SimpleBuyPolicy {
 
     @Override
     public boolean validate(ShoppingBag shoppingBag, User user) {
-
+        double total_price=0;
         //ShoppingBag shopBag= purchaseProcess.getShoppingBag();
         List<Product> products = shoppingBag.getProducts();
         if(products.size() < min_quantity)
             return false;
         if(products.size() > max_quantity)
+            return false;
+        for(Product p :products)
+            total_price +=p.getPrice();
+        if (total_price < minCost)
+            return false;
+        if (total_price > maxCost)
             return false;
         return true;
     }
@@ -61,8 +67,5 @@ public class BagBuyPolicy extends SimpleBuyPolicy {
     }
 
 
-    //@Override
-   // public boolean validate(ShoppingBag shoppingBag, User user) {
-       // return false;
-    //}
+
 }
