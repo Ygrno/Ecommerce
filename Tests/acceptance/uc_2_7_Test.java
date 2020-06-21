@@ -48,13 +48,13 @@ public class uc_2_7_Test {
 
     @Test
     public void successScenario() throws JSONException {
-        gi.save_products(1,"bmba","store1",1);
-        gi.save_products(5,"twix","store3",1);
-        gi.save_products(5,"chips","store2",1);
-        System.out.println(gi.watch_products_in_cart(5).get(0).getString("name"));
-        assert gi.watch_products_in_cart(5).get(0).getString("name").equals("bmba");
-        assert gi.watch_products_in_cart(5).get(1).getString("name").equals("twix");
-        assert !gi.watch_products_in_cart(5).get(1).getString("name").equals("besli");
+        gi.save_products(0,"bmba","store1",1);
+        gi.save_products(0,"twix","store3",1);
+        gi.save_products(0,"chips","store2",1);
+        System.out.println(gi.watch_products_in_cart(0).get(0).getString("name"));
+        assert gi.watch_products_in_cart(0).get(0).getString("name").equals("bmba");
+        assert gi.watch_products_in_cart(0).get(1).getString("name").equals("twix");
+        assert !gi.watch_products_in_cart(0).get(1).getString("name").equals("besli");
 
     }
     @Test
