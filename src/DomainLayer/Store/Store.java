@@ -38,18 +38,8 @@ public class Store {
     private List<PurchaseProcess> purchase_process_list = Collections.synchronizedList(new  ArrayList<>());
     @OneToMany(mappedBy = "store",cascade=CascadeType.ALL)
     private List<StoreRole> roles = Collections.synchronizedList(new  ArrayList<>());
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     //hila
-    @Transient
+    @OneToMany(mappedBy = "store",fetch = FetchType.LAZY,cascade=CascadeType.ALL)
     private List<BuyPolicy> buyPolicyList = Collections.synchronizedList(new  ArrayList<>());
 
     public Store(String name) {
@@ -175,6 +165,12 @@ public class Store {
         }
         return true;
     }
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
 }

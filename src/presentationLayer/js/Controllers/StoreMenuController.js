@@ -489,48 +489,40 @@ function add_simple_buy_policy() {
     introDiv.className = 'total_price_div';
     div.appendChild(introDiv);
 
-    let productName = document.createElement("input");
-    productName.placeholder="Enter product name";
-    productName.className = 'text_input';
-    div.appendChild(productName);
 
     let policyType = document.createElement("input");
-    policyType.placeholder="Enter policy type (bag buy policy(quantity), product buy policy(product))";
+    policyType.placeholder="Enter number policy type (1 for bag buy policy,2 for product buy policy)";
     policyType.className = 'text_input';
     div.appendChild(policyType);
 
+    let productName = document.createElement("input");
+    productName.placeholder="Enter product name (for product buy policy) ";
+    productName.className = 'text_input';
+    div.appendChild(productName);
+
     let minProducts = document.createElement("input");
-    minProducts.placeholder="Enter minimum number that client could buy";
+    minProducts.placeholder="Enter minimum number of products that client could add to bag (for bag buy policy)";
     minProducts.className = 'text_input';
     div.appendChild(minProducts);
 
     let maxProducts = document.createElement("input");
-    maxProducts.placeholder="Enter minimum number that client could buy";
+    maxProducts.placeholder="Enter minimum number of products that client could add to bag (for bag buy policy)";
     maxProducts.className = 'text_input';
     div.appendChild(maxProducts);
 
-    let minCost = document.createElement("input");   /////TODO ?????
-    minCost.placeholder="Enter the minimum cost of the product";
-    minCost.className = 'text_input';
-    div.appendChild(minCost);
-
-    let maxCost = document.createElement("input");     /////TODO ?????
-    maxCost.placeholder="Enter the maximum cost of the product";
-    maxCost.className = 'text_input';
-    div.appendChild(maxCost);
 
     let min_quantity = document.createElement("input");
-    min_quantity.placeholder="Enter discount due date (ddmmyyyy without /)";
+    min_quantity.placeholder="Enter minimum product quantity that client could buy for this product (product buy policy)";
     min_quantity.className = 'text_input';
     div.appendChild(min_quantity);
 
     let max_quantity = document.createElement("input");
-    max_quantity.placeholder="Enter discount due date (ddmmyyyy without /)";
+    max_quantity.placeholder="Enter maximum product quantity that client could buy for this product (product buy policy)";
     max_quantity.className = 'text_input';
     div.appendChild(max_quantity);
 
     let day = document.createElement("input");
-    day.placeholder="Enter the day (day of week)";
+    day.placeholder="Enter the day (day of week : 1 for sunday, 2 for monday etc)";
     day.className = 'text_input';
     div.appendChild(day);
 
@@ -542,48 +534,52 @@ function add_simple_buy_policy() {
     finish.style.marginTop = '3%';
     finish.onclick = function(){
         let product = productName.value;
-        if(product === ""){
+
+        let type = policyType.value;
+        if(type === "" || (type !== "1" && type !== "2")){
+            alert("please enter the policy type correctly");
+            return;
+        }
+        if(type === "2"  && product === ""){
             alert("please enter the product name");
             return;
         }
-        let type = policyType.value;
-        if(type === ""){
-            alert("please enter the policy type");
-            return;
-        }
         let minp = minProducts.value;
-        if(minp === ""){
+        if(type === "1" && minp === ""){
             alert("please enter the min products");
             return;
         }
         let maxp = maxProducts.value;
-        if(maxp === "") {
+        if(type === "1" && maxp === "") {
             alert("please enter the max products");
             return;
         }
-        let minc = minCost.value;
-        if(minc === "") {
-            alert("please enter the min cost");
-            return;
-        }
-        let maxc = maxCost.value;
-        if(maxc === "") {
-            alert("please enter the max cost");
-            return;
-        }
+
         let minq = min_quantity.value;
-        if(minq === "") {
+        if(type === "2" && minq === "") {
             alert("please enter the min quantity");
             return;
         }
         let maxq = max_quantity.value;
-        if(maxq === "") {
+        if(type === "2" && maxq === "") {
             alert("please enter the max quantity");
             return;
         }
         let daay = day.value;
-        if(daay === "") {
-            alert("please enter the day");
+        if((daay === "") || (daay!=="1" & daay!=="2" & daay!=="3" & daay!=="4" & daay!=="5" & daay!=="6" & daay!=="7")) {
+            alert("please enter the day correctly");
+            return;
+        }
+        if(type === "1"){
+            minq=0;
+            maxq=0;
+        }
+        else if(type === "2"){
+            minp=0;
+            maxp=0;
+        }
+        else{
+            alert("please enter the type correctly");
             return;
         }
         instance.add_store_visible_discount({
@@ -593,8 +589,8 @@ function add_simple_buy_policy() {
             type: type,
             minProducts: minp,
             maxProducts: maxp,
-            minCost: minc,
-            maxCost: maxc,
+            minCost: 0,
+            maxCost: 0,
             maxQuantity: maxq,
             minQuantity: minq,
             day: daay,
@@ -613,57 +609,47 @@ function edit_simple_buy_policy() {
     div.style.overflow = 'auto';
 
     let introDiv = document.createElement("div");
-    introDiv.innerHTML = "Edit simple buy policy";
+    introDiv.innerHTML = "Add discount";
     introDiv.className = 'total_price_div';
     div.appendChild(introDiv);
 
-    let policy_id = document.createElement("input");
-    policy_id.placeholder="Enter policy id you wish to edit";
-    policy_id.className = 'text_input';
-    div.appendChild(policy_id);
+    let policyId = document.createElement("input");
+    policyId.placeholder="Enter th epolicy id you wish to edit";
+    policyId.className = 'text_input';
+    div.appendChild(policyId);
 
-    let productName = document.createElement("input");
-    productName.placeholder="Enter product name";
-    productName.className = 'text_input';
-    div.appendChild(productName);
-
-    let policyType = document.createElement("input");  //TODO ????
-    policyType.placeholder="Enter policy type";
+    let policyType = document.createElement("input");
+    policyType.placeholder="Enter number policy type (1 for bag buy policy,2 for product buy policy)";
     policyType.className = 'text_input';
     div.appendChild(policyType);
 
+    let productName = document.createElement("input");
+    productName.placeholder="Enter product name (for product buy policy) ";
+    productName.className = 'text_input';
+    div.appendChild(productName);
+
     let minProducts = document.createElement("input");
-    minProducts.placeholder="Enter minimum number that client could buy";
+    minProducts.placeholder="Enter minimum number of products that client could add to bag (for bag buy policy)";
     minProducts.className = 'text_input';
     div.appendChild(minProducts);
 
     let maxProducts = document.createElement("input");
-    maxProducts.placeholder="Enter minimum number that client could buy";
+    maxProducts.placeholder="Enter minimum number of products that client could add to bag (for bag buy policy)";
     maxProducts.className = 'text_input';
     div.appendChild(maxProducts);
 
-    let minCost = document.createElement("input");
-    minCost.placeholder="Enter the minimum cost of the product";
-    minCost.className = 'text_input';
-    div.appendChild(minCost);
-
-    let maxCost = document.createElement("input");
-    maxCost.placeholder="Enter the maximum cost of the product";
-    maxCost.className = 'text_input';
-    div.appendChild(maxCost);
-
     let min_quantity = document.createElement("input");
-    min_quantity.placeholder="Enter discount due date (ddmmyyyy without /)";
+    min_quantity.placeholder="Enter minimum product quantity that client could buy for this product (product buy policy)";
     min_quantity.className = 'text_input';
     div.appendChild(min_quantity);
 
     let max_quantity = document.createElement("input");
-    max_quantity.placeholder="Enter discount due date (ddmmyyyy without /)";
+    max_quantity.placeholder="Enter maximum product quantity that client could buy for this product (product buy policy)";
     max_quantity.className = 'text_input';
     div.appendChild(max_quantity);
 
     let day = document.createElement("input");
-    day.placeholder="Enter discount due date (ddmmyyyy without /)";
+    day.placeholder="Enter the day (day of week : 1 for sunday, 2 for monday etc)";
     day.className = 'text_input';
     div.appendChild(day);
 
@@ -675,69 +661,71 @@ function edit_simple_buy_policy() {
     finish.style.marginTop = '3%';
     finish.onclick = function(){
         let product = productName.value;
-        if(product === ""){
+        let policy_ids = policyId.value;
+        if(policy_ids === "") {
+            alert("please enter the policy ID");
+        }
+        let type = policyType.value;
+        if(type === "" || (type !== "1" && type !== "2")){
+            alert("please enter the policy type correctly");
+            return;
+        }
+        if(type === "2"  && product === ""){
             alert("please enter the product name");
             return;
         }
-        let id = policy_id.value;
-        if(id === ""){
-            alert("please enter the policy id");
-            return;
-        }
-        let type = policyType.value;
-        if(type === ""){
-            alert("please enter the policy type");
-            return;
-        }
         let minp = minProducts.value;
-        if(minp === ""){
+        if(type === "1" && minp === ""){
             alert("please enter the min products");
             return;
         }
         let maxp = maxProducts.value;
-        if(maxp === "") {
+        if(type === "1" && maxp === "") {
             alert("please enter the max products");
             return;
         }
-        let minc = minCost.value;
-        if(minc === "") {
-            alert("please enter the min cost");
-            return;
-        }
-        let maxc = maxCost.value;
-        if(maxc === "") {
-            alert("please enter the max cost");
-            return;
-        }
+
         let minq = min_quantity.value;
-        if(minq === "") {
+        if(type === "2" && minq === "") {
             alert("please enter the min quantity");
             return;
         }
         let maxq = max_quantity.value;
-        if(maxq === "") {
+        if(type === "2" && maxq === "") {
             alert("please enter the max quantity");
             return;
         }
         let daay = day.value;
-        if(daay === "") {
-            alert("please enter the day");
+        if((daay === "") || (daay!=="1" & daay!=="2" & daay!=="3" & daay!=="4" & daay!=="5" & daay!=="6" & daay!=="7")) {
+            alert("please enter the day correctly");
+            return;
+        }
+        if(type === "1"){
+            minq=0;
+            maxq=0;
+        }
+        else if(type === "2"){
+            minp=0;
+            maxp=0;
+        }
+        else{
+            alert("please enter the type correctly");
             return;
         }
         instance.add_store_visible_discount({
             user_name: localStorage.getItem("current_username"),
             store: store_name,
             product: product,
-            policy_id: id,
+            policy_id:policy_ids,
             type: type,
             minProducts: minp,
             maxProducts: maxp,
-            minCost: minc,
-            maxCost: maxc,
+            minCost: 0,
+            maxCost: 0,
             maxQuantity: maxq,
             minQuantity: minq,
             day: daay,
-            req: "edit_store_simple_buyPolicy"
+            req: "create_store_simple_buyPolicy"
         });
     };
     div.appendChild(finish);
@@ -815,7 +803,7 @@ function edit_complex_buy_policy() {
 
 
     let policyId = document.createElement("input");
-    policyId.placeholder="Enter th epolicy id you wish to edit";
+    policyId.placeholder="Enter th policy id you wish to edit";
     policyId.className = 'text_input';
     div.appendChild(policyId);
 
@@ -913,6 +901,11 @@ function remove_buy_policy() {
     div.appendChild(finish);
 
     popUp(div);
+}
+
+
+function view_buy_policies() {
+    
 }
 
 
@@ -1417,4 +1410,24 @@ function complex_discount_response(response) {
 
 function delete_discount_response(response) {
     alert(JSON.stringify(response));
+}
+
+function add_simple_policy_response(response) {
+    alert(JSON.stringify(response));
+}
+
+function edit_simple_policy_response(response) {
+    alert(JSON.stringify(response));
+}
+
+function remove_store_buyPolicy_response(response) {
+    alert(JSON.stringify(response));
+}
+
+function add_complex_buy_policy_response(response) {
+    alert(JSON.stringify(response));
+}
+
+function view_buy_policies_response() {
+    
 }

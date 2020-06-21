@@ -212,7 +212,20 @@
                 complex_discount_response(response);
             }else if (req === "delete_discount"){
                 delete_discount_response(response);
+            }else if (req === "create_store_simple_buyPolicy"){
+                add_simple_policy_response(response);
+            }else if (req === "edit_store_simple_buyPolicy"){
+                edit_simple_policy_response(response);
+            }else if (req === "remove_store_buyPolicy"){
+                remove_store_buyPolicy_response(response);
+            }else if (req === "create_store_complex_buyPolicy"){
+                add_complex_buy_policy_response(response);
+            }else if (req === "view_buy_policies"){
+                view_buy_policies_response(response);
             }
+
+
+
 
         };
 

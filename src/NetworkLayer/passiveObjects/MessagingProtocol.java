@@ -135,7 +135,10 @@ public class MessagingProtocol {
                 StoreRoleMessageProccess.create_store_complex_buyPolicy(this,request);
             }else if(req.equals("remove_store_buyPolicy")){
                 StoreRoleMessageProccess.remove_store_buyPolicy(this,request);
+            }else if(req.equals("edit_store_complex_buyPolicy")){
+                StoreRoleMessageProccess.edit_store_complex_buyPolicy(this,request);
             }
+
 
         }catch (Exception e){
             System.out.println("Can't process " + msg);

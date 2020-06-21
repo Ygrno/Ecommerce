@@ -30,7 +30,7 @@ public class ComplexBuyPolicy extends BuyPolicy{
     }
 
     public ComplexBuyPolicy(int policy_id, Logicaloperation op) {
-        super(policy_id);
+        //super(policy_id);
         this.op = op;
         policies_list = new ArrayList<BuyPolicy>();
     }

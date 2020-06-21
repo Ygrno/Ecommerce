@@ -448,6 +448,7 @@ public class SubscribersManage_Facade implements InternalService {
         BuyPolicy comp_policy = find_buy_policy(policy_id, store);
         if (comp_policy!= null) return false;//policy_id already exists;
         ComplexBuyPolicy complex_policy = new ComplexBuyPolicy(policy_id, int_to_logic(op));
+        complex_policy.setStore(store);
         dB.updateAndCommit(complex_policy);
         int counter=0;
         List<BuyPolicy> policies_toAdd=new ArrayList<>();
@@ -490,7 +491,7 @@ public class SubscribersManage_Facade implements InternalService {
         BuyPolicy policy = find_buy_policy(policy_id, store);
         if (policy == null) return false; //policy_id not exists;
         ComplexBuyPolicy complex_policy=(ComplexBuyPolicy) policy;
-
+        complex_policy.setStore(store);
         BuyPolicy new_policy = find_buy_policy(new_policy_id, store);
         if (new_policy == null) return false; //policy_id not exists;
 
@@ -519,14 +520,9 @@ public class SubscribersManage_Facade implements InternalService {
         if (store==null) return false;
         BuyPolicy policy = find_buy_policy(policy_id, store);
         if (policy == null) return false; //policy_id not exists;
-        List<BuyPolicy> policies = store.getBuyPolicyList();
-        for (Policy p : policies)
-            if(p.getPolicy_id()==policy_id) {
-                policies.remove(p);
-                dB.deleteAndCommit(p);
-                return true;
-            }
-        return false;
+        store.getBuyPolicyList().remove(policy);
+        dB.deleteAndCommit(policy);
+        return true;
     }
 
     //private functions for buy policy
@@ -559,16 +555,19 @@ public class SubscribersManage_Facade implements InternalService {
             case 1:
                 policy = new BagBuyPolicy(policy_id, minCost, maxCost, min_quantity, max_quantity);
                 store.getBuyPolicyList().add(policy);
+                policy.setStore(store);
                 dB.updateAndCommit(policy);
                 return true;
             case 2:
                 policy = new ProductBuyPolicy(policy_id, product_name, minProducts, maxProducts);
                 store.getBuyPolicyList().add(policy);
+                policy.setStore(store);
                 dB.updateAndCommit(policy);
                 return true;
             case 3:
                 policy = new SystemBuyPolicy(policy_id, day);
                 store.getBuyPolicyList().add(policy);
+                policy.setStore(store);
                 dB.updateAndCommit(policy);
                 return true;
             default:
