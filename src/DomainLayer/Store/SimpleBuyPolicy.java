@@ -14,8 +14,8 @@ import javax.persistence.Table;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class SimpleBuyPolicy extends BuyPolicy{
 
-    public SimpleBuyPolicy(int policy_id) {
-        super(policy_id);
+    public SimpleBuyPolicy(int policy_id, String description) {
+        super();
     }
 
 

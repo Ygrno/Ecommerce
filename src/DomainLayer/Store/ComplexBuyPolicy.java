@@ -29,8 +29,8 @@ public class ComplexBuyPolicy extends BuyPolicy{
         return policies_list;
     }
 
-    public ComplexBuyPolicy(int policy_id, Logicaloperation op) {
-        super(policy_id);
+    public ComplexBuyPolicy(int policy_id,String description, Logicaloperation op) {
+        super(policy_id, description);
         this.op = op;
         policies_list = new ArrayList<BuyPolicy>();
     }

@@ -431,23 +431,23 @@ public class SubscribersManage_Facade implements InternalService {
         return history.toString();
     }
 
-    public static boolean create_store_simple_buyPolicy(String user_name, String store_name, int type, int policy_id, String product_name, int minProducts, int maxProducts, int minCost, int maxCost, int min_quantity, int max_quantity, int day) {
+    public static boolean create_store_simple_buyPolicy(String user_name, String store_name, int type, String description, int policy_id, String product_name, int minProducts, int maxProducts, int minCost, int maxCost, int min_quantity, int max_quantity, int day) {
         if (checkPermission(user_name, store_name)) return false;
         Store store = find_store(store_name);
         if (store==null)return false;
         BuyPolicy policy = find_buy_policy(policy_id, store);
         if (policy!= null) return false;//policy_id already exists;
 
-        return build_and_add_policy_to_store(type, policy_id, product_name, minProducts, maxProducts, minCost, maxCost, min_quantity, max_quantity, day, store);
+        return build_and_add_policy_to_store(type, description, policy_id, product_name, minProducts, maxProducts, minCost, maxCost, min_quantity, max_quantity, day, store);
     }
 
-    public static boolean create_store_complex_buyPolicy(String user_name, String store_name, int policy_id, int[] policy_ids, int op){
+    public static boolean create_store_complex_buyPolicy(String user_name, String store_name,String description, int policy_id, int[] policy_ids, int op){
         if (checkPermission(user_name, store_name)) return false;
         Store store = find_store(store_name);
         if (store==null)return false;
         BuyPolicy comp_policy = find_buy_policy(policy_id, store);
         if (comp_policy!= null) return false;//policy_id already exists;
-        ComplexBuyPolicy complex_policy = new ComplexBuyPolicy(policy_id, int_to_logic(op));
+        ComplexBuyPolicy complex_policy = new ComplexBuyPolicy(policy_id,description, int_to_logic(op));
         dB.updateAndCommit(complex_policy);
         int counter=0;
         List<BuyPolicy> policies_toAdd=new ArrayList<>();
@@ -469,7 +469,7 @@ public class SubscribersManage_Facade implements InternalService {
     return true;
     }
 
-    public static boolean edit_store_simple_buyPolicy(String user_name, String store_name, int type, int policy_id, String product_name, int minProducts, int maxProducts, int minCost, int maxCost, int min_quantity, int max_quantity, int day) {
+    public static boolean edit_store_simple_buyPolicy(String user_name, String store_name, int type,String description, int policy_id, String product_name, int minProducts, int maxProducts, int minCost, int maxCost, int min_quantity, int max_quantity, int day) {
 
         if (checkPermission(user_name, store_name)) return false;
         Store store = find_store(store_name);
@@ -480,7 +480,7 @@ public class SubscribersManage_Facade implements InternalService {
             return false; //policy_id not exists;
         store.getBuyPolicyList().remove(policy); //remove the old policy
         dB.updateAndCommit(policy);
-        return build_and_add_policy_to_store(type, policy_id, product_name, minProducts, maxProducts, minCost, maxCost, min_quantity, max_quantity, day, store);
+        return build_and_add_policy_to_store(type,description, policy_id, product_name, minProducts, maxProducts, minCost, maxCost, min_quantity, max_quantity, day, store);
     }
 
     public static boolean edit_store_complex_buyPolicy(String user_name, String store_name, int policy_id, int new_policy_id, String act){
@@ -553,21 +553,21 @@ public class SubscribersManage_Facade implements InternalService {
             return true;
         return false;
     }
-    private static boolean build_and_add_policy_to_store(int type, int policy_id, String product_name, int minProducts, int maxProducts, int minCost, int maxCost, int min_quantity, int max_quantity, int day, Store store) {
+    private static boolean build_and_add_policy_to_store(int type, String description, int policy_id, String product_name, int minProducts, int maxProducts, int minCost, int maxCost, int min_quantity, int max_quantity, int day, Store store) {
         BuyPolicy policy;
         switch (type) {   //1=bag; 2=product; 3=system;
             case 1:
-                policy = new BagBuyPolicy(policy_id, minCost, maxCost, min_quantity, max_quantity);
+                policy = new BagBuyPolicy(policy_id,description, minCost, maxCost, min_quantity, max_quantity);
                 store.getBuyPolicyList().add(policy);
                 dB.updateAndCommit(policy);
                 return true;
             case 2:
-                policy = new ProductBuyPolicy(policy_id, product_name, minProducts, maxProducts);
+                policy = new ProductBuyPolicy(policy_id,description, product_name, minProducts, maxProducts);
                 store.getBuyPolicyList().add(policy);
                 dB.updateAndCommit(policy);
                 return true;
             case 3:
-                policy = new SystemBuyPolicy(policy_id, day);
+                policy = new SystemBuyPolicy(policy_id,description, day);
                 store.getBuyPolicyList().add(policy);
                 dB.updateAndCommit(policy);
                 return true;

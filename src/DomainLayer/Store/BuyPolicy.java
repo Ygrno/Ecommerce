@@ -14,15 +14,18 @@ import java.util.List;
 public abstract class BuyPolicy extends Policy {
 
    // enum Logicaloperation { or, and, xor};
+    private String description;
 
-
-    public BuyPolicy(int policy_id)
+    public BuyPolicy(int policy_id, String description)
     {
         super.id = policy_id;
+        super.description = description;
     }
 
     public BuyPolicy() {
     }
+
+
 
     @Override
     public boolean validate(ShoppingBag shoppingBag, User user) {
