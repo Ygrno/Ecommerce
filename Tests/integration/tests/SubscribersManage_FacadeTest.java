@@ -74,7 +74,7 @@ public class SubscribersManage_FacadeTest {
         }
         SubscribersManage_Facade.add_product_to_store("test_sub", "test_store", "test_product", 2,3);
 
-        Boolean b = SubscribersManage_Facade.create_store_simple_buyPolicy("test_sub", "test_store", 2, 1, "test_product", 1, 5,  -1, -1,0,100,-1);
+        Boolean b = SubscribersManage_Facade.create_store_simple_buyPolicy("test_sub", "test_store", 2, "simple product policy",1, "test_product", 1, 5,  -1, -1,0,100,-1);
 
         assert b ;
         List<BuyPolicy> policies = s.getBuyPolicyList();
@@ -92,8 +92,8 @@ public class SubscribersManage_FacadeTest {
             s = System.getSystem().get_store("test_store");
         }
         SubscribersManage_Facade.add_product_to_store("test_sub", "test_store", "test_product", 2,3);
-        SubscribersManage_Facade.create_store_simple_buyPolicy("test_sub", "test_store", 2, 1, "test_product", 1, 5,  -1, -1,0,100,-1);
-        SubscribersManage_Facade.create_store_simple_buyPolicy("test_sub", "test_store", 2, 2, "test_product", 1, 5,  -1, -1,0,100,-1);
+        SubscribersManage_Facade.create_store_simple_buyPolicy("test_sub", "test_store", 2,"simple policy 1", 1, "test_product", 1, 5,  -1, -1,0,100,-1);
+        SubscribersManage_Facade.create_store_simple_buyPolicy("test_sub", "test_store", 2, "simple policy 1",2, "test_product", 1, 5,  -1, -1,0,100,-1);
 
         Boolean b = SubscribersManage_Facade.remove_store_buyPolicy("test_sub", "test_store", 2);
         assert b;
@@ -113,10 +113,10 @@ public class SubscribersManage_FacadeTest {
             s = System.getSystem().get_store("test_store");
         }
         SubscribersManage_Facade.add_product_to_store("test_sub", "test_store", "test_product", 2,3);
-        SubscribersManage_Facade.create_store_simple_buyPolicy("test_sub", "test_store", 2, 1, "test_product", 1, 5,  -1, -1,0,100,-1);
-        SubscribersManage_Facade.create_store_simple_buyPolicy("test_sub", "test_store", 2, 2, "test_product", 1, 5,  -1, -1,0,100,-1);
+        SubscribersManage_Facade.create_store_simple_buyPolicy("test_sub", "test_store", 2, "simple policy 1",1, "test_product", 1, 5,  -1, -1,0,100,-1);
+        SubscribersManage_Facade.create_store_simple_buyPolicy("test_sub", "test_store", 2, "simple policy 2",2, "test_product", 1, 5,  -1, -1,0,100,-1);
 
-        Boolean b = SubscribersManage_Facade.edit_store_simple_buyPolicy("test_sub", "test_store", 2, 2, "test_product", 1, 10,  -1, -1,0,200,-1);
+        Boolean b = SubscribersManage_Facade.edit_store_simple_buyPolicy("test_sub", "test_store", 2, "simple policy 2",2, "test_product", 1, 10,  -1, -1,0,200,-1);
         assert b;
         List<BuyPolicy> policies = s.getBuyPolicyList();
         assert policies != null;
@@ -136,10 +136,10 @@ public class SubscribersManage_FacadeTest {
         }
         SubscribersManage_Facade.add_product_to_store("test_sub", "test_store", "test_product", 2,3);
 
-        SubscribersManage_Facade.create_store_simple_buyPolicy("test_sub", "test_store", 2, 1, "test_product", 1, 5,  -1, -1,0,100,-1);
-        SubscribersManage_Facade.create_store_simple_buyPolicy("test_sub", "test_store", 2, 2, "test_product", 1, 5,  -1, -1,0,100,-1);
+        SubscribersManage_Facade.create_store_simple_buyPolicy("test_sub", "test_store", 2, "simple policy 1",1, "test_product", 1, 5,  -1, -1,0,100,-1);
+        SubscribersManage_Facade.create_store_simple_buyPolicy("test_sub", "test_store", 2, "simple policy 2",2, "test_product", 1, 5,  -1, -1,0,100,-1);
 
-        Boolean b = SubscribersManage_Facade.create_store_complex_buyPolicy("test_sub", "test_store",3, new int[]{1, 2}, 1);
+        Boolean b = SubscribersManage_Facade.create_store_complex_buyPolicy("test_sub", "test_store","complex policy 3",3, new int[]{1, 2}, 1);
 
         assert b ;
         List<BuyPolicy> policies = s.getBuyPolicyList();
@@ -161,9 +161,9 @@ public class SubscribersManage_FacadeTest {
         }
         SubscribersManage_Facade.add_product_to_store("test_sub", "test_store", "test_product", 2,3);
 
-        SubscribersManage_Facade.create_store_simple_buyPolicy("test_sub", "test_store", 2, 1, "test_product", 1, 5,  -1, -1,0,100,-1);
-        SubscribersManage_Facade.create_store_simple_buyPolicy("test_sub", "test_store", 2, 2, "test_product", 1, 5,  -1, -1,0,100,-1);
-        SubscribersManage_Facade.create_store_complex_buyPolicy("test_sub", "test_store",3, new int[]{1, 2}, 1);
+        SubscribersManage_Facade.create_store_simple_buyPolicy("test_sub", "test_store", 2, "simple policy 1",1, "test_product", 1, 5,  -1, -1,0,100,-1);
+        SubscribersManage_Facade.create_store_simple_buyPolicy("test_sub", "test_store", 2,"simple policy 2", 2, "test_product", 1, 5,  -1, -1,0,100,-1);
+        SubscribersManage_Facade.create_store_complex_buyPolicy("test_sub", "test_store","complex policy 3",3, new int[]{1, 2}, 1);
 
         Boolean b = SubscribersManage_Facade.edit_store_complex_buyPolicy("test_sub", "test_store",3, 2, "remove");
 

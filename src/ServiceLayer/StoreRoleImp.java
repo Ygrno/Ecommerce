@@ -64,40 +64,40 @@ public class StoreRoleImp implements IStoreRole {
 
 
 
-    public boolean create_store_simple_buyPolicy(String user_name, String store_name, int policy_type, int policy_id, String product_name, int minProducts, int maxProducts, int minCost, int maxCost, int min_quantity, int max_quantity, int day) {
+    public boolean create_store_simple_buyPolicy(String user_name, String store_name, int policy_type, String description, int policy_id, String product_name, int minProducts, int maxProducts, int minCost, int maxCost, int min_quantity, int max_quantity, int day) {
         my_logInfo.logger.info("create simple buy Policy");
         if (!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
             return false;
         }
         if (SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
-            return SubscribersManage_Facade.create_store_simple_buyPolicy(user_name, store_name, policy_type, policy_id, product_name, minProducts, maxProducts,minCost,maxCost, min_quantity, max_quantity, day);
+            return SubscribersManage_Facade.create_store_simple_buyPolicy(user_name, store_name, policy_type, description, policy_id, product_name, minProducts, maxProducts,minCost,maxCost, min_quantity, max_quantity, day);
         }
         return false;
     }
 
 
-    public boolean create_store_complex_buyPolicy(String user_name, String store_name, int policy_id, int[] policy_ids, int op) {
+    public boolean create_store_complex_buyPolicy(String user_name, String store_name,String description, int policy_id, int[] policy_ids, int op) {
         my_logInfo.logger.info("create complex buy Policy");
         if (!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
             return false;
         }
         if (SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
-            return SubscribersManage_Facade.create_store_complex_buyPolicy(user_name, store_name, policy_id, policy_ids, op);
+            return SubscribersManage_Facade.create_store_complex_buyPolicy(user_name, store_name,description, policy_id, policy_ids, op);
         }
         my_logError.logger.severe("create_store_simple_buyPolicy failed!");
         return false;
     }
 
-    public boolean edit_store_simple_buyPolicy(String user_name, String store_name, int type, int policy_id, String product_name, int minProducts, int maxProducts, int minCost, int maxCost, int min_quantity, int max_quantity, int day){
+    public boolean edit_store_simple_buyPolicy(String user_name, String store_name, int type,String description, int policy_id, String product_name, int minProducts, int maxProducts, int minCost, int maxCost, int min_quantity, int max_quantity, int day){
         my_logInfo.logger.info("edit simple buy Policy");
         if (!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
             return false;
         }
         if (SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
-            return SubscribersManage_Facade.edit_store_simple_buyPolicy(user_name, store_name, type, policy_id, product_name, minProducts, maxProducts, minCost, maxCost, min_quantity, max_quantity, day);
+            return SubscribersManage_Facade.edit_store_simple_buyPolicy(user_name, store_name, type,description, policy_id, product_name, minProducts, maxProducts, minCost, maxCost, min_quantity, max_quantity, day);
         }
         my_logError.logger.severe("edit_store_simple_buyPolicy failed!");
         return false;

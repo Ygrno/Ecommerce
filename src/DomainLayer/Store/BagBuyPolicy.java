@@ -19,9 +19,9 @@ public class BagBuyPolicy extends SimpleBuyPolicy {
     private int min_quantity; //minimum number of products in the bag
     private int max_quantity;
 
-    public BagBuyPolicy(int policy_id, int minCost, int maxCost, int min_quantity, int max_quantity)
+    public BagBuyPolicy(int policy_id,String description, int minCost, int maxCost, int min_quantity, int max_quantity)
     {
-        super(policy_id);
+        super(policy_id,description);
         this.minCost=minCost;
         this.maxCost=maxCost;
         this.min_quantity=min_quantity;
