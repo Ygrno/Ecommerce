@@ -288,6 +288,7 @@ class Main{
     }
 
     add_store_conditioned_discount(details){
+        alert("sendin");
         this.client.send(JSON.stringify(details));
     }
 

@@ -602,4 +602,34 @@ public class SubscribersManage_Facade implements InternalService {
         Subscriber requester = System.getSystem().get_subscriber(userName);
         requester.notifications().add(o);
     }
+
+    public static int[] getBuyPolicyIdsList(String store_name){
+
+        Store store = find_store(store_name);
+        if (store==null) return null;
+        int[] exists_policies = new int[store.getBuyPolicyList().size()];
+        int i = 0;
+        java.lang.System.out.println(store.getBuyPolicyList().size());
+        for (BuyPolicy p : store.getBuyPolicyList()) {
+            exists_policies[i] = p.getPolicy_id();
+            i++;
+        }
+        return exists_policies;
+    }
+
+    public static int[] getPoliciesInComplex(String store_name, int policy_id) {
+        int[] exists_policies = new int[100];
+        Store store = find_store(store_name);
+        if (store==null) return null;
+        int i = 0;
+        for (BuyPolicy c : store.getBuyPolicyList()) {
+            if (c.getPolicy_id()==policy_id && c instanceof ComplexBuyPolicy ){
+                for (BuyPolicy p : ((ComplexBuyPolicy) c).getPolicies_list()) {
+                    exists_policies[i] = p.getPolicy_id();
+                    i++;
+                }
+            }
+        }
+        return exists_policies;
+    }
 }

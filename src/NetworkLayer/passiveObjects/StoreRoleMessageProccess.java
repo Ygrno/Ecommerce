@@ -343,4 +343,20 @@ public class StoreRoleMessageProccess {
         protocol.send(o);
     }
 
+    public static void get_policies_ids_in_store(MessagingProtocol protocol, JSONObject request) throws Exception{
+        String store = request.getString("store");
+
+        List<JSONObject> policies = storeRole.get_policies_ids_in_store(store);
+
+        JSONArray arr = new JSONArray();
+        for(JSONObject p : policies){
+            arr.put(p);
+        }
+
+        JSONObject o = new JSONObject();
+        o.put("policies", arr);
+        o.put("req", request.get("req"));
+        protocol.send(o);
+    }
+
 }

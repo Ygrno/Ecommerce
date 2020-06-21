@@ -137,6 +137,8 @@ public class MessagingProtocol {
                 StoreRoleMessageProccess.remove_store_buyPolicy(this,request);
             }else if(req.equals("edit_store_complex_buyPolicy")){
                 StoreRoleMessageProccess.edit_store_complex_buyPolicy(this,request);
+            }else if(req.equals("get_policies_ids_in_store")){
+                StoreRoleMessageProccess.get_policies_ids_in_store(this,request);
             }
 
 

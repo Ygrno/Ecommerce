@@ -609,7 +609,7 @@ function edit_simple_buy_policy() {
     div.style.overflow = 'auto';
 
     let introDiv = document.createElement("div");
-    introDiv.innerHTML = "Add discount";
+    introDiv.innerHTML = "Edit buy policy";
     introDiv.className = 'total_price_div';
     div.appendChild(introDiv);
 
@@ -725,7 +725,7 @@ function edit_simple_buy_policy() {
             maxQuantity: maxq,
             minQuantity: minq,
             day: daay,
-            req: "create_store_simple_buyPolicy"
+            req: "edit_store_simple_buyPolicy"
         });
     };
     div.appendChild(finish);
@@ -905,7 +905,13 @@ function remove_buy_policy() {
 
 
 function view_buy_policies() {
-    
+    let vars = instance.getUrlVars();
+    let store_name = vars["s"];
+
+    instance.add_store_conditioned_discount({
+        store: store_name,
+        req: "get_policies_ids_in_store"
+    });
 }
 
 
@@ -1428,6 +1434,23 @@ function add_complex_buy_policy_response(response) {
     alert(JSON.stringify(response));
 }
 
-function view_buy_policies_response() {
-    
+function view_buy_policies_response(policies) {
+    let policiesList = policies["policies"];
+    if (policiesList.length === 0) return;
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+
+    let prodcutHTMLList = new HTMLList(div);
+
+    const cellBuilder = (product)=>{
+        //DESIGN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        let d = document.createElement("div");
+        d.innerHTML = "<b>"+JSON.stringify(product)+"</b>";
+        return d;
+    };
+
+    policiesList.forEach((p)=> prodcutHTMLList.addElement(p));
+    prodcutHTMLList.render(cellBuilder);
+
+    popUp(div);
 }

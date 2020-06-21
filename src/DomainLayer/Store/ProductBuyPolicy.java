@@ -58,7 +58,7 @@ public class ProductBuyPolicy extends SimpleBuyPolicy {
 
     public ProductBuyPolicy (int policy_id, String name, int minProducts, int maxProducts)
     {
-        super(policy_id);
+       // super(policy_id);
         this.product_name = name;
         this.minProducts = minProducts;
         this.maxProducts = maxProducts;

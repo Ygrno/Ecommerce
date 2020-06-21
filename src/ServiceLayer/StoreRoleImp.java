@@ -3,6 +3,7 @@ import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
 import Logs.LogErrors;
 import Logs.LogInfo;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -317,4 +318,40 @@ public class StoreRoleImp implements IStoreRole {
     }
 
 
+
+    public List<JSONObject> get_policies_ids_in_store(String store_name) throws Exception {
+        my_logInfo.logger.info("get_policies_ids_in_store");
+        List<JSONObject> res = new LinkedList<>();
+        if (!SystemManage_Facade.is_initialized()) {
+            my_logError.logger.severe("System not initialized");
+            return null;
+        }
+        int[] ids = SubscribersManage_Facade.getBuyPolicyIdsList(store_name);
+        if(ids != null) {
+            for (int id : ids) {
+                JSONObject o = new JSONObject();
+                o.put("id", id);
+                res.add(o);
+
+            }
+        }
+        return res;
+    }
+
+    public List<JSONObject> get_sub_policies_in_complex( String store_name, int policy_id) throws JSONException {
+        List<JSONObject> res = new LinkedList<>();
+        if (!SystemManage_Facade.is_initialized()) {
+            my_logError.logger.severe("System not initialized");
+            return null;
+        }
+        int[] ids = SubscribersManage_Facade.getPoliciesInComplex(store_name, policy_id);
+        if(ids != null) {
+            for (int id : ids) {
+                JSONObject o = new JSONObject();
+                o.put("id", id);
+                res.add(o);
+            }
+        }
+        return res;
+    }
 }
