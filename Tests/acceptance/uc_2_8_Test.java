@@ -47,7 +47,7 @@ public class uc_2_8_Test {
     @Test
     public void successScenario() throws Exception {
         gi.save_products(0,"bmba","store3",1);
-        assertTrue(gi.buy_products_in_cart(5,"mahmoud","1234123412341234","11/26",999));
+        assertTrue(gi.buy_products_in_cart(0,"mahmoud","1234123412341234","11/26",999));
 
     }
     @Test

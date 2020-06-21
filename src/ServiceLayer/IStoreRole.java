@@ -38,5 +38,10 @@ public interface IStoreRole {
     public String watch_store_history(String user_name, String store_name); //4.10 //5.1
     //4.11
 
-
+    public boolean create_store_simple_buyPolicy(String user_name, String store_name, int policy_type, int policy_id, String product_name, int minProducts, int maxProducts, int minCost, int maxCost, int min_quantity, int max_quantity, int day);
+    public boolean create_store_complex_buyPolicy(String user_name, String store_name, int policy_id, int[] policy_ids, int op);
+    public boolean edit_store_simple_buyPolicy(String user_name, String store_name, int type, int policy_id, String product_name, int minProducts, int maxProducts, int minCost, int maxCost, int min_quantity, int max_quantity, int day);
+    public boolean edit_store_complex_buyPolicy(String user_name, String store_name, int policy_id, int new_policy_id, String act);
+    public boolean remove_store_buyPolicy(String user_name, String store_name, int policy_id);
+    //need to add function for viewing exsisting policies
 }

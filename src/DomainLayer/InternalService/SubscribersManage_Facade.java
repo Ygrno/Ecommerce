@@ -494,12 +494,12 @@ public class SubscribersManage_Facade implements InternalService {
         BuyPolicy new_policy = find_buy_policy(new_policy_id, store);
         if (new_policy == null) return false; //policy_id not exists;
 
-        if (act=="add") {
+        if (act.equals("add")) {
             complex_policy.getPolicies_list().add(new_policy);
             dB.updateAndCommit(complex_policy);
             return true;
         }
-        else if (act=="remove") {
+        else if (act.equals("remove")) {
             for (BuyPolicy p : complex_policy.getPolicies_list()) {
                 if (p.getPolicy_id() == new_policy_id) {
                     complex_policy.getPolicies_list().remove(p);

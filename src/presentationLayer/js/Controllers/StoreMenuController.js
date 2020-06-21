@@ -477,6 +477,445 @@ function delete_discount() {
     popUp(div);
 }
 
+
+function add_simple_buy_policy() {
+    let vars = instance.getUrlVars();
+    let store_name = vars["s"];
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+
+    let introDiv = document.createElement("div");
+    introDiv.innerHTML = "Add discount";
+    introDiv.className = 'total_price_div';
+    div.appendChild(introDiv);
+
+    let productName = document.createElement("input");
+    productName.placeholder="Enter product name";
+    productName.className = 'text_input';
+    div.appendChild(productName);
+
+    let policyType = document.createElement("input");
+    policyType.placeholder="Enter policy type (bag buy policy(quantity), product buy policy(product))";
+    policyType.className = 'text_input';
+    div.appendChild(policyType);
+
+    let minProducts = document.createElement("input");
+    minProducts.placeholder="Enter minimum number that client could buy";
+    minProducts.className = 'text_input';
+    div.appendChild(minProducts);
+
+    let maxProducts = document.createElement("input");
+    maxProducts.placeholder="Enter minimum number that client could buy";
+    maxProducts.className = 'text_input';
+    div.appendChild(maxProducts);
+
+    let minCost = document.createElement("input");   /////TODO ?????
+    minCost.placeholder="Enter the minimum cost of the product";
+    minCost.className = 'text_input';
+    div.appendChild(minCost);
+
+    let maxCost = document.createElement("input");     /////TODO ?????
+    maxCost.placeholder="Enter the maximum cost of the product";
+    maxCost.className = 'text_input';
+    div.appendChild(maxCost);
+
+    let min_quantity = document.createElement("input");
+    min_quantity.placeholder="Enter discount due date (ddmmyyyy without /)";
+    min_quantity.className = 'text_input';
+    div.appendChild(min_quantity);
+
+    let max_quantity = document.createElement("input");
+    max_quantity.placeholder="Enter discount due date (ddmmyyyy without /)";
+    max_quantity.className = 'text_input';
+    div.appendChild(max_quantity);
+
+    let day = document.createElement("input");
+    day.placeholder="Enter the day (day of week)";
+    day.className = 'text_input';
+    div.appendChild(day);
+
+    let finish = document.createElement("div");
+    finish.className = 'Green_beautiful_div';
+    finish.innerHTML = '<b>Finish</b>';
+    finish.style.fontSize = '30px';
+    finish.style.width = '100px';
+    finish.style.marginTop = '3%';
+    finish.onclick = function(){
+        let product = productName.value;
+        if(product === ""){
+            alert("please enter the product name");
+            return;
+        }
+        let type = policyType.value;
+        if(type === ""){
+            alert("please enter the policy type");
+            return;
+        }
+        let minp = minProducts.value;
+        if(minp === ""){
+            alert("please enter the min products");
+            return;
+        }
+        let maxp = maxProducts.value;
+        if(maxp === "") {
+            alert("please enter the max products");
+            return;
+        }
+        let minc = minCost.value;
+        if(minc === "") {
+            alert("please enter the min cost");
+            return;
+        }
+        let maxc = maxCost.value;
+        if(maxc === "") {
+            alert("please enter the max cost");
+            return;
+        }
+        let minq = min_quantity.value;
+        if(minq === "") {
+            alert("please enter the min quantity");
+            return;
+        }
+        let maxq = max_quantity.value;
+        if(maxq === "") {
+            alert("please enter the max quantity");
+            return;
+        }
+        let daay = day.value;
+        if(daay === "") {
+            alert("please enter the day");
+            return;
+        }
+        instance.add_store_visible_discount({
+            user_name: localStorage.getItem("current_username"),
+            store: store_name,
+            product: product,
+            type: type,
+            minProducts: minp,
+            maxProducts: maxp,
+            minCost: minc,
+            maxCost: maxc,
+            maxQuantity: maxq,
+            minQuantity: minq,
+            day: daay,
+            req: "create_store_simple_buyPolicy"
+        });
+    };
+    div.appendChild(finish);
+
+    popUp(div);
+}
+
+function edit_simple_buy_policy() {
+    let vars = instance.getUrlVars();
+    let store_name = vars["s"];
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+
+    let introDiv = document.createElement("div");
+    introDiv.innerHTML = "Edit simple buy policy";
+    introDiv.className = 'total_price_div';
+    div.appendChild(introDiv);
+
+    let policy_id = document.createElement("input");
+    policy_id.placeholder="Enter policy id you wish to edit";
+    policy_id.className = 'text_input';
+    div.appendChild(policy_id);
+
+    let productName = document.createElement("input");
+    productName.placeholder="Enter product name";
+    productName.className = 'text_input';
+    div.appendChild(productName);
+
+    let policyType = document.createElement("input");  //TODO ????
+    policyType.placeholder="Enter policy type";
+    policyType.className = 'text_input';
+    div.appendChild(policyType);
+
+    let minProducts = document.createElement("input");
+    minProducts.placeholder="Enter minimum number that client could buy";
+    minProducts.className = 'text_input';
+    div.appendChild(minProducts);
+
+    let maxProducts = document.createElement("input");
+    maxProducts.placeholder="Enter minimum number that client could buy";
+    maxProducts.className = 'text_input';
+    div.appendChild(maxProducts);
+
+    let minCost = document.createElement("input");
+    minCost.placeholder="Enter the minimum cost of the product";
+    minCost.className = 'text_input';
+    div.appendChild(minCost);
+
+    let maxCost = document.createElement("input");
+    maxCost.placeholder="Enter the maximum cost of the product";
+    maxCost.className = 'text_input';
+    div.appendChild(maxCost);
+
+    let min_quantity = document.createElement("input");
+    min_quantity.placeholder="Enter discount due date (ddmmyyyy without /)";
+    min_quantity.className = 'text_input';
+    div.appendChild(min_quantity);
+
+    let max_quantity = document.createElement("input");
+    max_quantity.placeholder="Enter discount due date (ddmmyyyy without /)";
+    max_quantity.className = 'text_input';
+    div.appendChild(max_quantity);
+
+    let day = document.createElement("input");
+    day.placeholder="Enter discount due date (ddmmyyyy without /)";
+    day.className = 'text_input';
+    div.appendChild(day);
+
+    let finish = document.createElement("div");
+    finish.className = 'Green_beautiful_div';
+    finish.innerHTML = '<b>Finish</b>';
+    finish.style.fontSize = '30px';
+    finish.style.width = '100px';
+    finish.style.marginTop = '3%';
+    finish.onclick = function(){
+        let product = productName.value;
+        if(product === ""){
+            alert("please enter the product name");
+            return;
+        }
+        let id = policy_id.value;
+        if(id === ""){
+            alert("please enter the policy id");
+            return;
+        }
+        let type = policyType.value;
+        if(type === ""){
+            alert("please enter the policy type");
+            return;
+        }
+        let minp = minProducts.value;
+        if(minp === ""){
+            alert("please enter the min products");
+            return;
+        }
+        let maxp = maxProducts.value;
+        if(maxp === "") {
+            alert("please enter the max products");
+            return;
+        }
+        let minc = minCost.value;
+        if(minc === "") {
+            alert("please enter the min cost");
+            return;
+        }
+        let maxc = maxCost.value;
+        if(maxc === "") {
+            alert("please enter the max cost");
+            return;
+        }
+        let minq = min_quantity.value;
+        if(minq === "") {
+            alert("please enter the min quantity");
+            return;
+        }
+        let maxq = max_quantity.value;
+        if(maxq === "") {
+            alert("please enter the max quantity");
+            return;
+        }
+        let daay = day.value;
+        if(daay === "") {
+            alert("please enter the day");
+            return;
+        }
+        instance.add_store_visible_discount({
+            user_name: localStorage.getItem("current_username"),
+            store: store_name,
+            product: product,
+            policy_id: id,
+            type: type,
+            minProducts: minp,
+            maxProducts: maxp,
+            minCost: minc,
+            maxCost: maxc,
+            maxQuantity: maxq,
+            minQuantity: minq,
+            day: daay,
+            req: "edit_store_simple_buyPolicy"
+        });
+    };
+    div.appendChild(finish);
+
+    popUp(div);
+}
+
+
+function add_complex_buy_policy() {
+    let vars = instance.getUrlVars();
+    let store_name = vars["s"];
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+
+    let introDiv = document.createElement("div");
+    introDiv.innerHTML = "Add complex buy policy";
+    introDiv.className = 'total_price_div';
+    div.appendChild(introDiv);
+
+
+    let policies = document.createElement("input");
+    policies.placeholder="Enter policies ID's (with space between each ID)";
+    policies.className = 'text_input';
+    div.appendChild(policies);
+
+    let policyType = document.createElement("input");
+    policyType.placeholder="Enter policy operation (1 for and operation ,2 for or operation ,3 for xor operation)";
+    policyType.className = 'text_input';
+    div.appendChild(policyType);
+
+
+
+
+    let finish = document.createElement("div");
+    finish.className = 'Green_beautiful_div';
+    finish.innerHTML = '<b>Finish</b>';
+    finish.style.fontSize = '30px';
+    finish.style.width = '100px';
+    finish.style.marginTop = '3%';
+    finish.onclick = function(){
+
+        let policy_ids = policies.value;
+        if(policy_ids === "") {
+            alert("please enter the policies ID's");
+        }
+
+        let type = policyType.value;
+        if(type === "") {
+            alert("please enter the policy type");
+        }
+
+        instance.add_store_conditioned_discount({
+            user_name: localStorage.getItem("current_username"),
+            store: store_name,
+            policy_ids:policy_ids,
+            type: type,
+            req: "create_store_complex_buyPolicy"
+        });
+    };
+    div.appendChild(finish);
+
+    popUp(div);
+}
+
+function edit_complex_buy_policy() {
+    let vars = instance.getUrlVars();
+    let store_name = vars["s"];
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+
+    let introDiv = document.createElement("div");
+    introDiv.innerHTML = "Edit complex buy policy";
+    introDiv.className = 'total_price_div';
+    div.appendChild(introDiv);
+
+
+    let policyId = document.createElement("input");
+    policyId.placeholder="Enter th epolicy id you wish to edit";
+    policyId.className = 'text_input';
+    div.appendChild(policyId);
+
+    let newPolicyId = document.createElement("input");
+    newPolicyId.placeholder="Enter the policy Id you wish to add/remove";
+    newPolicyId.className = 'text_input';
+    div.appendChild(newPolicyId);
+
+    let action = document.createElement("input");
+    action.placeholder="Enter edit action (remove ,add)";
+    action.className = 'text_input';
+    div.appendChild(action);
+
+
+
+
+    let finish = document.createElement("div");
+    finish.className = 'Green_beautiful_div';
+    finish.innerHTML = '<b>Finish</b>';
+    finish.style.fontSize = '30px';
+    finish.style.width = '100px';
+    finish.style.marginTop = '3%';
+    finish.onclick = function(){
+
+        let policy_ids = policyId.value;
+        if(policy_ids === "") {
+            alert("please enter the policy ID");
+        }
+
+        let newId = newPolicyId.value;
+        if(newId === "") {
+            alert("please enter the new policy id");
+        }
+
+        let act = action.value;
+        if(act === "") {
+            alert("please enter the action");
+        }
+
+        instance.add_store_conditioned_discount({
+            user_name: localStorage.getItem("current_username"),
+            store: store_name,
+            policy_id:policy_ids,
+            new_policy_id: newId,
+            act: act,
+            req: "edit_store_complex_buyPolicy"
+        });
+    };
+    div.appendChild(finish);
+
+    popUp(div);
+}
+
+function remove_buy_policy() {
+    let vars = instance.getUrlVars();
+    let store_name = vars["s"];
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+
+    let introDiv = document.createElement("div");
+    introDiv.innerHTML = "Remove buy policy";
+    introDiv.className = 'total_price_div';
+    div.appendChild(introDiv);
+
+
+    let policyId = document.createElement("input");
+    policyId.placeholder="Enter the epolicy id you wish to remove";
+    policyId.className = 'text_input';
+    div.appendChild(policyId);
+
+
+
+    let finish = document.createElement("div");
+    finish.className = 'Green_beautiful_div';
+    finish.innerHTML = '<b>Finish</b>';
+    finish.style.fontSize = '30px';
+    finish.style.width = '100px';
+    finish.style.marginTop = '3%';
+    finish.onclick = function(){
+
+        let policy_ids = policyId.value;
+        if(policy_ids === "") {
+            alert("please enter the policy ID");
+        }
+
+
+
+        instance.add_store_conditioned_discount({
+            user_name: localStorage.getItem("current_username"),
+            store: store_name,
+            policy_id:policy_ids,
+            req: "remove_store_buyPolicy"
+        });
+    };
+    div.appendChild(finish);
+
+    popUp(div);
+}
+
+
 function edit_permissions() {
     let vars = instance.getUrlVars();
     let store_name = vars["s"];
