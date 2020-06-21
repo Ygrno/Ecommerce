@@ -44,7 +44,6 @@ public class Product implements Serializable {
         this.supplied_amount = supplied_amount;
         this.store = store;
         product_review_list = new ArrayList<>();
-        this.id=System.nextProductId++;
     }
 
     public String getName() {
@@ -84,6 +83,7 @@ public class Product implements Serializable {
 
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
 
     public int getId() {

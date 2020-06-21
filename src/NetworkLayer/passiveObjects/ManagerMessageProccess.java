@@ -1,11 +1,14 @@
 package NetworkLayer.passiveObjects;
 
-import ServiceLayer.IManager;
-import ServiceLayer.ManagerImp;
+import ServiceLayer.IAdmin;
+import ServiceLayer.AdminImp;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.List;
+
 public class ManagerMessageProccess {
-    private static IManager manager = new ManagerImp();
+    private static IAdmin manager = new AdminImp();
 
     public static void close_store_permanently(MessagingProtocol protocol, JSONObject request) throws Exception{
         String storename = request.getString("store_name");
@@ -20,7 +23,6 @@ public class ManagerMessageProccess {
 
     public static void remove_subscriber(MessagingProtocol protocol, JSONObject request) throws Exception{
         String username = request.getString("username");
-
         boolean b = manager.remove_subscriber(username);
 
         JSONObject o=new JSONObject();
@@ -36,20 +38,32 @@ public class ManagerMessageProccess {
     public static void view_history_store(MessagingProtocol protocol, JSONObject request) throws Exception{
         String store=request.getString("store_name");
 
-        String s=manager.view_history_store(store);
+        List<JSONObject> l = manager.view_history_store(store);
         JSONObject o=new JSONObject();
         o.put("req", request.get("req"));
-        o.put("history", s);
+
+        JSONArray arr = new JSONArray();
+        for(JSONObject j : l){
+            arr.put(j);
+        }
+        o.put("history", arr);
+
         protocol.send(o);
     }
 
     public static void view_history_costumer(MessagingProtocol protocol, JSONObject request) throws Exception{
         String store=request.getString("user_name");
-
-        String s=manager.view_history_costumer(store);
+        System.out.println(store);
+        List<JSONObject> history = manager.view_history_costumer(store);
         JSONObject o=new JSONObject();
+
+        JSONArray arr = new JSONArray();
+        for(JSONObject h : history){
+            arr.put(h);
+        }
+
         o.put("req", request.get("req"));
-        o.put("history", s);
+        o.put("history", arr);
         protocol.send(o);
     }
 

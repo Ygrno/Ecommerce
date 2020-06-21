@@ -1,3 +1,16 @@
+
+function AdminMsgCallBack(req, response){
+    if(req === "remove_subscriber"){
+        AdminRemoveSubscriber(response);
+    }else if(req === "view_history_store"){
+        AdminViewStoreHistory(response, "view_store_history_result");
+    }else if(req === "view_history_costumer"){
+        AdminViewCustomerHistory(response, "view_customer_history_result");
+    }
+}
+
+
+
 class Admin{
 
     constructor(){
@@ -13,6 +26,7 @@ class Admin{
         let name = document.createElement("input");
         name.placeholder="Name";
         name.className= 'tex_input';
+        name.id = "remove_username_input";
         parent.appendChild(name);
         let finish = document.createElement("div");
         finish.className = 'Green_beautiful_div';
@@ -21,7 +35,8 @@ class Admin{
         finish.style.width = '200px';
         // finish.style.marginTop = '3%';
         finish.onclick = function(){
-            //////TODO : add functionality
+            //////TODO : send to 'remove_subscriber' request to server
+            instance.remove_subscriber(name.value);
         };
         parent.appendChild(finish);
     }
@@ -49,12 +64,16 @@ class Admin{
                 alert("please enter the store name");
                 return;
             }
-            instance.send_process_details({
+            instance.sendToServer({
                 store_name: store,
                 req: "view_history_store"
             });
         };
         parent.appendChild(finish);
+        let result_div = document.createElement("div");
+        result_div.id = "view_store_history_result";
+        result_div.className = "view_history_result";
+        parent.appendChild(result_div);
     }
 
     view_customer_history(parent){
@@ -64,7 +83,7 @@ class Admin{
         entroDiv.className = 'entro_div';
         parent.appendChild(entroDiv);
         let name = document.createElement("input");
-        name.placeholder="Store Name";
+        name.placeholder="Subscriber username";
         name.className= 'tex_input';
         parent.appendChild(name);
         let finish = document.createElement("div");
@@ -79,12 +98,18 @@ class Admin{
                 alert("please enter the user name");
                 return;
             }
-            instance.send_process_details({
+            instance.sendToServer({
                 user_name: user,
-                req: "view_customer_history"
+                req: "view_history_costumer"
             });
         };
         parent.appendChild(finish);
+
+        let result_div = document.createElement("div");
+        result_div.id = "view_customer_history_result";
+        result_div.className = "view_history_result";
+        parent.appendChild(result_div);
+
     }
 
     today_revenue(parent){
@@ -127,8 +152,98 @@ class Admin{
         parent.innerHTML = '';
     }
 
+} let _AdminInstance = new Admin();
+
+
+
+function AdminRemoveSubscriber(response){
+    if(response.success){
+        alert("Removed successfully !");
+    }else{
+        alert("Subscriber is not exist or already removed");
+    }
+    let remove_username_input = document.getElementById("remove_username_input");
+    if( remove_username_input ) remove_username_input.value = "";
+}
+
+function AdminViewStoreHistory(response, result_div) {
+    let parent = document.getElementById(result_div);
+
+    let history = response.history;
+
+    history.forEach((purchaseProcess)=>{
+        let username = purchaseProcess.username;
+        let price = purchaseProcess.price;
+        let products = purchaseProcess.products;
+
+        let purchase_div = document.createElement("div");
+        purchase_div.className = "purchase_div";
+
+        let name_span = document.createElement("span");
+        name_span.innerHTML = "<b>Purchased By :</b>" + username;
+        purchase_div.appendChild(name_span);
+
+        let price_span = document.createElement("span");
+        price_span.innerHTML = "<b>Price :</b>" + price;
+        purchase_div.appendChild(price_span);
+
+        let ul = document.createElement("ul");
+
+        products.forEach((product)=>{
+           let li = document.createElement("li");
+           li.innerHTML = product.name;
+           ul.appendChild(li);
+        });
+
+        purchase_div.appendChild(ul);
+        parent.appendChild(purchase_div);
+    });
+
+}
+
+function AdminViewCustomerHistory(response, result_div) {
+    let parent = document.getElementById(result_div);
+
+    let history = response.history;
+
+    history.forEach((purchaseProcess)=>{
+        let store = purchaseProcess.store_name;
+        let price = purchaseProcess.price;
+        let products = purchaseProcess.products;
+
+        let purchase_div = document.createElement("div");
+        purchase_div.className = "purchase_div";
+
+        let name_span = document.createElement("span");
+        name_span.innerHTML = "<b>Purchased At :</b>" + store;
+        purchase_div.appendChild(name_span);
+
+        let price_span = document.createElement("span");
+        price_span.innerHTML = "<b>Price :</b>" + price;
+        purchase_div.appendChild(price_span);
+
+        let ul = document.createElement("ul");
+
+        products.forEach((product)=>{
+            let li = document.createElement("li");
+            li.innerHTML = product.name;
+            ul.appendChild(li);
+        });
+
+        purchase_div.appendChild(ul);
+        parent.appendChild(purchase_div);
+    });
+
 }
 
 
 
-let _AdminInstance = new Admin();
+
+
+
+
+
+
+
+
+

@@ -77,4 +77,11 @@ public class Subscriber extends User {
     public List<String> getQuries() {
         return Quries;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(! (obj instanceof  Subscriber)) return false;
+
+        return ((Subscriber) obj).getName().equals(this.getName());
+    }
 }

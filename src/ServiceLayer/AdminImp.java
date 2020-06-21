@@ -1,9 +1,13 @@
 package ServiceLayer;
 
 import DomainLayer.InternalService.SystemManage_Facade;
+import netscape.javascript.JSObject;
+import org.json.JSONObject;
+
+import java.util.List;
 
 
-public class ManagerImp implements IManager {
+public class AdminImp implements IAdmin {
 
     @Override
     public boolean close_store_permanently(String store_name) {
@@ -14,7 +18,7 @@ public class ManagerImp implements IManager {
     @Override
     public boolean remove_subscriber(String user_name) {
         if(!SystemManage_Facade.is_initialized()) return false;
-        return false;
+        return SystemManage_Facade.remove_subscriber(user_name);
     }
 
     @Override
@@ -24,13 +28,13 @@ public class ManagerImp implements IManager {
     }
 
     @Override
-    public String view_history_store(String store_name) {
+    public List<JSONObject> view_history_store(String store_name) throws Exception {
         if(!SystemManage_Facade.is_initialized()) return null;
         return SystemManage_Facade.get_store_purchase_process(store_name);
     }
 
     @Override
-    public String view_history_costumer(String user_name) {
+    public List<JSONObject> view_history_costumer(String user_name) throws Exception{
         if(!SystemManage_Facade.is_initialized()) return  null;
         return SystemManage_Facade.get_subscriber_purchase_process(user_name);
 

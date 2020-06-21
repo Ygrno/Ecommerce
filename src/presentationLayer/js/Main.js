@@ -66,7 +66,7 @@ function includeHeader() {
                     elmnt.removeAttribute("w3-include-html");
                     includeHeader();
                 }
-            }
+            };
             xhttp.open("GET", file, false);
             xhttp.send();
             setLoggedUserLabel();
@@ -135,6 +135,10 @@ class Main{
 
     login(username, password){
         this.client.send(JSON.stringify({req:"login", username:username, password:password}));
+    }
+
+    sendToServer(request){
+        this.client.send(JSON.stringify(request));
     }
 
     continueAsAGuest(username, password){
@@ -297,6 +301,11 @@ class Main{
 
     view_customer_history(details){
         this.client.send(JSON.stringify(details));
+    }
+
+
+    remove_subscriber(username){
+        this.client.send(JSON.stringify({req:"remove_subscriber", username:username}));
     }
 
     view_history_store(details){

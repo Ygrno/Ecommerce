@@ -81,6 +81,28 @@
             border-radius: 10px;
             margin-left: 2%;
             margin-top: 5%;
+            overflow: auto;
+        }
+
+        .view_history_result{
+            width: 70%;
+            float: left;
+        }
+
+        .purchase_div span{
+            width: 100%;
+            float: left;
+        }
+
+        .purchase_div span ul{
+            margin-top: 3%;
+        }
+        .purchase_div{
+            overflow: auto;
+            width: 100%;
+            border: 1px solid #cccccc;
+            margin-top: 1%;
+            font-size: 25px;
         }
     </style>
 
@@ -91,10 +113,10 @@
 <div class="LeftMenu">
 
     <div class="MenuBtn" onclick="menuListener('remove_subscriber')"> Remove Subscriber </div>
-    <div class="MenuBtn" onclick="menuListener('respond_to_complaints')"> Respond to Complains </div>
+    <!--<div class="MenuBtn" onclick="menuListener('respond_to_complaints')"> Respond to Complains </div>-->
     <div class="MenuBtn" onclick="menuListener('view_history_store')"> View Store History</div>
     <div class="MenuBtn" onclick="menuListener('view_customer_history')"> View Customer History </div>
-    <div class="MenuBtn" onclick="menuListener('watch_system_Log')"> Watch System Log </div>
+    <!-- <div class="MenuBtn" onclick="menuListener('watch_system_Log')"> Watch System Log </div> -->
     <div class="MenuBtn" onclick="menuListener('today_revenue')"> Today Revenue </div>
     <div class="MenuBtn" onclick="menuListener('data_revenue')"> Date Revenue </div>
     <div class="MenuBtn" onclick="menuListener('logout')"> Logout </div>
@@ -114,15 +136,28 @@
 
     let content = document.getElementById("container_content");
 
+
+    function setMessageHandler(){
+        Main.prototype.messageHandler = function(msg){
+            let response = JSON.parse(msg);
+            let req = response.req;
+
+            AdminMsgCallBack(req, response);
+        };
+
+        return Main.getInstance();
+    }
+
+
     function menuListener(option) {
-        if(option === "remove_subscriber"){
+        if(option === "remove_subscriber"){ //V
             _AdminInstance.removeSubscriber(content);
         }else if(option ==="respond_to_complaints"){
 
-        }else if(option ==="view_history_store"){
+        }else if(option ==="view_history_store"){ //V
             _AdminInstance.view_history_store(content);
         }else if(option ==="view_customer_history"){
-            _AdminInstance.view_customer_history(parent);
+            _AdminInstance.view_customer_history(content);
         }else if(option ==="watch_system_Log"){
 
         }else if(option ==="today_revenue"){
@@ -130,9 +165,17 @@
         }else if(option ==="data_revenue"){
             _AdminInstance.data_revenue(parent);
         }else if(option ==="logout"){
-            instance.sign_out(localStorage.getItem("current_username"));
+            logout();
         }
     }
+
+    function run() {
+        let main = setMessageHandler();
+        main.init(()=>{});
+    }
+
+
+    run();
     
 </script>
 
