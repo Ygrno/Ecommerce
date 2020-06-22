@@ -299,11 +299,13 @@ public class SubscribersManage_Facade implements InternalService {
             Subscriber subscriber2 = System.getSystem().get_subscriber(user_assign);
             if(subscriber2 == null || store_role.store.find_store_owner_by_name(user_assign) != null) return false;
             StoreOwner storeOwner = new StoreOwner(subscriber2,store_role.store);
-            dB.updateAndCommit(storeOwner);
             subscriber2.getRole_list().add(storeOwner);
             storeOwner.store.getRoles().add(storeOwner);
             store_role.getAssigned_users().add(storeOwner);
             storeOwner.setAssigned_by(store_role);
+            dB.updateAndCommit(store_role);
+            dB.updateAndCommit(storeOwner);
+
             return true;
         }
         return false;
@@ -339,6 +341,8 @@ public class SubscribersManage_Facade implements InternalService {
             }
             store_role.store.getRoles().remove(storeOwner2);
             store_role.getAssigned_users().remove(storeOwner2);
+            storeOwner2.user.getRole_list().remove(storeOwner2);
+            storeOwner2.user=null;
             storeOwner2.setAssigned_by(null);
             dB.deleteAndCommit(storeOwner2);
 
@@ -390,7 +394,9 @@ public class SubscribersManage_Facade implements InternalService {
             if(!store_role.getAssigned_users().contains(storeManger)) return false;
             store_role.store.getRoles().remove(storeManger);
             store_role.getAssigned_users().remove(storeManger);
+            store_role.user.getRole_list().remove(storeManger);
             storeManger.setAssigned_by(null);
+            storeManger.setUser(null);
             dB.deleteAndCommit(storeManger);
             return true;
         }
