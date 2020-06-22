@@ -323,7 +323,10 @@ public class SubscribersManage_Facade implements InternalService {
             if(!store_role.getAssigned_users().contains(storeOwner2)) return false; //Requester can't remove this store Owner cause he wasn't assigned by him.
 
             List<Role> assigned_users = storeOwner2.getAssigned_users();
-            for(Role role: assigned_users){
+            boolean end = assigned_users.size() == 0;
+            while(!end){
+
+                Role role = assigned_users.get(0);
                 if(role instanceof StoreRole){
                     Store store = ((StoreRole) role).store;
                     if(store.getName().equals(store_name)){
@@ -338,12 +341,15 @@ public class SubscribersManage_Facade implements InternalService {
                         }
                     }
                 }
+                if(assigned_users.size() == 0) end = true;
+
             }
             store_role.store.getRoles().remove(storeOwner2);
             store_role.getAssigned_users().remove(storeOwner2);
             storeOwner2.user.getRole_list().remove(storeOwner2);
             storeOwner2.user=null;
             storeOwner2.setAssigned_by(null);
+
             dB.deleteAndCommit(storeOwner2);
 
             return true;
@@ -394,9 +400,11 @@ public class SubscribersManage_Facade implements InternalService {
             if(!store_role.getAssigned_users().contains(storeManger)) return false;
             store_role.store.getRoles().remove(storeManger);
             store_role.getAssigned_users().remove(storeManger);
-            store_role.user.getRole_list().remove(storeManger);
+            //store_role.user.getRole_list().remove(storeManger);
+            storeManger.user.getRole_list().remove(storeManger);
             storeManger.setAssigned_by(null);
             storeManger.setUser(null);
+            //dB.updateAndCommit(store_role);
             dB.deleteAndCommit(storeManger);
             return true;
         }
