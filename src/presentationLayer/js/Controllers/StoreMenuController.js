@@ -495,6 +495,11 @@ function add_simple_buy_policy() {
     policyType.className = 'text_input';
     div.appendChild(policyType);
 
+    let description = document.createElement("input");
+    description.placeholder="Enter policy description ";
+    description.className = 'text_input';
+    div.appendChild(description);
+
     let productName = document.createElement("input");
     productName.placeholder="Enter product name (for product buy policy) ";
     productName.className = 'text_input';
@@ -534,7 +539,7 @@ function add_simple_buy_policy() {
     finish.style.marginTop = '3%';
     finish.onclick = function(){
         let product = productName.value;
-
+        let descr = description.value;
         let type = policyType.value;
         if(type === "" || (type !== "1" && type !== "2")){
             alert("please enter the policy type correctly");
@@ -594,6 +599,7 @@ function add_simple_buy_policy() {
             maxQuantity: maxq,
             minQuantity: minq,
             day: daay,
+            desc:descr,
             req: "create_store_simple_buyPolicy"
         });
     };
@@ -617,6 +623,11 @@ function edit_simple_buy_policy() {
     policyId.placeholder="Enter th epolicy id you wish to edit";
     policyId.className = 'text_input';
     div.appendChild(policyId);
+
+    let description = document.createElement("input");
+    description.placeholder="Enter policy description ";
+    description.className = 'text_input';
+    div.appendChild(description);
 
     let policyType = document.createElement("input");
     policyType.placeholder="Enter number policy type (1 for bag buy policy,2 for product buy policy)";
@@ -662,6 +673,7 @@ function edit_simple_buy_policy() {
     finish.onclick = function(){
         let product = productName.value;
         let policy_ids = policyId.value;
+        let desc = description.value;
         if(policy_ids === "") {
             alert("please enter the policy ID");
         }
@@ -725,6 +737,7 @@ function edit_simple_buy_policy() {
             maxQuantity: maxq,
             minQuantity: minq,
             day: daay,
+            desc:desc,
             req: "edit_store_simple_buyPolicy"
         });
     };
@@ -756,7 +769,10 @@ function add_complex_buy_policy() {
     policyType.className = 'text_input';
     div.appendChild(policyType);
 
-
+    let description = document.createElement("input");
+    description.placeholder="Enter policy description ";
+    description.className = 'text_input';
+    div.appendChild(description);
 
 
     let finish = document.createElement("div");
@@ -766,7 +782,7 @@ function add_complex_buy_policy() {
     finish.style.width = '100px';
     finish.style.marginTop = '3%';
     finish.onclick = function(){
-
+        let desc = description.value;
         let policy_ids = policies.value;
         if(policy_ids === "") {
             alert("please enter the policies ID's");
@@ -782,6 +798,7 @@ function add_complex_buy_policy() {
             store: store_name,
             policy_ids:policy_ids,
             type: type,
+            desc:desc,
             req: "create_store_complex_buyPolicy"
         });
     };
@@ -1359,79 +1376,165 @@ function add_product(){
 
 
 function buyResponse(response){
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function add_store_product_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function remove_store_product_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
+}
+
+function save_product_for_guest_response(response) {
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
+}
+
+function save_product_for_subscriber_response(response) {
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function edit_store_product_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function assign_store_manager_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function remove_store_manager_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function assign_store_owner_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function remove_store_owner_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === truث)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function close_store_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
-function openStoreResponse(response) {
-    alert(JSON.stringify(response));
-}
+
 
 function send_query_to_store_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function visible_discount_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function conditioned_discount_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function complex_discount_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function delete_discount_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function add_simple_policy_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function edit_simple_policy_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function remove_store_buyPolicy_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function add_complex_buy_policy_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function view_buy_policies_response(policies) {

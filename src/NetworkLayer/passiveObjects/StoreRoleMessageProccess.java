@@ -265,8 +265,9 @@ public class StoreRoleMessageProccess {
         int maxQuantity = request.getInt("maxQuantity");
         int minQuantity = request.getInt("minQuantity");
         int day = request.getInt("day");
+        String description = request.getString("desc");
 
-        boolean b = storeRole.create_store_simple_buyPolicy(username,storename,policyType,0,productName,minProducts,maxProducts,minCost,maxCost,minQuantity,maxQuantity,day);
+        boolean b = storeRole.create_store_simple_buyPolicy(username,storename,policyType,description,0,productName,minProducts,maxProducts,minCost,maxCost,minQuantity,maxQuantity,day);
 
         JSONObject o=new JSONObject();
         o.put("req", request.get("req"));
@@ -287,8 +288,9 @@ public class StoreRoleMessageProccess {
         int maxQuantity = request.getInt("maxQuantity");
         int minQuantity = request.getInt("minQuantity");
         int day = request.getInt("day");
+        String description = request.getString("desc");
 
-        boolean b = storeRole.edit_store_simple_buyPolicy(username,storename,policyType,policy_id,productName,minProducts,maxProducts,minCost,maxCost,minQuantity,maxQuantity,day);
+        boolean b = storeRole.edit_store_simple_buyPolicy(username,storename,policyType,description,policy_id,productName,minProducts,maxProducts,minCost,maxCost,minQuantity,maxQuantity,day);
 
         JSONObject o=new JSONObject();
         o.put("req", request.get("req"));
@@ -306,8 +308,8 @@ public class StoreRoleMessageProccess {
         for(int i=0;i<ids.length;i++){
             int_ids[i] = Integer.parseInt(ids[i]);
         }
-
-        boolean b = storeRole.create_store_complex_buyPolicy(username,storename,0,int_ids,type);
+        String description = request.getString("desc");
+        boolean b = storeRole.create_store_complex_buyPolicy(username,storename,description,0,int_ids,type);
 
         JSONObject o=new JSONObject();
         o.put("req", request.get("req"));

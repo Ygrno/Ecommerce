@@ -1,4 +1,5 @@
 
+
 function logout() {
     instance.sign_out(localStorage.getItem("current_username"));
     localStorage.removeItem("current_username");

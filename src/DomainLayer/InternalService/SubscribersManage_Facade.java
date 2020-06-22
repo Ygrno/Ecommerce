@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import DAL.DBAccess;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class SubscribersManage_Facade implements InternalService {
@@ -431,23 +432,23 @@ public class SubscribersManage_Facade implements InternalService {
         return history.toString();
     }
 
-    public static boolean create_store_simple_buyPolicy(String user_name, String store_name, int type, int policy_id, String product_name, int minProducts, int maxProducts, int minCost, int maxCost, int min_quantity, int max_quantity, int day) {
+    public static boolean create_store_simple_buyPolicy(String user_name, String store_name, int type, String description, int policy_id, String product_name, int minProducts, int maxProducts, int minCost, int maxCost, int min_quantity, int max_quantity, int day) {
         if (checkPermission(user_name, store_name)) return false;
         Store store = find_store(store_name);
         if (store==null)return false;
         BuyPolicy policy = find_buy_policy(policy_id, store);
         if (policy!= null) return false;//policy_id already exists;
 
-        return build_and_add_policy_to_store(type, policy_id, product_name, minProducts, maxProducts, minCost, maxCost, min_quantity, max_quantity, day, store);
+        return build_and_add_policy_to_store(type, description, policy_id, product_name, minProducts, maxProducts, minCost, maxCost, min_quantity, max_quantity, day, store);
     }
 
-    public static boolean create_store_complex_buyPolicy(String user_name, String store_name, int policy_id, int[] policy_ids, int op){
+    public static boolean create_store_complex_buyPolicy(String user_name, String store_name,String description, int policy_id, int[] policy_ids, int op){
         if (checkPermission(user_name, store_name)) return false;
         Store store = find_store(store_name);
         if (store==null)return false;
         BuyPolicy comp_policy = find_buy_policy(policy_id, store);
         if (comp_policy!= null) return false;//policy_id already exists;
-        ComplexBuyPolicy complex_policy = new ComplexBuyPolicy(policy_id, int_to_logic(op));
+        ComplexBuyPolicy complex_policy = new ComplexBuyPolicy(policy_id,description, int_to_logic(op));
         complex_policy.setStore(store);
         dB.updateAndCommit(complex_policy);
         int counter=0;
@@ -470,7 +471,7 @@ public class SubscribersManage_Facade implements InternalService {
     return true;
     }
 
-    public static boolean edit_store_simple_buyPolicy(String user_name, String store_name, int type, int policy_id, String product_name, int minProducts, int maxProducts, int minCost, int maxCost, int min_quantity, int max_quantity, int day) {
+    public static boolean edit_store_simple_buyPolicy(String user_name, String store_name, int type,String description, int policy_id, String product_name, int minProducts, int maxProducts, int minCost, int maxCost, int min_quantity, int max_quantity, int day) {
 
         if (checkPermission(user_name, store_name)) return false;
         Store store = find_store(store_name);
@@ -481,7 +482,7 @@ public class SubscribersManage_Facade implements InternalService {
             return false; //policy_id not exists;
         store.getBuyPolicyList().remove(policy); //remove the old policy
         dB.updateAndCommit(policy);
-        return build_and_add_policy_to_store(type, policy_id, product_name, minProducts, maxProducts, minCost, maxCost, min_quantity, max_quantity, day, store);
+        return build_and_add_policy_to_store(type,description, policy_id, product_name, minProducts, maxProducts, minCost, maxCost, min_quantity, max_quantity, day, store);
     }
 
     public static boolean edit_store_complex_buyPolicy(String user_name, String store_name, int policy_id, int new_policy_id, String act){
@@ -549,23 +550,23 @@ public class SubscribersManage_Facade implements InternalService {
             return true;
         return false;
     }
-    private static boolean build_and_add_policy_to_store(int type, int policy_id, String product_name, int minProducts, int maxProducts, int minCost, int maxCost, int min_quantity, int max_quantity, int day, Store store) {
+    private static boolean build_and_add_policy_to_store(int type, String description, int policy_id, String product_name, int minProducts, int maxProducts, int minCost, int maxCost, int min_quantity, int max_quantity, int day, Store store) {
         BuyPolicy policy;
         switch (type) {   //1=bag; 2=product; 3=system;
             case 1:
-                policy = new BagBuyPolicy(policy_id, minCost, maxCost, min_quantity, max_quantity);
+                policy = new BagBuyPolicy(policy_id,description, minCost, maxCost, min_quantity, max_quantity);
                 store.getBuyPolicyList().add(policy);
                 policy.setStore(store);
                 dB.updateAndCommit(policy);
                 return true;
             case 2:
-                policy = new ProductBuyPolicy(policy_id, product_name, minProducts, maxProducts);
+                policy = new ProductBuyPolicy(policy_id,description, product_name, minProducts, maxProducts);
                 store.getBuyPolicyList().add(policy);
                 policy.setStore(store);
                 dB.updateAndCommit(policy);
                 return true;
             case 3:
-                policy = new SystemBuyPolicy(policy_id, day);
+                policy = new SystemBuyPolicy(policy_id,description, day);
                 store.getBuyPolicyList().add(policy);
                 policy.setStore(store);
                 dB.updateAndCommit(policy);
@@ -603,18 +604,15 @@ public class SubscribersManage_Facade implements InternalService {
         requester.notifications().add(o);
     }
 
-    public static int[] getBuyPolicyIdsList(String store_name){
-
+    public static HashMap<Integer,String> getBuyPolicyIdsList(String store_name){
+        HashMap<Integer,String> policies = new HashMap<>();
         Store store = find_store(store_name);
         if (store==null) return null;
-        int[] exists_policies = new int[store.getBuyPolicyList().size()];
         int i = 0;
-        java.lang.System.out.println(store.getBuyPolicyList().size());
         for (BuyPolicy p : store.getBuyPolicyList()) {
-            exists_policies[i] = p.getPolicy_id();
-            i++;
+            policies.put(p.getPolicy_id(),p.getDescription());
         }
-        return exists_policies;
+        return policies;
     }
 
     public static int[] getPoliciesInComplex(String store_name, int policy_id) {

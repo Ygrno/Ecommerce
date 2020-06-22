@@ -65,7 +65,7 @@ public class InitSystemState {
                 case "add_manager_to_store":
                     return storeRoleImp.assign_store_manager(method_args[0],method_args[1],method_args[2]);
                 case "create_store_simple_policy":
-                    return storeRoleImp.create_store_simple_buyPolicy(method_args[0],method_args[1],Integer.parseInt(method_args[2]), Integer.parseInt(method_args[3]),method_args[4],Integer.parseInt(method_args[5]),Integer.parseInt(method_args[6]), Integer.parseInt(method_args[7]), Integer.parseInt(method_args[8]), Integer.parseInt(method_args[9]), Integer.parseInt(method_args[10]), Integer.parseInt(method_args[11]));
+                    return storeRoleImp.create_store_simple_buyPolicy(method_args[0],method_args[1],Integer.parseInt(method_args[2]),method_args[3],Integer.parseInt(method_args[4]),method_args[5],Integer.parseInt(method_args[6]),Integer.parseInt(method_args[7]), Integer.parseInt(method_args[8]), Integer.parseInt(method_args[9]), Integer.parseInt(method_args[10]), Integer.parseInt(method_args[11]), Integer.parseInt(method_args[12]));
                 case "saveProductForGuest":
                     return guestImp.save_products(Integer.parseInt(method_args[0]),method_args[1],method_args[2], Integer.parseInt(method_args[3]));
                 case "saveProductForSubscriber":

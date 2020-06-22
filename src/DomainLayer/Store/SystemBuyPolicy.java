@@ -13,9 +13,9 @@ import javax.persistence.Table;
 public class SystemBuyPolicy extends SimpleBuyPolicy {
 
     private int day;
-    public SystemBuyPolicy (int policy_id, int day)
+    public SystemBuyPolicy (int policy_id, String description, int day)
     {
-        super(policy_id);
+        super(policy_id,description);
         this.day = day;
     }
 

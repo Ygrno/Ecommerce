@@ -15,16 +15,27 @@ public abstract class BuyPolicy extends Policy {
 
    // enum Logicaloperation { or, and, xor};
 
+
     @ManyToOne(targetEntity = Store.class)
     @JoinColumn(name ="store_id")
     protected Store store;
 
-    public BuyPolicy(int policy_id)
+
+    public BuyPolicy(int policy_id, String description)
     {
-        super.id = policy_id;
+        //super.id = policy_id;
+        super.description = description;
     }
 
     public BuyPolicy() {
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

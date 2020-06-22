@@ -12,6 +12,9 @@ import java.util.List;
 @Table(name = "policies")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Policy {
+    @Column
+    protected String description;
+
     //enum Logicaloperation { or, and, xor};
     public abstract boolean validate (ShoppingBag shoppingBag, User user);
 
