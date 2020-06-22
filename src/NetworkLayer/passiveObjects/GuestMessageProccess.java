@@ -126,7 +126,7 @@ public class GuestMessageProccess {
 
         int id = request.getInt("id");
         List<JSONObject> products=guestImp.watch_products_in_cart(id);
-
+        Double totalPrice=guestImp.getTotalPriceOfCart(String.valueOf(id));
         if(products == null) return;
 
         JSONArray jarr = new JSONArray();
@@ -136,6 +136,7 @@ public class GuestMessageProccess {
 
         JSONObject l = new JSONObject();
         l.put("productsInCart", jarr);
+        l.put("price",totalPrice);
         l.put("req", request.get("req"));
 
         protocol.send(l);

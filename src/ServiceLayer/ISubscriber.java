@@ -27,7 +27,7 @@ public interface ISubscriber {
     public String view_purchase_history(String user_name);  //3.7    //changed the return boolean type to List<PurchaseProcess> and the input from none to string user_name
     public boolean edit_account();     //3.8
 
-
+    public double getTotalPriceOfCart(String userName);
     public List<JSONObject> getNotifications(String userName);
 
 }

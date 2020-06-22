@@ -75,7 +75,7 @@ function buyThings(products){
     div.style.overflow = 'auto';
     let productList = products["productsInCart"];
 
-    let cost = productList.reduce((acc,curr)=>acc + curr["price"],0);
+    let cost = products["price"];
 
     let priceDiv = document.createElement("div");
     priceDiv.innerHTML = "Price : "+cost;

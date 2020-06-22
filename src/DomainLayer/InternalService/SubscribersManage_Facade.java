@@ -211,16 +211,18 @@ public class SubscribersManage_Facade implements InternalService {
         Subscriber subscriber = System.getSystem().get_subscriber(user_name);
 
         Store store = new Store(store_name);
-        if(!dB.updateAndCommit(store)) return false;
+
 
         StoreOwner storeOwner = new StoreOwner(subscriber, store);
-        if(!dB.updateAndCommit(storeOwner)) return false;
+
 
         subscriber.getRole_list().add(storeOwner);
 
         store.getRoles().add(storeOwner);
 
         System.getSystem().getStore_list().add(store);
+        if(!dB.updateAndCommit(store)) return false;
+        if(!dB.updateAndCommit(storeOwner)) return false;
         return true;
     }
 
@@ -569,13 +571,13 @@ public class SubscribersManage_Facade implements InternalService {
         BuyPolicy policy;
         switch (type) {   //1=bag; 2=product; 3=system;
             case 1:
-                policy = new BagBuyPolicy(policy_id,description, minCost, maxCost, min_quantity, max_quantity);
+                policy = new BagBuyPolicy(policy_id,description, minCost, maxCost,minProducts ,maxProducts );
                 store.getBuyPolicyList().add(policy);
                 policy.setStore(store);
                 dB.updateAndCommit(policy);
                 return true;
             case 2:
-                policy = new ProductBuyPolicy(policy_id,description, product_name, minProducts, maxProducts);
+                policy = new ProductBuyPolicy(policy_id,description, product_name,min_quantity ,max_quantity );
                 store.getBuyPolicyList().add(policy);
                 policy.setStore(store);
                 dB.updateAndCommit(policy);

@@ -485,7 +485,7 @@ function add_simple_buy_policy() {
     div.style.overflow = 'auto';
 
     let introDiv = document.createElement("div");
-    introDiv.innerHTML = "Add discount";
+    introDiv.innerHTML = "Add simple buy policy";
     introDiv.className = 'total_price_div';
     div.appendChild(introDiv);
 
@@ -511,7 +511,7 @@ function add_simple_buy_policy() {
     div.appendChild(minProducts);
 
     let maxProducts = document.createElement("input");
-    maxProducts.placeholder="Enter minimum number of products that client could add to bag (for bag buy policy)";
+    maxProducts.placeholder="Enter maximum number of products that client could add to bag (for bag buy policy)";
     maxProducts.className = 'text_input';
     div.appendChild(maxProducts);
 
@@ -615,7 +615,7 @@ function edit_simple_buy_policy() {
     div.style.overflow = 'auto';
 
     let introDiv = document.createElement("div");
-    introDiv.innerHTML = "Edit buy policy";
+    introDiv.innerHTML = "Edit simple buy policy";
     introDiv.className = 'total_price_div';
     div.appendChild(introDiv);
 
@@ -645,7 +645,7 @@ function edit_simple_buy_policy() {
     div.appendChild(minProducts);
 
     let maxProducts = document.createElement("input");
-    maxProducts.placeholder="Enter minimum number of products that client could add to bag (for bag buy policy)";
+    maxProducts.placeholder="Enter maximum number of products that client could add to bag (for bag buy policy)";
     maxProducts.className = 'text_input';
     div.appendChild(maxProducts);
 

@@ -55,6 +55,19 @@ public class SystemManage_Facade implements InternalService {
     }
 
 
+    public static boolean checkIfCanBuy(String id){
+        User u =getUser(id);
+        for(PurchaseProcess process: u.getPurchaseProcesslist()){
+            HashMap<Product,Integer> products= process.getShoppingBag().getProductsAmounts();
+            for(Product p:products.keySet()){
+                if(p.getSupplied_amount()<products.get(p)){
+                    return false;
+                }
+            }
+            if(!process.getStore().validatePurchasePolicies(process.getShoppingBag(),u)) return false;
+        }
+        return true;
+    }
 
     public static boolean buy(String[] dd) throws Exception {
         DealDetails dd1 = new DealDetails(dd[0],Double.parseDouble(dd[1]),dd[2],dd[3],dd[4],Integer.parseInt(dd[5]));
@@ -71,17 +84,14 @@ public class SystemManage_Facade implements InternalService {
 
                     //Update the supply amount of products in store
                     ShoppingBag shoppingBag = purchase.getShoppingBag();
-                    for(Product prod: shoppingBag.getProducts()){
+                    for(Product prod: shoppingBag.getProductsAmounts().keySet()){
                         Product store_product = getProductInStore(prod.getName(),store);
-                        store_product.setSupplied_amount(store_product.getSupplied_amount() - prod.getBuy_amount());
+                        store_product.setSupplied_amount(store_product.getSupplied_amount() - shoppingBag.getProductsAmounts().get(prod));
+                        dB.updateAndCommit(store_product);
                     }
-
-                    //validate buy policies of store
-                    store.validatePurchasePolicies(shoppingBag,u);
-
                     //User bought his saved products so shopping bag no longer exists with store.
                     purchase.getUser().getShoppingCart().getShopping_bag_list().remove(purchase.getShoppingBag());
-                    //todo - maybe dB.deleteAndCommit(purchase);
+                    dB.updateAndCommit(purchase);
                 }
             }
             return true;

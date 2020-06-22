@@ -2,6 +2,7 @@ package ServiceLayer;
 import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
 
+import DomainLayer.System;
 import Logs.LogErrors;
 import Logs.LogInfo;
 import org.json.JSONException;
@@ -95,7 +96,12 @@ public class SubscriberImp implements ISubscriber {
         }
         double price=SystemManage_Facade.getPriceOfCart(id);
         String[] dealDetails = {id,String.valueOf(price),buyerName,creditCardNumber,expireDate, String.valueOf(cvv)};
-        return SystemManage_Facade.buy(dealDetails);
+        boolean b;
+        synchronized (this) {
+            if(!SystemManage_Facade.checkIfCanBuy(id)) return false;
+            b = SystemManage_Facade.buy(dealDetails);
+        }
+        return b;
     }
 
 
@@ -212,5 +218,10 @@ public class SubscriberImp implements ISubscriber {
     public boolean edit_account() {
         if(!SystemManage_Facade.is_initialized()) return false;
         return false;
+    }
+
+    @Override
+    public double getTotalPriceOfCart(String userName) {
+        return SystemManage_Facade.getPriceOfCart(userName);
     }
 }

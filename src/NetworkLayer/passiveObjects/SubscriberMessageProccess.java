@@ -25,6 +25,7 @@ public class SubscriberMessageProccess {
     public static void viewCart(MessagingProtocol protocol, JSONObject request) throws Exception{
         String username = request.getString("username");
         List<JSONObject> products=subscriber.watch_products_in_cart(username);
+        Double totalPrice=subscriber.getTotalPriceOfCart(username);
 
         if(products == null) return;
 
@@ -35,6 +36,7 @@ public class SubscriberMessageProccess {
 
         JSONObject l = new JSONObject();
         l.put("productsInCart", jarr);
+        l.put("price",totalPrice);
         l.put("req", request.get("req"));
 
         protocol.send(l);

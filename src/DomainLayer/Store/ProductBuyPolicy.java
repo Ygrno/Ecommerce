@@ -7,6 +7,7 @@ import DomainLayer.User.User;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.HashMap;
 import java.util.List;
 
 @Entity
@@ -67,12 +68,14 @@ public class ProductBuyPolicy extends SimpleBuyPolicy {
     @Override
     public boolean validate(ShoppingBag shoppingBag, User user) {
         //ShoppingBag shopBag= purchaseProcess.getShoppingBag();
-        List<Product> products = shoppingBag.getProducts();
-        for (Product p : products) {
+        HashMap<Product,Integer> products = shoppingBag.getProductsAmounts();
+        for (Product p : products.keySet()) {
             if (p.getName().equals(this.product_name)) {
-                if (minProducts != 0 && p.getSupplied_amount() < minProducts)
+                System.out.println(products.get(p));
+                System.out.println(minProducts);
+                if (minProducts != 0 && products.get(p) < minProducts)
                     return false;
-                if (maxProducts != 0 && p.getSupplied_amount() > maxProducts)
+                if (maxProducts != 0 && products.get(p) > maxProducts)
                     return false;
             }
         }
