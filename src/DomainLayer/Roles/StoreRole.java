@@ -20,7 +20,7 @@ public abstract class StoreRole extends Role {
     @ManyToOne
     @JoinColumn(name = "store_id")
     public Store store;
-    @OneToMany(mappedBy = "assigned_by")
+    @OneToMany(mappedBy = "assigned_by" )
     private List<Role> assigned_users = new ArrayList<>();
 
     @Transient
