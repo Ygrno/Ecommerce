@@ -154,7 +154,9 @@ public class MessagingProtocol {
     }
 
     public void send(String msg){
-        connectionHandler.send(msg);
+        if (connectionHandler != null) connectionHandler.send(msg);
+
+
     }
 
 }
