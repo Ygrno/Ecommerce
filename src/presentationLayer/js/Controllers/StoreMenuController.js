@@ -1449,7 +1449,7 @@ function assign_store_owner_response(response) {
 
 function remove_store_owner_response(response) {
     let bool = response["success"];
-    if(bool === truث)
+    if(bool === true)
         alert("process completed successfully");
     else
         alert("process uncompleted something is wrong!");
