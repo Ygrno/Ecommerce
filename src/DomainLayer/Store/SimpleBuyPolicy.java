@@ -15,7 +15,7 @@ import javax.persistence.Table;
 public class SimpleBuyPolicy extends BuyPolicy{
 
     public SimpleBuyPolicy(int policy_id, String description) {
-        super();
+        super(policy_id,description);
     }
 
 

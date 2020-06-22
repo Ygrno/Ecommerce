@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -135,7 +136,6 @@ public class StoreRoleImp implements IStoreRole {
             my_logError.logger.severe("System not initialized");
             return false;
         }
-        if (!SystemManage_Facade.is_initialized()) return false;
         if (SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
             return SubscribersManage_Facade.add_owner_to_store(user_name, store_name, user_assign);
         }
@@ -320,19 +320,21 @@ public class StoreRoleImp implements IStoreRole {
 
 
     public List<JSONObject> get_policies_ids_in_store(String store_name) throws Exception {
+        my_logInfo.logger.info("get_policies_ids_in_store");
         List<JSONObject> res = new LinkedList<>();
         if (!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
             return null;
         }
-        int[] ids = SubscribersManage_Facade.getBuyPolicyIdsList(store_name);
-        if(ids != null) {
-            for (int id : ids) {
-                JSONObject o = new JSONObject();
-                o.put("id", id);
-                res.add(o);
-            }
+        HashMap<Integer,String> policies= SubscribersManage_Facade.getBuyPolicyIdsList(store_name);
+        assert policies != null;
+        for(Integer i:policies.keySet()){
+          JSONObject o =new JSONObject();
+          o.put("id",i);
+          o.put("description",policies.get(i));
+          res.add(o);
         }
+
         return res;
     }
 

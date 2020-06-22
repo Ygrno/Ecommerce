@@ -253,4 +253,112 @@ public class StoreRoleMessageProccess {
         protocol.send(o);
     }
 
+    public static void create_store_simple_buyPolicy(MessagingProtocol protocol, JSONObject request) throws Exception{
+        String username = request.getString("user_name");
+        String storename = request.getString("store");
+        String productName = request.getString("product");
+        int policyType = request.getInt("type");
+        int minProducts = request.getInt("minProducts");
+        int maxProducts = request.getInt("maxProducts");
+        int minCost = request.getInt("minCost");
+        int maxCost = request.getInt("maxCost");
+        int maxQuantity = request.getInt("maxQuantity");
+        int minQuantity = request.getInt("minQuantity");
+        int day = request.getInt("day");
+        String description = request.getString("desc");
+
+        boolean b = storeRole.create_store_simple_buyPolicy(username,storename,policyType,description,0,productName,minProducts,maxProducts,minCost,maxCost,minQuantity,maxQuantity,day);
+
+        JSONObject o=new JSONObject();
+        o.put("req", request.get("req"));
+        o.put("success", b);
+        protocol.send(o);
+    }
+
+    public static void edit_store_simple_buyPolicy(MessagingProtocol protocol, JSONObject request) throws Exception{
+        String username = request.getString("user_name");
+        String storename = request.getString("store");
+        String productName = request.getString("product");
+        int policy_id = request.getInt("policy_id");
+        int policyType = request.getInt("type");
+        int minProducts = request.getInt("minProducts");
+        int maxProducts = request.getInt("maxProducts");
+        int minCost = request.getInt("minCost");
+        int maxCost = request.getInt("maxCost");
+        int maxQuantity = request.getInt("maxQuantity");
+        int minQuantity = request.getInt("minQuantity");
+        int day = request.getInt("day");
+        String description = request.getString("desc");
+
+        boolean b = storeRole.edit_store_simple_buyPolicy(username,storename,policyType,description,policy_id,productName,minProducts,maxProducts,minCost,maxCost,minQuantity,maxQuantity,day);
+
+        JSONObject o=new JSONObject();
+        o.put("req", request.get("req"));
+        o.put("success", b);
+        protocol.send(o);
+    }
+
+    public static void create_store_complex_buyPolicy(MessagingProtocol protocol, JSONObject request) throws Exception{
+        String username = request.getString("user_name");
+        String storename = request.getString("store");
+        String policy_ids = request.getString("policy_ids");
+        int type = request.getInt("type");
+        String [] ids= policy_ids.split(" ");
+        int[] int_ids=new int[ids.length];
+        for(int i=0;i<ids.length;i++){
+            int_ids[i] = Integer.parseInt(ids[i]);
+        }
+        String description = request.getString("desc");
+        boolean b = storeRole.create_store_complex_buyPolicy(username,storename,description,0,int_ids,type);
+
+        JSONObject o=new JSONObject();
+        o.put("req", request.get("req"));
+        o.put("success", b);
+        protocol.send(o);
+    }
+
+    public static void edit_store_complex_buyPolicy(MessagingProtocol protocol, JSONObject request) throws Exception{
+        String username = request.getString("user_name");
+        String storename = request.getString("store");
+        int policy_id = request.getInt("policy_id");
+        int new_policy_id = request.getInt("new_policy_id");
+        String act =request.getString("act");
+
+        boolean b = storeRole.edit_store_complex_buyPolicy(username,storename,policy_id,new_policy_id,act);
+
+        JSONObject o=new JSONObject();
+        o.put("req", request.get("req"));
+        o.put("success", b);
+        protocol.send(o);
+    }
+
+    public static void remove_store_buyPolicy(MessagingProtocol protocol, JSONObject request) throws Exception{
+        String username = request.getString("user_name");
+        String storename = request.getString("store");
+        int policy_id = request.getInt("policy_id");
+
+        boolean b = storeRole.remove_store_buyPolicy(username,storename,policy_id);
+
+        JSONObject o=new JSONObject();
+        o.put("req", request.get("req"));
+        o.put("success", b);
+        protocol.send(o);
+    }
+
+    public static void get_policies_ids_in_store(MessagingProtocol protocol, JSONObject request) throws Exception{
+        String store = request.getString("store");
+
+        List<JSONObject> policies = storeRole.get_policies_ids_in_store(store);
+
+        JSONArray arr = new JSONArray();
+        for(JSONObject p : policies){
+            arr.put(p);
+        }
+
+        JSONObject o = new JSONObject();
+        o.put("policies", arr);
+        o.put("req", request.get("req"));
+        protocol.send(o);
+    }
+
 }

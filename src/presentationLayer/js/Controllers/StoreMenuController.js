@@ -477,6 +477,461 @@ function delete_discount() {
     popUp(div);
 }
 
+
+function add_simple_buy_policy() {
+    let vars = instance.getUrlVars();
+    let store_name = vars["s"];
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+
+    let introDiv = document.createElement("div");
+    introDiv.innerHTML = "Add discount";
+    introDiv.className = 'total_price_div';
+    div.appendChild(introDiv);
+
+
+    let policyType = document.createElement("input");
+    policyType.placeholder="Enter number policy type (1 for bag buy policy,2 for product buy policy)";
+    policyType.className = 'text_input';
+    div.appendChild(policyType);
+
+    let description = document.createElement("input");
+    description.placeholder="Enter policy description ";
+    description.className = 'text_input';
+    div.appendChild(description);
+
+    let productName = document.createElement("input");
+    productName.placeholder="Enter product name (for product buy policy) ";
+    productName.className = 'text_input';
+    div.appendChild(productName);
+
+    let minProducts = document.createElement("input");
+    minProducts.placeholder="Enter minimum number of products that client could add to bag (for bag buy policy)";
+    minProducts.className = 'text_input';
+    div.appendChild(minProducts);
+
+    let maxProducts = document.createElement("input");
+    maxProducts.placeholder="Enter minimum number of products that client could add to bag (for bag buy policy)";
+    maxProducts.className = 'text_input';
+    div.appendChild(maxProducts);
+
+
+    let min_quantity = document.createElement("input");
+    min_quantity.placeholder="Enter minimum product quantity that client could buy for this product (product buy policy)";
+    min_quantity.className = 'text_input';
+    div.appendChild(min_quantity);
+
+    let max_quantity = document.createElement("input");
+    max_quantity.placeholder="Enter maximum product quantity that client could buy for this product (product buy policy)";
+    max_quantity.className = 'text_input';
+    div.appendChild(max_quantity);
+
+    let day = document.createElement("input");
+    day.placeholder="Enter the day (day of week : 1 for sunday, 2 for monday etc)";
+    day.className = 'text_input';
+    div.appendChild(day);
+
+    let finish = document.createElement("div");
+    finish.className = 'Green_beautiful_div';
+    finish.innerHTML = '<b>Finish</b>';
+    finish.style.fontSize = '30px';
+    finish.style.width = '100px';
+    finish.style.marginTop = '3%';
+    finish.onclick = function(){
+        let product = productName.value;
+        let descr = description.value;
+        let type = policyType.value;
+        if(type === "" || (type !== "1" && type !== "2")){
+            alert("please enter the policy type correctly");
+            return;
+        }
+        if(type === "2"  && product === ""){
+            alert("please enter the product name");
+            return;
+        }
+        let minp = minProducts.value;
+        if(type === "1" && minp === ""){
+            alert("please enter the min products");
+            return;
+        }
+        let maxp = maxProducts.value;
+        if(type === "1" && maxp === "") {
+            alert("please enter the max products");
+            return;
+        }
+
+        let minq = min_quantity.value;
+        if(type === "2" && minq === "") {
+            alert("please enter the min quantity");
+            return;
+        }
+        let maxq = max_quantity.value;
+        if(type === "2" && maxq === "") {
+            alert("please enter the max quantity");
+            return;
+        }
+        let daay = day.value;
+        if((daay === "") || (daay!=="1" & daay!=="2" & daay!=="3" & daay!=="4" & daay!=="5" & daay!=="6" & daay!=="7")) {
+            alert("please enter the day correctly");
+            return;
+        }
+        if(type === "1"){
+            minq=0;
+            maxq=0;
+        }
+        else if(type === "2"){
+            minp=0;
+            maxp=0;
+        }
+        else{
+            alert("please enter the type correctly");
+            return;
+        }
+        instance.add_store_visible_discount({
+            user_name: localStorage.getItem("current_username"),
+            store: store_name,
+            product: product,
+            type: type,
+            minProducts: minp,
+            maxProducts: maxp,
+            minCost: 0,
+            maxCost: 0,
+            maxQuantity: maxq,
+            minQuantity: minq,
+            day: daay,
+            desc:descr,
+            req: "create_store_simple_buyPolicy"
+        });
+    };
+    div.appendChild(finish);
+
+    popUp(div);
+}
+
+function edit_simple_buy_policy() {
+    let vars = instance.getUrlVars();
+    let store_name = vars["s"];
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+
+    let introDiv = document.createElement("div");
+    introDiv.innerHTML = "Edit buy policy";
+    introDiv.className = 'total_price_div';
+    div.appendChild(introDiv);
+
+    let policyId = document.createElement("input");
+    policyId.placeholder="Enter th epolicy id you wish to edit";
+    policyId.className = 'text_input';
+    div.appendChild(policyId);
+
+    let description = document.createElement("input");
+    description.placeholder="Enter policy description ";
+    description.className = 'text_input';
+    div.appendChild(description);
+
+    let policyType = document.createElement("input");
+    policyType.placeholder="Enter number policy type (1 for bag buy policy,2 for product buy policy)";
+    policyType.className = 'text_input';
+    div.appendChild(policyType);
+
+    let productName = document.createElement("input");
+    productName.placeholder="Enter product name (for product buy policy) ";
+    productName.className = 'text_input';
+    div.appendChild(productName);
+
+    let minProducts = document.createElement("input");
+    minProducts.placeholder="Enter minimum number of products that client could add to bag (for bag buy policy)";
+    minProducts.className = 'text_input';
+    div.appendChild(minProducts);
+
+    let maxProducts = document.createElement("input");
+    maxProducts.placeholder="Enter minimum number of products that client could add to bag (for bag buy policy)";
+    maxProducts.className = 'text_input';
+    div.appendChild(maxProducts);
+
+    let min_quantity = document.createElement("input");
+    min_quantity.placeholder="Enter minimum product quantity that client could buy for this product (product buy policy)";
+    min_quantity.className = 'text_input';
+    div.appendChild(min_quantity);
+
+    let max_quantity = document.createElement("input");
+    max_quantity.placeholder="Enter maximum product quantity that client could buy for this product (product buy policy)";
+    max_quantity.className = 'text_input';
+    div.appendChild(max_quantity);
+
+    let day = document.createElement("input");
+    day.placeholder="Enter the day (day of week : 1 for sunday, 2 for monday etc)";
+    day.className = 'text_input';
+    div.appendChild(day);
+
+    let finish = document.createElement("div");
+    finish.className = 'Green_beautiful_div';
+    finish.innerHTML = '<b>Finish</b>';
+    finish.style.fontSize = '30px';
+    finish.style.width = '100px';
+    finish.style.marginTop = '3%';
+    finish.onclick = function(){
+        let product = productName.value;
+        let policy_ids = policyId.value;
+        let desc = description.value;
+        if(policy_ids === "") {
+            alert("please enter the policy ID");
+        }
+        let type = policyType.value;
+        if(type === "" || (type !== "1" && type !== "2")){
+            alert("please enter the policy type correctly");
+            return;
+        }
+        if(type === "2"  && product === ""){
+            alert("please enter the product name");
+            return;
+        }
+        let minp = minProducts.value;
+        if(type === "1" && minp === ""){
+            alert("please enter the min products");
+            return;
+        }
+        let maxp = maxProducts.value;
+        if(type === "1" && maxp === "") {
+            alert("please enter the max products");
+            return;
+        }
+
+        let minq = min_quantity.value;
+        if(type === "2" && minq === "") {
+            alert("please enter the min quantity");
+            return;
+        }
+        let maxq = max_quantity.value;
+        if(type === "2" && maxq === "") {
+            alert("please enter the max quantity");
+            return;
+        }
+        let daay = day.value;
+        if((daay === "") || (daay!=="1" & daay!=="2" & daay!=="3" & daay!=="4" & daay!=="5" & daay!=="6" & daay!=="7")) {
+            alert("please enter the day correctly");
+            return;
+        }
+        if(type === "1"){
+            minq=0;
+            maxq=0;
+        }
+        else if(type === "2"){
+            minp=0;
+            maxp=0;
+        }
+        else{
+            alert("please enter the type correctly");
+            return;
+        }
+        instance.add_store_visible_discount({
+            user_name: localStorage.getItem("current_username"),
+            store: store_name,
+            product: product,
+            policy_id:policy_ids,
+            type: type,
+            minProducts: minp,
+            maxProducts: maxp,
+            minCost: 0,
+            maxCost: 0,
+            maxQuantity: maxq,
+            minQuantity: minq,
+            day: daay,
+            desc:desc,
+            req: "edit_store_simple_buyPolicy"
+        });
+    };
+    div.appendChild(finish);
+
+    popUp(div);
+}
+
+
+function add_complex_buy_policy() {
+    let vars = instance.getUrlVars();
+    let store_name = vars["s"];
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+
+    let introDiv = document.createElement("div");
+    introDiv.innerHTML = "Add complex buy policy";
+    introDiv.className = 'total_price_div';
+    div.appendChild(introDiv);
+
+
+    let policies = document.createElement("input");
+    policies.placeholder="Enter policies ID's (with space between each ID)";
+    policies.className = 'text_input';
+    div.appendChild(policies);
+
+    let policyType = document.createElement("input");
+    policyType.placeholder="Enter policy operation (1 for and operation ,2 for or operation ,3 for xor operation)";
+    policyType.className = 'text_input';
+    div.appendChild(policyType);
+
+    let description = document.createElement("input");
+    description.placeholder="Enter policy description ";
+    description.className = 'text_input';
+    div.appendChild(description);
+
+
+    let finish = document.createElement("div");
+    finish.className = 'Green_beautiful_div';
+    finish.innerHTML = '<b>Finish</b>';
+    finish.style.fontSize = '30px';
+    finish.style.width = '100px';
+    finish.style.marginTop = '3%';
+    finish.onclick = function(){
+        let desc = description.value;
+        let policy_ids = policies.value;
+        if(policy_ids === "") {
+            alert("please enter the policies ID's");
+        }
+
+        let type = policyType.value;
+        if(type === "") {
+            alert("please enter the policy type");
+        }
+
+        instance.add_store_conditioned_discount({
+            user_name: localStorage.getItem("current_username"),
+            store: store_name,
+            policy_ids:policy_ids,
+            type: type,
+            desc:desc,
+            req: "create_store_complex_buyPolicy"
+        });
+    };
+    div.appendChild(finish);
+
+    popUp(div);
+}
+
+function edit_complex_buy_policy() {
+    let vars = instance.getUrlVars();
+    let store_name = vars["s"];
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+
+    let introDiv = document.createElement("div");
+    introDiv.innerHTML = "Edit complex buy policy";
+    introDiv.className = 'total_price_div';
+    div.appendChild(introDiv);
+
+
+    let policyId = document.createElement("input");
+    policyId.placeholder="Enter th policy id you wish to edit";
+    policyId.className = 'text_input';
+    div.appendChild(policyId);
+
+    let newPolicyId = document.createElement("input");
+    newPolicyId.placeholder="Enter the policy Id you wish to add/remove";
+    newPolicyId.className = 'text_input';
+    div.appendChild(newPolicyId);
+
+    let action = document.createElement("input");
+    action.placeholder="Enter edit action (remove ,add)";
+    action.className = 'text_input';
+    div.appendChild(action);
+
+
+
+
+    let finish = document.createElement("div");
+    finish.className = 'Green_beautiful_div';
+    finish.innerHTML = '<b>Finish</b>';
+    finish.style.fontSize = '30px';
+    finish.style.width = '100px';
+    finish.style.marginTop = '3%';
+    finish.onclick = function(){
+
+        let policy_ids = policyId.value;
+        if(policy_ids === "") {
+            alert("please enter the policy ID");
+        }
+
+        let newId = newPolicyId.value;
+        if(newId === "") {
+            alert("please enter the new policy id");
+        }
+
+        let act = action.value;
+        if(act === "") {
+            alert("please enter the action");
+        }
+
+        instance.add_store_conditioned_discount({
+            user_name: localStorage.getItem("current_username"),
+            store: store_name,
+            policy_id:policy_ids,
+            new_policy_id: newId,
+            act: act,
+            req: "edit_store_complex_buyPolicy"
+        });
+    };
+    div.appendChild(finish);
+
+    popUp(div);
+}
+
+function remove_buy_policy() {
+    let vars = instance.getUrlVars();
+    let store_name = vars["s"];
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+
+    let introDiv = document.createElement("div");
+    introDiv.innerHTML = "Remove buy policy";
+    introDiv.className = 'total_price_div';
+    div.appendChild(introDiv);
+
+
+    let policyId = document.createElement("input");
+    policyId.placeholder="Enter the epolicy id you wish to remove";
+    policyId.className = 'text_input';
+    div.appendChild(policyId);
+
+
+
+    let finish = document.createElement("div");
+    finish.className = 'Green_beautiful_div';
+    finish.innerHTML = '<b>Finish</b>';
+    finish.style.fontSize = '30px';
+    finish.style.width = '100px';
+    finish.style.marginTop = '3%';
+    finish.onclick = function(){
+
+        let policy_ids = policyId.value;
+        if(policy_ids === "") {
+            alert("please enter the policy ID");
+        }
+
+
+
+        instance.add_store_conditioned_discount({
+            user_name: localStorage.getItem("current_username"),
+            store: store_name,
+            policy_id:policy_ids,
+            req: "remove_store_buyPolicy"
+        });
+    };
+    div.appendChild(finish);
+
+    popUp(div);
+}
+
+
+function view_buy_policies() {
+    let vars = instance.getUrlVars();
+    let store_name = vars["s"];
+
+    instance.add_store_conditioned_discount({
+        store: store_name,
+        req: "get_policies_ids_in_store"
+    });
+}
+
+
 function edit_permissions() {
     let vars = instance.getUrlVars();
     let store_name = vars["s"];
@@ -921,61 +1376,184 @@ function add_product(){
 
 
 function buyResponse(response){
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function add_store_product_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function remove_store_product_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
+}
+
+function save_product_for_guest_response(response) {
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
+}
+
+function save_product_for_subscriber_response(response) {
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function edit_store_product_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function assign_store_manager_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function remove_store_manager_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function assign_store_owner_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function remove_store_owner_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === truث)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function close_store_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
-function openStoreResponse(response) {
-    alert(JSON.stringify(response));
-}
+
 
 function send_query_to_store_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function visible_discount_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function conditioned_discount_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function complex_discount_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
 }
 
 function delete_discount_response(response) {
-    alert(JSON.stringify(response));
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
+}
+
+function add_simple_policy_response(response) {
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
+}
+
+function edit_simple_policy_response(response) {
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
+}
+
+function remove_store_buyPolicy_response(response) {
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
+}
+
+function add_complex_buy_policy_response(response) {
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
+}
+
+function view_buy_policies_response(policies) {
+    let policiesList = policies["policies"];
+    if (policiesList.length === 0) return;
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+
+    let prodcutHTMLList = new HTMLList(div);
+
+    const cellBuilder = (product)=>{
+        //DESIGN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        let d = document.createElement("div");
+        d.innerHTML = "<b>"+JSON.stringify(product)+"</b>";
+        return d;
+    };
+
+    policiesList.forEach((p)=> prodcutHTMLList.addElement(p));
+    prodcutHTMLList.render(cellBuilder);
+
+    popUp(div);
 }

@@ -1,4 +1,5 @@
 
+
 function logout() {
     instance.sign_out(localStorage.getItem("current_username"));
     localStorage.removeItem("current_username");
@@ -288,6 +289,7 @@ class Main{
     }
 
     add_store_conditioned_discount(details){
+        alert("sendin");
         this.client.send(JSON.stringify(details));
     }
 

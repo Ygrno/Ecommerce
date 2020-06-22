@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import DAL.DBAccess;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class SubscribersManage_Facade implements InternalService {
@@ -448,6 +449,7 @@ public class SubscribersManage_Facade implements InternalService {
         BuyPolicy comp_policy = find_buy_policy(policy_id, store);
         if (comp_policy!= null) return false;//policy_id already exists;
         ComplexBuyPolicy complex_policy = new ComplexBuyPolicy(policy_id,description, int_to_logic(op));
+        complex_policy.setStore(store);
         dB.updateAndCommit(complex_policy);
         int counter=0;
         List<BuyPolicy> policies_toAdd=new ArrayList<>();
@@ -490,16 +492,16 @@ public class SubscribersManage_Facade implements InternalService {
         BuyPolicy policy = find_buy_policy(policy_id, store);
         if (policy == null) return false; //policy_id not exists;
         ComplexBuyPolicy complex_policy=(ComplexBuyPolicy) policy;
-
+        complex_policy.setStore(store);
         BuyPolicy new_policy = find_buy_policy(new_policy_id, store);
         if (new_policy == null) return false; //policy_id not exists;
 
-        if (act=="add") {
+        if (act.equals("add")) {
             complex_policy.getPolicies_list().add(new_policy);
             dB.updateAndCommit(complex_policy);
             return true;
         }
-        else if (act=="remove") {
+        else if (act.equals("remove")) {
             for (BuyPolicy p : complex_policy.getPolicies_list()) {
                 if (p.getPolicy_id() == new_policy_id) {
                     complex_policy.getPolicies_list().remove(p);
@@ -519,14 +521,9 @@ public class SubscribersManage_Facade implements InternalService {
         if (store==null) return false;
         BuyPolicy policy = find_buy_policy(policy_id, store);
         if (policy == null) return false; //policy_id not exists;
-        List<BuyPolicy> policies = store.getBuyPolicyList();
-        for (Policy p : policies)
-            if(p.getPolicy_id()==policy_id) {
-                policies.remove(p);
-                dB.deleteAndCommit(p);
-                return true;
-            }
-        return false;
+        store.getBuyPolicyList().remove(policy);
+        dB.deleteAndCommit(policy);
+        return true;
     }
 
     //private functions for buy policy
@@ -559,16 +556,19 @@ public class SubscribersManage_Facade implements InternalService {
             case 1:
                 policy = new BagBuyPolicy(policy_id,description, minCost, maxCost, min_quantity, max_quantity);
                 store.getBuyPolicyList().add(policy);
+                policy.setStore(store);
                 dB.updateAndCommit(policy);
                 return true;
             case 2:
                 policy = new ProductBuyPolicy(policy_id,description, product_name, minProducts, maxProducts);
                 store.getBuyPolicyList().add(policy);
+                policy.setStore(store);
                 dB.updateAndCommit(policy);
                 return true;
             case 3:
                 policy = new SystemBuyPolicy(policy_id,description, day);
                 store.getBuyPolicyList().add(policy);
+                policy.setStore(store);
                 dB.updateAndCommit(policy);
                 return true;
             default:
@@ -604,16 +604,15 @@ public class SubscribersManage_Facade implements InternalService {
         requester.notifications().add(o);
     }
 
-    public static int[] getBuyPolicyIdsList(String store_name){
-        int[] exists_policies = new int[100];
+    public static HashMap<Integer,String> getBuyPolicyIdsList(String store_name){
+        HashMap<Integer,String> policies = new HashMap<>();
         Store store = find_store(store_name);
         if (store==null) return null;
         int i = 0;
         for (BuyPolicy p : store.getBuyPolicyList()) {
-            exists_policies[i] = p.getPolicy_id();
-            i++;
+            policies.put(p.getPolicy_id(),p.getDescription());
         }
-        return exists_policies;
+        return policies;
     }
 
     public static int[] getPoliciesInComplex(String store_name, int policy_id) {

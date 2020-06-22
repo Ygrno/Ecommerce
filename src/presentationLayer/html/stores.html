@@ -167,9 +167,9 @@
             }else if(req === "get_product_of_store"){
                 addProduct(response);
             }else if (req === "save_product_for_guest") {
-                console.log(response);
+                save_product_for_guest_response(response);
             }else if(req === "save_product_for_subscriber"){
-                console.log(response);
+                save_product_for_subscriber_response(response);
             }else if (req==="view_cart_guest"){
                 ViewCart(response);
             }else if (req==="view_cart_subscriber"){
@@ -212,6 +212,16 @@
                 complex_discount_response(response);
             }else if (req === "delete_discount"){
                 delete_discount_response(response);
+            }else if (req === "create_store_simple_buyPolicy"){
+                add_simple_policy_response(response);
+            }else if (req === "edit_store_simple_buyPolicy"){
+                edit_simple_policy_response(response);
+            }else if (req === "remove_store_buyPolicy"){
+                remove_store_buyPolicy_response(response);
+            }else if (req === "create_store_complex_buyPolicy"){
+                add_complex_buy_policy_response(response);
+            }else if (req === "get_policies_ids_in_store"){
+                view_buy_policies_response(response);
             }
 
         };

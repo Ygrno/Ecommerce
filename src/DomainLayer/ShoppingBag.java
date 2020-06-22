@@ -52,6 +52,7 @@ public class ShoppingBag {
 
 
 
+
     
 
     public synchronized double getDiscounted_bag_price() {

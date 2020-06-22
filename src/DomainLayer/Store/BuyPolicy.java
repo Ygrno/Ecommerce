@@ -14,18 +14,29 @@ import java.util.List;
 public abstract class BuyPolicy extends Policy {
 
    // enum Logicaloperation { or, and, xor};
-    private String description;
+
+
+    @ManyToOne(targetEntity = Store.class)
+    @JoinColumn(name ="store_id")
+    protected Store store;
+
 
     public BuyPolicy(int policy_id, String description)
     {
-        super.id = policy_id;
+        //super.id = policy_id;
         super.description = description;
     }
 
     public BuyPolicy() {
     }
 
+    public String getDescription() {
+        return description;
+    }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     @Override
     public boolean validate(ShoppingBag shoppingBag, User user) {
@@ -39,4 +50,12 @@ public abstract class BuyPolicy extends Policy {
 //        this.policy_id=id;
 //    }
 
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
+    }
 }

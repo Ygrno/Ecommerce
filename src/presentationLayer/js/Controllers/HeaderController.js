@@ -24,6 +24,13 @@ function get_notifications(response){
     popUp(div);
 }
 
+function openStoreResponse(response) {
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
+}
 
 function ViewCart(products) {
     /**display cart popup**/

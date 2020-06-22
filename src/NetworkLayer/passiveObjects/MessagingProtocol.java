@@ -127,7 +127,20 @@ public class MessagingProtocol {
                 StoreRoleMessageProccess.add_store_complex_discount(this,request);
             }else if(req.equals("delete_discount")){
                 StoreRoleMessageProccess.delete_discount(this,request);
+            }else if(req.equals("create_store_simple_buyPolicy")){
+                StoreRoleMessageProccess.create_store_simple_buyPolicy(this,request);
+            }else if(req.equals("edit_store_simple_buyPolicy")){
+                StoreRoleMessageProccess.edit_store_simple_buyPolicy(this,request);
+            }else if(req.equals("create_store_complex_buyPolicy")){
+                StoreRoleMessageProccess.create_store_complex_buyPolicy(this,request);
+            }else if(req.equals("remove_store_buyPolicy")){
+                StoreRoleMessageProccess.remove_store_buyPolicy(this,request);
+            }else if(req.equals("edit_store_complex_buyPolicy")){
+                StoreRoleMessageProccess.edit_store_complex_buyPolicy(this,request);
+            }else if(req.equals("get_policies_ids_in_store")){
+                StoreRoleMessageProccess.get_policies_ids_in_store(this,request);
             }
+
 
         }catch (Exception e){
             System.out.println("Can't process " + msg);
