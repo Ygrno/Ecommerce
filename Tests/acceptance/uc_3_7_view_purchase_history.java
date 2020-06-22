@@ -15,20 +15,25 @@ public class uc_3_7_view_purchase_history {
 
     private  static SubscribersManage_Facade SUB;
     private static SystemManage_Facade SYS;
+    private static ArrayList<String> bamba ;
 
 
     @BeforeClass
     public static void before() {
         SYS = new SystemManage_Facade();
+        SUB = new SubscribersManage_Facade();
         SYS.init_system();
         SYS.is_initialized();
         SYS.add_subscriber("subscriber", "subscriber");
         SUB.subscriber_login_state("subscriber",true);
+        SUB.create_store("subscriber","test");
+        bamba= new ArrayList<>();
+        bamba.add("bamba");
     }
 
     @Test
     public void success_scenario() throws JSONException {
-        SUB.purchaseListAdd("subscriber" ,"test",new ArrayList<String>());
+        SUB.purchaseListAdd("subscriber" ,"test",bamba);
         assertNotNull(SYS.View_purchase("subscriber"));
     }
 
