@@ -216,14 +216,8 @@ public class SystemManage_Facade implements InternalService {
 
     public static boolean add_subscriber(String user_name, String password) {
         Subscriber subscriber = new Subscriber(user_name, password);
-        try {
-            dB.updateAndCommit(subscriber);
-        }
-        catch (Exception e){
-            java.lang.System.out.println("disconnected with the mysql server");
-        }
         system.getUser_list().add(subscriber);
-        return true;
+        return dB.updateAndCommit(subscriber);
     }
 
     public static  List<JSONObject> View_purchase(String user_name) throws JSONException { //3.7

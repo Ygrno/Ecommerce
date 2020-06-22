@@ -23,6 +23,8 @@ public class SubscribersManage_Facade implements InternalService {
 
     private static DBAccess dB = DBAccess.getInstance();
 
+
+
     /////////////// login/signup methods///////////////////////////
     public static boolean login(String username, String password){
         if(System.getSystem().get_subscriber(username)== null)
@@ -37,9 +39,8 @@ public class SubscribersManage_Facade implements InternalService {
             return false;
         }
         Subscriber sub = new Subscriber(username,password);
-        dB.updateAndCommit(sub);
         System.getSystem().getUser_list().add(sub);
-        return true;
+        return dB.updateAndCommit(sub);
     }
 /*    public static Boolean openStore(String username, String name) {
         return System.getSystem().SubImp().open_store(username,name);
@@ -205,22 +206,22 @@ public class SubscribersManage_Facade implements InternalService {
         return false;
     }
 
-    public static void create_store(String user_name, String store_name) {
+    public static boolean create_store(String user_name, String store_name) {
 
         Subscriber subscriber = System.getSystem().get_subscriber(user_name);
 
         Store store = new Store(store_name);
-        dB.updateAndCommit(store);
+        if(!dB.updateAndCommit(store)) return false;
 
         StoreOwner storeOwner = new StoreOwner(subscriber, store);
-        dB.updateAndCommit(storeOwner);
+        if(!dB.updateAndCommit(storeOwner)) return false;
 
         subscriber.getRole_list().add(storeOwner);
 
         store.getRoles().add(storeOwner);
 
         System.getSystem().getStore_list().add(store);
-
+        return true;
     }
 
     public static boolean add_product_to_store(String user_name, String store_name, String product_name, double product_price, int product_amount) {
@@ -229,14 +230,14 @@ public class SubscribersManage_Facade implements InternalService {
         if (store_role instanceof StoreOwner) {
             Product product = new Product(product_name, product_price, product_amount, store_role.store);
 
-            dB.updateAndCommit(product);
+            if(!dB.updateAndCommit(product)) return false;
             store_role.store.getProduct_list().add(product);
             return true;
         }
         else if (store_role instanceof StoreManger) {
             if (((StoreManger) store_role).havePermission("ADD_PRODUCT")) {
                 Product product = new Product(product_name, product_price, product_amount, store_role.store);
-                dB.updateAndCommit(product);
+                if(!dB.updateAndCommit(product)) return false;
                 store_role.store.getProduct_list().add(product);
             }
             return true;
@@ -366,8 +367,8 @@ public class SubscribersManage_Facade implements InternalService {
             storeManger.store.getRoles().add(storeManger);
             store_role.getAssigned_users().add(storeManger);
             storeManger.setAssigned_by(store_role);
-            dB.updateAndCommit(storeManger);
-            dB.updateAndCommit(store_role);
+            if(!dB.updateAndCommit(storeManger)) return false;
+            if(!dB.updateAndCommit(store_role)) return false;
             return true;
         }
         return false;
