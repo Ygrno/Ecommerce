@@ -123,8 +123,8 @@ public class SubscriberImp implements ISubscriber {
             return false;
         }
         if(SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)){
-            SubscribersManage_Facade.create_store(user_name,store_name);
-            return true;
+            if(!SubscribersManage_Facade.create_store(user_name,store_name)) return false;
+                return true;
         }
         my_logError.logger.severe("open_store failed!");
         return false;

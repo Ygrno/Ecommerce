@@ -47,7 +47,7 @@ public class GuestImp implements IGuest {
         }
 
         if(!SystemManage_Facade.find_subscriber(user_name)) {
-            SystemManage_Facade.add_subscriber(user_name, password);
+            if(!SystemManage_Facade.add_subscriber(user_name, password)) return false;
             if(user_name.equals("Admin")) SystemManage_Facade.promote_to_manager(user_name,password);
             SubscribersManage_Facade.subscriber_login_state(user_name,true);
             return true;

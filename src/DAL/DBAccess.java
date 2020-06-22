@@ -1,6 +1,7 @@
 package DAL;
 
 import DomainLayer.User.Subscriber;
+import Logs.LogErrors;
 import com.fasterxml.classmate.AnnotationConfiguration;
 //import com.mysql.cj.xdevapi.SessionFactory;
 import org.hibernate.Session;
@@ -28,6 +29,8 @@ public class DBAccess {
     private EntityManager entityManager;
     private Session session ;
     private static DBAccess instance= new DBAccess();
+    LogErrors my_logError = LogErrors.getLogger();
+
 
     /**
      * constructor
@@ -64,25 +67,37 @@ public class DBAccess {
      *  update the changes in the db
      * @param o
      */
-    public void updateAndCommit(Object o){
-        if ( !(session.getTransaction().isActive())) {
-            session.getTransaction().begin();
+    public boolean updateAndCommit(Object o){
+        try {
+            if (!(session.getTransaction().isActive())) {
+                session.getTransaction().begin();
+            }
+            session.saveOrUpdate(o);
+            session.getTransaction().commit();
+            return true;
         }
-        session.saveOrUpdate(o);
-//        entityManager.persist(o);
-//        entityManager.getTransaction().commit();
-        session.getTransaction().commit();
+        catch (Exception e){
+            e.printStackTrace();
+            my_logError.logger.severe("Failed To Connect To The DataBase!");
+            return false;
+        }
     }
 
 
-    public void deleteAndCommit(Object o){
-        if ( !(session.getTransaction().isActive())) {
-            session.getTransaction().begin();
+    public boolean deleteAndCommit(Object o){
+        try {
+            if (!(session.getTransaction().isActive())) {
+                session.getTransaction().begin();
+            }
+            session.delete(o);
+            session.getTransaction().commit();
+            return true;
         }
-        session.delete(o);
-//        entityManager.persist(o);
-//        entityManager.getTransaction().commit();
-        session.getTransaction().commit();
+        catch (Exception e){
+            e.printStackTrace();
+            my_logError.logger.severe("Failed To Connect To The DataBase!");
+            return false;
+        }
     }
 
 
@@ -90,27 +105,42 @@ public class DBAccess {
      * Close the connection
      * @return true if the connection is closed properly
      */
-    public void closeConnection() {
+    public boolean closeConnection() {
         try {
             if (conn != null && !conn.isClosed()) {
                 closeSession();
                 conn.close();
                 conn = null;
+                return true;
             }
         } catch (Exception e) {
+            return false;
         }
+        return false;
     }
 
-    public void closeSession() {
+    public Session getSession() {
+        return session;
+    }
+
+    public boolean closeSession() {
         if(session != null) {
             session.close();
+            return true;
         }
+        return false;
     }
 
     public static DBAccess getInstance() {
         return instance;
     }
 
+    public boolean isActive(){
+        if(!session.isConnected()){
+            return false;
+        }
+        return session.getTransaction().isActive();
+    }
 
     public <T> List<T> select(Class<T> c){
         return session.createCriteria(c).list();

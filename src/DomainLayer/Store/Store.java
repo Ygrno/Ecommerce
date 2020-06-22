@@ -44,12 +44,6 @@ public class Store {
 
     public Store(String name) {
         //TODO: require policy
-        List<Product> p=System.dbAccess.select(Product.class);
-//        for(Product pr: p){
-//            java.lang.System.out.println(pr.getStore().getId());
-//            if(pr.getStore().getId()==this.id)
-//                this.product_list.add(pr);
-//        }
 
         this.name = name;
        // this.id = System.nextStoreId++;

@@ -1,5 +1,6 @@
 package acceptance;
 
+import DAL.DBAccess;
 import ServiceLayer.GuestImp;
 import ServiceLayer.SubscriberImp;
 import org.junit.BeforeClass;
@@ -17,6 +18,7 @@ public class uc_1_1_init_system_test {
     private static GuestImp guestImp;
     private static ManagerImp managerImp;
     private static SubscriberImp subscriberImp;
+
 
 
 
@@ -45,5 +47,6 @@ public class uc_1_1_init_system_test {
         //guestImp.login("user1", "wrong_password");
         assertFalse(guestImp.login("user2","hi"));
     }
+
 
 }
