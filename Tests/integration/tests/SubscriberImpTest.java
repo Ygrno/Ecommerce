@@ -184,9 +184,13 @@ public class SubscriberImpTest {
         List<String> strings = new ArrayList<String>();
         PurchaseProcess purchaseProcess = new PurchaseProcess(subscriber,store,new ShoppingBag(strings));
         subscriber.getPurchaseProcesslist().add(purchaseProcess);
-        String purchase = SUBImp.view_purchase_history("subscriber");
-        assertNotNull(purchase);//the purchase added successfully
-        assertEquals(purchase,"");
+        try {
+            List<JSONObject> purchases = SUBImp.view_purchase_history("subscriber");
+            assertNotNull(purchases);//the purchase added successfully
+            assertEquals(purchases.size(), 0);
+        }catch (Exception e){
+
+        }
     }
 
     @Test

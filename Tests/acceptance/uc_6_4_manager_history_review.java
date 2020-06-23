@@ -43,17 +43,26 @@ public class uc_6_4_manager_history_review {
 
     @Test
     public void success_scenario() {
-        assertEquals(managerImp.view_history_store("store1"),"");
-        assertEquals(managerImp.view_history_costumer("buyer"),"");
+        try {
+            assertEquals(managerImp.view_history_store("store1").size(), 0);
+            assertEquals(managerImp.view_history_costumer("buyer"), "");
+        }
+        catch (Exception e){
 
+        }
 
     }
 
 
     @Test
     public void failure_scenario() {
-        assertEquals(managerImp.view_history_store("store2"),"");
-        assertEquals(managerImp.view_history_costumer("buyer1"),"");
+        try {
+            assertEquals(managerImp.view_history_store("store2").size(), 0);
+            assertEquals(managerImp.view_history_costumer("buyer1").size(),0);
+
+        }catch (Exception e){
+
+        }
 
 
     }

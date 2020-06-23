@@ -5,6 +5,7 @@ import ServiceLayer.SubscriberImp;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class SubscriberMessageProccess {
@@ -60,7 +61,7 @@ public class SubscriberMessageProccess {
 
     public static void signOut(MessagingProtocol protocol, JSONObject request) throws Exception{
         String username = request.getString("username");
-        boolean b=subscriber.sign_out(username);
+        boolean b = subscriber.sign_out(username);
         JSONObject o=new JSONObject();
         o.put("req", request.get("req"));
         o.put("success", b);
@@ -108,11 +109,18 @@ public class SubscriberMessageProccess {
 
     public static void view_purchase_history(MessagingProtocol protocol, JSONObject request) throws Exception{
         String username = request.getString("username");
-        String l = subscriber.view_purchase_history(username);
+        List<JSONObject> history = subscriber.view_purchase_history(username);
 
         JSONObject o = new JSONObject();
+
+        JSONArray arr = new JSONArray();
+        for (Iterator<JSONObject> iterator = history.iterator(); iterator.hasNext(); ) {
+            JSONObject h = iterator.next();
+            arr.put(h);
+        }
+
         o.put("req", request.get("req"));
-        o.put("products_in_history", l);
+        o.put("products_in_history", arr);
 
         protocol.send(o);
     }
