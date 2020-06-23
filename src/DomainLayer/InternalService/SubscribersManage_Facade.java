@@ -546,7 +546,7 @@ public class SubscribersManage_Facade implements InternalService {
     //private functions for buy policy
     private static BuyPolicy find_buy_policy(int policy_id, Store store) {
         for (BuyPolicy p : store.getBuyPolicyList())
-            if (p.getPolicy_id()==policy_id)
+            if ((p.getPolicy_id())==policy_id)
                 return p;
         return null;
     }
