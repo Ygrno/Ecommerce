@@ -64,7 +64,7 @@ public class SystemManage_Facade implements InternalService {
                     return false;
                 }
             }
-            if(!process.getStore().validatePurchasePolicies(process.getShoppingBag(),u)) return false;
+            if(!process.getStore().validatePurchasePolicies(process.getShoppingBag())) return false;
         }
         return true;
     }

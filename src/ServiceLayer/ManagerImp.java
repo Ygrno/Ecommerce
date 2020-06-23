@@ -1,5 +1,6 @@
 package ServiceLayer;
 
+import DAL.DBAccess;
 import DomainLayer.InternalService.SystemManage_Facade;
 import Encryption.EncryptProxy;
 import ExternalService.ExternalSupplyService;
@@ -12,6 +13,7 @@ import Logs.LogInfo;
 public class ManagerImp implements IManager {
     LogErrors my_logError = LogErrors.getLogger();
     LogInfo my_logInfo = LogInfo.getLogger();
+    private static DBAccess db;
 
     @Override
     public boolean init_system(boolean file) {
@@ -19,9 +21,11 @@ public class ManagerImp implements IManager {
         my_logInfo.logger.info("Init System");
         //Init System Flow:
         //---------------------------
-
+        // init DB
+        db= DBAccess.getInstance();
         //Initialize System.
         SystemManage_Facade.init_system();
+
 
         //Sign-Up Admin
         GuestImp guestImp = new GuestImp();
