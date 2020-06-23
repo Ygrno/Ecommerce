@@ -410,9 +410,10 @@ public class SystemManage_Facade implements InternalService {
         if (sub != null) {
             for(PurchaseProcess purchase: sub.getPurchaseProcesslist()){
                 if(purchase.isFinished())
-                    history.append("\n").append("Customer Name: ").append(purchase.getDetails().getBuyer_name()).append("Store Name: ").append(purchase.getStore().getName()).append("\nList of products: ").append(purchase.getShoppingBag().getProducts_names().toString()).append("\n sum: ").append(purchase.getDetails().getPrice());
+                    history.append("\n").append("Customer Name: ").append(purchase.getDetails().getBuyer_name()).append(" Store Name: ").append(purchase.getStore().getName()).append("\nList of products: ").append(purchase.getShoppingBag().getProducts_names().toString()).append("\n sum: ").append(purchase.getDetails().getPrice()).append("\n");
             }
         }
+
         return history.toString();
     }
 
