@@ -23,7 +23,7 @@ public class SystemBuyPolicy extends SimpleBuyPolicy {
     }
 
     @Override
-    public boolean validate (ShoppingBag shoppingBag, User user) {
+    public boolean validate (ShoppingBag shoppingBag) {
         return true;
     }
 

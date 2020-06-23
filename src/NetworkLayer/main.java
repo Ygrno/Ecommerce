@@ -11,7 +11,7 @@ public class main {
     private static DBAccess db;
     public static void main(String[] args){
         //start the database
-        db=DBAccess.getInstance();
+        //db=DBAccess.getInstance();
         ManagerImp managerImp = new ManagerImp();
         managerImp.init_system(true);
 

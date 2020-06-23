@@ -33,7 +33,7 @@ public class BagBuyPolicy extends SimpleBuyPolicy {
     }
 
     @Override
-    public boolean validate(ShoppingBag shoppingBag, User user) {
+    public boolean validate(ShoppingBag shoppingBag) {
         double total_price=0;
         //ShoppingBag shopBag= purchaseProcess.getShoppingBag();
         List<Product> products = shoppingBag.getProducts();
@@ -47,6 +47,7 @@ public class BagBuyPolicy extends SimpleBuyPolicy {
             return false;
         if (total_price > maxCost)
             return false;
+
         return true;
     }
 
