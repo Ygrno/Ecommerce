@@ -1,30 +1,22 @@
 package integration.tests;
 
 import DomainLayer.InternalService.SubscribersManage_Facade;
-import DomainLayer.Roles.Role;
-import DomainLayer.Roles.StoreRole;
-import DomainLayer.System;
 import DomainLayer.User.Subscriber;
-import NetworkLayer.passiveObjects.GuestMessageProccess;
 import ServiceLayer.GuestImp;
-import ServiceLayer.ManagerImp;
-import ServiceLayer.SubscriberImp;
-import junit.framework.TestCase;
+import ServiceLayer.AdminImp;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class SubscriberTest {
 
     private static Subscriber subscriber;
-    private static ManagerImp managerImp;
+    private static AdminImp managerImp;
     private static GuestImp guestImp;
 
 
     @BeforeClass
     public static void setUp() throws Exception {
-        managerImp = new ManagerImp();
+        managerImp = new AdminImp();
         managerImp.init_system(false);
         guestImp = new GuestImp();
         guestImp.sign_up("test_sub", "pass");

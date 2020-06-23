@@ -1,7 +1,7 @@
 package acceptance;
 
 import ServiceLayer.GuestImp;
-import ServiceLayer.ManagerImp;
+import ServiceLayer.AdminImp;
 import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
 import org.junit.*;
@@ -16,7 +16,7 @@ public class uc_4_7_remove_store_manager {
     private static GuestImp guestImp;
     private static SubscriberImp SUBImp;
     private static StoreRoleImp storeRoleImp;
-    private static ManagerImp managerImp;
+    private static AdminImp managerImp;
 
 
 
@@ -25,7 +25,7 @@ public class uc_4_7_remove_store_manager {
         guestImp = new GuestImp();
         SUBImp = new SubscriberImp();
         storeRoleImp =  new StoreRoleImp();
-        managerImp = new ManagerImp();
+        managerImp = new AdminImp();
         managerImp.init_system(false);
         guestImp.login("Admin","Password");
         guestImp.sign_up("manager", "password");

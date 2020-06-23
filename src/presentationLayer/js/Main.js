@@ -67,7 +67,7 @@ function includeHeader() {
                     elmnt.removeAttribute("w3-include-html");
                     includeHeader();
                 }
-            }
+            };
             xhttp.open("GET", file, false);
             xhttp.send();
             setLoggedUserLabel();
@@ -136,6 +136,10 @@ class Main{
 
     login(username, password){
         this.client.send(JSON.stringify({req:"login", username:username, password:password}));
+    }
+
+    sendToServer(request){
+        this.client.send(JSON.stringify(request));
     }
 
     continueAsAGuest(username, password){
@@ -309,6 +313,26 @@ class Main{
         this.client.send(JSON.stringify({req:"get_user_permissions",username:user, store:store}));
     }
 
+    view_customer_history(details){
+        this.client.send(JSON.stringify(details));
+    }
+
+
+    remove_subscriber(username){
+        this.client.send(JSON.stringify({req:"remove_subscriber", username:username}));
+    }
+
+    view_history_store(details){
+        this.client.send(JSON.stringify(details));
+    }
+
+    today_revenue(){
+        this.client.send(JSON.stringify({req:"today_revenue"}));
+    }
+
+    date_revenue(){
+        this.client.send(JSON.stringify(details));
+    }
     edit_manager_permissions(store, assigned_user, permissions){
         this.client.send(JSON.stringify({
             req: "edit_manager_permissions",

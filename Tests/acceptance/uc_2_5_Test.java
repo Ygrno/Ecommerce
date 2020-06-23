@@ -2,7 +2,7 @@ package acceptance;
 
 import DAL.DBAccess;
 import ServiceLayer.GuestImp;
-import ServiceLayer.ManagerImp;
+import ServiceLayer.AdminImp;
 import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
 import org.junit.BeforeClass;
@@ -13,12 +13,12 @@ import java.util.HashMap;
 
 public class uc_2_5_Test {
     private static GuestImp gi;
-    private static ManagerImp managerImp;
+    private static AdminImp managerImp;
     private DBAccess db;
     @BeforeClass
     public static void setUp() throws IOException {
         gi=new GuestImp();
-        managerImp = new ManagerImp();
+        managerImp = new AdminImp();
         SubscriberImp si = new SubscriberImp();
         StoreRoleImp sri = new StoreRoleImp();
         managerImp.init_system(false);

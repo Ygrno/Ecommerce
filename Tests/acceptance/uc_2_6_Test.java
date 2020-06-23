@@ -1,7 +1,7 @@
 package acceptance;
 
 import ServiceLayer.GuestImp;
-import ServiceLayer.ManagerImp;
+import ServiceLayer.AdminImp;
 import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
 import org.json.JSONException;
@@ -15,13 +15,13 @@ import static org.junit.Assert.assertTrue;
 public class uc_2_6_Test {
 
     private static GuestImp gi;
-    private static ManagerImp managerImp;
+    private static AdminImp managerImp;
 
 
     @BeforeClass
     public static void setUp() throws IOException {
         gi=new GuestImp();
-        managerImp = new ManagerImp();
+        managerImp = new AdminImp();
         SubscriberImp si = new SubscriberImp();
         StoreRoleImp sri = new StoreRoleImp();
         managerImp.init_system(false);

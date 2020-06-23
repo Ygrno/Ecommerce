@@ -201,7 +201,7 @@ public class SubscriberImp implements ISubscriber {
     }
 
     @Override
-    public String view_purchase_history(String user_name) {
+    public List<JSONObject> view_purchase_history(String user_name) throws Exception{
         my_logInfo.logger.info("view_purchase_history");
         if(!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
@@ -209,6 +209,20 @@ public class SubscriberImp implements ISubscriber {
         }
         if(SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)){
             return SystemManage_Facade.get_subscriber_purchase_process(user_name);
+        }
+        my_logError.logger.severe("view_purchase_history failed!");
+        return null;
+    }
+
+
+    public String view_purchase_history_string(String user_name){
+        my_logInfo.logger.info("view_purchase_history");
+        if(!SystemManage_Facade.is_initialized()) {
+            my_logError.logger.severe("System not initialized");
+            return null;
+        }
+        if(SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)){
+            return SystemManage_Facade.get_subscriber_purchase_process_string(user_name);
         }
         my_logError.logger.severe("view_purchase_history failed!");
         return null;

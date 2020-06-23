@@ -2,8 +2,7 @@ package NetworkLayer;
 
 import DAL.DBAccess;
 import NetworkLayer.passiveObjects.connectionHandler;
-import Stubs.Esimulation;
-import ServiceLayer.ManagerImp;
+import ServiceLayer.AdminImp;
 
 import java.net.ServerSocket;
 
@@ -12,7 +11,7 @@ public class main {
     public static void main(String[] args){
         //start the database
         //db=DBAccess.getInstance();
-        ManagerImp managerImp = new ManagerImp();
+        AdminImp managerImp = new AdminImp();
         managerImp.init_system(true);
 
         //Esimulation.Init();
