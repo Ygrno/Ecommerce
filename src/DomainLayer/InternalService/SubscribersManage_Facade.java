@@ -443,7 +443,7 @@ public class SubscribersManage_Facade implements InternalService {
             Store store = store_role.store;
             for(PurchaseProcess purchase: store.getPurchase_process_list()){
                 if(purchase.isFinished())
-                    history.append("\n").append("Customer Name: ").append(purchase.getDetails().getBuyer_name()).append("\nList of products: ").append(purchase.getShoppingBag().getProducts_names().toString()).append("\n sum: ").append(purchase.getDetails().getPrice());
+                    history.append("\n").append(" Customer Name: ").append(purchase.getDetails().getBuyer_name()).append("\n List of products: ").append(purchase.getShoppingBag().getProducts_names().toString()).append("\n sum: ").append(purchase.getDetails().getPrice());
             }
         }
         return history.toString();

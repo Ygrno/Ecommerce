@@ -1056,14 +1056,14 @@ function watch_store_history(){
 
 function watch_store_history_respond(products) {
     let productList = products["store_history"];
-
+    if (productList.length === 0) return;
     let div = document.createElement("div");
     div.style.overflow = 'auto';
-    console.log(products);
-    alert(JSON.stringify(products));
-    //DESIGN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    let d = document.createElement("div");
-    d.innerHTML = "<b> productList </b>";
+
+    let purchaseDiv = document.createElement("div");
+    purchaseDiv.innerHTML = "Purchases : "+productList;
+    purchaseDiv.className = 'total_price_div';
+    div.appendChild(purchaseDiv);
 
     popUp(div);
 }

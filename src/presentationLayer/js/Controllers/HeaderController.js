@@ -32,41 +32,7 @@ function openStoreResponse(response) {
         alert("process uncompleted something is wrong!");
 }
 
-function ViewCart(products) {
-    /**display cart popup**/
 
-    let productList = products["productsInCart"];
-    if (productList.length === 0) return;
-    let div = document.createElement("div");
-    div.style.overflow = 'auto';
-
-    let prodcutHTMLList = new HTMLList(div);
-
-    const cellBuilder = (product)=>{
-        //DESIGN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        let d = document.createElement("div");
-        d.innerHTML = "<b>"+JSON.stringify(product)+"</b>";
-        return d;
-    };
-
-    productList.forEach((p)=> prodcutHTMLList.addElement(p));
-    prodcutHTMLList.render(cellBuilder);
-
-    let BuyButton = document.createElement("div");
-    BuyButton.className = "Green_beautiful_div";
-    BuyButton.innerHTML = '<b>Buy</b>';
-    BuyButton.style.fontSize = '40px';
-    BuyButton.style.width = '100px';
-    BuyButton.style.marginTop = '3%';
-    BuyButton.onclick = function(){
-        buyThings(products);
-    };
-
-    div.appendChild(BuyButton);
-
-
-    popUp(div);
-}
 
 function buyThings(products){
     clearPopUp();
@@ -137,20 +103,59 @@ function buyThings(products){
     popUp(div);
 }
 
+function ViewCart(products) {
+    /**display cart popup**/
+
+    let productList = products["productsInCart"];
+    if (productList.length === 0) return;
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+
+    let prodcutHTMLList = new HTMLList(div);
+
+    const cellBuilder = (product)=>{
+        //DESIGN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        let d = document.createElement("div");
+        d.innerHTML = "<b>"+JSON.stringify(product)+"</b>";
+        return d;
+    };
+
+    productList.forEach((p)=> prodcutHTMLList.addElement(p));
+    prodcutHTMLList.render(cellBuilder);
+
+    let BuyButton = document.createElement("div");
+    BuyButton.className = "Green_beautiful_div";
+    BuyButton.innerHTML = '<b>Buy</b>';
+    BuyButton.style.fontSize = '40px';
+    BuyButton.style.width = '100px';
+    BuyButton.style.marginTop = '3%';
+    BuyButton.onclick = function(){
+        buyThings(products);
+    };
+
+    div.appendChild(BuyButton);
+
+
+    popUp(div);
+}
+
 function viewPurchaseHistory(products){
     if(isGuest()){
         alert("You should sign in first");
         return;
     }
 
+
     let productList = products["products_in_history"];
     if (productList.length === 0) return;
     let div = document.createElement("div");
     div.style.overflow = 'auto';
 
-    productList.innerHTML = productList;
-    productList.className = 'total_price_div';
-    div.appendChild(productList);
+    let purchaseDiv = document.createElement("div");
+    purchaseDiv.innerHTML = "Purchases : "+productList;
+    purchaseDiv.className = 'total_price_div';
+    div.appendChild(purchaseDiv);
+
     popUp(div);
 
 }
