@@ -158,6 +158,18 @@ public class GuestMessageProccess {
         protocol.send(o);
     }
 
+    public  static void remove_product_cart_guest(MessagingProtocol protocol, JSONObject request) throws Exception{
+        int id = request.getInt("id");
+        String productName=request.getString("product_name");
+        String storeName=request.getString("store_name");
+
+        boolean b = guestImp.remove_product_from_cart(id,productName,storeName);
+        JSONObject o=new JSONObject();
+        o.put("req", request.get("req"));
+        o.put("success", b);
+        protocol.send(o);
+    }
+
 
 
 

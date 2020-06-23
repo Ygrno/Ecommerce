@@ -188,3 +188,59 @@ function openNewStore(){
     div.appendChild(finish);
     popUp(div);
 }
+
+function remove_product_cart(){
+
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+
+    let introDiv = document.createElement("div");
+    introDiv.innerHTML = "Remove Product From Cart";
+    introDiv.className = 'total_price_div';
+    div.appendChild(introDiv);
+
+    let product_name = document.createElement("input");
+    product_name.placeholder="Enter Product Name";
+    product_name.className = 'text_input';
+    div.appendChild(product_name);
+
+    let store_name = document.createElement("input");
+    store_name.placeholder="Enter Store Name";
+    store_name.className = 'text_input';
+    div.appendChild(store_name);
+
+
+    let finish = document.createElement("div");
+    finish.className = 'Green_beautiful_div';
+    finish.innerHTML = '<b>Finish</b>';
+    finish.style.fontSize = '30px';
+    finish.style.width = '100px';
+    finish.style.marginTop = '3%';
+    finish.onclick = function(){
+        let product = product_name.value;
+        if(product === ""){
+            alert("please enter the product name");
+            return;
+        }
+        let storeName = store_name.value;
+        if(storeName === ""){
+            alert("please enter the store name");
+            return;
+        }
+        instance.remove_product_cart({
+            product: product,
+            store:storeName
+        });
+    };
+
+    div.appendChild(finish);
+    popUp(div);
+}
+
+function remove_cart_product_response(response) {
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
+}

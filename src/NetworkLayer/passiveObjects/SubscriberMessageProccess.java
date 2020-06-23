@@ -141,6 +141,17 @@ public class SubscriberMessageProccess {
         protocol.send(o);
     }
 
+    public  static void remove_product_cart_subscriber(MessagingProtocol protocol, JSONObject request) throws Exception{
+        String username = request.getString("username");
+        String productName=request.getString("product_name");
+        String storeName=request.getString("store_name");
+
+        boolean b = subscriber.remove_product_from_cart(username,productName,storeName);
+        JSONObject o=new JSONObject();
+        o.put("req", request.get("req"));
+        o.put("success", b);
+        protocol.send(o);
+    }
 
 
 }

@@ -1513,6 +1513,14 @@ function add_simple_policy_response(response) {
         alert("process uncompleted something is wrong!");
 }
 
+function remove_cart_product_response(response) {
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
+}
+
 function edit_simple_policy_response(response) {
     let bool = response["success"];
     if(bool === true)
