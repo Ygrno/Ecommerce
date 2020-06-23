@@ -166,24 +166,28 @@ public class SystemManage_Facade implements InternalService {
         if(product == null || amount > product.getSupplied_amount()) return false;
 
         Product buy_product = new Product(product.getName(),product.getPrice(),product.getSupplied_amount(),product.getStore());
-        dB.updateAndCommit(buy_product); //todo - the product already exists in DB, but not connected to the buyer.
         buy_product.setBuy_amount(amount);
 
         for(PurchaseProcess p:g.getPurchaseProcesslist()){
-            if(p.getStore().getName().equals(store_name)){
+            if(!p.isFinished() && p.getStore().getName().equals(store_name)){
                 p.getShoppingBag().getProducts_names().add(product_name);
-                p.getShoppingBag().getProducts().add(buy_product);
+                p.getShoppingBag().getProducts().add(product);
                 processExist=true;
+                product.setShoppingBag(p.getShoppingBag());
+
+
             }
         }
 
         if(!processExist){
-            PurchaseProcess p=new PurchaseProcess(g,SystemManage_Facade.get_store(store_name),new ShoppingBag(new ArrayList<>()));
-//            dB.updateAndCommit(p);
+            ShoppingBag sb= new ShoppingBag(new ArrayList<>());
+            PurchaseProcess p = new PurchaseProcess(g,s,sb);
             g.getShoppingCart().getShopping_bag_list().add(p.getShoppingBag());
             p.getShoppingBag().getProducts_names().add(product_name);
-            p.getShoppingBag().getProducts().add(buy_product);
-
+            p.getShoppingBag().getProducts().add(product);
+            g.getPurchaseProcesslist().add(p);
+            sb.setShoppingCart(g.getShoppingCart());
+            product.setShoppingBag(sb);
         }
         return true;
     }
@@ -444,11 +448,20 @@ public class SystemManage_Facade implements InternalService {
 
     public static boolean removeProductFromCart(String id, String product_name, String store_name) {
         User g= getUser(id);
+        Product toRemove=null;
         for(PurchaseProcess pp:g.getPurchaseProcesslist()){
             if(pp.getStore().getName().equals(store_name)){
                 for (Product p : pp.getShoppingBag().getProducts()){
                     if(p.getName().equals(product_name))
-                        pp.getShoppingBag().getProducts().remove(p);
+                        toRemove=p;
+                }
+                if(toRemove!=null) {
+                    java.lang.System.out.println("im here");
+                    pp.getShoppingBag().getProducts().remove(toRemove);
+                    if(!(g instanceof Guest)) {
+                        dB.updateAndCommit(pp.getShoppingBag());
+                        dB.updateAndCommit(pp);
+                    }
                 }
             }
         }

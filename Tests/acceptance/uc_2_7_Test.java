@@ -56,6 +56,9 @@ public class uc_2_7_Test {
         assert gi.watch_products_in_cart(0).get(1).getString("name").equals("twix");
         assert !gi.watch_products_in_cart(0).get(1).getString("name").equals("besli");
 
+        gi.remove_product_from_cart(0,"bmba","store1");
+        assert !gi.watch_products_in_cart(0).get(0).getString("name").equals("bmba");
+
     }
     @Test
     public void failScenario1() throws JSONException {

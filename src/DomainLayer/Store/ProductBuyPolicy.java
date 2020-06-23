@@ -71,8 +71,6 @@ public class ProductBuyPolicy extends SimpleBuyPolicy {
         HashMap<Product,Integer> products = shoppingBag.getProductsAmounts();
         for (Product p : products.keySet()) {
             if (p.getName().equals(this.product_name)) {
-                System.out.println(products.get(p));
-                System.out.println(minProducts);
                 if (minProducts != 0 && products.get(p) < minProducts)
                     return false;
                 if (maxProducts != 0 && products.get(p) > maxProducts)

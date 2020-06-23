@@ -319,6 +319,21 @@ class Main{
         }));
     }
 
+    remove_product_cart(details){
+        let msg = {
+            product_name: details.product,
+            store_name: details.store,
+        };
+        if (isGuest()) {
+            msg["id"] = localStorage.getItem("guest_id");
+            msg["req"] = "remove_product_cart_guest";
+        } else {
+            msg["username"] = localStorage.getItem("current_username");
+            msg["req"] = "remove_product_cart_subscriber";
+        }
+
+        this.client.send(JSON.stringify(msg));
+    }
 }
 
 let instance = new Main();
