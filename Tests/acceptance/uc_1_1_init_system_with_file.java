@@ -1,9 +1,7 @@
 package acceptance;
 
 import ServiceLayer.GuestImp;
-import ServiceLayer.ManagerImp;
-import org.json.JSONException;
-import org.junit.BeforeClass;
+import ServiceLayer.AdminImp;
 import org.junit.Test;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -13,13 +11,13 @@ import java.io.IOException;
 public class uc_1_1_init_system_with_file {
 
     private static GuestImp guestImp;
-    private static ManagerImp managerImp;
+    private static AdminImp managerImp;
 
 
 
     @Test
     public void TEST() throws IOException {
-        managerImp = new ManagerImp();
+        managerImp = new AdminImp();
         assert managerImp.init_system(true);
     }
 

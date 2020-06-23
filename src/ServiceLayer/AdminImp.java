@@ -10,7 +10,7 @@ import Logs.LogErrors;
 import Logs.LogInfo;
 
 
-public class ManagerImp implements IManager {
+public class AdminImp implements IAdmin {
     LogErrors my_logError = LogErrors.getLogger();
     LogInfo my_logInfo = LogInfo.getLogger();
     private static DBAccess db;

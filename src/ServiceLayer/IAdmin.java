@@ -1,6 +1,6 @@
 package ServiceLayer;
 
-public interface IManager {
+public interface IAdmin {
 
     public boolean init_system(boolean file); //1.1
     public boolean close_store_permanently(String store_name); //6.1

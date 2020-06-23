@@ -1,11 +1,11 @@
 package NetworkLayer.passiveObjects;
 
-import ServiceLayer.IManager;
-import ServiceLayer.ManagerImp;
+import ServiceLayer.IAdmin;
+import ServiceLayer.AdminImp;
 import org.json.JSONObject;
 
 public class ManagerMessageProccess {
-    private static IManager manager = new ManagerImp();
+    private static IAdmin manager = new AdminImp();
 
     public static void close_store_permanently(MessagingProtocol protocol, JSONObject request) throws Exception{
         String storename = request.getString("store_name");

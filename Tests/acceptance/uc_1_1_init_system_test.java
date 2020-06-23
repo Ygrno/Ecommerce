@@ -1,11 +1,10 @@
 package acceptance;
 
-import DAL.DBAccess;
 import ServiceLayer.GuestImp;
 import ServiceLayer.SubscriberImp;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import ServiceLayer.ManagerImp;
+import ServiceLayer.AdminImp;
 
 import java.io.IOException;
 
@@ -16,7 +15,7 @@ public class uc_1_1_init_system_test {
 
 
     private static GuestImp guestImp;
-    private static ManagerImp managerImp;
+    private static AdminImp managerImp;
     private static SubscriberImp subscriberImp;
 
 
@@ -25,7 +24,7 @@ public class uc_1_1_init_system_test {
     @BeforeClass
     public static void before() throws IOException {
         //SystemManage_Facade.init_system();
-        managerImp = new ManagerImp();
+        managerImp = new AdminImp();
         managerImp.init_system(false);
         guestImp = new GuestImp();
         subscriberImp = new SubscriberImp();

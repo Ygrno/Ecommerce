@@ -7,23 +7,22 @@ import DomainLayer.Store.Policy;
 import DomainLayer.Store.Store;
 import DomainLayer.System;
 import ServiceLayer.InitSystemState;
-import ServiceLayer.ManagerImp;
+import ServiceLayer.AdminImp;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.List;
 import DomainLayer.InternalService.SubscribersManage_Facade;
-import DomainLayer.InternalService.SystemManage_Facade;
 import DomainLayer.Store.BuyPolicy;
 
 public class initSystemTest {
 
-    public static ManagerImp managerImp;
+    public static AdminImp managerImp;
 
 
     @BeforeClass
     public static void setUp() throws Exception {
-        managerImp =  new ManagerImp();
+        managerImp =  new AdminImp();
         managerImp.init_system(true);
         InitSystemState.init();
     }

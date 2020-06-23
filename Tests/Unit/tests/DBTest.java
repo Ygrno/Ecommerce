@@ -1,23 +1,21 @@
 package Unit.tests;
 
 import DAL.DBAccess;
-import DomainLayer.User.Subscriber;
 import ServiceLayer.GuestImp;
-import ServiceLayer.ManagerImp;
+import ServiceLayer.AdminImp;
 import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class DBTest {
     private static DBAccess dbAccess;
     private static GuestImp guestImp;
-    private static ManagerImp managerImp;
+    private static AdminImp managerImp;
     private static SubscriberImp subscriberImp;
     private static StoreRoleImp storeRoleImp;
 
@@ -25,7 +23,7 @@ public class DBTest {
     public static void setUp(){
         dbAccess=DBAccess.getInstance();
         guestImp = new GuestImp();
-        managerImp = new ManagerImp();
+        managerImp = new AdminImp();
         managerImp.init_system(false);
         subscriberImp = new SubscriberImp();
         storeRoleImp = new StoreRoleImp();

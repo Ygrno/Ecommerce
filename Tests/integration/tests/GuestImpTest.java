@@ -1,13 +1,12 @@
 package integration.tests;
 
-import DomainLayer.InternalService.SystemManage_Facade;
 import DomainLayer.Product;
 import DomainLayer.ShoppingBag;
 import DomainLayer.Store.Store;
 import DomainLayer.System;
 import DomainLayer.User.Guest;
 import ServiceLayer.GuestImp;
-import ServiceLayer.ManagerImp;
+import ServiceLayer.AdminImp;
 import org.json.JSONException;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -21,14 +20,14 @@ public class GuestImpTest {
     private static GuestImp gi2;
     private static System system;
     private static Guest guest;
-    private static ManagerImp managerImp;
+    private static AdminImp managerImp;
 
 
     @BeforeClass
     public static void setUp(){
             gi = new GuestImp();
             gi2 = new GuestImp();
-            managerImp = new ManagerImp();
+            managerImp = new AdminImp();
             managerImp.init_system(false);
             system = System.getSystem();
             gi.login("Admin", "Password");
