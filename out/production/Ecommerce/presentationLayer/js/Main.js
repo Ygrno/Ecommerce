@@ -1,4 +1,5 @@
 
+
 function logout() {
     instance.sign_out(localStorage.getItem("current_username"));
     localStorage.removeItem("current_username");
@@ -291,6 +292,19 @@ class Main{
         this.client.send(JSON.stringify(details));
     }
 
+    add_store_conditioned_discount(details){
+        alert("sendin");
+        this.client.send(JSON.stringify(details));
+    }
+
+    add_store_complex_discount(details){
+        this.client.send(JSON.stringify(details));
+    }
+
+    delete_discount(details){
+        this.client.send(JSON.stringify(details));
+    }
+
     get_notifications(){
         this.client.send(JSON.stringify({req:"get_notifications",username:localStorage.getItem("current_username")}));
     }
@@ -329,6 +343,21 @@ class Main{
         }));
     }
 
+    remove_product_cart(details){
+        let msg = {
+            product_name: details.product,
+            store_name: details.store,
+        };
+        if (isGuest()) {
+            msg["id"] = localStorage.getItem("guest_id");
+            msg["req"] = "remove_product_cart_guest";
+        } else {
+            msg["username"] = localStorage.getItem("current_username");
+            msg["req"] = "remove_product_cart_subscriber";
+        }
+
+        this.client.send(JSON.stringify(msg));
+    }
 }
 
 let instance = new Main();

@@ -12,6 +12,7 @@ import DomainLayer.System;
 import DomainLayer.User.Subscriber;
 import ServiceLayer.SubscriberImp;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;

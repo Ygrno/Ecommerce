@@ -55,7 +55,7 @@ public class initSystemTest {
         assert p == null;
     }
 
-    @Test
+/*    @Test
     public void add_store_simple_buyPolicy() {
         Store s = System.getSystem().get_store("shoes");
         List<BuyPolicy> policies = s.getBuyPolicyList();
@@ -64,7 +64,7 @@ public class initSystemTest {
         for (Policy p: policies){
             assert (p.getPolicy_id()==1);
         }
-    }
+    }*/
 
     @Test
     public void add_owner_to_store() {
