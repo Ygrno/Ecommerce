@@ -8,6 +8,7 @@ package acceptance;
         import org.junit.Test;
 
         import java.io.IOException;
+        import java.util.ArrayList;
 
 
         import static org.junit.Assert.*;
@@ -45,7 +46,7 @@ public class uc_6_4_manager_history_review {
     public void success_scenario() {
         try {
             assertEquals(managerImp.view_history_store("store1").size(), 0);
-            assertEquals(managerImp.view_history_costumer("buyer"), "");
+            assertEquals(managerImp.view_history_costumer("buyer"), new ArrayList<>());
         }
         catch (Exception e){
 

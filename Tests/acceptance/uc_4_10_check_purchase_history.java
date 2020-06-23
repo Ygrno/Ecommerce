@@ -46,8 +46,8 @@ public class uc_4_10_check_purchase_history {
 
         String purchase1  = storeRoleImp.watch_store_history("Admin","store");
         Assert.assertEquals("\n" +
-                "Customer Name: noam\n" +
-                "List of products: [bamba]\n" +
+                " Customer Name: noam\n" +
+                " List of products: [bamba]\n" +
                 " sum: 3.0",purchase1);
 
         addProductsFromDifferentStores();
@@ -55,18 +55,18 @@ public class uc_4_10_check_purchase_history {
         String purchase2 = storeRoleImp.watch_store_history("Admin","store");
 
         Assert.assertEquals("\n" +
-                "Customer Name: noam\n" +
-                "List of products: [bamba]\n" +
+                " Customer Name: noam\n" +
+                " List of products: [bamba]\n" +
                 " sum: 3.0\n" +
-                "Customer Name: noam\n" +
-                "List of products: [bisli]\n" +
+                " Customer Name: noam\n" +
+                " List of products: [bisli]\n" +
                 " sum: 6.0",purchase2);
 
         String purchase3 = storeRoleImp.watch_store_history("Admin","Computer Store");
 
         Assert.assertEquals("\n" +
-                "Customer Name: noam\n" +
-                "List of products: [PC, mouse, keyboard]\n" +
+                " Customer Name: noam\n" +
+                " List of products: [PC, mouse, keyboard]\n" +
                 " sum: 4100.0",purchase3);
 
         //assertTrue(storeRoleImp.edit_manager_permissions("Admin","store","manager",permissions));
