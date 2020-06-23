@@ -29,5 +29,6 @@ public interface ISubscriber {
 
     public double getTotalPriceOfCart(String userName);
     public List<JSONObject> getNotifications(String userName);
+    public String view_purchase_history_string(String user_name);
 
 }

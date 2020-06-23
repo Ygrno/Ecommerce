@@ -109,18 +109,11 @@ public class SubscriberMessageProccess {
 
     public static void view_purchase_history(MessagingProtocol protocol, JSONObject request) throws Exception{
         String username = request.getString("username");
-        List<JSONObject> history = subscriber.view_purchase_history(username);
+        String l = subscriber.view_purchase_history_string(username);
 
         JSONObject o = new JSONObject();
-
-        JSONArray arr = new JSONArray();
-        for (Iterator<JSONObject> iterator = history.iterator(); iterator.hasNext(); ) {
-            JSONObject h = iterator.next();
-            arr.put(h);
-        }
-
         o.put("req", request.get("req"));
-        o.put("products_in_history", arr);
+        o.put("products_in_history", l);
 
         protocol.send(o);
     }
