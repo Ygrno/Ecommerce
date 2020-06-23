@@ -69,7 +69,7 @@ public class PurchaseProcess {
 
     private void update_details(DealDetails dealDetails){
 
-        details = new DealDetails(dealDetails.getUser_id(),shoppingBag.getDiscounted_bag_price(),dealDetails.getBuyer_name(),dealDetails.getCreditCardNumber(),dealDetails.getExpireDate(),dealDetails.getCvv());
+        details = new DealDetails(dealDetails.getUser_id(),shoppingBag.getDiscounted_bag_price(),dealDetails.getBuyer_name(),dealDetails.getCreditCardNumber(),dealDetails.getExpireDate(),dealDetails.getCvv(), dealDetails.getBuyer_id());
 
     }
     public PurchaseProcess(User user, Store store, ShoppingBag shoppingBag) {

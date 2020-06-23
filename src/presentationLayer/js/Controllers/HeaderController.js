@@ -90,9 +90,11 @@ function buyThings(products){
     expire_date.placeholder = "Expire date (mm/yy)";
     let cvv = document.createElement("input");
     cvv.placeholder="cvv";
+    let buyer_id = document.createElement("input");
+    buyer_id.placeholder="ID";
 
 
-    [name, credit_card_number, expire_date, cvv].forEach((d)=>{
+    [name, credit_card_number, expire_date, cvv, buyer_id].forEach((d)=>{
         d.className = 'text_input';
         div.appendChild(d);
     });
@@ -108,6 +110,7 @@ function buyThings(products){
         let ccNumber = credit_card_number.value;
         let expire_date_value = expire_date.value;
         let cvvValue = cvv.value;
+        let buyer_idValue = buyer_id.value;
         if(buyerName === ""){
             alert("please enter the name");
             return;
@@ -124,12 +127,16 @@ function buyThings(products){
             alert("please enter the cvv");
             return;
         }
+        if(buyer_idValue=== "") {
+            alert("please enter the Buyer id");
+            return;
+        }
         instance.send_process_details({
             buyer_name: buyerName,
             creditCardNumber: ccNumber,
             expireDate: expire_date_value,
             cvv: cvvValue,
-            discount: 0        ///change later
+            buyer_id:buyer_idValue
         });
     };
     div.appendChild(finish);

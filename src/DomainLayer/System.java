@@ -58,13 +58,9 @@ public class System {
         store_list = dbAccess.select(Store.class);
 
 
-        //dummy
-        store_list.add(new Store("store"));
-
         initialized = true;
 
         nextGuestId=0;
-        //SubImp = new SubscriberImp();
     }
 
 

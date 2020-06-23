@@ -23,6 +23,6 @@ public interface IGuest {
     public boolean save_products(int id,String product_name, String store_name,int amount); //2.6
     public List<JSONObject> watch_products_in_cart(int id) throws JSONException;  //2.7.1
     boolean remove_product_from_cart(int id,String product_name,String store_name);                //2.7.2
-    public boolean buy_products_in_cart(int id,String buyerName,String creditCardNumber,String expireDate,int cvv) throws Exception;   //2.8 //7
+    public boolean buy_products_in_cart(int id,String buyerName,String creditCardNumber,String expireDate,int cvv, String buyer_id) throws Exception;   //2.8 //7
     public double getTotalPriceOfCart(String userName);
 }

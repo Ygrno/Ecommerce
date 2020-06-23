@@ -26,7 +26,8 @@ public class ProductFinanceServiceAdapter {
                 details.getBuyer_name(),
                 details.getCreditCardNumber(),
                 details.getExpireDate(),
-                details.getCvv()
+                details.getCvv(),
+                details.getBuyer_id()
         );
     }
 }

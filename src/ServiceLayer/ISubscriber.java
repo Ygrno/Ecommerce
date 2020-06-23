@@ -15,7 +15,7 @@ public interface ISubscriber {
     public boolean save_products(String userName,String product_name, String store_name,int amount); //2.6
     public List<JSONObject> watch_products_in_cart(String userName) throws JSONException;  //2.7.1
     boolean remove_product_from_cart(String id,String product_name,String store_name);                 //2.7.2
-    public boolean buy_products_in_cart(String id,String buyerName,String creditCardNumber,String expireDate,int cvv) throws Exception;   //2.8 //7
+    public boolean buy_products_in_cart(String id,String buyerName,String creditCardNumber,String expireDate,int cvv, String buyer_id) throws Exception;   //2.8 //7
 
     public boolean sign_out(String user_name);  //3.1
     public boolean open_store(String user_name, String store_name); //3.2

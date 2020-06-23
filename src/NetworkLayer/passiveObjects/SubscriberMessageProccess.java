@@ -48,9 +48,9 @@ public class SubscriberMessageProccess {
         String creditCardNumber=request.getString("creditCardNumber");
         String expireDate=request.getString("expireDate");
         int cvv=request.getInt("cvv");
-        double discount =request.getDouble("discount");
+        String buyer_id=request.getString("buyer_id");
 
-        boolean b = subscriber.buy_products_in_cart(username,buyerName,creditCardNumber,expireDate,cvv);
+        boolean b = subscriber.buy_products_in_cart(username,buyerName,creditCardNumber,expireDate,cvv, buyer_id);
         JSONObject o=new JSONObject();
         o.put("req", request.get("req"));
         o.put("success", b);

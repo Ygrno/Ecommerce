@@ -70,7 +70,7 @@ public class SystemManage_Facade implements InternalService {
     }
 
     public static boolean buy(String[] dd) throws Exception {
-        DealDetails dd1 = new DealDetails(dd[0],Double.parseDouble(dd[1]),dd[2],dd[3],dd[4],Integer.parseInt(dd[5]));
+        DealDetails dd1 = new DealDetails(dd[0],Double.parseDouble(dd[1]),dd[2],dd[3],dd[4],Integer.parseInt(dd[5]), dd[6]);
         if (system.getProductFinanceService().tryToBuy(dd1)) {
 
             User u = getUser(dd[0]);

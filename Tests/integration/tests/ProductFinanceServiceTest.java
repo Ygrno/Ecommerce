@@ -27,7 +27,7 @@ public class ProductFinanceServiceTest {
 
     @Test
     public void tryToBuy() {
-        assertEquals(true, productFinanceService.tryToBuy(new DealDetails("m",100, "mahmoud", "1291823", "21/9", 977)));
-        assertEquals(false, productFinanceService.tryToBuy(new DealDetails("t",100, "tamer", "1291823", "21/9", 977)));
+        assertEquals(true, productFinanceService.tryToBuy(new DealDetails("m",100, "mahmoud", "1291823", "21/9", 977, "12345678")));
+        assertEquals(false, productFinanceService.tryToBuy(new DealDetails("t",100, "tamer", "1291823", "21/9", 977, "12345678")));
     }
 }
