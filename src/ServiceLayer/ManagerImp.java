@@ -14,7 +14,7 @@ public class ManagerImp implements IManager {
     LogInfo my_logInfo = LogInfo.getLogger();
 
     @Override
-    public boolean init_system(boolean file) {
+    public boolean init_system(boolean file) throws Exception {
 
         my_logInfo.logger.info("Init System");
         //Init System Flow:

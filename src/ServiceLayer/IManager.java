@@ -2,7 +2,7 @@ package ServiceLayer;
 
 public interface IManager {
 
-    public boolean init_system(boolean file); //1.1
+    public boolean init_system(boolean file) throws Exception; //1.1
     public boolean close_store_permanently(String store_name); //6.1
     public boolean remove_subscriber(String user_name); //6.2
     public boolean respond_complaints (); //6.3

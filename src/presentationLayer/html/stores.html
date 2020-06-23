@@ -201,7 +201,7 @@
             }else if (req === "get_notifications"){
                 get_notifications(response);
             }else if (req === "new_notification"){
-                newNotification();
+                newNotification(response["username"]);
             }else if (req === "get_user_permissions"){
                 on_permissions_recieved(response);
             }else if (req === "add_store_visible_discount"){

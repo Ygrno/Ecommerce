@@ -1,5 +1,7 @@
 package NetworkLayer.passiveObjects;
 
+import DomainLayer.System;
+import Observer.Observer;
 import ServiceLayer.ISubscriber;
 import ServiceLayer.SubscriberImp;
 import org.json.JSONArray;
@@ -16,7 +18,7 @@ public class SubscriberMessageProccess {
         String productName = request.getString("product");
         boolean b= subscriber.save_products(userName,productName,storeName,1);
         JSONObject o=new JSONObject();
-        System.out.println(request.get("req"));
+//        System.out.println(request.get("req"));
         o.put("success", b);
         o.put("req", request.get("req"));
         protocol.send(o);
@@ -117,25 +119,23 @@ public class SubscriberMessageProccess {
 
     public static void getNotifications(MessagingProtocol protocol, JSONObject request) throws Exception{
         String username = request.getString("username");
-        List<JSONObject> l = subscriber.getNotifications(username);
+        List<JSONObject> l = Observer.GetObserver().getNotifications(username);
         if(l == null) return;
 
         JSONArray jarr = new JSONArray();
         for(JSONObject o : l){
             jarr.put(o);
         }
-
         JSONObject o = new JSONObject();
         o.put("notifications", jarr);
         o.put("req", request.get("req"));
-
         protocol.send(o);
     }
 
-    public static void send_notification(MessagingProtocol protocol) throws Exception{
-        System.out.println("new notify");
+    public static void send_notification(MessagingProtocol protocol,String username) throws Exception{
         JSONObject o = new JSONObject();
         o.put("req","new_notification");
+        o.put("username",username);
         protocol.send(o);
     }
 

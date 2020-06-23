@@ -22,7 +22,7 @@ public class uc_6_4_manager_history_review {
     private static ManagerImp managerImp;
 
     @BeforeClass
-    public static void before() throws IOException {
+    public static void before() throws Exception {
         SUBImp = new SubscriberImp();
         guestImp = new GuestImp();
         storeRoleImp = new StoreRoleImp();

@@ -21,8 +21,10 @@ function searchProduct(ele){
 
 }
 
-function newNotification(){
-    alert("YOU HAVE NEW NOTIFICATION!");
+function newNotification(username){
+    let current_username = localStorage.getItem("current_username");
+    if(current_username === username)
+        alert("YOU HAVE NEW NOTIFICATION!");
 }
 
 function popUp(content_div) {

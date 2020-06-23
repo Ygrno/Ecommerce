@@ -91,7 +91,7 @@ public class uc_4_10_check_purchase_history {
 
 
     @Test
-    public void failure_scenario() {
+    public void failure_scenario() throws Exception {
 
         String purchase1  = storeRoleImp.watch_store_history("s1","store");
         Assert.assertNull(purchase1);

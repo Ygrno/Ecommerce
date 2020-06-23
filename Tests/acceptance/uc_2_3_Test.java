@@ -18,7 +18,7 @@ public class uc_2_3_Test {
     private static GuestImp guestImp;
 
     @Before
-    public void setUp() throws IOException {
+    public void setUp() throws Exception {
         guestImp=new GuestImp();
 //        admin=new GuestImp();
 //        admin.login("Admin", "Password");
@@ -30,17 +30,17 @@ public class uc_2_3_Test {
     }
 
     @Test
-    public void successScenario(){
+    public void successScenario() throws Exception {
         guestImp.sign_up("user","123");
         assertTrue(guestImp.login("user","123"));
     }
     @Test
-    public void failScenario1(){
+    public void failScenario1() throws Exception {
         guestImp.sign_up("user","123");
         assertFalse(guestImp.login("mahmo", "123"));
     }
     @Test
-    public void failScenario2(){
+    public void failScenario2() throws Exception {
         guestImp.sign_up("user","123");
         assertFalse(guestImp.login("user", "1234"));
     }

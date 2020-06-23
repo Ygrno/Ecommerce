@@ -20,12 +20,9 @@ public abstract class User {
     private ShoppingCart shoppingCart;
     @OneToMany(mappedBy = "user",cascade=CascadeType.ALL)
     private List<PurchaseProcess> purchaseProcesslist;
-    @Transient
-    private List<JSONObject> notifications;
     public User(){
         purchaseProcesslist = Collections.synchronizedList(new  ArrayList<>());
         shoppingCart = new ShoppingCart();
-        notifications= Collections.synchronizedList(new  ArrayList<>());
 
     }
 
@@ -38,7 +35,6 @@ public abstract class User {
     }
 
 
-    public List<JSONObject> notifications(){return notifications;}
 
 
     @Id

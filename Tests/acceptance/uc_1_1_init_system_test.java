@@ -23,7 +23,7 @@ public class uc_1_1_init_system_test {
 
 
     @BeforeClass
-    public static void before() throws IOException {
+    public static void before() throws Exception {
         //SystemManage_Facade.init_system();
         managerImp = new ManagerImp();
         managerImp.init_system(false);
@@ -36,14 +36,14 @@ public class uc_1_1_init_system_test {
     }
 
     @Test
-    public void success_scenario(){
+    public void success_scenario() throws Exception {
         assertTrue(guestImp.login("user", "password"));
         assertTrue(subscriberImp.sign_out("user1"));
     }
 
 
     @Test
-    public void failure_scenario() {
+    public void failure_scenario() throws Exception {
         //guestImp.login("user1", "wrong_password");
         assertFalse(guestImp.login("user2","hi"));
     }

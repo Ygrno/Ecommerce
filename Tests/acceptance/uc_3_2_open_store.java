@@ -22,7 +22,7 @@ public class uc_3_2_open_store {
 
 
     @BeforeClass
-    public static void before(){
+    public static void before() throws Exception {
 
         managerImp = new ManagerImp();
 
@@ -38,7 +38,7 @@ public class uc_3_2_open_store {
     }
 
     @Test
-    public void a_success_scenario(){
+    public void a_success_scenario() throws Exception {
 
 
 
@@ -48,7 +48,7 @@ public class uc_3_2_open_store {
 
 
     @Test
-    public void b_failure_scenario() {
+    public void b_failure_scenario() throws Exception {
 
         subscriberImp.sign_out("subscriber");
 

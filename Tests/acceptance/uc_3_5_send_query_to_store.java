@@ -13,7 +13,7 @@ public class uc_3_5_send_query_to_store {
     private static SystemManage_Facade SYS;
     private static SubscriberImp SUBImp;
     @BeforeClass
-    public static void before() throws IOException {
+    public static void before() throws Exception {
         SYS = new SystemManage_Facade();
         SUBImp = new SubscriberImp();
         SYS.init_system();
@@ -24,14 +24,14 @@ public class uc_3_5_send_query_to_store {
     }
 
     @Test
-    public void success_scenario() {
+    public void success_scenario() throws Exception {
         assertTrue(SUBImp.send_query_to_store("subscriber", "check"));
         assertTrue(SUBImp.send_query_to_store("subscriber", "check2"));
     }
 
 
     @Test
-    public void failure_scenario() {
+    public void failure_scenario() throws Exception {
         assertFalse(SUBImp.send_query_to_store("subscriber1","test"));
     }
 }

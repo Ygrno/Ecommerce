@@ -48,7 +48,7 @@ public class SystemManage_FacadeTest {
     }
 
     @Test
-    public void view_purchase() throws JSONException {
+    public void view_purchase() throws Exception {
         Subscriber s1=new Subscriber("mahmoud","123");
         Subscriber s2=new Subscriber("ahmd","123");
         Store st1=new Store("store1");
@@ -88,7 +88,7 @@ public class SystemManage_FacadeTest {
     }
 
     @Test
-    public void get_products_of_store() {
+    public void get_products_of_store() throws Exception {
         Store s1=new Store("store1");
         Store s2=new Store("store2");
         s1.setProduct_list(new ArrayList<>());

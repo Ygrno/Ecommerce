@@ -22,7 +22,7 @@ public class DBTest {
     private static StoreRoleImp storeRoleImp;
 
     @BeforeClass
-    public static void setUp(){
+    public static void setUp() throws Exception {
         dbAccess=DBAccess.getInstance();
         guestImp = new GuestImp();
         managerImp = new ManagerImp();
@@ -44,7 +44,7 @@ public class DBTest {
     }
 
     @Test
-    public void testCase() throws IOException {
+    public void testCase() throws Exception {
          assert  guestImp.sign_up("mhmod","123");
          assert  subscriberImp.open_store("mhmod","x");
          assert  subscriberImp.open_store("mhmod","x1");

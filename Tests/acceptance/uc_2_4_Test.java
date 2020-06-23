@@ -22,7 +22,7 @@ public class uc_2_4_Test {
     private static ManagerImp managerImp;
 
     @BeforeClass
-    public static void before() throws IOException {
+    public static void before() throws Exception {
         guestImp = new GuestImp();
         SUBImp = new SubscriberImp();
         storeRoleImp =  new StoreRoleImp();

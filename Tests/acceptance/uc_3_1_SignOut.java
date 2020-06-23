@@ -15,7 +15,7 @@ public class uc_3_1_SignOut {
     private static SubscriberImp Subimp;
 
     @BeforeClass
-    public static void before(){
+    public static void before() throws Exception {
         SYS= new SystemManage_Facade();
         Subimp = new SubscriberImp();
         SYS.init_system();
@@ -25,7 +25,7 @@ public class uc_3_1_SignOut {
     }
 
     @Test
-    public void success_scenario(){
+    public void success_scenario() throws Exception {
         SUB.subscriber_login_state("subscriber",true);
         assertTrue(SubscribersManage_Facade.check_if_logged_in("subscriber"));
         assertTrue(Subimp.sign_out("subscriber"));
@@ -34,7 +34,7 @@ public class uc_3_1_SignOut {
 
 
     @Test
-    public void failure_scenario() {
+    public void failure_scenario() throws Exception {
         assertTrue(Subimp.sign_out("subscriber"));
         assertFalse(SubscribersManage_Facade.check_if_logged_in("subscriber"));
         assertFalse(Subimp.sign_out("subscriber"));

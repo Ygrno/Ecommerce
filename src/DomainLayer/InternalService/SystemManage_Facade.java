@@ -29,7 +29,7 @@ public class SystemManage_Facade implements InternalService {
     public static System system;
     private static DBAccess dB = DBAccess.getInstance();
 
-    public static void init_system() {
+    public static void init_system() throws Exception {
         system = System.getSystem();
     }
 

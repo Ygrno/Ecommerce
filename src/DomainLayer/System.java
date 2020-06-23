@@ -15,6 +15,7 @@ import DomainLayer.User.Guest;
 import DomainLayer.User.Subscriber;
 import ExternalService.Mockups.ExternalFinanceServiceMock;
 import ExternalService.Mockups.ExternalSupplyServiceMock;
+import Observer.Observer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,7 +24,6 @@ import java.util.List;
 public class System {
 
     private static System SYSTEM_SINGLETON = null;
-    //private SubscriberImp SubImp;
     private List<Subscriber> user_list;
     private List<Guest> guest_list;
     private int nextGuestId=0;
@@ -48,7 +48,7 @@ public class System {
     private ProductFinanceServiceAdapter productFinanceService = new ProductFinanceServiceAdapter();
     private StoreOwner storeowner;
 
-    private System(){
+    private System() throws Exception {
 
         user_list = Collections.synchronizedList(new  ArrayList<>());
         guest_list = Collections.synchronizedList(new  ArrayList<>());
@@ -65,10 +65,11 @@ public class System {
 
         nextGuestId=0;
         //SubImp = new SubscriberImp();
+        Observer.GetObserver();
     }
 
 
-    public static System getSystem() {
+    public static System getSystem() throws Exception {
         if(SYSTEM_SINGLETON == null) SYSTEM_SINGLETON = new System();
         return SYSTEM_SINGLETON;
     }

@@ -11,10 +11,14 @@ import DomainLayer.Store.VisibleDiscount;
 import DomainLayer.System;
 import DomainLayer.User.ProductReview;
 import DomainLayer.User.Subscriber;
+import Observer.Observer;
+import com.mysql.cj.xdevapi.JsonArray;
+import jdk.jshell.tool.JavaShellToolBuilder;
 import org.json.JSONException;
 import org.json.JSONObject;
 import DAL.DBAccess;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +30,7 @@ public class SubscribersManage_Facade implements InternalService {
 
 
     /////////////// login/signup methods///////////////////////////
-    public static boolean login(String username, String password){
+    public static boolean login(String username, String password) throws Exception {
         if(System.getSystem().get_subscriber(username)== null)
             return false;
         subscriber_login_state(username, true);
@@ -34,7 +38,7 @@ public class SubscribersManage_Facade implements InternalService {
         return true;
     }
 
-    public static boolean signup(String username, String password){
+    public static boolean signup(String username, String password) throws Exception {
         if(System.getSystem().get_subscriber(username) != null ){
             return false;
         }
@@ -46,21 +50,21 @@ public class SubscribersManage_Facade implements InternalService {
         return System.getSystem().SubImp().open_store(username,name);
     }*/
 
-    public static List<StoreRole> GetRoles(String store) {
+    public static List<StoreRole> GetRoles(String store) throws Exception {
         return System.getSystem().get_store(store).getRoles();
     }
-    public static StoreOwner StoreOwner(String username,String store) {
+    public static StoreOwner StoreOwner(String username,String store) throws Exception {
         return System.getSystem().storeOwner(username,store);
     }
 
-    public static boolean signout(String username){
+    public static boolean signout(String username) throws Exception {
         if(!check_if_logged_in(username)) {
             return false;
         }
         subscriber_login_state(username,false);
         return true;
     }
-    public static void purchaseListAdd(String sub, String store ,ArrayList<String> arr){
+    public static void purchaseListAdd(String sub, String store ,ArrayList<String> arr) throws Exception {
         ShoppingBag shoppingBag = new ShoppingBag(arr);
         dB.updateAndCommit(shoppingBag);
         PurchaseProcess pp = new PurchaseProcess( System.getSystem().get_subscriber(sub), System.getSystem().get_store(store),shoppingBag);
@@ -77,17 +81,27 @@ public class SubscribersManage_Facade implements InternalService {
 
 
 
-    public static void subscriber_login_state(String user_name, boolean state) {
+    public static void subscriber_login_state(String user_name, boolean state) throws Exception { //notifi updated
+        java.lang.System.out.println("we are after subscriber_login_state");
         System.getSystem().get_subscriber(user_name).setLogged_in(state);
+        if(state)
+           if (Observer.GetObserver().CheckNotification(user_name)) {
+               Observer.GetObserver().Notify(user_name);
+//               JSONObject o = new JSONObject();
+//               o.put("username",user_name);
+//               o.put("message","login");
+//               Observer.GetObserver().update(o);
+               java.lang.System.out.println("we found notification");
+           }
     }
 
-    public static boolean check_if_logged_in(String user_name) {
+    public static boolean check_if_logged_in(String user_name) throws Exception {
         if (System.initialized) {
             return System.getSystem().get_subscriber(user_name).isLogged_in();
         }
         return false;
     }
-    public static boolean addProductReview(String user_name, String product_name, String store_name, String review_data, int rank) {
+    public static boolean addProductReview(String user_name, String product_name, String store_name, String review_data, int rank) throws Exception {
         Subscriber subscriber = System.getSystem().get_subscriber(user_name);
         Product reviewedProduct = System.getSystem().get_store(store_name).getProduct(product_name);
         List<PurchaseProcess> purchedlist = new ArrayList<>();
@@ -109,7 +123,7 @@ public class SubscribersManage_Facade implements InternalService {
         }
         return isPurchased;
     }
-    public static boolean delete_discount(String user_name, String store_name, String discount_name) {
+    public static boolean delete_discount(String user_name, String store_name, String discount_name) throws Exception {
         Subscriber requester = System.getSystem().get_subscriber(user_name);
 
         StoreRole store_role = requester.get_role_at_store(store_name);
@@ -128,7 +142,7 @@ public class SubscribersManage_Facade implements InternalService {
 
     }
 
-    public static boolean add_visible_discount_to_product(String user_name, String store_name, String product_name, String discount_name, double discount_percentage, int due_date) {
+    public static boolean add_visible_discount_to_product(String user_name, String store_name, String product_name, String discount_name, double discount_percentage, int due_date) throws Exception {
         Subscriber requester = System.getSystem().get_subscriber(user_name);
         StoreRole store_role = requester.get_role_at_store(store_name);
         if(store_role == null ) return false;
@@ -149,7 +163,7 @@ public class SubscribersManage_Facade implements InternalService {
 
     }
 
-    public static boolean add_conditioned_discount_to_product(String user_name, String store_name, String product_name, String discount_name, double discount_percentage, int due_date,int amount,int sum) {
+    public static boolean add_conditioned_discount_to_product(String user_name, String store_name, String product_name, String discount_name, double discount_percentage, int due_date,int amount,int sum) throws Exception {
         Subscriber requester = System.getSystem().get_subscriber(user_name);
         StoreRole store_role = requester.get_role_at_store(store_name);
         if(store_role == null ) return false;
@@ -179,7 +193,7 @@ public class SubscribersManage_Facade implements InternalService {
 
     }
 
-    public static boolean add_complex_discount(String user_name, String store_name, String discount_name, String[] discounts, String type, int end_of_use_date) {
+    public static boolean add_complex_discount(String user_name, String store_name, String discount_name, String[] discounts, String type, int end_of_use_date) throws Exception {
         Subscriber requester = System.getSystem().get_subscriber(user_name);
         StoreRole store_role = requester.get_role_at_store(store_name);
         if(store_role == null ) return false;
@@ -206,25 +220,26 @@ public class SubscribersManage_Facade implements InternalService {
         return false;
     }
 
-    public static boolean create_store(String user_name, String store_name) {
+    public static boolean create_store(String user_name, String store_name) throws Exception {
+
+        JSONObject O = new JSONObject();
+        O.put("username",user_name);
+        O.put("message","opened store : " + store_name);
+        Observer.GetObserver().update(O);
+        java.lang.System.out.println(user_name + " " + store_name);
 
         Subscriber subscriber = System.getSystem().get_subscriber(user_name);
-
         Store store = new Store(store_name);
         if(!dB.updateAndCommit(store)) return false;
-
         StoreOwner storeOwner = new StoreOwner(subscriber, store);
         if(!dB.updateAndCommit(storeOwner)) return false;
-
         subscriber.getRole_list().add(storeOwner);
-
         store.getRoles().add(storeOwner);
-
         System.getSystem().getStore_list().add(store);
         return true;
     }
 
-    public static boolean add_product_to_store(String user_name, String store_name, String product_name, double product_price, int product_amount) {
+    public static boolean add_product_to_store(String user_name, String store_name, String product_name, double product_price, int product_amount) throws Exception {
         Subscriber subscriber = System.getSystem().get_subscriber(user_name);
         StoreRole store_role = subscriber.get_role_at_store(store_name);
         if (store_role instanceof StoreOwner) {
@@ -248,7 +263,7 @@ public class SubscribersManage_Facade implements InternalService {
     }
 
 
-    public static boolean change_product_in_store(String user_name, String store_name, String product_name, String new_product_name, int product_price, int product_amount) {
+    public static boolean change_product_in_store(String user_name, String store_name, String product_name, String new_product_name, int product_price, int product_amount) throws Exception {
         Subscriber subscriber = System.getSystem().get_subscriber(user_name);
         StoreRole store_role = subscriber.get_role_at_store(store_name);
         if (store_role instanceof StoreOwner) {
@@ -273,7 +288,7 @@ public class SubscribersManage_Facade implements InternalService {
         return false;
     }
 
-    public static boolean remove_product_in_store(String user_name, String store_name, String product_name) {
+    public static boolean remove_product_in_store(String user_name, String store_name, String product_name) throws Exception {
         Subscriber subscriber = System.getSystem().get_subscriber(user_name);
         StoreRole store_role = subscriber.get_role_at_store(store_name);
         if (store_role instanceof StoreOwner) {
@@ -293,7 +308,7 @@ public class SubscribersManage_Facade implements InternalService {
         return false;
     }
 
-    public static boolean add_owner_to_store(String user_name, String store_name, String user_assign) {
+    public static boolean add_owner_to_store(String user_name, String store_name, String user_assign) throws Exception {
         Subscriber subscriber1 = System.getSystem().get_subscriber(user_name);
         StoreRole store_role = subscriber1.get_role_at_store(store_name);
         if (store_role instanceof StoreOwner) {
@@ -312,7 +327,7 @@ public class SubscribersManage_Facade implements InternalService {
         return false;
     }
 
-    public static boolean remove_owner_from_store(String user_name, String store_name, String user_assign) {
+    public static boolean remove_owner_from_store(String user_name, String store_name, String user_assign) throws Exception {
         Subscriber requester = System.getSystem().get_subscriber(user_name);
         StoreRole store_role = requester.get_role_at_store(store_name);
 
@@ -358,7 +373,7 @@ public class SubscribersManage_Facade implements InternalService {
         return false;
     }
 
-    public static boolean add_manager_to_store(String user_name, String store_name, String user_assign) {
+    public static boolean add_manager_to_store(String user_name, String store_name, String user_assign) throws Exception {
         Subscriber requester = System.getSystem().get_subscriber(user_name);
 
         StoreRole store_role = requester.get_role_at_store(store_name);
@@ -388,7 +403,7 @@ public class SubscribersManage_Facade implements InternalService {
         return false;
     }
 
-    public static boolean remove_manager_from_store(String user_name, String store_name, String user_assign) {
+    public static boolean remove_manager_from_store(String user_name, String store_name, String user_assign) throws Exception {
         Subscriber requester = System.getSystem().get_subscriber(user_name);
         StoreRole store_role = requester.get_role_at_store(store_name);
         if(store_role == null) return false;
@@ -412,7 +427,7 @@ public class SubscribersManage_Facade implements InternalService {
         return false;
     }
 
-    public static boolean change_permissions_of_manager(String user_name, String store_name,String user_assign , ArrayList<String> permissions) {
+    public static boolean change_permissions_of_manager(String user_name, String store_name,String user_assign , ArrayList<String> permissions) throws Exception {
         Subscriber requester = System.getSystem().get_subscriber(user_name);
         StoreRole store_role = requester.get_role_at_store(store_name);
         if(store_role == null) return false; //bug
@@ -432,7 +447,7 @@ public class SubscribersManage_Facade implements InternalService {
         return false;
     }
 
-    public static String store_purchase_history(String user_name, String store_name){
+    public static String store_purchase_history(String user_name, String store_name) throws Exception {
         StringBuilder history = new StringBuilder();
         Subscriber requester = System.getSystem().get_subscriber(user_name);
         StoreRole store_role = requester.get_role_at_store(store_name);
@@ -447,7 +462,7 @@ public class SubscribersManage_Facade implements InternalService {
         return history.toString();
     }
 
-    public static boolean create_store_simple_buyPolicy(String user_name, String store_name, int type, String description, int policy_id, String product_name, int minProducts, int maxProducts, int minCost, int maxCost, int min_quantity, int max_quantity, int day) {
+    public static boolean create_store_simple_buyPolicy(String user_name, String store_name, int type, String description, int policy_id, String product_name, int minProducts, int maxProducts, int minCost, int maxCost, int min_quantity, int max_quantity, int day) throws Exception {
         if (checkPermission(user_name, store_name)) return false;
         Store store = find_store(store_name);
         if (store==null)return false;
@@ -457,7 +472,7 @@ public class SubscribersManage_Facade implements InternalService {
         return build_and_add_policy_to_store(type, description, policy_id, product_name, minProducts, maxProducts, minCost, maxCost, min_quantity, max_quantity, day, store);
     }
 
-    public static boolean create_store_complex_buyPolicy(String user_name, String store_name,String description, int policy_id, int[] policy_ids, int op){
+    public static boolean create_store_complex_buyPolicy(String user_name, String store_name,String description, int policy_id, int[] policy_ids, int op) throws Exception {
         if (checkPermission(user_name, store_name)) return false;
         Store store = find_store(store_name);
         if (store==null)return false;
@@ -486,7 +501,7 @@ public class SubscribersManage_Facade implements InternalService {
     return true;
     }
 
-    public static boolean edit_store_simple_buyPolicy(String user_name, String store_name, int type,String description, int policy_id, String product_name, int minProducts, int maxProducts, int minCost, int maxCost, int min_quantity, int max_quantity, int day) {
+    public static boolean edit_store_simple_buyPolicy(String user_name, String store_name, int type,String description, int policy_id, String product_name, int minProducts, int maxProducts, int minCost, int maxCost, int min_quantity, int max_quantity, int day) throws Exception {
 
         if (checkPermission(user_name, store_name)) return false;
         Store store = find_store(store_name);
@@ -500,7 +515,7 @@ public class SubscribersManage_Facade implements InternalService {
         return build_and_add_policy_to_store(type,description, policy_id, product_name, minProducts, maxProducts, minCost, maxCost, min_quantity, max_quantity, day, store);
     }
 
-    public static boolean edit_store_complex_buyPolicy(String user_name, String store_name, int policy_id, int new_policy_id, String act){
+    public static boolean edit_store_complex_buyPolicy(String user_name, String store_name, int policy_id, int new_policy_id, String act) throws Exception {
         if (checkPermission(user_name, store_name)) return false;
         Store store = find_store(store_name);
         if (store==null) return false;
@@ -530,7 +545,7 @@ public class SubscribersManage_Facade implements InternalService {
         return false;
     }
 
-    public static boolean remove_store_buyPolicy(String user_name, String store_name, int policy_id){
+    public static boolean remove_store_buyPolicy(String user_name, String store_name, int policy_id) throws Exception {
         if (checkPermission(user_name, store_name)) return false;
         Store store = find_store(store_name);
         if (store==null) return false;
@@ -548,7 +563,7 @@ public class SubscribersManage_Facade implements InternalService {
                 return p;
         return null;
     }
-    private static Store find_store(String store_name) {
+    private static Store find_store(String store_name) throws Exception {
         List<Store> store_list= System.getSystem().getStore_list();
         for (Store s: store_list) {
             if(s.getName().equals(store_name))
@@ -556,7 +571,7 @@ public class SubscribersManage_Facade implements InternalService {
         }
         return null;
     }
-    private static boolean checkPermission(String user_name, String store_name) {
+    private static boolean checkPermission(String user_name, String store_name) throws Exception {
         Subscriber requester = System.getSystem().get_subscriber(user_name);
         StoreRole store_role = requester.get_role_at_store(store_name);
         if (store_role == null) return true;
@@ -608,18 +623,27 @@ public class SubscribersManage_Facade implements InternalService {
 
 
 
-    public static List<JSONObject> getNotifications(String userName){
-        Subscriber requester = System.getSystem().get_subscriber(userName);
-        return requester.notifications();
+    public static List<JSONObject> getNotifications(String userName) throws Exception {
+//        Subscriber requester = System.getSystem().get_subscriber(userName);
+        ArrayList<JSONObject> Json = new ArrayList<JSONObject>();
+        for (JSONObject O : Observer.GetObserver().getObservers()){
+            if(O.get("username") == userName){
+                Json.add(O);
+            }
+        }
+        for (JSONObject O : Observer.GetObserver().getObserversSeen()){
+            if(O.get("username") == userName){
+                Json.add(O);
+            }
+        }
+        return Json;
     }
 
-    public static void addNotification(JSONObject o) throws JSONException {
-        String userName=o.getString("username");
-        Subscriber requester = System.getSystem().get_subscriber(userName);
-        requester.notifications().add(o);
+    public static void addNotification(JSONObject o) throws Exception {
+        Observer.GetObserver().getObservers().add(o);
     }
 
-    public static HashMap<Integer,String> getBuyPolicyIdsList(String store_name){
+    public static HashMap<Integer,String> getBuyPolicyIdsList(String store_name) throws Exception {
         HashMap<Integer,String> policies = new HashMap<>();
         Store store = find_store(store_name);
         if (store==null) return null;
@@ -630,7 +654,7 @@ public class SubscribersManage_Facade implements InternalService {
         return policies;
     }
 
-    public static int[] getPoliciesInComplex(String store_name, int policy_id) {
+    public static int[] getPoliciesInComplex(String store_name, int policy_id) throws Exception {
         int[] exists_policies = new int[100];
         Store store = find_store(store_name);
         if (store==null) return null;

@@ -19,7 +19,7 @@ public class uc_2_6_Test {
 
 
     @BeforeClass
-    public static void setUp() throws IOException {
+    public static void setUp() throws Exception {
         gi=new GuestImp();
         managerImp = new ManagerImp();
         SubscriberImp si = new SubscriberImp();

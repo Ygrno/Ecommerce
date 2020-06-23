@@ -18,7 +18,7 @@ public class uc_1_1_init_system_with_file {
 
 
     @Test
-    public void TEST() throws IOException {
+    public void TEST() throws Exception {
         managerImp = new ManagerImp();
         assert managerImp.init_system(true);
     }

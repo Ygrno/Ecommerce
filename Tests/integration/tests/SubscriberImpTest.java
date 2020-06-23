@@ -30,7 +30,7 @@ public class SubscriberImpTest {
     private static Store store;
 
     @BeforeClass
-    public static void init_func() throws IOException {
+    public static void init_func() throws Exception {
         SUBImp= new SubscriberImp();
         SUB= new SubscribersManage_Facade();
         SYS= new SystemManage_Facade();
@@ -134,13 +134,13 @@ public class SubscriberImpTest {
     }
 
     @Test
-    public void sign_out() {//3.1
+    public void sign_out() throws Exception {//3.1
         assertTrue(SUBImp.sign_out("subscriber"));//test if the signout works as expected
         assertFalse(SubscribersManage_Facade.check_if_logged_in("subscriber"));//check the status of the user after signing out, if he is not logged in then he is a guest
     }
 
     @Test
-    public void open_store() { //3.2
+    public void open_store() throws Exception { //3.2
         assertTrue(SUBImp.open_store("subscriber","test"));//test if the store func works as expected
         assertTrue(SYS.get_store("test")!=null);//test if the store is actually added to the database
         store=SYS.get_store("test");
@@ -163,7 +163,7 @@ public class SubscriberImpTest {
     }
 
     @Test
-    public void send_query_to_store() {
+    public void send_query_to_store() throws Exception {
         store=SYS.get_store("test");
         SUBImp.send_query_to_store("subscriber","test");
         List<String> query = (List<String>) subscriber.getQueries();
@@ -179,7 +179,7 @@ public class SubscriberImpTest {
     }
 
     @Test
-    public void view_purchase_history() {
+    public void view_purchase_history() throws Exception {
         store = SYS.get_store("test");
         List<String> strings = new ArrayList<String>();
         PurchaseProcess purchaseProcess = new PurchaseProcess(subscriber,store,new ShoppingBag(strings));

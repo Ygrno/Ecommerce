@@ -24,7 +24,7 @@ public class GuestImp implements IGuest {
     }
 
     @Override
-    public boolean sign_up(String user_name, String password) {
+    public boolean sign_up(String user_name, String password) throws Exception {
 
         my_logInfo.logger.info("Sign Up");
 
@@ -58,7 +58,7 @@ public class GuestImp implements IGuest {
     }
 
     @Override
-    public boolean login(String user_name, String password) {
+    public boolean login(String user_name, String password) throws Exception {
         my_logInfo.logger.info("Login");
 
         //if(user_name.equals("Admin") && password.equals("Password")) SystemManage_Facade.init_system();

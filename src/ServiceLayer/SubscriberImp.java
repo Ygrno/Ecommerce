@@ -2,8 +2,10 @@ package ServiceLayer;
 import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
 
+import DomainLayer.System;
 import Logs.LogErrors;
 import Logs.LogInfo;
+import Observer.Observer;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -100,7 +102,7 @@ public class SubscriberImp implements ISubscriber {
 
 
     @Override
-    public boolean sign_out(String user_name) {
+    public boolean sign_out(String user_name) throws Exception {
         my_logInfo.logger.info("sign_out");
         if(!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
@@ -116,7 +118,7 @@ public class SubscriberImp implements ISubscriber {
     }
 
     @Override
-    public boolean open_store(String user_name, String store_name) {
+    public boolean open_store(String user_name, String store_name) throws Exception {
         my_logInfo.logger.info("open_store");
         if(!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
@@ -131,7 +133,7 @@ public class SubscriberImp implements ISubscriber {
     }
 
     @Override
-    public boolean write_review(String user_name, String product_name, String store_name, String review_data, int rank) {
+    public boolean write_review(String user_name, String product_name, String store_name, String review_data, int rank) throws Exception {
         my_logInfo.logger.info("write_review");
         if(!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
@@ -144,7 +146,7 @@ public class SubscriberImp implements ISubscriber {
     }
 
     @Override
-    public List<JSONObject> getNotifications(String userName) {
+    public List<JSONObject> getNotifications(String userName) throws Exception {
         my_logInfo.logger.info("getNotifications");
         if (!SystemManage_Facade.is_initialized())
         {
@@ -174,7 +176,7 @@ public class SubscriberImp implements ISubscriber {
     }
 
     @Override
-    public boolean send_query_to_store(String user_name,String Query) {//add test
+    public boolean send_query_to_store(String user_name,String Query) throws Exception {//add test
         my_logInfo.logger.info("send_query_to_store");
         if(!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
@@ -195,7 +197,7 @@ public class SubscriberImp implements ISubscriber {
     }
 
     @Override
-    public String view_purchase_history(String user_name) {
+    public String view_purchase_history(String user_name) throws Exception {
         my_logInfo.logger.info("view_purchase_history");
         if(!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
