@@ -34,9 +34,9 @@ public class BuyPolicyTest {
         p1 = new Product("bamba",10,2,s);
         p2 = new Product("grill",10,4,s);
         //ProductBuyPolicy(policy_id,description, product_name, minProducts, maxProducts);
-        a = new ProductBuyPolicy(5,"simple policy 1", "bamba", 1, 5);
+        a = new ProductBuyPolicy(5,"simple policy 1", "bamba", 2, 3);
         //BagBuyPolicy(policy_id,description, minCost, maxCost, min_quantity, max_quantity);
-        b = new BagBuyPolicy(2,"simple policy 2", 0, 1000, 2, 3);
+        b = new BagBuyPolicy(2,"simple policy 2", 0, 1000, 2, 4);
         c = new ComplexBuyPolicy(3, "simple policy 3", Logicaloperation.and);
 
         assert (a!=null) ;
@@ -49,8 +49,21 @@ public class BuyPolicyTest {
         shoppingBag = new ShoppingBag(null);
 
         List<Product> productList = shoppingBag.getProducts();
+        assertTrue(a.validate(shoppingBag));
         productList.add(p1);
+        assertFalse(b.validate(shoppingBag)); //check min in bag
+        assertFalse(a.validate(shoppingBag)); //1 p check min in product
+        productList.add(p1);
+        assertTrue(a.validate(shoppingBag)); //2 p1
+        productList.add(p1);
+        productList.add(p1);
+        assertFalse(a.validate(shoppingBag)); //4 p1 check max in product
+        productList.remove(p1);
         productList.add(p2);
+        productList.add(p2);
+        assertFalse(b.validate(shoppingBag)); // total 5 product - over the maximum (4)
+        productList.remove(p2);
+
 
     }
 
