@@ -1,6 +1,6 @@
 package acceptance;
 import ServiceLayer.GuestImp;
-import ServiceLayer.ManagerImp;
+import ServiceLayer.AdminImp;
 import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
 import org.junit.BeforeClass;
@@ -18,7 +18,7 @@ public class uc_4_6_edit_manager_permessions {
     private static SubscriberImp SUBImp;
     private static StoreRoleImp storeRoleImp;
     private static ArrayList<String> permissions = new ArrayList<>();
-    private static ManagerImp managerImp;
+    private static AdminImp managerImp;
 
     @BeforeClass
     public static void before() throws Exception {
@@ -26,7 +26,7 @@ public class uc_4_6_edit_manager_permessions {
         guestImp = new GuestImp();
         SUBImp = new SubscriberImp();
         storeRoleImp =  new StoreRoleImp();
-        managerImp = new ManagerImp();
+        managerImp = new AdminImp();
         managerImp.init_system(false);
         guestImp.login("Admin","Password");
         guestImp.sign_up("manager", "password");

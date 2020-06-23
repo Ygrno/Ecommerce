@@ -55,6 +55,19 @@ public class SystemManage_Facade implements InternalService {
     }
 
 
+    public static boolean checkIfCanBuy(String id){
+        User u =getUser(id);
+        for(PurchaseProcess process: u.getPurchaseProcesslist()){
+            HashMap<Product,Integer> products= process.getShoppingBag().getProductsAmounts();
+            for(Product p:products.keySet()){
+                if(p.getSupplied_amount()<products.get(p)){
+                    return false;
+                }
+            }
+            if(!process.getStore().validatePurchasePolicies(process.getShoppingBag())) return false;
+        }
+        return true;
+    }
 
     public static boolean buy(String[] dd) throws Exception {
         DealDetails dd1 = new DealDetails(dd[0],Double.parseDouble(dd[1]),dd[2],dd[3],dd[4],Integer.parseInt(dd[5]));
@@ -71,17 +84,14 @@ public class SystemManage_Facade implements InternalService {
 
                     //Update the supply amount of products in store
                     ShoppingBag shoppingBag = purchase.getShoppingBag();
-                    for(Product prod: shoppingBag.getProducts()){
+                    for(Product prod: shoppingBag.getProductsAmounts().keySet()){
                         Product store_product = getProductInStore(prod.getName(),store);
-                        store_product.setSupplied_amount(store_product.getSupplied_amount() - prod.getBuy_amount());
+                        store_product.setSupplied_amount(store_product.getSupplied_amount() - shoppingBag.getProductsAmounts().get(prod));
+                        dB.updateAndCommit(store_product);
                     }
-
-                    //validate buy policies of store
-                    store.validatePurchasePolicies(shoppingBag,u);
-
                     //User bought his saved products so shopping bag no longer exists with store.
                     purchase.getUser().getShoppingCart().getShopping_bag_list().remove(purchase.getShoppingBag());
-                    //todo - maybe dB.deleteAndCommit(purchase);
+                    dB.updateAndCommit(purchase);
                 }
             }
             return true;
@@ -156,24 +166,29 @@ public class SystemManage_Facade implements InternalService {
         if(product == null || amount > product.getSupplied_amount()) return false;
 
         Product buy_product = new Product(product.getName(),product.getPrice(),product.getSupplied_amount(),product.getStore());
-        dB.updateAndCommit(buy_product); //todo - the product already exists in DB, but not connected to the buyer.
+//        dB.updateAndCommit(buy_product); //todo - the product already exists in DB, but not connected to the buyer.
         buy_product.setBuy_amount(amount);
 
         for(PurchaseProcess p:g.getPurchaseProcesslist()){
-            if(p.getStore().getName().equals(store_name)){
+            if(!p.isFinished() && p.getStore().getName().equals(store_name)){
                 p.getShoppingBag().getProducts_names().add(product_name);
-                p.getShoppingBag().getProducts().add(buy_product);
+                p.getShoppingBag().getProducts().add(product);
                 processExist=true;
+                product.setShoppingBag(p.getShoppingBag());
+
+
             }
         }
 
         if(!processExist){
-            PurchaseProcess p=new PurchaseProcess(g,SystemManage_Facade.get_store(store_name),new ShoppingBag(new ArrayList<>()));
-//            dB.updateAndCommit(p);
+            ShoppingBag sb= new ShoppingBag(new ArrayList<>());
+            PurchaseProcess p = new PurchaseProcess(g,s,sb);
             g.getShoppingCart().getShopping_bag_list().add(p.getShoppingBag());
             p.getShoppingBag().getProducts_names().add(product_name);
-            p.getShoppingBag().getProducts().add(buy_product);
-
+            p.getShoppingBag().getProducts().add(product);
+            g.getPurchaseProcesslist().add(p);
+            sb.setShoppingCart(g.getShoppingCart());
+            product.setShoppingBag(sb);
         }
         return true;
     }
@@ -220,7 +235,11 @@ public class SystemManage_Facade implements InternalService {
         return dB.updateAndCommit(subscriber);
     }
 
-    public static  List<JSONObject> View_purchase(String user_name) throws JSONException { //3.7
+    public static boolean remove_subscriber(String username) {
+        return system.remove_subscriber(username);
+    }
+
+        public static  List<JSONObject> View_purchase(String user_name) throws JSONException { //3.7
         Subscriber subscriber = system.get_subscriber(user_name);
         List<JSONObject> l = new ArrayList<>();
         for(PurchaseProcess pp : subscriber.getPurchaseProcesslist()){
@@ -285,6 +304,7 @@ public class SystemManage_Facade implements InternalService {
             product.setShoppingBag(sb);
             dB.updateAndCommit(s.getShoppingCart());
             dB.updateAndCommit(p);
+            //   dB.updateAndCommit(p);
             dB.updateAndCommit(sb);
             dB.updateAndCommit(product);
         }
@@ -367,15 +387,77 @@ public class SystemManage_Facade implements InternalService {
         return products_arr;
     }
 
-    public static String get_store_purchase_process(String store_name) {
-        StringBuilder history = new StringBuilder();
+    public static List<JSONObject> get_store_purchase_process(String store_name) throws Exception{
+        List<JSONObject> history = new ArrayList<>();
         Store store = system.get_store(store_name);
         if (store != null) {
-            for(PurchaseProcess purchase: store.getPurchase_process_list()){
-                if(purchase.isFinished())
-                    history.append("\n").append("Store Name: ").append(purchase.getStore().getName()).append("\nList of products: ").append(purchase.getShoppingBag().getProducts_names().toString()).append("\n sum: ").append(purchase.getDetails().getPrice());
+            for(PurchaseProcess purchase: store.getPurchase_process_list()) {
+                if (purchase.isFinished()) {
+                    //history.append("\n").append("Store Name: ").append(purchase.getStore().getName()).append("\nList of products: ").append(purchase.getShoppingBag().getProducts_names().toString()).append("\n sum: ").append(purchase.getDetails().getPrice());
+                    JSONObject o = new JSONObject();
+                    o.put("store_name", purchase.getStore().getName());
+                    o.put("price", purchase.getDetails().getPrice());
+                    //set username
+                    User buyer = purchase.getUser();
+                    if(buyer instanceof Guest){
+                        o.put("username", "Guest");
+                    }else {
+                        o.put("username", ((Subscriber)buyer).getName());
+                    }
+
+                    //set products
+                    JSONArray arr = new JSONArray();
+                    for(String productName : purchase.getShoppingBag().getProducts_names()){
+                        JSONObject p = new JSONObject();
+                        p.put("name", productName);
+                        arr.put(p);
+                    }
+                    o.put("products", arr);
+                    history.add(o);
+                }
             }
         }
+
+        return history;
+    }
+
+    public static List<JSONObject> get_subscriber_purchase_process(String user_name) throws Exception {
+        List<JSONObject> history = new ArrayList<>();
+
+        Subscriber sub = system.get_subscriber(user_name);
+        if (sub != null) {
+            for(PurchaseProcess purchase: sub.getPurchaseProcesslist()) {
+                if (purchase.isFinished()) {
+                    //history.append("\n").append("Customer Name: ").append(purchase.getDetails().getBuyer_name()).append("Store Name: ").append(purchase.getStore().getName()).append("\nList of products: ").append(purchase.getShoppingBag().getProducts_names().toString()).append("\n sum: ").append(purchase.getDetails().getPrice());
+                    JSONObject o = new JSONObject();
+                    o.put("store_name", purchase.getStore().getName());
+                    o.put("price", purchase.getDetails().getPrice());
+
+                    JSONArray arr = new JSONArray();
+                    for(String productName : purchase.getShoppingBag().getProducts_names()){
+                        JSONObject p = new JSONObject();
+                        p.put("name", productName);
+                        arr.put(p);
+                    }
+                    o.put("products", arr);
+                    history.add(o);
+
+                }
+            }
+        }
+        return history;
+    }
+
+    public static String get_subscriber_purchase_process_string(String user_name) {
+        StringBuilder history = new StringBuilder();
+        Subscriber sub = system.get_subscriber(user_name);
+        if (sub != null) {
+            for(PurchaseProcess purchase: sub.getPurchaseProcesslist()){
+                if(purchase.isFinished())
+                    history.append("\n").append("Customer Name: ").append(purchase.getDetails().getBuyer_name()).append(" Store Name: ").append(purchase.getStore().getName()).append("\nList of products: ").append(purchase.getShoppingBag().getProducts_names().toString()).append("\n sum: ").append(purchase.getDetails().getPrice()).append("\n");
+            }
+        }
+
         return history.toString();
     }
 
@@ -390,17 +472,18 @@ public class SystemManage_Facade implements InternalService {
         return stores;
     }
 
-    public static String get_subscriber_purchase_process(String user_name) {
+/*    public static String get_subscriber_purchase_process(String user_name) {
         StringBuilder history = new StringBuilder();
         Subscriber sub = system.get_subscriber(user_name);
         if (sub != null) {
             for(PurchaseProcess purchase: sub.getPurchaseProcesslist()){
                 if(purchase.isFinished())
-                    history.append("\n").append("Customer Name: ").append(purchase.getDetails().getBuyer_name()).append("Store Name: ").append(purchase.getStore().getName()).append("\nList of products: ").append(purchase.getShoppingBag().getProducts_names().toString()).append("\n sum: ").append(purchase.getDetails().getPrice());
+                    history.append("\n").append("Customer Name: ").append(purchase.getDetails().getBuyer_name()).append(" Store Name: ").append(purchase.getStore().getName()).append("\nList of products: ").append(purchase.getShoppingBag().getProducts_names().toString()).append("\n sum: ").append(purchase.getDetails().getPrice()).append("\n");
             }
         }
+
         return history.toString();
-    }
+    }*/
 
     public static String today_revenue() {
         double sum = 0;
@@ -434,11 +517,20 @@ public class SystemManage_Facade implements InternalService {
 
     public static boolean removeProductFromCart(String id, String product_name, String store_name) {
         User g= getUser(id);
+        Product toRemove=null;
         for(PurchaseProcess pp:g.getPurchaseProcesslist()){
             if(pp.getStore().getName().equals(store_name)){
                 for (Product p : pp.getShoppingBag().getProducts()){
                     if(p.getName().equals(product_name))
-                        pp.getShoppingBag().getProducts().remove(p);
+                        toRemove=p;
+                }
+                if(toRemove!=null) {
+                    java.lang.System.out.println("im here");
+                    pp.getShoppingBag().getProducts().remove(toRemove);
+                    if(!(g instanceof Guest)) {
+                        dB.updateAndCommit(pp.getShoppingBag());
+                        dB.updateAndCommit(pp);
+                    }
                 }
             }
         }

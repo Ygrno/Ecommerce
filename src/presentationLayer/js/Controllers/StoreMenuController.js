@@ -485,7 +485,7 @@ function add_simple_buy_policy() {
     div.style.overflow = 'auto';
 
     let introDiv = document.createElement("div");
-    introDiv.innerHTML = "Add discount";
+    introDiv.innerHTML = "Add simple buy policy";
     introDiv.className = 'total_price_div';
     div.appendChild(introDiv);
 
@@ -511,7 +511,7 @@ function add_simple_buy_policy() {
     div.appendChild(minProducts);
 
     let maxProducts = document.createElement("input");
-    maxProducts.placeholder="Enter minimum number of products that client could add to bag (for bag buy policy)";
+    maxProducts.placeholder="Enter maximum number of products that client could add to bag (for bag buy policy)";
     maxProducts.className = 'text_input';
     div.appendChild(maxProducts);
 
@@ -615,7 +615,7 @@ function edit_simple_buy_policy() {
     div.style.overflow = 'auto';
 
     let introDiv = document.createElement("div");
-    introDiv.innerHTML = "Edit buy policy";
+    introDiv.innerHTML = "Edit simple buy policy";
     introDiv.className = 'total_price_div';
     div.appendChild(introDiv);
 
@@ -645,7 +645,7 @@ function edit_simple_buy_policy() {
     div.appendChild(minProducts);
 
     let maxProducts = document.createElement("input");
-    maxProducts.placeholder="Enter minimum number of products that client could add to bag (for bag buy policy)";
+    maxProducts.placeholder="Enter maximum number of products that client could add to bag (for bag buy policy)";
     maxProducts.className = 'text_input';
     div.appendChild(maxProducts);
 
@@ -1056,14 +1056,14 @@ function watch_store_history(){
 
 function watch_store_history_respond(products) {
     let productList = products["store_history"];
-
+    if (productList.length === 0) return;
     let div = document.createElement("div");
     div.style.overflow = 'auto';
-    console.log(products);
-    alert(JSON.stringify(products));
-    //DESIGN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    let d = document.createElement("div");
-    d.innerHTML = "<b> productList </b>";
+
+    let purchaseDiv = document.createElement("div");
+    purchaseDiv.innerHTML = "Purchases : "+productList;
+    purchaseDiv.className = 'total_price_div';
+    div.appendChild(purchaseDiv);
 
     popUp(div);
 }
@@ -1506,6 +1506,14 @@ function delete_discount_response(response) {
 }
 
 function add_simple_policy_response(response) {
+    let bool = response["success"];
+    if(bool === true)
+        alert("process completed successfully");
+    else
+        alert("process uncompleted something is wrong!");
+}
+
+function remove_cart_product_response(response) {
     let bool = response["success"];
     if(bool === true)
         alert("process completed successfully");

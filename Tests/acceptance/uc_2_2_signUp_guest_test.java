@@ -1,7 +1,7 @@
 package acceptance;
 
 import ServiceLayer.GuestImp;
-import ServiceLayer.ManagerImp;
+import ServiceLayer.AdminImp;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -18,13 +18,13 @@ public class uc_2_2_signUp_guest_test {
 
     private static GuestImp guestImp ;
     private static GuestImp guestImp2 ;
-    private static ManagerImp managerImp;
+    private static AdminImp managerImp;
 
     @BeforeClass
     public static void before() throws Exception {
         guestImp = new GuestImp();
         guestImp2 = new GuestImp();
-        managerImp = new ManagerImp();
+        managerImp = new AdminImp();
         managerImp.init_system(false);
     }
 

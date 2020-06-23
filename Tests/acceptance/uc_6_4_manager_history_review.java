@@ -1,13 +1,14 @@
 
 package acceptance;
         import ServiceLayer.GuestImp;
-        import ServiceLayer.ManagerImp;
+        import ServiceLayer.AdminImp;
         import ServiceLayer.StoreRoleImp;
         import ServiceLayer.SubscriberImp;
         import org.junit.BeforeClass;
         import org.junit.Test;
 
         import java.io.IOException;
+        import java.util.ArrayList;
 
 
         import static org.junit.Assert.*;
@@ -19,14 +20,14 @@ public class uc_6_4_manager_history_review {
     private static SubscriberImp SUBImp;
     private static GuestImp guestImp;
     private static StoreRoleImp storeRoleImp;
-    private static ManagerImp managerImp;
+    private static AdminImp managerImp;
 
     @BeforeClass
     public static void before() throws Exception {
         SUBImp = new SubscriberImp();
         guestImp = new GuestImp();
         storeRoleImp = new StoreRoleImp();
-        managerImp = new ManagerImp();
+        managerImp = new AdminImp();
         managerImp.init_system(false);
         guestImp.login("Admin","Password");
         guestImp.sign_up("subscriber", "subscriber");
@@ -43,17 +44,26 @@ public class uc_6_4_manager_history_review {
 
     @Test
     public void success_scenario() {
-        assertEquals(managerImp.view_history_store("store1"),"");
-        assertEquals(managerImp.view_history_costumer("buyer"),"");
+        try {
+            assertEquals(managerImp.view_history_store("store1").size(), 0);
+            assertEquals(managerImp.view_history_costumer("buyer"), new ArrayList<>());
+        }
+        catch (Exception e){
 
+        }
 
     }
 
 
     @Test
     public void failure_scenario() {
-        assertEquals(managerImp.view_history_store("store2"),"");
-        assertEquals(managerImp.view_history_costumer("buyer1"),"");
+        try {
+            assertEquals(managerImp.view_history_store("store2").size(), 0);
+            assertEquals(managerImp.view_history_costumer("buyer1").size(),0);
+
+        }catch (Exception e){
+
+        }
 
 
     }

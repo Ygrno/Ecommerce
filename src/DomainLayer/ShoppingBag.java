@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 @Entity
 @Table(name = "shoppings_bags")
@@ -100,7 +101,20 @@ public class ShoppingBag {
     }
 
 
+    public HashMap<Product,Integer> getProductsAmounts(){
+        HashMap<Product,Integer> map = new HashMap<>();
+        for(Product p:products){
 
+            if(map.containsKey(p)){
+                map.replace(p,map.get(p),map.get(p)+1);
+            }
+            else
+            {
+                map.put(p,1);
+            }
+        }
+        return map;
+    }
 
 
     public int getId() {

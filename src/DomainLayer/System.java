@@ -92,6 +92,18 @@ public class System {
         }
         return subscriber;
     }
+
+    public boolean remove_subscriber(String username){
+        Subscriber s = get_subscriber(username);
+        if (s == null) return false;
+
+        //remove subscriber
+        //remove all stores related to subscriber
+
+
+        return user_list.remove(s);
+    }
+
     public Store get_store(String store_name){
         Store store = null;
         for (Store s : store_list){

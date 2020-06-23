@@ -267,6 +267,11 @@ public class StoreRoleMessageProccess {
         int day = request.getInt("day");
         String description = request.getString("desc");
 
+        System.out.println(minProducts);
+        System.out.println(maxProducts);
+        System.out.println(minQuantity);
+        System.out.println(maxQuantity);
+
         boolean b = storeRole.create_store_simple_buyPolicy(username,storename,policyType,description,0,productName,minProducts,maxProducts,minCost,maxCost,minQuantity,maxQuantity,day);
 
         JSONObject o=new JSONObject();

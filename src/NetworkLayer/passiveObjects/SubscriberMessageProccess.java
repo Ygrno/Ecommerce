@@ -7,6 +7,7 @@ import ServiceLayer.SubscriberImp;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class SubscriberMessageProccess {
@@ -27,6 +28,7 @@ public class SubscriberMessageProccess {
     public static void viewCart(MessagingProtocol protocol, JSONObject request) throws Exception{
         String username = request.getString("username");
         List<JSONObject> products=subscriber.watch_products_in_cart(username);
+        Double totalPrice=subscriber.getTotalPriceOfCart(username);
 
         if(products == null) return;
 
@@ -37,6 +39,7 @@ public class SubscriberMessageProccess {
 
         JSONObject l = new JSONObject();
         l.put("productsInCart", jarr);
+        l.put("price",totalPrice);
         l.put("req", request.get("req"));
 
         protocol.send(l);
@@ -60,7 +63,7 @@ public class SubscriberMessageProccess {
 
     public static void signOut(MessagingProtocol protocol, JSONObject request) throws Exception{
         String username = request.getString("username");
-        boolean b=subscriber.sign_out(username);
+        boolean b = subscriber.sign_out(username);
         JSONObject o=new JSONObject();
         o.put("req", request.get("req"));
         o.put("success", b);
@@ -108,7 +111,7 @@ public class SubscriberMessageProccess {
 
     public static void view_purchase_history(MessagingProtocol protocol, JSONObject request) throws Exception{
         String username = request.getString("username");
-        String l = subscriber.view_purchase_history(username);
+        String l = subscriber.view_purchase_history_string(username);
 
         JSONObject o = new JSONObject();
         o.put("req", request.get("req"));
@@ -139,6 +142,17 @@ public class SubscriberMessageProccess {
         protocol.send(o);
     }
 
+    public  static void remove_product_cart_subscriber(MessagingProtocol protocol, JSONObject request) throws Exception{
+        String username = request.getString("username");
+        String productName=request.getString("product_name");
+        String storeName=request.getString("store_name");
+
+        boolean b = subscriber.remove_product_from_cart(username,productName,storeName);
+        JSONObject o=new JSONObject();
+        o.put("req", request.get("req"));
+        o.put("success", b);
+        protocol.send(o);
+    }
 
 
 }

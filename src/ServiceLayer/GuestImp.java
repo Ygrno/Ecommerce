@@ -181,6 +181,16 @@ public class GuestImp implements IGuest {
 
         double price=SystemManage_Facade.getPriceOfCart(String.valueOf(id));
         String[] dealDetails={String.valueOf(id),String.valueOf(price),buyerName,creditCardNumber,expireDate, String.valueOf(cvv)};
-        return SystemManage_Facade.buy(dealDetails);
+        boolean b;
+        synchronized (this) {
+            if(!SystemManage_Facade.checkIfCanBuy(String.valueOf(id))) return false;
+            b = SystemManage_Facade.buy(dealDetails);
+        }
+        return b;
+    }
+
+    @Override
+    public double getTotalPriceOfCart(String userName){
+        return SystemManage_Facade.getPriceOfCart(userName);
     }
 }

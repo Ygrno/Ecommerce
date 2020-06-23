@@ -138,7 +138,12 @@ public class MessagingProtocol {
                 StoreRoleMessageProccess.edit_store_complex_buyPolicy(this,request);
             }else if(req.equals("get_policies_ids_in_store")){
                 StoreRoleMessageProccess.get_policies_ids_in_store(this,request);
+            }else if(req.equals("remove_product_cart_guest")){
+                GuestMessageProccess.remove_product_cart_guest(this,request);
+            }else if(req.equals("remove_product_cart_subscriber")){
+                SubscriberMessageProccess.remove_product_cart_subscriber(this,request);
             }
+
 
 
         }catch (Exception e){

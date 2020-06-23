@@ -1,7 +1,7 @@
 package acceptance;
 
 import ServiceLayer.GuestImp;
-import ServiceLayer.ManagerImp;
+import ServiceLayer.AdminImp;
 import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
 import org.junit.BeforeClass;
@@ -20,11 +20,11 @@ public class uc_4_3_assign_store_owner {
     private static SubscriberImp SUBImp;
     private static GuestImp guestImp;
     private static StoreRoleImp storeRoleImp;
-    private static ManagerImp managerImp;
+    private static AdminImp managerImp;
 
     @BeforeClass
     public static void before() throws Exception {
-        managerImp = new ManagerImp();
+        managerImp = new AdminImp();
         SUBImp = new SubscriberImp();
         guestImp = new GuestImp();
         storeRoleImp = new StoreRoleImp();

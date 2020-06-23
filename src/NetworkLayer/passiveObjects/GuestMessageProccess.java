@@ -125,7 +125,7 @@ public class GuestMessageProccess {
 
         int id = request.getInt("id");
         List<JSONObject> products=guestImp.watch_products_in_cart(id);
-
+        Double totalPrice=guestImp.getTotalPriceOfCart(String.valueOf(id));
         if(products == null) return;
 
         JSONArray jarr = new JSONArray();
@@ -135,6 +135,7 @@ public class GuestMessageProccess {
 
         JSONObject l = new JSONObject();
         l.put("productsInCart", jarr);
+        l.put("price",totalPrice);
         l.put("req", request.get("req"));
 
         protocol.send(l);
@@ -150,6 +151,18 @@ public class GuestMessageProccess {
         double discount =request.getDouble("discount");
 
         boolean b = guestImp.buy_products_in_cart(id,buyerName,creditCardNumber,expireDate,cvv);
+        JSONObject o=new JSONObject();
+        o.put("req", request.get("req"));
+        o.put("success", b);
+        protocol.send(o);
+    }
+
+    public  static void remove_product_cart_guest(MessagingProtocol protocol, JSONObject request) throws Exception{
+        int id = request.getInt("id");
+        String productName=request.getString("product_name");
+        String storeName=request.getString("store_name");
+
+        boolean b = guestImp.remove_product_from_cart(id,productName,storeName);
         JSONObject o=new JSONObject();
         o.put("req", request.get("req"));
         o.put("success", b);

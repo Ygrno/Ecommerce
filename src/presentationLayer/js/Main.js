@@ -69,7 +69,7 @@ function includeHeader() {
                     elmnt.removeAttribute("w3-include-html");
                     includeHeader();
                 }
-            }
+            };
             xhttp.open("GET", file, false);
             xhttp.send();
             setLoggedUserLabel();
@@ -138,6 +138,10 @@ class Main{
 
     login(username, password){
         this.client.send(JSON.stringify({req:"login", username:username, password:password}));
+    }
+
+    sendToServer(request){
+        this.client.send(JSON.stringify(request));
     }
 
     continueAsAGuest(username, password){
@@ -311,6 +315,26 @@ class Main{
         this.client.send(JSON.stringify({req:"get_user_permissions",username:user, store:store}));
     }
 
+    view_customer_history(details){
+        this.client.send(JSON.stringify(details));
+    }
+
+
+    remove_subscriber(username){
+        this.client.send(JSON.stringify({req:"remove_subscriber", username:username}));
+    }
+
+    view_history_store(details){
+        this.client.send(JSON.stringify(details));
+    }
+
+    today_revenue(){
+        this.client.send(JSON.stringify({req:"today_revenue"}));
+    }
+
+    date_revenue(){
+        this.client.send(JSON.stringify(details));
+    }
     edit_manager_permissions(store, assigned_user, permissions){
         this.client.send(JSON.stringify({
             req: "edit_manager_permissions",
@@ -321,6 +345,21 @@ class Main{
         }));
     }
 
+    remove_product_cart(details){
+        let msg = {
+            product_name: details.product,
+            store_name: details.store,
+        };
+        if (isGuest()) {
+            msg["id"] = localStorage.getItem("guest_id");
+            msg["req"] = "remove_product_cart_guest";
+        } else {
+            msg["username"] = localStorage.getItem("current_username");
+            msg["req"] = "remove_product_cart_subscriber";
+        }
+
+        this.client.send(JSON.stringify(msg));
+    }
 }
 
 let instance = new Main();

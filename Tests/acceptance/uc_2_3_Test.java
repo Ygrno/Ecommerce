@@ -3,7 +3,7 @@ package acceptance;
 
 
 import ServiceLayer.GuestImp;
-import ServiceLayer.ManagerImp;
+import ServiceLayer.AdminImp;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertFalse;
@@ -14,7 +14,7 @@ import java.io.IOException;
 public class uc_2_3_Test {
 
     private static GuestImp admin ;
-    private static ManagerImp managerImp;
+    private static AdminImp managerImp;
     private static GuestImp guestImp;
 
     @Before
@@ -23,7 +23,7 @@ public class uc_2_3_Test {
 //        admin=new GuestImp();
 //        admin.login("Admin", "Password");
 
-        managerImp = new ManagerImp();
+        managerImp = new AdminImp();
         managerImp.init_system(false);
         //assertTrue(SystemManage_Facade.is_initialized());
         guestImp.sign_up("user1", "pass");

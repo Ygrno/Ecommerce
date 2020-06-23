@@ -150,6 +150,10 @@
                 get_notifications(response);
             }else if (req === "new_notification"){
                 newNotification(response["username"]);
+            }else if (req === "remove_product_cart_guest"){
+                remove_cart_product_response(response);
+            }else if (req === "remove_product_cart_subscriber"){
+                remove_cart_product_response(response);
             }
         };
 

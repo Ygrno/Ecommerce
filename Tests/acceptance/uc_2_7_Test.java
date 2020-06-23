@@ -1,7 +1,7 @@
 package acceptance;
 
 import ServiceLayer.GuestImp;
-import ServiceLayer.ManagerImp;
+import ServiceLayer.AdminImp;
 import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
 import org.json.JSONException;
@@ -15,13 +15,13 @@ import static org.junit.Assert.assertTrue;
 
 public class uc_2_7_Test {
     private static GuestImp gi;
-    private static ManagerImp managerImp;
+    private static AdminImp managerImp;
 
 
     @BeforeClass
     public static void setUp() throws Exception {
         gi=new GuestImp();
-        managerImp = new ManagerImp();
+        managerImp = new AdminImp();
         SubscriberImp si = new SubscriberImp();
         StoreRoleImp sri = new StoreRoleImp();
         managerImp.init_system(false);
@@ -55,6 +55,9 @@ public class uc_2_7_Test {
         assert gi.watch_products_in_cart(0).get(0).getString("name").equals("bmba");
         assert gi.watch_products_in_cart(0).get(1).getString("name").equals("twix");
         assert !gi.watch_products_in_cart(0).get(1).getString("name").equals("besli");
+
+        gi.remove_product_from_cart(0,"bmba","store1");
+        assert !gi.watch_products_in_cart(0).get(0).getString("name").equals("bmba");
 
     }
     @Test
