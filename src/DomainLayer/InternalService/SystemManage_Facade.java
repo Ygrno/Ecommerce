@@ -77,7 +77,7 @@ public class SystemManage_Facade implements InternalService {
                     }
 
                     //validate buy policies of store
-                    store.validatePurchasePolicies(shoppingBag,u);
+                    store.validatePurchasePolicies(shoppingBag);
 
                     //User bought his saved products so shopping bag no longer exists with store.
                     purchase.getUser().getShoppingCart().getShopping_bag_list().remove(purchase.getShoppingBag());

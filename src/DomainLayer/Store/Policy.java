@@ -16,7 +16,7 @@ public abstract class Policy {
     protected String description;
 
     //enum Logicaloperation { or, and, xor};
-    public abstract boolean validate (ShoppingBag shoppingBag, User user);
+    public abstract boolean validate (ShoppingBag shoppingBag);
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

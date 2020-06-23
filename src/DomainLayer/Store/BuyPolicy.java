@@ -39,7 +39,7 @@ public abstract class BuyPolicy extends Policy {
     }
 
     @Override
-    public boolean validate(ShoppingBag shoppingBag, User user) {
+    public boolean validate(ShoppingBag shoppingBag) {
         return true;
     }
 

@@ -64,10 +64,10 @@ public class Store {
     }
 
 
-    public void setPurchasePolicy(BuyPolicy buyPolicy) {
+    public void addBuyPolicy(BuyPolicy buyPolicy) {
         buyPolicyList.add(buyPolicy);
     }
-    public void removePurchasePolicy(BuyPolicy buyPolicy) {
+    public void removeBuyPolicy(BuyPolicy buyPolicy) {
         buyPolicyList.remove(buyPolicy);
     }
 
@@ -158,9 +158,9 @@ public class Store {
         return null;
     }
 
-    public boolean validatePurchasePolicies(ShoppingBag shoppingBag, User user) {
+    public boolean validatePurchasePolicies(ShoppingBag shoppingBag) {
         for(Policy p: buyPolicyList){
-            if (!p.validate(shoppingBag, user))
+            if (!p.validate(shoppingBag))
                 return false;
         }
         return true;

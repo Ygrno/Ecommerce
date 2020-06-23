@@ -56,16 +56,16 @@ public class ProductBuyPolicy extends SimpleBuyPolicy {
 
 
 
-    public ProductBuyPolicy (int policy_id, String description, String name, int minProducts, int maxProducts)
+    public ProductBuyPolicy (int policy_id, String description, String product_name, int minProducts, int maxProducts)
     {
         super(policy_id,description);
-        this.product_name = name;
+        this.product_name = product_name;
         this.minProducts = minProducts;
         this.maxProducts = maxProducts;
     }
 
     @Override
-    public boolean validate(ShoppingBag shoppingBag, User user) {
+    public boolean validate(ShoppingBag shoppingBag) {
         //ShoppingBag shopBag= purchaseProcess.getShoppingBag();
         List<Product> products = shoppingBag.getProducts();
         for (Product p : products) {
