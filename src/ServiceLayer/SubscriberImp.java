@@ -216,7 +216,7 @@ public class SubscriberImp implements ISubscriber {
     }
 
 
-    public String view_purchase_history_string(String user_name){
+    public String view_purchase_history_string(String user_name) throws Exception {
         my_logInfo.logger.info("view_purchase_history");
         if(!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");

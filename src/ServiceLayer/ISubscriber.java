@@ -28,7 +28,7 @@ public interface ISubscriber {
     public boolean edit_account();     //3.8
 
     public double getTotalPriceOfCart(String userName);
-    public String view_purchase_history_string(String user_name);
+    public String view_purchase_history_string(String user_name) throws Exception;
     public List<JSONObject> getNotifications(String userName) throws Exception;
 
 }

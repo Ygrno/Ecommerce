@@ -2,10 +2,7 @@ package integration.tests;
 
 import DomainLayer.InternalService.SystemManage_Facade;
 import Observer.Observer;
-import ServiceLayer.GuestImp;
-import ServiceLayer.ManagerImp;
-import ServiceLayer.StoreRoleImp;
-import ServiceLayer.SubscriberImp;
+import ServiceLayer.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -19,7 +16,7 @@ public class ObserverTest {
     private static SubscriberImp SUBImp;
     private static GuestImp guestImp;
     private static StoreRoleImp storeRoleImp;
-    private static ManagerImp managerImp;
+    private static IAdmin managerImp;
     private static Observer _Observer;
     @Before
     public void setUp() throws Exception {
@@ -27,7 +24,7 @@ public class ObserverTest {
         SYS.init_system();
         SYS.is_initialized();
         _Observer= Observer.GetObserver();
-        managerImp = new ManagerImp();
+        managerImp = new AdminImp();
         SUBImp = new SubscriberImp();
         guestImp = new GuestImp();
         storeRoleImp = new StoreRoleImp();
