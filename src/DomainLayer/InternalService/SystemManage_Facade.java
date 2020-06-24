@@ -79,6 +79,7 @@ public class SystemManage_Facade implements InternalService {
                 if(!purchase.isFinished()) {
                     purchase.setDone(true, dd1); //User Bought the products therefore the process is finished.
 
+
                     Store store = purchase.getStore();
                     store.getPurchase_process_list().add(purchase); //Store now contains that history purchase.
 
@@ -168,12 +169,12 @@ public class SystemManage_Facade implements InternalService {
 
         Product buy_product = new Product(product.getName(),product.getPrice(),product.getSupplied_amount(),product.getStore());
 //        dB.updateAndCommit(buy_product); //todo - the product already exists in DB, but not connected to the buyer.
-        buy_product.setBuy_amount(amount);
+//        buy_product.setBuy_amount(amount);
 
         for(PurchaseProcess p:g.getPurchaseProcesslist()){
             if(!p.isFinished() && p.getStore().getName().equals(store_name)){
                 p.getShoppingBag().getProducts_names().add(product_name);
-                p.getShoppingBag().getProducts().add(product);
+                p.getShoppingBag().getProducts().add(buy_product);
                 processExist=true;
                 product.setShoppingBag(p.getShoppingBag());
 
@@ -276,14 +277,14 @@ public class SystemManage_Facade implements InternalService {
 
         if(product == null || amount > product.getSupplied_amount()) return false;
 
-        //Product buy_product = new Product(product.getName(),product.getPrice(),product.getSupplied_amount(),product.getStore());
+          Product buy_product = new Product(product.getName(),product.getPrice(),product.getSupplied_amount(),product.getStore());
 //        dB.updateAndCommit(buy_product); //todo - the product already exists in DB, but not connected to the buyer.
 //        buy_product.setBuy_amount(amount);
 
         for(PurchaseProcess p:s.getPurchaseProcesslist()){
             if(!p.isFinished() && p.getStore().getName().equals(store_name)){
                 p.getShoppingBag().getProducts_names().add(product_name);
-                p.getShoppingBag().getProducts().add(product);
+                p.getShoppingBag().getProducts().add(buy_product);
                 processExist=true;
                 product.setShoppingBag(p.getShoppingBag());
                 dB.updateAndCommit(s.getShoppingCart());

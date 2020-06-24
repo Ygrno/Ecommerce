@@ -247,7 +247,7 @@ public class StoreRoleImp implements IStoreRole {
         if (SystemManage_Facade.find_subscriber(user_name) && SystemManage_Facade.find_store(store_name) && SubscribersManage_Facade.check_if_logged_in(user_name) ) {
             return SubscribersManage_Facade.store_purchase_history(user_name, store_name);
         }
-        my_logInfo.logger.info("watch_store_history failed!");
+        my_logError.logger.severe("watch_store_history failed!");
         return null;
     }
 
@@ -264,7 +264,7 @@ public class StoreRoleImp implements IStoreRole {
 
             return true;
         }
-        my_logInfo.logger.info("add_visible_discount failed!");
+        my_logError.logger.severe("add_visible_discount failed!");
         return false;
     }
 
@@ -280,7 +280,7 @@ public class StoreRoleImp implements IStoreRole {
             SubscribersManage_Facade.add_conditioned_discount_to_product(user_name, store_name, product_name, discount_name, discount_percentage, due_date, amount, sum);
             return true;
         }
-        my_logInfo.logger.info("add_conditioned_discount failed!");
+        my_logError.logger.severe("add_conditioned_discount failed!");
         return false;
     }
 
@@ -296,7 +296,7 @@ public class StoreRoleImp implements IStoreRole {
             SubscribersManage_Facade.add_complex_discount(user_name, store_name, discount_name, discounts, type,end_of_use_date);
             return true;
         }
-        my_logInfo.logger.info("add_complex_discount failed!");
+        my_logError.logger.severe("add_complex_discount failed!");
         return false;
     }
 
@@ -313,10 +313,26 @@ public class StoreRoleImp implements IStoreRole {
             SubscribersManage_Facade.delete_discount(user_name, store_name, discount_name);
             return true;
         }
-        my_logInfo.logger.info("delete_discount failed!");
+        my_logError.logger.severe("delete_discount failed!");
         return false;
     }
 
+    @Override
+    public List<JSONObject> view_all_discount(String user_name,String store_name) throws Exception {
+        my_logInfo.logger.info("view_all_discounts");
+
+        if (!SystemManage_Facade.is_initialized()) {
+            my_logError.logger.severe("System not initialized");
+            return null;
+        }
+
+        if (SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
+            return SubscribersManage_Facade.view_all_discounts(user_name, store_name);
+        }
+
+        my_logError.logger.severe("view all duscounts failed!");
+        return null;
+    }
 
 
     public List<JSONObject> get_policies_ids_in_store(String store_name) throws Exception {
