@@ -29,7 +29,7 @@ public class BuyPolicyTest {
     private static User user;
 
     @BeforeClass
-    public static void before() throws IOException {
+    public static void before() throws Exception {
         s =new Store("my_food");
         p1 = new Product("bamba",10,2,s);
         p2 = new Product("grill",10,4,s);
