@@ -32,6 +32,9 @@ public class PurchaseProcess {
     @Column
     private int finished_date;
 
+
+
+
     public PurchaseProcess() {
     }
 
@@ -61,6 +64,7 @@ public class PurchaseProcess {
         finished_date=Integer.parseInt(dateString);
 
     }
+
 
 
 

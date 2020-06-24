@@ -87,6 +87,7 @@ public class ComplexDiscount extends DiscountComponent {
 
     @Override
     public boolean validate(ShoppingBag shoppingBag) {
+        if(!check_date(this.end_of_use_date)) return false;
         boolean and_predicate = true;
         boolean or_predicate = false;
         boolean or_predicate2 = false;

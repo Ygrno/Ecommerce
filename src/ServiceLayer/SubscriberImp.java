@@ -2,7 +2,6 @@ package ServiceLayer;
 import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
 
-import DomainLayer.System;
 import Logs.LogErrors;
 import Logs.LogInfo;
 import Observer.Observer;

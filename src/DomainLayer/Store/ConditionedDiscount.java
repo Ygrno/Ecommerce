@@ -10,27 +10,35 @@ import java.util.List;
 @Table(name = "conditioned_discounts")
 public class ConditionedDiscount extends DiscountComponent {
 
-    private String discount_name;
     private double discount_percentage;
     private int end_of_use_date;     // { Format 12062020 = 12/06/2020 }
     @Column(name = "cond")
     private Condition cond;
-    @OneToOne(targetEntity = Store.class,cascade = CascadeType.ALL)
-    private Store store;
     @OneToOne(targetEntity = Product.class,cascade = CascadeType.ALL)
     private Product product;
+    @Transient
     private int required_amount, required_sum;
 
     public ConditionedDiscount() {
+    }
+
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public int getRequired_amount() {
+        return required_amount;
+    }
+
+    public int getRequired_sum() {
+        return required_sum;
     }
 
     //public double getFinal_price() {
        // return final_price;
     //}
 
-    public void setStore(Store s){
-        this.store=s;
-    }
 
     public void setProduct(Product p){
         this.product=p;
@@ -56,7 +64,6 @@ public class ConditionedDiscount extends DiscountComponent {
         this.discount_percentage = discount_percentage;
         this.end_of_use_date = end_of_use_date;
         this.cond = condition;
-        this.store = store;
         this.product = product;
         this.required_amount = required_amount;
         this.required_sum = required_sum;
@@ -94,16 +101,20 @@ public class ConditionedDiscount extends DiscountComponent {
 
     @Override
     public boolean validate(ShoppingBag shoppingBag) {
+        if(!check_date(this.end_of_use_date)) return false;
         List<Product> products = shoppingBag.getProducts();
         switch(cond){
             case IF_NUMBER_OF_PRODUCTS:
             {
+                int count = 0;
                 for(Product p:products){
                     if(p.getName().equals(this.product.getName())){
-                        if(p.getBuy_amount() >= required_amount)
+                        count++;
+                        if(count >= required_amount)
                             return true;
                     }
                 }
+
                 break;
 
             }
@@ -125,13 +136,20 @@ public class ConditionedDiscount extends DiscountComponent {
             setCalculated(true);
             switch (cond) {
                 case IF_NUMBER_OF_PRODUCTS: {
-
                     final_price = product.getPrice() - (discount_percentage * product.getPrice());
-                    Product discountedProduct = new Product(product.getName(),final_price , product.getSupplied_amount(), product.getStore());
-                    shoppingBag.getProducts().remove(product);
-                    shoppingBag.getProducts().add(discountedProduct);
+                    int count = 0;
+                    for(Product p: shoppingBag.getProducts()){
+                        if(p.getName().equals(product.getName())) {
+                            count++;
+                            if(count % (required_amount+1) == 0){
+                                p.setPrice(final_price);
+                            }
+                        }
+
+                    }
 
                 }
+                break;
                 case IF_SUM_GREATER_THAN: {
 
                     double sum_price = shoppingBag.getDiscounted_bag_price();
@@ -139,6 +157,7 @@ public class ConditionedDiscount extends DiscountComponent {
                     shoppingBag.setDiscounted_bag_price(final_price);
 
                 }
+                break;
                 default:
                     throw new UnsupportedOperationException();
             }
