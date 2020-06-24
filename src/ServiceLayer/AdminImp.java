@@ -34,7 +34,7 @@ public class AdminImp implements IAdmin {
 
         //Sign-Up Admin
         GuestImp guestImp = new GuestImp();
-        if(!guestImp.sign_up("Admin", "Password")) return false;
+        if(!guestImp.sign_up("A1", "Password")) return false;
 
         //True = Read File, False = Don't read file
         if(file) {
