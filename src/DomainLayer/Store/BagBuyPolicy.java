@@ -35,11 +35,27 @@ public class BagBuyPolicy extends SimpleBuyPolicy {
 
     @Override
     public boolean validate(ShoppingBag shoppingBag) {
-        double total_price=0;
-        //ShoppingBag shopBag= purchaseProcess.getShoppingBag();
-        //HashMap<Product,Integer> products = shoppingBag.getProductsAmounts();
+
         List<Product> products = shoppingBag.getProducts();
-        if(products.size() < min_quantity)
+        if( products.size() < min_quantity)
+            return false;
+        if( products.size() > max_quantity)
+            return false;
+
+        return true;
+    }
+
+
+/*
+  //HashMap<Product,Integer> products = shoppingBag.getProductsAmounts();
+        HashMap<Product,Integer> products = shoppingBag.getProductsAmounts();
+        int countProduct = 0;
+        double total_price=0;
+        for (Product p : products.keySet()) {
+            countProduct = countProduct+products.get(p);
+            total_price = total_price + p.getPrice();
+        }
+ if(products.size() < min_quantity)
             return false;
         if(products.size() > max_quantity)
             return false;
@@ -49,12 +65,7 @@ public class BagBuyPolicy extends SimpleBuyPolicy {
             return false;
         if (total_price > maxCost)
             return false;
-
-        return true;
-    }
-
-
-
+ */
 
 
     public int getMinCost() {

@@ -11,6 +11,8 @@ import DomainLayer.Store.VisibleDiscount;
 import DomainLayer.System;
 import DomainLayer.User.ProductReview;
 import DomainLayer.User.Subscriber;
+import Logs.LogErrors;
+import Logs.LogInfo;
 import Observer.Observer;
 import com.mysql.cj.xdevapi.JsonArray;
 import jdk.jshell.tool.JavaShellToolBuilder;
@@ -26,7 +28,8 @@ import java.util.List;
 public class SubscribersManage_Facade implements InternalService {
 
     private static DBAccess dB = DBAccess.getInstance();
-
+    private static LogInfo my_logInfo = LogInfo.getLogger();
+    private static LogErrors my_logError = LogErrors.getLogger();
 
 
     /////////////// login/signup methods///////////////////////////
@@ -565,6 +568,7 @@ public class SubscribersManage_Facade implements InternalService {
 
     //private functions for buy policy
     private static BuyPolicy find_buy_policy(int policy_id, Store store) {
+        my_logInfo.logger.info("find_buy_policy in store by policy_id");
         for (BuyPolicy p : store.getBuyPolicyList())
             if ((p.getPolicy_id())==policy_id)
                 return p;
@@ -609,11 +613,12 @@ public class SubscribersManage_Facade implements InternalService {
                 dB.updateAndCommit(policy);
                 return true;
             default:
+                my_logError.logger.severe("failed to build_and_add_policy_to_store");
                 return false;
         }
     }
     private static Logicaloperation int_to_logic(int op) {
-        Logicaloperation logic_op;
+        Logicaloperation logic_op = Logicaloperation.and;
         switch(op){
             case 1:
                 logic_op= Logicaloperation.and;
@@ -625,7 +630,7 @@ public class SubscribersManage_Facade implements InternalService {
                 logic_op= Logicaloperation.xor;
                 break;
         }
-        return Logicaloperation.and;
+        return logic_op;
     }
 
 
