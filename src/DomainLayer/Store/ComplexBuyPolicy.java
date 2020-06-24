@@ -39,15 +39,14 @@ public class ComplexBuyPolicy extends BuyPolicy{
     public boolean validate(ShoppingBag shoppingBag) {
         switch (this.op){
             case and:
-                validate_and(shoppingBag);
-                break;
+                return validate_and(shoppingBag);
             case or:
-                validate_or(shoppingBag);
-                break;
+                return validate_or(shoppingBag);
             case xor://todo hila
                 return true;
+            default:
+                return false;
         }
-        return false;
     }
 
     @Override
