@@ -21,7 +21,7 @@ public class ProductFinanceServiceAdapter {
     }
 
 
-    public boolean tryToBuy(DealDetails details){
+    public boolean tryToBuy(DealDetails details) throws Exception{
         return FinanceService.purchase(
                 details.getBuyer_name(),
                 details.getCreditCardNumber(),

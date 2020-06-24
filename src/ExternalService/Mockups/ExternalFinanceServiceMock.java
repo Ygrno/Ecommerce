@@ -20,15 +20,10 @@ public class ExternalFinanceServiceMock implements ExternalFinanceService {
     }
 
     @Override
-    public boolean purchase(String accName, String ccn, String expireDate, int cvv, String id) {
+    public boolean purchase(String accName, String ccn, String expireDate, int cvv, String id) throws Exception {
         String[] date = expireDate.split("/");
-
-        try {
-            String response = HTTPPostClient.send(HTTPPostClient.makePayParams(ccn, date[0], date[1], accName, String.valueOf(cvv), id));
-            return !response.equals("-1");
-        }catch (Exception e){
-            return false;
-        }
+        String response = HTTPPostClient.send(HTTPPostClient.makePayParams(ccn, date[0], date[1], accName, String.valueOf(cvv), id));
+        return !response.equals("-1");
 
     }
 

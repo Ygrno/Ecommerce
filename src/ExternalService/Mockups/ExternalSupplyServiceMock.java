@@ -18,16 +18,13 @@ public class ExternalSupplyServiceMock implements ExternalSupplyService {
     }
 
     @Override
-    public boolean order(OrderDetails orderDetails) {
-        try {
-            String response = HTTPPostClient.send(
-                    HTTPPostClient.makeSupplyParams(orderDetails.getName(), orderDetails.getAddress(), orderDetails.getCity(), orderDetails.getCountry(), orderDetails.getZip())
-            );
+    public boolean order(OrderDetails orderDetails) throws Exception {
 
-            return !response.equals("-1");
-        }catch (Exception e){
-            return false;
-        }
+        String response = HTTPPostClient.send(
+                HTTPPostClient.makeSupplyParams(orderDetails.getName(), orderDetails.getAddress(), orderDetails.getCity(), orderDetails.getCountry(), orderDetails.getZip())
+        );
+
+        return !response.equals("-1");
 
     }
 }
