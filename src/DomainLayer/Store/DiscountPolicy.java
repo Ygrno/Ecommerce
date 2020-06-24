@@ -55,6 +55,7 @@ public class DiscountPolicy {
         }
         return null;
     }
+
     public void delete_discount(String discount_name){
         List<DiscountComponent> toRemove = new ArrayList<DiscountComponent>();
         for(DiscountComponent dc : discounts){

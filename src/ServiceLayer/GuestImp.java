@@ -162,9 +162,7 @@ public class GuestImp implements IGuest {
             my_logError.logger.severe("System not initialized");
             return false;
         }
-//        if(discount > 1 || discount < 0){
-//            return false;
-//        }
+
         if(expireDate.length() != 5){
             my_logError.logger.severe("expireDate length wasn't 5");
             return false;
