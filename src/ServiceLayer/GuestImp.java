@@ -156,17 +156,13 @@ public class GuestImp implements IGuest {
     }
 
     @Override
-    public boolean buy_products_in_cart(int id,String buyerName,String creditCardNumber,String expireDate,int cvv) throws Exception {
+    public boolean buy_products_in_cart(int id,String buyerName,String creditCardNumber,String expireDate,int cvv, String buyer_id) throws Exception {
         my_logInfo.logger.info("buy_products_in_cart");
         if (!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
             return false;
         }
 
-        if(expireDate.length() != 5){
-            my_logError.logger.severe("expireDate length wasn't 5");
-            return false;
-        }
         if(creditCardNumber.length()!=16) {
             my_logError.logger.severe("creditCardNumber length wasn't 16");
             return false;
@@ -178,7 +174,7 @@ public class GuestImp implements IGuest {
         //check product availability
 
         double price=SystemManage_Facade.getPriceOfCart(String.valueOf(id));
-        String[] dealDetails={String.valueOf(id),String.valueOf(price),buyerName,creditCardNumber,expireDate, String.valueOf(cvv)};
+        String[] dealDetails={String.valueOf(id),String.valueOf(price),buyerName,creditCardNumber,expireDate, String.valueOf(cvv), buyer_id};
         boolean b;
         synchronized (this) {
             if(!SystemManage_Facade.checkIfCanBuy(String.valueOf(id))) return false;

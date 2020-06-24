@@ -39,7 +39,7 @@ public class BuyWithDiscounts {
         subscriberImp.save_products("s2","pc","computers",1);
         subscriberImp.save_products("s2","pc","computers",1);
 
-        subscriberImp.buy_products_in_cart("s2","moti","1234567891234567","12/24",123);
+        subscriberImp.buy_products_in_cart("s2","moti","1234567891234567","12/24",123,"123456789");
 
     }
 

@@ -215,7 +215,7 @@ class Main{
             creditCardNumber: details.creditCardNumber,
             expireDate: details.expireDate,
             cvv: details.cvv,
-            discount: details.discount
+            buyer_id: details.buyer_id
         };
         if (isGuest()) {
             msg["id"] = localStorage.getItem("guest_id");

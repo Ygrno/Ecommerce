@@ -128,10 +128,10 @@ public class SubscriberImpTest {
 
     @Test
     public void buy_products_in_cart() throws Exception {
-        assertTrue(SUBImp.buy_products_in_cart("subscriber","mahmoud","1234123412341234","11/26",999));
-        assertFalse(SUBImp.buy_products_in_cart("subscriber","mahmoud","1234123412341234","11/26",9999));
-        assertFalse(SUBImp.buy_products_in_cart("subscriber","mahmoud","12341234123412341","11/26",999));
-        assertFalse(SUBImp.buy_products_in_cart("subscriber","mahmoud","1234123412341234","11/261",999));
+        assertTrue(SUBImp.buy_products_in_cart("subscriber","mahmoud","1234123412341234","11/26",999, "12345567"));
+        assertFalse(SUBImp.buy_products_in_cart("subscriber","mahmoud","1234123412341234","11/26",9999, "12345567"));
+        assertFalse(SUBImp.buy_products_in_cart("subscriber","mahmoud","12341234123412341","11/26",999, "12345567"));
+        assertFalse(SUBImp.buy_products_in_cart("subscriber","mahmoud","1234123412341234","11/261",999, "12345567"));
     }
 
     @Test

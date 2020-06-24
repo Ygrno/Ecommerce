@@ -7,16 +7,17 @@ public class DealDetails {
     private String creditCardNumber;
     private String expireDate;
     private int cvv;
+    private String buyer_id;
 
 
-
-    public DealDetails(String id, double price, String buyer_name, String creditCardNumber, String expireDate, int cvv) {
+    public DealDetails(String id, double price, String buyer_name, String creditCardNumber, String expireDate, int cvv, String buyer_id) {
         this.user_id = id;
         this.price = price;
         this.buyer_name = buyer_name;
         this.creditCardNumber = creditCardNumber;
         this.expireDate = expireDate;
         this.cvv = cvv;
+        this.buyer_id = buyer_id;
     }
 
     public double getPrice() {
@@ -36,6 +37,8 @@ public class DealDetails {
     }
 
     public String getUser_id() { return user_id; }
+
+    public String getBuyer_id(){return this.buyer_id;}
 
     public int getCvv() {
         return cvv;

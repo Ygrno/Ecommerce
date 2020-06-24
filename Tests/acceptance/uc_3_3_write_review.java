@@ -33,7 +33,7 @@ public class uc_3_3_write_review {
         guestImp.login("buyer","buyer");
         SUBImp.save_products("buyer","Bamba","store1",5);
 
-        SUBImp.buy_products_in_cart("buyer","Noam","1234567891234567","22019",120); //was missing
+        SUBImp.buy_products_in_cart("buyer","Noam","1234567891234567","22019",120, "12345567"); //was missing
     }
 
     @Test

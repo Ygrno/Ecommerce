@@ -70,7 +70,7 @@ public class SystemManage_Facade implements InternalService {
     }
 
     public static boolean buy(String[] dd) throws Exception {
-        DealDetails dd1 = new DealDetails(dd[0],Double.parseDouble(dd[1]),dd[2],dd[3],dd[4],Integer.parseInt(dd[5]));
+        DealDetails dd1 = new DealDetails(dd[0],Double.parseDouble(dd[1]),dd[2],dd[3],dd[4],Integer.parseInt(dd[5]), dd[6]);
         if (system.getProductFinanceService().tryToBuy(dd1)) {
 
             User u = getUser(dd[0]);
@@ -88,11 +88,12 @@ public class SystemManage_Facade implements InternalService {
                     for(Product prod: shoppingBag.getProductsAmounts().keySet()){
                         Product store_product = getProductInStore(prod.getName(),store);
                         store_product.setSupplied_amount(store_product.getSupplied_amount() - shoppingBag.getProductsAmounts().get(prod));
-                        dB.updateAndCommit(store_product);
+                        //dB.updateAndCommit(store_product);
                     }
                     //User bought his saved products so shopping bag no longer exists with store.
                     purchase.getUser().getShoppingCart().getShopping_bag_list().remove(purchase.getShoppingBag());
-                    dB.updateAndCommit(purchase);
+                    if(u instanceof Subscriber)
+                        dB.updateAndCommit(purchase);
                 }
             }
             return true;
@@ -116,8 +117,8 @@ public class SystemManage_Facade implements InternalService {
     /////////////////guest methods/////////////////////
 
     public static Guest getGuest(int id){
-        for(Guest g : system.getGuest_list()){
 
+        for(Guest g : system.getGuest_list()){
             if(g.getId()==id)
                 return g;
         }
@@ -125,8 +126,8 @@ public class SystemManage_Facade implements InternalService {
     }
 
     public static Guest addGuest(){
-        Guest guest=new Guest(system.getNextGuestId());
-//        dB.updateAndCommit(guest);
+        int id = system.getNextGuestId();
+        Guest guest = new Guest(id);
         system.getGuest_list().add(guest);
         system.increaseGuestId();
         return guest;
@@ -154,10 +155,10 @@ public class SystemManage_Facade implements InternalService {
 
     //todo - check updates DB
     public static boolean saveProductForGuest(int id,String product_name, String store_name,int amount){
-
         Guest g=SystemManage_Facade.getGuest(id);
         if(g==null)
             g=SystemManage_Facade.addGuest();
+
         boolean processExist=false;
         Product product=null;
         Store s = SystemManage_Facade.get_store(store_name);
