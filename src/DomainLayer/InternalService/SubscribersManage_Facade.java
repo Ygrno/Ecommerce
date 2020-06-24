@@ -183,7 +183,7 @@ public class SubscribersManage_Facade implements InternalService {
                     dB.updateAndCommit(conditionedDiscount);
                     return true;
                 }
-                if (sum > 0) {
+                else if (sum >= 0) {
                     ConditionedDiscount conditionedDiscount = new ConditionedDiscount(discount_name, discount_percentage, due_date, Condition.IF_SUM_GREATER_THAN, store_to_add, p, amount, sum);
                     discountPolicy.add_discount(conditionedDiscount);
                     dB.updateAndCommit(conditionedDiscount);
@@ -209,9 +209,17 @@ public class SubscribersManage_Facade implements InternalService {
                 }
             ArrayList<DiscountComponent> discounts_comp = new ArrayList<>();
             for(String name : discounts){
-                DiscountComponent dc=discountPolicy.get_discount_by_name(name);
-                if(dc!=null)
-                    discounts_comp.add(dc);
+                DiscountComponent dc = discountPolicy.get_discount_by_name(name);
+                if(dc!=null) {
+                    DiscountComponent dc_clone = null;
+                    if(dc instanceof VisibleDiscount){
+                        dc_clone = new VisibleDiscount(dc.getDiscount_name(),((VisibleDiscount) dc).getDiscount_percentage(),((VisibleDiscount) dc).getEnd_of_use_date(),((VisibleDiscount) dc).getProduct());
+                    }
+                    else if(dc instanceof ConditionedDiscount){
+                        dc_clone = new ConditionedDiscount(dc.getDiscount_name(),((ConditionedDiscount) dc).getDiscount_percentage(),((ConditionedDiscount) dc).getEnd_of_use_date(),((ConditionedDiscount) dc).getCond(),null,((ConditionedDiscount) dc).getProduct(),((ConditionedDiscount) dc).getRequired_amount(),((ConditionedDiscount) dc).getRequired_sum());
+                    }
+                    if(dc_clone != null) discounts_comp.add(dc_clone);
+                }
                 else{
                     return false;
                 }
@@ -680,5 +688,18 @@ public class SubscribersManage_Facade implements InternalService {
             }
         }
         return exists_policies;
+    }
+
+    public static List<JSONObject> view_all_discounts(String user_name, String store_name) throws Exception {
+        ArrayList<JSONObject> all_discounts = new ArrayList<JSONObject>();
+        Store store = find_store(store_name);
+        if(store == null) return null;
+        for(DiscountComponent discount: store.getDiscountPolicy().getDiscounts()){
+            JSONObject o = new JSONObject();
+            o.put("id", discount.getId());
+            o.put("Discount_Name", discount.getDiscount_name());
+            all_discounts.add(o);
+        }
+        return all_discounts;
     }
 }

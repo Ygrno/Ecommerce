@@ -2,7 +2,6 @@ package ServiceLayer;
 import DomainLayer.InternalService.SubscribersManage_Facade;
 import DomainLayer.InternalService.SystemManage_Facade;
 
-import DomainLayer.System;
 import Logs.LogErrors;
 import Logs.LogInfo;
 import Observer.Observer;
@@ -74,19 +73,13 @@ public class SubscriberImp implements ISubscriber {
 
 
     @Override
-    public boolean buy_products_in_cart(String id, String buyerName, String creditCardNumber, String expireDate, int cvv) throws Exception {
+    public boolean buy_products_in_cart(String id, String buyerName, String creditCardNumber, String expireDate, int cvv, String buyer_id) throws Exception {
         my_logInfo.logger.info("buy_products_in_cart");
         if(!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
             return false;
         }
-//        if(discount > 1 || discount < 0){
-//            return false;
-//        }
-        if(expireDate.length() != 5){
-            my_logError.logger.severe("expireDate length wasn't 5");
-            return false;
-        }
+
         if(creditCardNumber.length()!=16) {
             my_logError.logger.severe("creditCardNumber length wasn't 16");
             return false;
@@ -96,7 +89,7 @@ public class SubscriberImp implements ISubscriber {
             return false;
         }
         double price=SystemManage_Facade.getPriceOfCart(id);
-        String[] dealDetails = {id,String.valueOf(price),buyerName,creditCardNumber,expireDate, String.valueOf(cvv)};
+        String[] dealDetails = {id,String.valueOf(price),buyerName,creditCardNumber,expireDate, String.valueOf(cvv), buyer_id};
         boolean b;
         synchronized (this) {
             if(!SystemManage_Facade.checkIfCanBuy(id)) return false;

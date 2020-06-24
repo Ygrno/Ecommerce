@@ -46,7 +46,6 @@
         <!-- List of XML mapping files -->
         <mapping class = "DomainLayer.User.ProductReview"/>
         <mapping class = "DomainLayer.User.Subscriber"/>
-        <mapping class = "DomainLayer.User.Guest"/>
         <mapping class = "DomainLayer.User.User"/>
         <mapping class = "DomainLayer.Roles.Role"/>
         <mapping class = "DomainLayer.Roles.StoreRole"/>

@@ -70,7 +70,7 @@ public class SystemManage_Facade implements InternalService {
     }
 
     public static boolean buy(String[] dd) throws Exception {
-        DealDetails dd1 = new DealDetails(dd[0],Double.parseDouble(dd[1]),dd[2],dd[3],dd[4],Integer.parseInt(dd[5]));
+        DealDetails dd1 = new DealDetails(dd[0],Double.parseDouble(dd[1]),dd[2],dd[3],dd[4],Integer.parseInt(dd[5]), dd[6]);
         if (system.getProductFinanceService().tryToBuy(dd1)) {
 
             User u = getUser(dd[0]);
@@ -78,6 +78,7 @@ public class SystemManage_Facade implements InternalService {
             for(PurchaseProcess purchase: u.getPurchaseProcesslist()){
                 if(!purchase.isFinished()) {
                     purchase.setDone(true, dd1); //User Bought the products therefore the process is finished.
+
 
                     Store store = purchase.getStore();
                     store.getPurchase_process_list().add(purchase); //Store now contains that history purchase.
@@ -87,11 +88,12 @@ public class SystemManage_Facade implements InternalService {
                     for(Product prod: shoppingBag.getProductsAmounts().keySet()){
                         Product store_product = getProductInStore(prod.getName(),store);
                         store_product.setSupplied_amount(store_product.getSupplied_amount() - shoppingBag.getProductsAmounts().get(prod));
-                        dB.updateAndCommit(store_product);
+                        //dB.updateAndCommit(store_product);
                     }
                     //User bought his saved products so shopping bag no longer exists with store.
                     purchase.getUser().getShoppingCart().getShopping_bag_list().remove(purchase.getShoppingBag());
-                    dB.updateAndCommit(purchase);
+                    if(u instanceof Subscriber)
+                        dB.updateAndCommit(purchase);
                 }
             }
             return true;
@@ -115,8 +117,8 @@ public class SystemManage_Facade implements InternalService {
     /////////////////guest methods/////////////////////
 
     public static Guest getGuest(int id){
-        for(Guest g : system.getGuest_list()){
 
+        for(Guest g : system.getGuest_list()){
             if(g.getId()==id)
                 return g;
         }
@@ -124,8 +126,8 @@ public class SystemManage_Facade implements InternalService {
     }
 
     public static Guest addGuest(){
-        Guest guest=new Guest(system.getNextGuestId());
-//        dB.updateAndCommit(guest);
+        int id = system.getNextGuestId();
+        Guest guest = new Guest(id);
         system.getGuest_list().add(guest);
         system.increaseGuestId();
         return guest;
@@ -153,10 +155,10 @@ public class SystemManage_Facade implements InternalService {
 
     //todo - check updates DB
     public static boolean saveProductForGuest(int id,String product_name, String store_name,int amount){
-
         Guest g=SystemManage_Facade.getGuest(id);
         if(g==null)
             g=SystemManage_Facade.addGuest();
+
         boolean processExist=false;
         Product product=null;
         Store s = SystemManage_Facade.get_store(store_name);
@@ -167,12 +169,12 @@ public class SystemManage_Facade implements InternalService {
 
         Product buy_product = new Product(product.getName(),product.getPrice(),product.getSupplied_amount(),product.getStore());
 //        dB.updateAndCommit(buy_product); //todo - the product already exists in DB, but not connected to the buyer.
-        buy_product.setBuy_amount(amount);
+//        buy_product.setBuy_amount(amount);
 
         for(PurchaseProcess p:g.getPurchaseProcesslist()){
             if(!p.isFinished() && p.getStore().getName().equals(store_name)){
                 p.getShoppingBag().getProducts_names().add(product_name);
-                p.getShoppingBag().getProducts().add(product);
+                p.getShoppingBag().getProducts().add(buy_product);
                 processExist=true;
                 product.setShoppingBag(p.getShoppingBag());
 
@@ -275,14 +277,14 @@ public class SystemManage_Facade implements InternalService {
 
         if(product == null || amount > product.getSupplied_amount()) return false;
 
-        //Product buy_product = new Product(product.getName(),product.getPrice(),product.getSupplied_amount(),product.getStore());
+          Product buy_product = new Product(product.getName(),product.getPrice(),product.getSupplied_amount(),product.getStore());
 //        dB.updateAndCommit(buy_product); //todo - the product already exists in DB, but not connected to the buyer.
 //        buy_product.setBuy_amount(amount);
 
         for(PurchaseProcess p:s.getPurchaseProcesslist()){
             if(!p.isFinished() && p.getStore().getName().equals(store_name)){
                 p.getShoppingBag().getProducts_names().add(product_name);
-                p.getShoppingBag().getProducts().add(product);
+                p.getShoppingBag().getProducts().add(buy_product);
                 processExist=true;
                 product.setShoppingBag(p.getShoppingBag());
                 dB.updateAndCommit(s.getShoppingCart());

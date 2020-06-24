@@ -19,7 +19,7 @@ public class ProductSupplyServiceAdapter {
            return this.SupplyService.connect();
     }
 
-    public boolean order(OrderDetails orderDetails){
+    public boolean order(OrderDetails orderDetails) throws Exception{
         return this.SupplyService.order(orderDetails);
     }
 }

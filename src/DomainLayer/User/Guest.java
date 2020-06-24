@@ -9,11 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 
-@Entity
-@Table(name="Guests")
 public class Guest extends User {
 
-    @Id
+
     private int id;
 
     public Guest()
@@ -35,7 +33,7 @@ public class Guest extends User {
 
     public Guest(int id) {
         super();
-
+        this.id=id;
        // purchaseProcesslist = new ArrayList<>();
 
     }

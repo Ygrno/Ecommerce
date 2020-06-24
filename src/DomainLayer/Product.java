@@ -20,8 +20,8 @@ public class Product implements Serializable {
     private double price;
     @Column
     private int supplied_amount;
-    @Column
-    private int Buy_amount;
+/*    @Column
+    private int Buy_amount;*/
     @ManyToOne(targetEntity = Store.class)
     @JoinColumn(name ="store_id")
     private Store store;
@@ -37,13 +37,13 @@ public class Product implements Serializable {
     }
 
 
-    public int getBuy_amount() {
-        return Buy_amount;
-    }
+//    public int getBuy_amount() {
+//        return Buy_amount;
+//    }
 
-    public void setBuy_amount(int buy_amount) {
-        Buy_amount = buy_amount;
-    }
+//    public void setBuy_amount(int buy_amount) {
+//        Buy_amount = buy_amount;
+//    }
 
     public Product(String name, double price, int supplied_amount, Store store) {
         this.name = name;
