@@ -187,7 +187,7 @@ public class SystemManage_Facade implements InternalService {
             PurchaseProcess p = new PurchaseProcess(g,s,sb);
             g.getShoppingCart().getShopping_bag_list().add(p.getShoppingBag());
             p.getShoppingBag().getProducts_names().add(product_name);
-            p.getShoppingBag().getProducts().add(product);
+            p.getShoppingBag().getProducts().add(buy_product);
             g.getPurchaseProcesslist().add(p);
             sb.setShoppingCart(g.getShoppingCart());
             product.setShoppingBag(sb);
@@ -300,7 +300,7 @@ public class SystemManage_Facade implements InternalService {
             PurchaseProcess p = new PurchaseProcess(s,store,sb);
             s.getShoppingCart().getShopping_bag_list().add(p.getShoppingBag());
             p.getShoppingBag().getProducts_names().add(product_name);
-            p.getShoppingBag().getProducts().add(product);
+            p.getShoppingBag().getProducts().add(buy_product);
             s.getPurchaseProcesslist().add(p);
             sb.setShoppingCart(s.getShoppingCart());
             product.setShoppingBag(sb);
