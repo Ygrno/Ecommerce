@@ -22,7 +22,7 @@ public class SystemTest {
     }
 
     @Test
-    public void get_subscriber() {
+    public void get_subscriber() throws Exception {
         assert System.getSystem().get_subscriber("test_sub") == null;
 
         System.getSystem().add_subscriber(subscriber);
@@ -30,7 +30,7 @@ public class SystemTest {
     }
 
     @Test
-    public void get_store() {
+    public void get_store() throws Exception {
         assert System.getSystem().get_store("test_store") == null;
 
         System.getSystem().getStore_list().add(store);

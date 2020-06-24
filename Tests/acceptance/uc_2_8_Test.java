@@ -1,7 +1,7 @@
 package acceptance;
 
 import ServiceLayer.GuestImp;
-import ServiceLayer.ManagerImp;
+import ServiceLayer.AdminImp;
 import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
 import org.junit.BeforeClass;
@@ -15,14 +15,14 @@ import static org.junit.Assert.assertTrue;
 public class uc_2_8_Test {
     private static GuestImp gi;
     private static SubscriberImp si;
-    private static ManagerImp managerImp;
+    private static AdminImp managerImp;
 
 
     @BeforeClass
-    public static  void setUp() throws IOException {
+    public static  void setUp() throws Exception {
         gi=new GuestImp();
         si= new SubscriberImp();
-        managerImp = new ManagerImp();
+        managerImp = new AdminImp();
         StoreRoleImp sri = new StoreRoleImp();
         managerImp.init_system(false);
         gi.sign_up("mhmod","123");

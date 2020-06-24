@@ -20,7 +20,7 @@ public class StoreRoleImp implements IStoreRole {
 
 
     @Override
-    public boolean add_store_product(String user_name, String store_name, String product_name, double product_price, int product_amount) {
+    public boolean add_store_product(String user_name, String store_name, String product_name, double product_price, int product_amount) throws Exception {
         my_logInfo.logger.info("add_store_product");
         if (!SystemManage_Facade.is_initialized() || product_amount == 0) {
             my_logError.logger.severe("System not initialized");
@@ -34,7 +34,7 @@ public class StoreRoleImp implements IStoreRole {
     }
 
     @Override
-    public boolean edit_store_product(String user_name, String store_name, String product_name,String new_product_name, int product_price, int product_amount) {
+    public boolean edit_store_product(String user_name, String store_name, String product_name,String new_product_name, int product_price, int product_amount) throws Exception {
         my_logInfo.logger.info("edit_store_product");
         if (!SystemManage_Facade.is_initialized() || product_amount == 0) {
             my_logError.logger.severe("System not initialized");
@@ -48,7 +48,7 @@ public class StoreRoleImp implements IStoreRole {
     }
 
     @Override
-    public boolean remove_store_product(String user_name, String store_name, String product_name) {
+    public boolean remove_store_product(String user_name, String store_name, String product_name) throws Exception {
         my_logInfo.logger.info("remove_store_product");
         if (!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
@@ -65,7 +65,7 @@ public class StoreRoleImp implements IStoreRole {
 
 
 
-    public boolean create_store_simple_buyPolicy(String user_name, String store_name, int policy_type, String description, int policy_id, String product_name, int minProducts, int maxProducts, int minCost, int maxCost, int min_quantity, int max_quantity, int day) {
+    public boolean create_store_simple_buyPolicy(String user_name, String store_name, int policy_type, String description, int policy_id, String product_name, int minProducts, int maxProducts, int minCost, int maxCost, int min_quantity, int max_quantity, int day) throws Exception {
         my_logInfo.logger.info("create simple buy Policy");
         if (!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
@@ -78,7 +78,7 @@ public class StoreRoleImp implements IStoreRole {
     }
 
 
-    public boolean create_store_complex_buyPolicy(String user_name, String store_name,String description, int policy_id, int[] policy_ids, int op) {
+    public boolean create_store_complex_buyPolicy(String user_name, String store_name,String description, int policy_id, int[] policy_ids, int op) throws Exception {
         my_logInfo.logger.info("create complex buy Policy");
         if (!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
@@ -91,7 +91,7 @@ public class StoreRoleImp implements IStoreRole {
         return false;
     }
 
-    public boolean edit_store_simple_buyPolicy(String user_name, String store_name, int type,String description, int policy_id, String product_name, int minProducts, int maxProducts, int minCost, int maxCost, int min_quantity, int max_quantity, int day){
+    public boolean edit_store_simple_buyPolicy(String user_name, String store_name, int type,String description, int policy_id, String product_name, int minProducts, int maxProducts, int minCost, int maxCost, int min_quantity, int max_quantity, int day) throws Exception {
         my_logInfo.logger.info("edit simple buy Policy");
         if (!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
@@ -103,7 +103,7 @@ public class StoreRoleImp implements IStoreRole {
         my_logError.logger.severe("edit_store_simple_buyPolicy failed!");
         return false;
     }
-    public boolean edit_store_complex_buyPolicy(String user_name, String store_name, int policy_id, int new_policy_id, String act){
+    public boolean edit_store_complex_buyPolicy(String user_name, String store_name, int policy_id, int new_policy_id, String act) throws Exception {
         my_logInfo.logger.info("edit complex buy Policy");
         if (!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
@@ -116,7 +116,7 @@ public class StoreRoleImp implements IStoreRole {
         return false;
     }
 
-    public boolean remove_store_buyPolicy(String user_name, String store_name, int policy_id){
+    public boolean remove_store_buyPolicy(String user_name, String store_name, int policy_id) throws Exception {
         my_logInfo.logger.info("remove buy Policy");
         if (!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
@@ -130,7 +130,7 @@ public class StoreRoleImp implements IStoreRole {
     }
 
     @Override
-    public boolean assign_store_owner(String user_name, String store_name, String user_assign) {
+    public boolean assign_store_owner(String user_name, String store_name, String user_assign) throws Exception {
         my_logInfo.logger.info("assign_store_owner");
         if (!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
@@ -144,7 +144,7 @@ public class StoreRoleImp implements IStoreRole {
     }
 
     @Override
-    public boolean remove_store_owner(String user_name, String store_name, String user_assign) {
+    public boolean remove_store_owner(String user_name, String store_name, String user_assign) throws Exception {
         my_logInfo.logger.info("remove_store_owner");
         if (!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
@@ -158,7 +158,7 @@ public class StoreRoleImp implements IStoreRole {
     }
 
     @Override
-    public boolean assign_store_manager(String user_name, String store_name, String user_assign) {
+    public boolean assign_store_manager(String user_name, String store_name, String user_assign) throws Exception {
         my_logInfo.logger.info("assign_store_manager");
         if (!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
@@ -174,7 +174,7 @@ public class StoreRoleImp implements IStoreRole {
 
 
     @Override
-    public boolean edit_manager_permissions(String user_name, String store_name,String user_assign , ArrayList<String> permissions) {
+    public boolean edit_manager_permissions(String user_name, String store_name,String user_assign , ArrayList<String> permissions) throws Exception {
         my_logInfo.logger.info("edit_manager_permissions");
         if (!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
@@ -210,7 +210,7 @@ public class StoreRoleImp implements IStoreRole {
     }
 
     @Override
-    public boolean remove_store_manager(String user_name, String store_name, String user_assign) {
+    public boolean remove_store_manager(String user_name, String store_name, String user_assign) throws Exception {
         my_logInfo.logger.info("remove_store_manager");
         if (!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
@@ -238,7 +238,7 @@ public class StoreRoleImp implements IStoreRole {
 
 
     @Override
-    public String watch_store_history(String user_name, String store_name) {
+    public String watch_store_history(String user_name, String store_name) throws Exception {
         my_logInfo.logger.info("watch_store_history");
         if (!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
@@ -252,7 +252,7 @@ public class StoreRoleImp implements IStoreRole {
     }
 
     @Override
-    public boolean add_visible_discount(String user_name, String store_name, String discount_name, double discount_percentage, int end_of_use_date, String product_name) {
+    public boolean add_visible_discount(String user_name, String store_name, String discount_name, double discount_percentage, int end_of_use_date, String product_name) throws Exception {
         my_logInfo.logger.info("create_visible_discount");
         if (!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
@@ -269,7 +269,7 @@ public class StoreRoleImp implements IStoreRole {
     }
 
     @Override
-    public boolean add_conditioned_discount(String user_name, String store_name, String product_name, String discount_name, double discount_percentage, int due_date, int amount, int sum) {
+    public boolean add_conditioned_discount(String user_name, String store_name, String product_name, String discount_name, double discount_percentage, int due_date, int amount, int sum) throws Exception {
         my_logInfo.logger.info("create_conditioned_discount");
         if (!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
@@ -285,7 +285,7 @@ public class StoreRoleImp implements IStoreRole {
     }
 
     @Override
-    public boolean add_complex_discount(String user_name, String store_name, String discount_name, String[]discounts, String type, int end_of_use_date) {
+    public boolean add_complex_discount(String user_name, String store_name, String discount_name, String[]discounts, String type, int end_of_use_date) throws Exception {
         my_logInfo.logger.info("create_conditioned_discount");
         if (!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
@@ -301,7 +301,7 @@ public class StoreRoleImp implements IStoreRole {
     }
 
     @Override
-    public boolean delete_discount(String user_name, String store_name, String discount_name) {
+    public boolean delete_discount(String user_name, String store_name, String discount_name) throws Exception {
         my_logInfo.logger.info("delete_discount");
 
         if (!SystemManage_Facade.is_initialized()) {
@@ -338,7 +338,7 @@ public class StoreRoleImp implements IStoreRole {
         return res;
     }
 
-    public List<JSONObject> get_sub_policies_in_complex( String store_name, int policy_id) throws JSONException {
+    public List<JSONObject> get_sub_policies_in_complex( String store_name, int policy_id) throws Exception {
         List<JSONObject> res = new LinkedList<>();
         if (!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");

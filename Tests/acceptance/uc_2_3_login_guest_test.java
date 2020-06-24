@@ -1,7 +1,7 @@
 package acceptance;
 
 import ServiceLayer.GuestImp;
-import ServiceLayer.ManagerImp;
+import ServiceLayer.AdminImp;
 import ServiceLayer.SubscriberImp;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -16,12 +16,12 @@ public class uc_2_3_login_guest_test {
     private static GuestImp admin ;
     private static GuestImp guestImp ;
     private static SubscriberImp SUBImp;
-    private static ManagerImp managerImp;
+    private static AdminImp managerImp;
 
 
     @BeforeClass
-    public static void before() throws IOException {
-        managerImp = new ManagerImp();
+    public static void before() throws Exception {
+        managerImp = new AdminImp();
         managerImp.init_system(false);
         admin = new GuestImp();
         SUBImp = new SubscriberImp();
@@ -29,9 +29,9 @@ public class uc_2_3_login_guest_test {
     }
 
     @Test
-    public void success_scenario(){
+    public void success_scenario() throws Exception {
         //admin.login("Admin", "Password");
-        managerImp = new ManagerImp();
+        managerImp = new AdminImp();
         managerImp.init_system(false);
         guestImp.sign_up("user1", "pass");
         assertTrue(guestImp.login("user1", "pass"));
@@ -41,7 +41,7 @@ public class uc_2_3_login_guest_test {
 
 
     @Test
-    public void failure_scenario(){
+    public void failure_scenario() throws Exception {
         assertFalse(guestImp.login("user1", "passWrong"));
     }
 }

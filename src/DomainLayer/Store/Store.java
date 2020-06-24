@@ -10,6 +10,7 @@ import DomainLayer.ShoppingBag;
 import DomainLayer.System;
 import DomainLayer.User.User;
 import Observer.Observer;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.persistence.*;
@@ -42,9 +43,17 @@ public class Store {
     @OneToMany(mappedBy = "store",fetch = FetchType.LAZY,cascade=CascadeType.ALL)
     private List<BuyPolicy> buyPolicyList = Collections.synchronizedList(new  ArrayList<>());
 
-    public Store(String name) {
+    public Store(String name) throws Exception {
         //TODO: require policy
-
+        for(Role role : roles){
+            if(role instanceof StoreOwner) {
+                JSONObject o = new JSONObject();
+                o.put("username",role.user.getName());
+                o.put("message", "store: "+ this.name +" is open");
+                Observer.GetObserver().update(o);
+                java.lang.System.out.println("Store");
+            }
+        }
         this.name = name;
        // this.id = System.nextStoreId++;
         discountPolicy = new DiscountPolicy();
@@ -58,10 +67,10 @@ public class Store {
     }
 
 
-    public void setPurchasePolicy(BuyPolicy buyPolicy) {
+    public void addBuyPolicy(BuyPolicy buyPolicy) {
         buyPolicyList.add(buyPolicy);
     }
-    public void removePurchasePolicy(BuyPolicy buyPolicy) {
+    public void removeBuyPolicy(BuyPolicy buyPolicy) {
         buyPolicyList.remove(buyPolicy);
     }
 
@@ -88,15 +97,14 @@ public class Store {
 
     public void setIs_open(boolean is_open) throws Exception {
         //notification Ahmad
-        for(Role role : roles){
-            if(role instanceof StoreOwner) {
-                JSONObject o = new JSONObject();
-                o.put("username",role.user.getName());
-                o.put("message", "store: "+this.name+" is open");
-                role.user.notifications().add(o);
-                Observer.update(o);
-            }
-        }
+//        for(Role role : roles){
+//            if(role instanceof StoreOwner) {
+//                JSONObject o = new JSONObject();
+//                o.put("username",role.user.getName());
+//                o.put("message", "store: "+this.name+" is open");
+//                System.getSystem().GetObserver().update(o);
+//            }
+//        }
         //notification
 
         this.is_open = is_open;
@@ -152,9 +160,9 @@ public class Store {
         return null;
     }
 
-    public boolean validatePurchasePolicies(ShoppingBag shoppingBag, User user) {
+    public boolean validatePurchasePolicies(ShoppingBag shoppingBag) {
         for(Policy p: buyPolicyList){
-            if (!p.validate(shoppingBag, user))
+            if (!p.validate(shoppingBag))
                 return false;
         }
         return true;

@@ -1,13 +1,12 @@
 package integration.tests;
 
-import DomainLayer.InternalService.SystemManage_Facade;
 import DomainLayer.Product;
 import DomainLayer.ShoppingBag;
 import DomainLayer.Store.Store;
 import DomainLayer.System;
 import DomainLayer.User.Guest;
 import ServiceLayer.GuestImp;
-import ServiceLayer.ManagerImp;
+import ServiceLayer.AdminImp;
 import org.json.JSONException;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -21,14 +20,14 @@ public class GuestImpTest {
     private static GuestImp gi2;
     private static System system;
     private static Guest guest;
-    private static ManagerImp managerImp;
+    private static AdminImp managerImp;
 
 
     @BeforeClass
-    public static void setUp(){
+    public static void setUp() throws Exception {
             gi = new GuestImp();
             gi2 = new GuestImp();
-            managerImp = new ManagerImp();
+            managerImp = new AdminImp();
             managerImp.init_system(false);
             system = System.getSystem();
             gi.login("Admin", "Password");
@@ -66,7 +65,7 @@ public class GuestImpTest {
     }
 
     @Test
-    public void sign_up() { //2.2
+    public void sign_up() throws Exception { //2.2
         assertEquals(true ,gi.sign_up("name", "pass") );
         assertEquals(false ,system.getUser_list().size()==1);
         assertEquals(true ,gi2.sign_up("name2", "pass2") );
@@ -74,7 +73,7 @@ public class GuestImpTest {
     }
 
     @Test
-    public void login() { //2.3
+    public void login() throws Exception { //2.3
         assertEquals(false ,gi.login("name", "pass") );
         assertEquals(false ,gi.login("name", "passFailed") );
     }

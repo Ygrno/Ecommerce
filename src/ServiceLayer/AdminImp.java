@@ -1,5 +1,6 @@
 package ServiceLayer;
 
+import DAL.DBAccess;
 import DomainLayer.InternalService.SystemManage_Facade;
 import Encryption.EncryptProxy;
 import ExternalService.ExternalSupplyService;
@@ -7,21 +8,29 @@ import ExternalService.Mockups.ExternalFinanceServiceMock;
 import ExternalService.Mockups.ExternalSupplyServiceMock;
 import Logs.LogErrors;
 import Logs.LogInfo;
+import netscape.javascript.JSObject;
+import org.json.JSONObject;
+
+import java.util.List;
 
 
-public class ManagerImp implements IManager {
+public class AdminImp implements IAdmin {
+
     LogErrors my_logError = LogErrors.getLogger();
     LogInfo my_logInfo = LogInfo.getLogger();
+    private static DBAccess db;
 
     @Override
-    public boolean init_system(boolean file) {
+    public boolean init_system(boolean file) throws Exception {
 
         my_logInfo.logger.info("Init System");
         //Init System Flow:
         //---------------------------
-
+        // init DB
+        db= DBAccess.getInstance();
         //Initialize System.
         SystemManage_Facade.init_system();
+
 
         //Sign-Up Admin
         GuestImp guestImp = new GuestImp();
@@ -68,7 +77,7 @@ public class ManagerImp implements IManager {
     @Override
     public boolean remove_subscriber(String user_name) {
         if(!SystemManage_Facade.is_initialized()) return false;
-        return false;
+        return SystemManage_Facade.remove_subscriber(user_name);
     }
 
     @Override
@@ -78,13 +87,13 @@ public class ManagerImp implements IManager {
     }
 
     @Override
-    public String view_history_store(String store_name) {
+    public List<JSONObject> view_history_store(String store_name) throws Exception {
         if(!SystemManage_Facade.is_initialized()) return null;
         return SystemManage_Facade.get_store_purchase_process(store_name);
     }
 
     @Override
-    public String view_history_costumer(String user_name) {
+    public List<JSONObject> view_history_costumer(String user_name) throws Exception{
         if(!SystemManage_Facade.is_initialized()) return  null;
         return SystemManage_Facade.get_subscriber_purchase_process(user_name);
 

@@ -51,9 +51,8 @@ public class Product implements Serializable {
         this.supplied_amount = supplied_amount;
         this.store = store;
 
-        
+
         product_review_list = Collections.synchronizedList(new  ArrayList<>());
-        
 
     }
 

@@ -1,6 +1,6 @@
 package acceptance;
 import ServiceLayer.GuestImp;
-import ServiceLayer.ManagerImp;
+import ServiceLayer.AdminImp;
 import ServiceLayer.StoreRoleImp;
 import ServiceLayer.SubscriberImp;
 import org.junit.BeforeClass;
@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class uc_3_2_open_store {
 
-    private static ManagerImp managerImp;
+    private static AdminImp managerImp;
     private static StoreRoleImp storeRoleImp;
     private static GuestImp guestImp;
     private static SubscriberImp subscriberImp;
@@ -22,9 +22,9 @@ public class uc_3_2_open_store {
 
 
     @BeforeClass
-    public static void before(){
+    public static void before() throws Exception {
 
-        managerImp = new ManagerImp();
+        managerImp = new AdminImp();
 
         managerImp.init_system(false);
 
@@ -38,7 +38,7 @@ public class uc_3_2_open_store {
     }
 
     @Test
-    public void a_success_scenario(){
+    public void a_success_scenario() throws Exception {
 
 
 
@@ -48,7 +48,7 @@ public class uc_3_2_open_store {
 
 
     @Test
-    public void b_failure_scenario() {
+    public void b_failure_scenario() throws Exception {
 
         subscriberImp.sign_out("subscriber");
 

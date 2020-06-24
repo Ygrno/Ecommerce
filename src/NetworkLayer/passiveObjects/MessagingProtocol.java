@@ -38,7 +38,6 @@ public class MessagingProtocol {
         try {
             JSONObject request = new JSONObject(msg);
             String req = (String) request.get("req");
-
             if(req.equals("login")){
                 GuestMessageProccess.Login(this, request);
             }else if(req.equals("get_stores")){

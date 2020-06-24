@@ -26,7 +26,7 @@ public class DiscountsTest {
 
 
     @BeforeClass
-    public static void init(){
+    public static void init() throws Exception {
         SimpleDateFormat format = new SimpleDateFormat("ddMMyyyy");
         String dateString = format.format( new Date()   );
         System.out.println(dateString);
