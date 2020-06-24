@@ -21,7 +21,7 @@ public class uc_4_6_edit_manager_permessions {
     private static AdminImp managerImp;
 
     @BeforeClass
-    public static void before() throws IOException {
+    public static void before() throws Exception {
         permissions.add("ADD_PRODUCT");
         guestImp = new GuestImp();
         SUBImp = new SubscriberImp();
@@ -36,13 +36,13 @@ public class uc_4_6_edit_manager_permessions {
     }
 
     @Test
-    public void success_scenario(){
+    public void success_scenario() throws Exception {
         assertTrue(storeRoleImp.edit_manager_permissions("Admin","store","manager",permissions));
     }
 
 
     @Test
-    public void failure_scenario() {
+    public void failure_scenario() throws Exception {
         assertFalse(storeRoleImp.edit_manager_permissions("Admin","store1","moti",permissions));
     }
 

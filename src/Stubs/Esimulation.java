@@ -7,7 +7,7 @@ import DomainLayer.User.Subscriber;
 import DomainLayer.Store.Store;
 
 public class Esimulation {
-    public static void Init(){
+    public static void Init() throws Exception {
         
         Subscriber tamer = new Subscriber("tamer","tamer");
         Subscriber ahmad = new Subscriber("ahmad","ahmad");

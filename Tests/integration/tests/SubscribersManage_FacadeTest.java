@@ -25,7 +25,7 @@ public class SubscribersManage_FacadeTest {
 
 
     @Test
-    public void subscriber_login_state() {
+    public void subscriber_login_state() throws Exception {
         SubscribersManage_Facade.subscriber_login_state("test_sub", true);
         assert SubscribersManage_Facade.check_if_logged_in("test_sub");
         SubscribersManage_Facade.subscriber_login_state("test_sub", false);
@@ -34,7 +34,7 @@ public class SubscribersManage_FacadeTest {
     }
 
     @Test
-    public void check_if_logged_in() {
+    public void check_if_logged_in() throws Exception {
         SubscribersManage_Facade.subscriber_login_state("test_sub", true);
         assert SubscribersManage_Facade.check_if_logged_in("test_sub");
         SubscribersManage_Facade.subscriber_login_state("test_sub", false);
@@ -42,14 +42,14 @@ public class SubscribersManage_FacadeTest {
     }
 
     @Test
-    public void create_store() {
+    public void create_store() throws Exception {
         SubscribersManage_Facade.create_store("test_sub", "test_store");
         assert System.getSystem().get_store("test_store") != null;
         assert System.getSystem().get_store("test_sub_not_existed") == null;
     }
 
     @Test
-    public void add_product_to_store() {
+    public void add_product_to_store() throws Exception {
         Store s = System.getSystem().get_store("test_sub");
 
         if(s == null){
@@ -66,7 +66,7 @@ public class SubscribersManage_FacadeTest {
     }
 
     @Test
-    public void create_store_simple_buyPolicy() {
+    public void create_store_simple_buyPolicy() throws Exception {
         Store s = System.getSystem().get_store("test_store");
         if(s == null){
             SubscribersManage_Facade.create_store("test_sub", "test_store");
@@ -85,7 +85,7 @@ public class SubscribersManage_FacadeTest {
     }
 
     @Test
-    public void remove_store_buyPolicy(){
+    public void remove_store_buyPolicy() throws Exception {
         Store s = System.getSystem().get_store("test_store");
         if(s == null){
             SubscribersManage_Facade.create_store("test_sub", "test_store");
@@ -110,7 +110,7 @@ public class SubscribersManage_FacadeTest {
 
 
     @Test
-    public void edit_store_simple_buyPolicy(){
+    public void edit_store_simple_buyPolicy()throws Exception{
         Store s = System.getSystem().get_store("test_s1");
         if(s == null){
             SubscribersManage_Facade.create_store("test_sub", "test_s1");
@@ -134,7 +134,7 @@ public class SubscribersManage_FacadeTest {
     }
 
     @Test
-    public void create_store_complex_buyPolicy() {
+    public void create_store_complex_buyPolicy() throws Exception {
         Store s = System.getSystem().get_store("test_store");
         if(s == null){
             SubscribersManage_Facade.create_store("test_sub", "test_store");
@@ -160,7 +160,7 @@ public class SubscribersManage_FacadeTest {
     }
 
     @Test
-    public void edit_store_complex_buyPolicy(){
+    public void edit_store_complex_buyPolicy() throws Exception {
         Store s = System.getSystem().get_store("test_store");
         if(s == null){
             SubscribersManage_Facade.create_store("test_sub", "test_store");

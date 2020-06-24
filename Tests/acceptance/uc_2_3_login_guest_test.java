@@ -20,7 +20,7 @@ public class uc_2_3_login_guest_test {
 
 
     @BeforeClass
-    public static void before() throws IOException {
+    public static void before() throws Exception {
         managerImp = new AdminImp();
         managerImp.init_system(false);
         admin = new GuestImp();
@@ -29,7 +29,7 @@ public class uc_2_3_login_guest_test {
     }
 
     @Test
-    public void success_scenario(){
+    public void success_scenario() throws Exception {
         //admin.login("Admin", "Password");
         managerImp = new AdminImp();
         managerImp.init_system(false);
@@ -41,7 +41,7 @@ public class uc_2_3_login_guest_test {
 
 
     @Test
-    public void failure_scenario(){
+    public void failure_scenario() throws Exception {
         assertFalse(guestImp.login("user1", "passWrong"));
     }
 }

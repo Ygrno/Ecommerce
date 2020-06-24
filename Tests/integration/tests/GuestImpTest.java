@@ -24,7 +24,7 @@ public class GuestImpTest {
 
 
     @BeforeClass
-    public static void setUp(){
+    public static void setUp() throws Exception {
             gi = new GuestImp();
             gi2 = new GuestImp();
             managerImp = new AdminImp();
@@ -65,7 +65,7 @@ public class GuestImpTest {
     }
 
     @Test
-    public void sign_up() { //2.2
+    public void sign_up() throws Exception { //2.2
         assertEquals(true ,gi.sign_up("name", "pass") );
         assertEquals(false ,system.getUser_list().size()==1);
         assertEquals(true ,gi2.sign_up("name2", "pass2") );
@@ -73,7 +73,7 @@ public class GuestImpTest {
     }
 
     @Test
-    public void login() { //2.3
+    public void login() throws Exception { //2.3
         assertEquals(false ,gi.login("name", "pass") );
         assertEquals(false ,gi.login("name", "passFailed") );
     }

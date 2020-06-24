@@ -52,7 +52,8 @@ public class PurchaseProcess {
                 JSONObject o = new JSONObject();
                 o.put("username", role.user.getName());
                 o.put("message", "Pruchase Process is done");
-                Observer.update(o);
+                Observer.GetObserver().update(o);
+                java.lang.System.out.println(o.get("username"));
             }
         }
         SimpleDateFormat format = new SimpleDateFormat("ddMMyyyy");

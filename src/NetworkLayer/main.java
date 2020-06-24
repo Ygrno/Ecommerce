@@ -8,7 +8,7 @@ import java.net.ServerSocket;
 
 public class main {
     private static DBAccess db;
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception {
         //start the database
         //db=DBAccess.getInstance();
         AdminImp managerImp = new AdminImp();

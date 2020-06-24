@@ -18,7 +18,7 @@ public class uc_4_1_add_edit_remove {
     private static AdminImp managerImp;
 
     @BeforeClass
-    public static void before() throws IOException {
+    public static void before() throws Exception {
         managerImp = new AdminImp();
         SUBImp = new SubscriberImp();
         guestImp = new GuestImp();
@@ -31,7 +31,7 @@ public class uc_4_1_add_edit_remove {
     }
 
     @Test
-    public void success_scenario() {
+    public void success_scenario() throws Exception {
         assertTrue(storeRoleImp.add_store_product("subscriber", "store1", "Bamba", 3, 25));
         assertTrue(storeRoleImp.edit_store_product("subscriber", "store1", "Bamba","new", 5, 17));
         assertTrue(storeRoleImp.remove_store_product("subscriber","store1","new"));
@@ -39,7 +39,7 @@ public class uc_4_1_add_edit_remove {
 
 
     @Test
-    public void failure_scenario() {
+    public void failure_scenario() throws Exception {
         assertFalse(storeRoleImp.remove_store_product("subscriber","store1","new"));
         assertFalse(storeRoleImp.edit_store_product("subscriber", "store1", "Bamba","new", 5, 17));
 

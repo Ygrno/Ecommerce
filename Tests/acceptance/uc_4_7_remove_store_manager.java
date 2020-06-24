@@ -21,7 +21,7 @@ public class uc_4_7_remove_store_manager {
 
 
     @BeforeClass
-    public static void before() throws IOException {
+    public static void before() throws Exception {
         guestImp = new GuestImp();
         SUBImp = new SubscriberImp();
         storeRoleImp =  new StoreRoleImp();
@@ -36,19 +36,19 @@ public class uc_4_7_remove_store_manager {
     }
 
     @Test
-    public void run_tests(){
+    public void run_tests() throws Exception {
         success_scenario();
         failure_scenario();
     }
 
 
-    public void success_scenario(){
+    public void success_scenario() throws Exception {
         assertTrue(storeRoleImp.remove_store_manager("Admin","store4","manager"));
     }
 
 
 
-    public void failure_scenario() {
+    public void failure_scenario() throws Exception {
         assertFalse(storeRoleImp.remove_store_manager("Admin","store4","manager"));
     }
 

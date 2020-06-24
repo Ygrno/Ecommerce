@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import java.util.List;
 import DomainLayer.InternalService.SubscribersManage_Facade;
+import DomainLayer.InternalService.SystemManage_Facade;
 import DomainLayer.Store.BuyPolicy;
 
 public class initSystemTest {
@@ -28,24 +29,24 @@ public class initSystemTest {
     }
 
     @Test
-    public void subscriber_login_state() {
+    public void subscriber_login_state() throws Exception {
         assert SubscribersManage_Facade.check_if_logged_in("hila");
     }
 
     @Test
-    public void check_if_logged_in() {
+    public void check_if_logged_in() throws Exception {
         assert SubscribersManage_Facade.check_if_logged_in("user1");
     }
 
 
     @Test
-    public void create_store() {
+    public void create_store() throws Exception {
         assert System.getSystem().get_store("shoes") != null;
         assert System.getSystem().get_store("test_sub_not_existed") == null;
     }
 
     @Test
-    public void add_product_to_store() {
+    public void add_product_to_store() throws Exception {
         Store s = System.getSystem().get_store("shoes");
 
         Product p = s.getProduct("bamba");
@@ -67,14 +68,14 @@ public class initSystemTest {
     }*/
 
     @Test
-    public void add_owner_to_store() {
+    public void add_owner_to_store() throws Exception {
         Store s = System.getSystem().get_store("shoes");
         List<BuyPolicy> policies = s.getBuyPolicyList();
         StoreOwner owner = s.find_store_owner_by_name("hila");
         assert owner.user.getName().equals("hila");
     }
     @Test
-    public void add_manager_to_store() {
+    public void add_manager_to_store() throws Exception {
         Store s = System.getSystem().get_store("shoes");
         List<BuyPolicy> policies = s.getBuyPolicyList();
         StoreManger manager = s.find_store_manager_by_name("user2");

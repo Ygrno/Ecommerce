@@ -37,14 +37,14 @@ public class uc_3_3_write_review {
     }
 
     @Test
-    public void success_scenario() {
+    public void success_scenario() throws Exception {
         assertTrue(SUBImp.write_review("buyer","Bamba","store1","good product",3));
 
     }
 
 
     @Test
-    public void failure_scenario() {
+    public void failure_scenario() throws Exception {
         assertFalse(SUBImp.write_review("buyer","chips","store1","good product",3));
 
 

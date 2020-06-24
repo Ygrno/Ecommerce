@@ -16,7 +16,7 @@ public class uc_2_5_Test {
     private static AdminImp managerImp;
     private DBAccess db;
     @BeforeClass
-    public static void setUp() throws IOException {
+    public static void setUp() throws Exception {
         gi=new GuestImp();
         managerImp = new AdminImp();
         SubscriberImp si = new SubscriberImp();

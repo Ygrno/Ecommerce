@@ -24,7 +24,6 @@ public class GuestMessageProccess {
             response.put("res", "false");
         response.put("username", request.get("username"));
         protocol.send(response);
-        //{req:"login", res:"true", username:"tamernassar"}
     }
 
     public static void continueAsAguest(MessagingProtocol protocol, JSONObject request)throws Exception{

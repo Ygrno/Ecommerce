@@ -24,7 +24,7 @@ public class uc_4_4_remove_store_owner {
     private static AdminImp managerImp;
 
     @BeforeClass
-    public static void before() throws IOException {
+    public static void before() throws Exception {
         SUBImp = new SubscriberImp();
         guestImp = new GuestImp();
         storeRoleImp = new StoreRoleImp();
@@ -47,7 +47,7 @@ public class uc_4_4_remove_store_owner {
 
     }
 
-    private void assign_users() {
+    private void assign_users() throws Exception {
         storeRoleImp.assign_store_owner("subscriber", "store1", "Admin");
         storeRoleImp.assign_store_owner("Admin", "store1", "s2");
         storeRoleImp.assign_store_owner("Admin", "store1", "s3");
@@ -55,12 +55,12 @@ public class uc_4_4_remove_store_owner {
 
     }
 
-    private void add_moshe() {
+    private void add_moshe() throws Exception {
         guestImp.sign_up("Moshe", "123");
         guestImp.login("Moshe", "123");
     }
 
-    private void assign_moshe() {
+    private void assign_moshe() throws Exception {
         storeRoleImp.assign_store_manager("subscriber", "store1", "Moshe");
 
 
@@ -68,7 +68,7 @@ public class uc_4_4_remove_store_owner {
 
 
     @Test
-    public void a_success_scenario() {
+    public void a_success_scenario() throws Exception {
         //Valid remove s3 store owner assigned by Admin.
         assertTrue(storeRoleImp.remove_store_owner("Admin", "store1", "s3"));
 
@@ -78,7 +78,7 @@ public class uc_4_4_remove_store_owner {
 
 
     @Test
-    public void b_failure_scenario() {
+    public void b_failure_scenario() throws Exception {
 
         //Trying to remove Admin after he was removed.
         assertFalse(storeRoleImp.remove_store_owner("subscriber", "store1", "Admin"));

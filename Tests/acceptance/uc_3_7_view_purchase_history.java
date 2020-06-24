@@ -19,7 +19,7 @@ public class uc_3_7_view_purchase_history {
 
 
     @BeforeClass
-    public static void before() {
+    public static void before() throws Exception {
         SYS = new SystemManage_Facade();
         SUB = new SubscribersManage_Facade();
         SYS.init_system();
@@ -32,14 +32,14 @@ public class uc_3_7_view_purchase_history {
     }
 
     @Test
-    public void success_scenario() throws JSONException {
+    public void success_scenario() throws Exception {
         SUB.purchaseListAdd("subscriber" ,"test",bamba);
         assertNotNull(SYS.View_purchase("subscriber"));
     }
 
 
     @Test
-    public void failure_scenario() throws JSONException {
+    public void failure_scenario() throws Exception {
         System.getSystem().get_subscriber("subscriber").setLogged_in(false);
         assertNotNull(SYS.View_purchase("subscriber"));
     }

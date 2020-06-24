@@ -21,7 +21,7 @@ public class uc_2_2_signUp_guest_test {
     private static AdminImp managerImp;
 
     @BeforeClass
-    public static void before() throws IOException {
+    public static void before() throws Exception {
         guestImp = new GuestImp();
         guestImp2 = new GuestImp();
         managerImp = new AdminImp();
@@ -30,7 +30,7 @@ public class uc_2_2_signUp_guest_test {
 
 
     @Test
-    public void a_success_scenario(){
+    public void a_success_scenario() throws Exception {
         assertTrue(guestImp.sign_up("manager", "password"));
         assertTrue(guestImp2.sign_up("user2", "password"));
         //guestImp2.login("user2", "password");
@@ -38,8 +38,7 @@ public class uc_2_2_signUp_guest_test {
 
 
     @Test
-    public void b_failure_scenario()
-    {
+    public void b_failure_scenario() throws Exception {
         assertFalse (guestImp2.sign_up("user2", "another_password"));
     }
 }

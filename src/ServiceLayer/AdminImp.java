@@ -21,7 +21,7 @@ public class AdminImp implements IAdmin {
     private static DBAccess db;
 
     @Override
-    public boolean init_system(boolean file) {
+    public boolean init_system(boolean file) throws Exception {
 
         my_logInfo.logger.info("Init System");
         //Init System Flow:
