@@ -23,7 +23,7 @@
         </property>
 
         <property name = "hibernate.connection.password">
-            root
+            442126Af!
         </property>
         <property name="hibernate.connection.CharSet" >
                   utf8

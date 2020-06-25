@@ -137,7 +137,7 @@ public class StoreRoleImp implements IStoreRole {
             return false;
         }
         if (SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
-            return SubscribersManage_Facade.add_owner_to_store(user_name, store_name, user_assign);
+            return SubscribersManage_Facade.add_owner_to_store(store_name, user_assign);
         }
         my_logError.logger.severe("assign_store_owner failed!");
         return false;

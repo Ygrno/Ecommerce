@@ -175,4 +175,12 @@ public class Store {
         this.id = id;
     }
 
+    public List<StoreOwner> GetStoreOwners() {
+        List<StoreOwner> Roles = null;
+        for (Role store_role : roles)
+            if (store_role instanceof StoreOwner) {
+                Roles.add((StoreOwner)store_role);
+            }
+        return Roles;
+    }
 }

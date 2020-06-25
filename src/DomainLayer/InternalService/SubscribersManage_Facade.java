@@ -325,7 +325,10 @@ public class SubscribersManage_Facade implements InternalService {
         }
         return false;
     }
-
+    public static boolean add_owner_to_store(String store_name, String user_assign) throws Exception {
+        return OwnersApproval.add_owner_to_store(store_name,user_assign);
+    }
+    // old 4.3
     public static boolean add_owner_to_store(String user_name, String store_name, String user_assign) throws Exception {
         Subscriber subscriber1 = System.getSystem().get_subscriber(user_name);
         StoreRole store_role = subscriber1.get_role_at_store(store_name);
@@ -339,7 +342,6 @@ public class SubscribersManage_Facade implements InternalService {
             storeOwner.setAssigned_by(store_role);
             dB.updateAndCommit(store_role);
             dB.updateAndCommit(storeOwner);
-
             return true;
         }
         return false;

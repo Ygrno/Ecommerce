@@ -27,7 +27,11 @@ public class uc_4_3_assign_store_owner {
         storeRoleImp = new StoreRoleImp();
         managerImp.init_system(false);
         guestImp.login("Admin","Password");
+
         guestImp.sign_up("subscriber", "subscriber");
+        guestImp.sign_up("subscriber1", "subscriber1");
+        guestImp.sign_up("subscriber2", "subscriber2");
+
         guestImp.login("subscriber","subscriber");
         SUBImp.open_store("subscriber","store1");
     }
