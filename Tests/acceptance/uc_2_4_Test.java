@@ -29,13 +29,13 @@ public class uc_2_4_Test {
         managerImp = new AdminImp();
         managerImp.init_system(false);
 
-        guestImp.login("Admin","Password"); //initiate the system
+        guestImp.login("A1","Password"); //initiate the system
         guestImp.sign_up("manager", "password");
         guestImp.login("manager", "password");
-        SUBImp.open_store("Admin","store1");
-        storeRoleImp.assign_store_manager("Admin","store1","manager");
-        storeRoleImp.add_store_product("Admin", "store1", "bamba", 3,10);
-        storeRoleImp.add_store_product("Admin", "store1", "bisli", 4,30);
+        SUBImp.open_store("A1","store1");
+        storeRoleImp.assign_store_manager("A1","store1","manager");
+        storeRoleImp.add_store_product("A1", "store1", "bamba", 3,10);
+        storeRoleImp.add_store_product("A1", "store1", "bisli", 4,30);
 
     }
 

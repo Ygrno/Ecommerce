@@ -931,6 +931,16 @@ function view_buy_policies() {
     });
 }
 
+function view_discount_policies() {
+    let vars = instance.getUrlVars();
+    let store_name = vars["s"];
+
+    instance.add_store_conditioned_discount({
+        user_name: localStorage.getItem("current_username"),
+        store: store_name,
+        req: "get_discount_in_store"
+    });
+}
 
 function edit_permissions() {
     let vars = instance.getUrlVars();
@@ -1546,6 +1556,27 @@ function add_complex_buy_policy_response(response) {
 }
 
 function view_buy_policies_response(policies) {
+    let policiesList = policies["policies"];
+    if (policiesList.length === 0) return;
+    let div = document.createElement("div");
+    div.style.overflow = 'auto';
+
+    let prodcutHTMLList = new HTMLList(div);
+
+    const cellBuilder = (product)=>{
+        //DESIGN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        let d = document.createElement("div");
+        d.innerHTML = "<b>"+JSON.stringify(product)+"</b>";
+        return d;
+    };
+
+    policiesList.forEach((p)=> prodcutHTMLList.addElement(p));
+    prodcutHTMLList.render(cellBuilder);
+
+    popUp(div);
+}
+
+function view_buy_discounts_response(policies) {
     let policiesList = policies["policies"];
     if (policiesList.length === 0) return;
     let div = document.createElement("div");

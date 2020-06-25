@@ -29,8 +29,7 @@ public class uc_7_connect_finance_service {
     @Test
     public void tryToBuy() {
         try {
-            assertEquals(true, productFinanceService.tryToBuy(new DealDetails("mahmoud", 100, "mahmoud", "1291823", "21/9", 977, "12345678")));
-            assertEquals(false, productFinanceService.tryToBuy(new DealDetails("tamer", 100, "tamer", "1291823", "21/9", 977, "12345678")));
+            assert  !("-1".equals(productFinanceService.tryToBuy(new DealDetails("mahmoud", 100, "mahmoud", "1291823", "21/9", 977, "12345678"))));
 
         }catch (Exception e){
 

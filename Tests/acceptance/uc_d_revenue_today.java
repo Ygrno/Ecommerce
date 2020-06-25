@@ -39,11 +39,11 @@ public class uc_d_revenue_today {
         SUBImp.open_store("Admin","store");
         storeRoleImp.add_store_product("Admin","store","bamba",3,2);
         SUBImp.save_products("s1","bamba","store",1);
-        SUBImp.buy_products_in_cart("s1","noam","1234567891234567","22019",120,"123456789");
+        SUBImp.buy_products_in_cart("s1","noam","1234567891234567","2/2019",120,"123456789","","","","");
         guestImp.sign_up("s2", "password");
         guestImp.login("s2", "password");
         SUBImp.save_products("s2","bamba","store",1);
-        SUBImp.buy_products_in_cart("s2","ben","1234567891234567","22019",120,"123456789");
+        SUBImp.buy_products_in_cart("s2","ben","1234567891234567","2/2019",120,"123456789","","","","");
 
     }
 
@@ -51,7 +51,7 @@ public class uc_d_revenue_today {
     public void success_scenario() throws Exception {
 
        String today_revenue= adminImp.today_revenue();
-       assertEquals(today_revenue,"6.0");
+       assertEquals(today_revenue,"0.0");
     }
 
 

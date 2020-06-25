@@ -10,7 +10,7 @@ public class main {
     private static DBAccess db;
     public static void main(String[] args) throws Exception {
         //start the database
-        //db=DBAccess.getInstance();
+        //db=DBAccess.getInstance();https://docs.microsoft.com/en-us/archive/msdn-magazine/2014/november/async-programming-unit-testing-asynchronous-code-three-solutions-for-better-tests
         AdminImp managerImp = new AdminImp();
         managerImp.init_system(true);
 

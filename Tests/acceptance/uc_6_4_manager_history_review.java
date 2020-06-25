@@ -29,7 +29,7 @@ public class uc_6_4_manager_history_review {
         storeRoleImp = new StoreRoleImp();
         managerImp = new AdminImp();
         managerImp.init_system(false);
-        guestImp.login("Admin","Password");
+        guestImp.login("A1","Password");
         guestImp.sign_up("subscriber", "subscriber");
         guestImp.login("subscriber","subscriber");
         SUBImp.open_store("subscriber","store1");
@@ -38,7 +38,7 @@ public class uc_6_4_manager_history_review {
         guestImp.sign_up("buyer","buyer");
         guestImp.login("buyer","buyer");
         SUBImp.save_products("buyer","bamba","store1",5);
-        guestImp.login("Admin","Password");
+        guestImp.login("A1","Password");
 
     }
 
