@@ -136,9 +136,9 @@ public class ConditionedDiscount extends DiscountComponent {
             setCalculated(true);
             switch (cond) {
                 case IF_NUMBER_OF_PRODUCTS: {
-                    final_price = product.getPrice() - (discount_percentage * product.getPrice());
                     int count = 0;
                     for(Product p: shoppingBag.getProducts()){
+                        final_price = p.getPrice() - (discount_percentage * p.getPrice());
                         if(p.getName().equals(product.getName())) {
                             count++;
                             if(count % (required_amount+1) == 0){

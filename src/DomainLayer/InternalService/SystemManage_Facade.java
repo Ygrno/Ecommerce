@@ -6,6 +6,8 @@ import DomainLayer.Roles.Permission;
 import DomainLayer.Roles.StoreManger;
 import DomainLayer.Roles.StoreRole;
 import DomainLayer.Roles.SystemManger;
+import DomainLayer.Store.DiscountComponent;
+import DomainLayer.Store.DiscountPolicy;
 import DomainLayer.Store.Store;
 import DomainLayer.System;
 import DomainLayer.User.Guest;
@@ -94,6 +96,11 @@ public class SystemManage_Facade implements InternalService {
 
                     Store store = purchase.getStore();
                     store.getPurchase_process_list().add(purchase); //Store now contains that history purchase.
+
+                    DiscountPolicy discountPolicy = store.getDiscountPolicy(); //discounts can now be re-calculate.
+                    for(DiscountComponent discount: discountPolicy.getDiscounts()){
+                        discount.setCalculated(false);
+                    }
 
                     //Update the supply amount of products in store
                     ShoppingBag shoppingBag = purchase.getShoppingBag();

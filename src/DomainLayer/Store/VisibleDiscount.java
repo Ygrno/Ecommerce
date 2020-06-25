@@ -74,8 +74,8 @@ public class VisibleDiscount extends DiscountComponent implements Serializable {
     public void calculate_discount(ShoppingBag shoppingBag) {
 
         if(check_date(this.end_of_use_date)) {
-            final_price = product.getPrice() - (discount_percentage * product.getPrice());
             for(Product p: shoppingBag.getProducts()){
+                final_price = p.getPrice() - (discount_percentage * p.getPrice());
                 if(!p.isDiscountCalculate()  && p.getName().equals(product.getName())){
                     p.setPrice(final_price);
                     p.setDiscountCalculate(true);
