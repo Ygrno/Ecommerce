@@ -130,14 +130,14 @@ public class StoreRoleImp implements IStoreRole {
     }
 
     @Override
-    public boolean assign_store_owner(String store_name, String user_assign) throws Exception {
+    public boolean assign_store_owner(String user_name,String store_name, String user_assign) throws Exception {
         my_logInfo.logger.info("assign_store_owner");
         if (!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
             return false;
         }
         if (SystemManage_Facade.find_subscriber(user_assign)) {
-            return SubscribersManage_Facade.add_owner_to_store(store_name, user_assign);
+            return SubscribersManage_Facade.add_owner_to_store(user_name,store_name, user_assign);
         }
         my_logError.logger.severe("assign_store_owner failed!");
         return false;
@@ -332,6 +332,20 @@ public class StoreRoleImp implements IStoreRole {
 
         my_logError.logger.severe("view all duscounts failed!");
         return null;
+    }
+
+    @Override
+    public boolean assign_store_owner_approval(String store_name, String user_assign) throws Exception {
+        my_logInfo.logger.info("assign_store_owner");
+        if (!SystemManage_Facade.is_initialized()) {
+            my_logError.logger.severe("System not initialized");
+            return false;
+        }
+        if (SystemManage_Facade.find_subscriber(user_assign)) {
+            return SubscribersManage_Facade.add_owner_to_store_app(store_name, user_assign);
+        }
+        my_logError.logger.severe("assign_store_owner failed!");
+        return false;
     }
 
 

@@ -332,27 +332,27 @@ public class SubscribersManage_Facade implements InternalService {
         }
         return false;
     }
-    public static boolean add_owner_to_store(String store_name, String user_assign) throws Exception {
-        return OwnersApproval.GetOwnersApproval().add_owner_to_store(store_name,user_assign);
+    public static boolean add_owner_to_store_app(String store_name, String user_assign) throws Exception {
+         return OwnersApproval.GetOwnersApproval().add_owner_to_store(store_name,user_assign);
     }
     // old 4.3
-//    public static boolean add_owner_to_store(String user_name, String store_name, String user_assign) throws Exception {
-//        Subscriber subscriber1 = System.getSystem().get_subscriber(user_name);
-//        StoreRole store_role = subscriber1.get_role_at_store(store_name);
-//        if (store_role instanceof StoreOwner) {
-//            Subscriber subscriber2 = System.getSystem().get_subscriber(user_assign);
-//            if(subscriber2 == null || store_role.store.find_store_owner_by_name(user_assign) != null) return false;
-//            StoreOwner storeOwner = new StoreOwner(subscriber2,store_role.store);
-//            subscriber2.getRole_list().add(storeOwner);
-//            storeOwner.store.getRoles().add(storeOwner);
-//            store_role.getAssigned_users().add(storeOwner);
-//            storeOwner.setAssigned_by(store_role);
-//            dB.updateAndCommit(store_role);
-//            dB.updateAndCommit(storeOwner);
-//            return true;
-//        }
-//        return false;
-//    }
+    public static boolean add_owner_to_store(String user_name, String store_name, String user_assign) throws Exception {
+        Subscriber subscriber1 = System.getSystem().get_subscriber(user_name);
+        StoreRole store_role = subscriber1.get_role_at_store(store_name);
+        if (store_role instanceof StoreOwner) {
+            Subscriber subscriber2 = System.getSystem().get_subscriber(user_assign);
+            if(subscriber2 == null || store_role.store.find_store_owner_by_name(user_assign) != null) return false;
+            StoreOwner storeOwner = new StoreOwner(subscriber2,store_role.store);
+            subscriber2.getRole_list().add(storeOwner);
+            storeOwner.store.getRoles().add(storeOwner);
+            store_role.getAssigned_users().add(storeOwner);
+            storeOwner.addAssigned_by(store_role);
+            dB.updateAndCommit(store_role);
+            dB.updateAndCommit(storeOwner);
+            return true;
+        }
+        return false;
+    }
 
     public static boolean remove_owner_from_store(String user_name, String store_name, String user_assign) throws Exception {
         Subscriber requester = System.getSystem().get_subscriber(user_name);

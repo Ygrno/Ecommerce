@@ -83,7 +83,7 @@ public class StoreRoleMessageProccess {
         String storename = request.getString("store_name");
         String user_assign = request.getString("user_assign");
 
-        boolean b = storeRole.assign_store_owner(storename,user_assign);
+        boolean b = storeRole.assign_store_owner(username,storename,user_assign);
 
         JSONObject o=new JSONObject();
         o.put("req", request.get("req"));
