@@ -97,20 +97,20 @@ function buyThings(products){
             alert("please enter the name");
             return;
         }
-        if(ccNumber=== "") {
-            alert("please enter the credit card number");
+        if(ccNumber=== "" || ccNumber.length !==16) {
+            alert("please enter valid credit card number");
             return;
         }
-        if(expire_date_value=== "") {
-            alert("please enter the expire date");
+        if( expire_date_value=== "" || [0,expire_date_value.length-1,-1].indexOf(expire_date_value.indexOf("/"))!==-1) {
+            alert("please enter valid expire date");
             return;
         }
-        if(cvvValue=== "") {
-            alert("please enter the cvv");
+        if(cvvValue=== "" || cvvValue.length!==3) {
+            alert("please enter valid cvv");
             return;
         }
-        if(buyer_idValue=== "") {
-            alert("please enter the Buyer id");
+        if(buyer_idValue=== "" || buyer_idValue.length!==9) {
+            alert("please enter valid Buyer id");
             return;
         }
         if(adressValue=== "") {
