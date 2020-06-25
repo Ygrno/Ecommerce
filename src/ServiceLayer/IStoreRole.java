@@ -26,7 +26,7 @@ public interface IStoreRole {
 //    public boolean remove_store_buying_policy(String user_name, String store_name);    //4.2 //5.1
 
 
-    boolean assign_store_owner(String user_name, String store_name, String user_assign) throws Exception; //4.3
+    boolean assign_store_owner(String store_name, String user_assign) throws Exception; //4.3
     boolean remove_store_owner(String user_name, String store_name, String user_assign) throws Exception; //4.4
     boolean assign_store_manager(String user_name, String store_name, String user_assign) throws Exception; //4.5
     boolean edit_manager_permissions(String user_name, String store_name, String user_assign, ArrayList<String> permissions) throws Exception; //4.6

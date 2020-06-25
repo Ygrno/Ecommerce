@@ -35,23 +35,23 @@ public class uc_4_4_remove_store_owner {
         guestImp.login("subscriber", "subscriber");
         SUBImp.open_store("subscriber", "store1");
 
-        storeRoleImp.assign_store_owner("subscriber", "store1", "Admin");
+        storeRoleImp.assign_store_owner( "store1", "Admin");
 
         guestImp.sign_up("s2", "123");
         guestImp.sign_up("s3", "123");
         guestImp.sign_up("s4", "123");
 
-        storeRoleImp.assign_store_owner("Admin", "store1", "s2");
-        storeRoleImp.assign_store_owner("Admin", "store1", "s3");
-        storeRoleImp.assign_store_manager("Admin", "store1", "s4");
+        storeRoleImp.assign_store_owner( "store1", "s2");
+        storeRoleImp.assign_store_owner( "store1", "s3");
+        storeRoleImp.assign_store_manager( "Admin","store1", "s4");
 
     }
 
     private void assign_users() throws Exception {
-        storeRoleImp.assign_store_owner("subscriber", "store1", "Admin");
-        storeRoleImp.assign_store_owner("Admin", "store1", "s2");
-        storeRoleImp.assign_store_owner("Admin", "store1", "s3");
-        storeRoleImp.assign_store_manager("Admin", "store1", "s4");
+        storeRoleImp.assign_store_owner( "store1", "Admin");
+        storeRoleImp.assign_store_owner( "store1", "s2");
+        storeRoleImp.assign_store_owner( "store1", "s3");
+        storeRoleImp.assign_store_manager("Admin","store1", "s4");
 
     }
 

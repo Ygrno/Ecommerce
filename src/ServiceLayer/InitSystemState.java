@@ -61,7 +61,7 @@ public class InitSystemState {
                 case "add_product_to_store":
                     return storeRoleImp.add_store_product(method_args[0],method_args[1],method_args[2],Integer.parseInt(method_args[3]),Integer.parseInt(method_args[4]));
                 case "add_owner_to_store":
-                   return storeRoleImp.assign_store_owner(method_args[0],method_args[1],method_args[2]);
+                   return storeRoleImp.assign_store_owner(method_args[0],method_args[1]);
                 case "add_manager_to_store":
                     return storeRoleImp.assign_store_manager(method_args[0],method_args[1],method_args[2]);
                 case "create_store_simple_policy":

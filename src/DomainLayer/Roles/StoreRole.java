@@ -16,11 +16,17 @@ import java.util.List;
 //        @AttributeOverride(name="id",column = @Column(name="id"))
 //})
 public abstract class StoreRole extends Role {
+    @Transient
+    protected ArrayList<Role> assigned = null;
+    @Transient
+    protected ArrayList<Role> assigned_by = null;
 
     @ManyToOne
     @JoinColumn(name = "store_id")
     public Store store;
-    @OneToMany(mappedBy = "assigned_by" )
+
+//    @OneToMany(mappedBy = "assigned_users" )
+    @Transient
     private List<Role> assigned_users = new ArrayList<>();
 
     @Transient
@@ -39,13 +45,7 @@ public abstract class StoreRole extends Role {
         this.assigned_users = assigned_users;
     }
 
-    public Role getAssigned_by() {
-        return assigned_by;
-    }
 
-    public void setAssigned_by(Role assigned_by) {
-        this.assigned_by = assigned_by;
-    }
 
     //Notification
     public Observer observer(){return observer;}

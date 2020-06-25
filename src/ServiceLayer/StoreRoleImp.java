@@ -130,13 +130,13 @@ public class StoreRoleImp implements IStoreRole {
     }
 
     @Override
-    public boolean assign_store_owner(String user_name, String store_name, String user_assign) throws Exception {
+    public boolean assign_store_owner(String store_name, String user_assign) throws Exception {
         my_logInfo.logger.info("assign_store_owner");
         if (!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
             return false;
         }
-        if (SystemManage_Facade.find_subscriber(user_name) && SubscribersManage_Facade.check_if_logged_in(user_name)) {
+        if (SystemManage_Facade.find_subscriber(user_assign)) {
             return SubscribersManage_Facade.add_owner_to_store(store_name, user_assign);
         }
         my_logError.logger.severe("assign_store_owner failed!");
