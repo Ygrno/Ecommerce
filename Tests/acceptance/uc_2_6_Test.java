@@ -60,7 +60,7 @@ public class uc_2_6_Test {
 
     @Test
     public void failScenario1() throws JSONException {
-        assert gi.watch_products_in_cart(1)==null;
+        assert gi.watch_products_in_cart(2)==null;
     }
 
 }

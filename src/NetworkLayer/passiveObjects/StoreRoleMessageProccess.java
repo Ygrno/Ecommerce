@@ -366,4 +366,20 @@ public class StoreRoleMessageProccess {
         protocol.send(o);
     }
 
+    public static void get_discounts_in_store(MessagingProtocol protocol, JSONObject request) throws Exception{
+        String store = request.getString("store");
+        String username = request.getString("user_name");
+        List<JSONObject> policies = storeRole.view_all_discount(username,store);
+
+        JSONArray arr = new JSONArray();
+        for(JSONObject p : policies){
+            arr.put(p);
+        }
+
+        JSONObject o = new JSONObject();
+        o.put("policies", arr);
+        o.put("req", request.get("req"));
+        protocol.send(o);
+    }
+
 }

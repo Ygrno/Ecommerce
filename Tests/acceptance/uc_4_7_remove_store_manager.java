@@ -27,11 +27,11 @@ public class uc_4_7_remove_store_manager {
         storeRoleImp =  new StoreRoleImp();
         managerImp = new AdminImp();
         managerImp.init_system(false);
-        guestImp.login("Admin","Password");
+        guestImp.login("A1","Password");
         guestImp.sign_up("manager", "password");
         guestImp.login("manager", "password");
-        SUBImp.open_store("Admin","store4");
-        storeRoleImp.assign_store_manager("Admin","store4","manager");
+        SUBImp.open_store("A1","store4");
+        storeRoleImp.assign_store_manager("A1","store4","manager");
 
     }
 
@@ -43,13 +43,13 @@ public class uc_4_7_remove_store_manager {
 
 
     public void success_scenario() throws Exception {
-        assertTrue(storeRoleImp.remove_store_manager("Admin","store4","manager"));
+        assertTrue(storeRoleImp.remove_store_manager("A1","store4","manager"));
     }
 
 
 
     public void failure_scenario() throws Exception {
-        assertFalse(storeRoleImp.remove_store_manager("Admin","store4","manager"));
+        assertFalse(storeRoleImp.remove_store_manager("A1","store4","manager"));
     }
 
 

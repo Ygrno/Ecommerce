@@ -41,11 +41,11 @@ public class uc_d_revenue_specific_date {
         SUBImp.open_store("Admin","store");
         storeRoleImp.add_store_product("Admin","store","bamba",3,2);
         SUBImp.save_products("s1","bamba","store",1);
-        SUBImp.buy_products_in_cart("s1","noam","1234567891234567","22019",120,"123456789");
+        SUBImp.buy_products_in_cart("s1","noam","1234567891234567","2/2019",120,"123456789","","","","");
         guestImp.sign_up("s2", "password");
         guestImp.login("s2", "password");
         SUBImp.save_products("s2","bamba","store",1);
-        SUBImp.buy_products_in_cart("s2","ben","1234567891234567","22019",120,"123456789");
+        SUBImp.buy_products_in_cart("s2","ben","1234567891234567","2/2019",120,"123456789","","","","");
 
     }
 
@@ -54,7 +54,7 @@ public class uc_d_revenue_specific_date {
         SimpleDateFormat format = new SimpleDateFormat("ddMMyyyy");
         String dateString = format.format( new Date());
         String date_revenue= adminImp.date_revenue(dateString);
-        assertEquals(date_revenue,"6.0");
+        assertEquals(date_revenue,"0.0");
     }
 
 

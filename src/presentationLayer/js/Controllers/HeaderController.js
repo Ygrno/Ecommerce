@@ -59,8 +59,20 @@ function buyThings(products){
     let buyer_id = document.createElement("input");
     buyer_id.placeholder="ID";
 
+    let address = document.createElement("input");
+    address.placeholder="address";
 
-    [name, credit_card_number, expire_date, cvv, buyer_id].forEach((d)=>{
+    let city = document.createElement("input");
+    city.placeholder="city";
+
+    let country = document.createElement("input");
+    country.placeholder="country";
+
+    let zip = document.createElement("input");
+    zip.placeholder="zip";
+
+
+    [name, credit_card_number, expire_date, cvv, buyer_id,address,city,country,zip].forEach((d)=>{
         d.className = 'text_input';
         div.appendChild(d);
     });
@@ -77,6 +89,10 @@ function buyThings(products){
         let expire_date_value = expire_date.value;
         let cvvValue = cvv.value;
         let buyer_idValue = buyer_id.value;
+        let adressValue=address.value;
+        let cityValue = city.value;
+        let countryValue= country.value;
+        let zipValue = zip.value;
         if(buyerName === ""){
             alert("please enter the name");
             return;
@@ -97,12 +113,32 @@ function buyThings(products){
             alert("please enter the Buyer id");
             return;
         }
+        if(adressValue=== "") {
+            alert("please enter the address");
+            return;
+        }
+        if(cityValue=== "") {
+            alert("please enter the city");
+            return;
+        }
+        if(countryValue=== "") {
+            alert("please enter the country");
+            return;
+        }
+        if(zipValue=== "") {
+            alert("please enter the zip code");
+            return;
+        }
         instance.send_process_details({
             buyer_name: buyerName,
             creditCardNumber: ccNumber,
             expireDate: expire_date_value,
             cvv: cvvValue,
-            buyer_id:buyer_idValue
+            buyer_id:buyer_idValue,
+            address:adressValue,
+            city:cityValue,
+            country:countryValue,
+            zip:zipValue
         });
     };
     div.appendChild(finish);

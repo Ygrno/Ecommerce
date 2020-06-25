@@ -68,13 +68,15 @@ public class ProductBuyPolicy extends SimpleBuyPolicy {
     @Override
     public boolean validate(ShoppingBag shoppingBag) {
         //ShoppingBag shopBag= purchaseProcess.getShoppingBag();
-        HashMap<Product,Integer> products = shoppingBag.getProductsAmounts();
+        HashMap<String,Integer> products = shoppingBag.getProductsAmounts();
         int countProduct = 0;
-        for (Product p : products.keySet()) {
-            if (p.getName().equals(this.product_name)) {
+        for (String p : products.keySet()) {
+            if (p.equals(this.product_name)) {
                 countProduct++;
-                if (minProducts != 0 && products.get(p) < minProducts)
+                System.out.println(products.get(p));
+                if (minProducts != 0 && products.get(p) < minProducts) {
                     return false;
+                }
                 if (maxProducts != 0 && products.get(p) > maxProducts)
                     return false;
             }

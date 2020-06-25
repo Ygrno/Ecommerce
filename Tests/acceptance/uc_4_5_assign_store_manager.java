@@ -31,6 +31,7 @@ public class uc_4_5_assign_store_manager {
         managerImp = new AdminImp();
         managerImp.init_system(false);
         guestImp.login("Admin","Password");
+        guestImp.sign_up("subscriber1", "subscriber");
         guestImp.sign_up("subscriber", "subscriber");
         guestImp.login("subscriber","subscriber");
         SUBImp.open_store("subscriber","store1");
@@ -38,7 +39,7 @@ public class uc_4_5_assign_store_manager {
 
     @Test
     public void a_success_scenario() throws Exception {
-        assertTrue(storeRoleImp.assign_store_manager("subscriber","store1","Admin"));
+        assertTrue(storeRoleImp.assign_store_manager("subscriber","store1","subscriber1"));
     }
 
 

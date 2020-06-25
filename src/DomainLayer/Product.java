@@ -28,6 +28,7 @@ public class Product implements Serializable {
     @OneToMany(mappedBy = "product",cascade=CascadeType.ALL)
     private List<ProductReview> product_review_list;
 
+    private boolean discountCalculate;
 
 
     @ManyToOne(targetEntity = ShoppingBag.class)
@@ -53,7 +54,7 @@ public class Product implements Serializable {
 
 
         product_review_list = Collections.synchronizedList(new  ArrayList<>());
-
+        this.discountCalculate=false;
     }
 
     public String getName() {
@@ -109,4 +110,18 @@ public class Product implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
+
+    public boolean isDiscountCalculate() {
+        return discountCalculate;
+    }
+
+    public void setDiscountCalculate(boolean discountCalculate) {
+        this.discountCalculate = discountCalculate;
+    }
+
+
+//    @Override
+//    public boolean equals(Object obj) {
+//        return ((Product)obj).getName().equals(this.name);
+//    }
 }

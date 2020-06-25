@@ -11,7 +11,12 @@ public class FailingFInanceServiceStub implements ExternalFinanceService {
     }
 
     @Override
-    public boolean purchase(String accName, String ccn, String expireDate, int cvv, String id) throws Exception{
+    public String purchase(String accName, String ccn, String expireDate, int cvv, String id) throws Exception{
         throw new ConnectException();
+    }
+
+    @Override
+    public String cancelPay(String tId) throws Exception {
+        throw new Exception();
     }
 }

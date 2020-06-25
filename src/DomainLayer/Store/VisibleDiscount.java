@@ -3,16 +3,16 @@ package DomainLayer.Store;
 import DomainLayer.Product;
 import DomainLayer.PurchaseProcess;
 import DomainLayer.ShoppingBag;
-import DomainLayer.System;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
 @Table(name = "visible_discount")
 
-public class VisibleDiscount extends DiscountComponent {
+public class VisibleDiscount extends DiscountComponent implements Serializable {
 
 
     private double discount_percentage;
@@ -73,11 +73,12 @@ public class VisibleDiscount extends DiscountComponent {
     @Override
     public void calculate_discount(ShoppingBag shoppingBag) {
 
-        if(!isCalculated() && check_date(this.end_of_use_date)) {
+        if(check_date(this.end_of_use_date)) {
             final_price = product.getPrice() - (discount_percentage * product.getPrice());
             for(Product p: shoppingBag.getProducts()){
-                if(p.getName().equals(product.getName())){
+                if(!p.isDiscountCalculate()  && p.getName().equals(product.getName())){
                     p.setPrice(final_price);
+                    p.setDiscountCalculate(true);
                 }
             }
             setCalculated(true);

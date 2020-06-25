@@ -215,7 +215,11 @@ class Main{
             creditCardNumber: details.creditCardNumber,
             expireDate: details.expireDate,
             cvv: details.cvv,
-            buyer_id: details.buyer_id
+            buyer_id: details.buyer_id,
+            address:details.address,
+            city:details.city,
+            country:details.country,
+            zip:details.zip
         };
         if (isGuest()) {
             msg["id"] = localStorage.getItem("guest_id");
@@ -295,7 +299,6 @@ class Main{
     }
 
     add_store_conditioned_discount(details){
-        alert("sendin");
         this.client.send(JSON.stringify(details));
     }
 

@@ -28,22 +28,22 @@ public class uc_4_6_edit_manager_permessions {
         storeRoleImp =  new StoreRoleImp();
         managerImp = new AdminImp();
         managerImp.init_system(false);
-        guestImp.login("Admin","Password");
+        guestImp.login("A1","Password");
         guestImp.sign_up("manager", "password");
         guestImp.login("manager", "password");
-        SUBImp.open_store("Admin","store");
-        storeRoleImp.assign_store_manager("Admin","store","manager");
+        SUBImp.open_store("A1","store");
+        storeRoleImp.assign_store_manager("A1","store","manager");
     }
 
     @Test
     public void success_scenario() throws Exception {
-        assertTrue(storeRoleImp.edit_manager_permissions("Admin","store","manager",permissions));
+        assertTrue(storeRoleImp.edit_manager_permissions("A1","store","manager",permissions));
     }
 
 
     @Test
     public void failure_scenario() throws Exception {
-        assertFalse(storeRoleImp.edit_manager_permissions("Admin","store1","moti",permissions));
+        assertFalse(storeRoleImp.edit_manager_permissions("A1","store1","moti",permissions));
     }
 
 

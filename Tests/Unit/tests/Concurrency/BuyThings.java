@@ -38,7 +38,7 @@ public class BuyThings {
 
         Thread t1 = new Thread(() -> {
             try {
-                s[0] = guestImp.buy_products_in_cart(0, "guest1", "1111111111111111", "4/2021", 111, "206666666");
+                s[0] = guestImp.buy_products_in_cart(0, "guest1", "1111111111111111", "4/2021", 111, "206666666","","","","");
             } catch (Exception e) {
 
             }
@@ -46,7 +46,7 @@ public class BuyThings {
 
         Thread t2 = new Thread(() -> {
             try {
-                s[1] = guestImp.buy_products_in_cart(1, "guest2", "1111111111111111", "4/2021", 111, "206666666");
+                s[1] = guestImp.buy_products_in_cart(1, "guest2", "1111111111111111", "4/2021", 111, "206666666","","","","");
             } catch (Exception e) {
 
             }

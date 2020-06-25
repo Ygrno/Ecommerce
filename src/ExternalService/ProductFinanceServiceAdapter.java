@@ -21,7 +21,7 @@ public class ProductFinanceServiceAdapter {
     }
 
 
-    public boolean tryToBuy(DealDetails details) throws Exception{
+    public String tryToBuy(DealDetails details) throws Exception{
         return FinanceService.purchase(
                 details.getBuyer_name(),
                 details.getCreditCardNumber(),
@@ -29,5 +29,9 @@ public class ProductFinanceServiceAdapter {
                 details.getCvv(),
                 details.getBuyer_id()
         );
+    }
+
+    public String cancelPay(String tId) throws Exception {
+        return FinanceService.cancelPay(tId);
     }
 }

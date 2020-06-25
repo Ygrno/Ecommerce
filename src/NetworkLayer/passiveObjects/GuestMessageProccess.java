@@ -149,8 +149,13 @@ public class GuestMessageProccess {
         String expireDate=request.getString("expireDate");
         int cvv=request.getInt("cvv");
         String buyer_id =request.getString("buyer_id");
+        String address = request.getString("address");
+        String city = request.getString("city");
+        String country = request.getString("country");
+        String zip = request.getString("zip");
 
-        boolean b = guestImp.buy_products_in_cart(id,buyerName,creditCardNumber,expireDate,cvv, buyer_id);
+        boolean b = guestImp.buy_products_in_cart(id,buyerName,creditCardNumber,expireDate,cvv, buyer_id,address,city,country,zip);
+
         JSONObject o=new JSONObject();
         o.put("req", request.get("req"));
         o.put("success", b);

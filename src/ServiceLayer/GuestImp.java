@@ -156,7 +156,7 @@ public class GuestImp implements IGuest {
     }
 
     @Override
-    public boolean buy_products_in_cart(int id,String buyerName,String creditCardNumber,String expireDate,int cvv, String buyer_id) throws Exception {
+    public boolean buy_products_in_cart(int id,String buyerName,String creditCardNumber,String expireDate,int cvv, String buyer_id,String address,String city,String country,String zip) throws Exception {
         my_logInfo.logger.info("buy_products_in_cart");
         if (!SystemManage_Facade.is_initialized()) {
             my_logError.logger.severe("System not initialized");
@@ -175,10 +175,12 @@ public class GuestImp implements IGuest {
 
         double price=SystemManage_Facade.getPriceOfCart(String.valueOf(id));
         String[] dealDetails={String.valueOf(id),String.valueOf(price),buyerName,creditCardNumber,expireDate, String.valueOf(cvv), buyer_id};
+        String[] supplyDetails = {buyerName,address,city,country,zip};
+
         boolean b;
         synchronized (this) {
             if(!SystemManage_Facade.checkIfCanBuy(String.valueOf(id))) return false;
-            b = SystemManage_Facade.buy(dealDetails);
+            b = SystemManage_Facade.buy(dealDetails,supplyDetails);
         }
         return b;
     }

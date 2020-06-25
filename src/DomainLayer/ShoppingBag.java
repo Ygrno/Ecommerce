@@ -101,10 +101,26 @@ public class ShoppingBag {
     }
 
 
-    public HashMap<Product,Integer> getProductsAmounts(){
+    public HashMap<String,Integer> getProductsAmounts(){
+
+        HashMap<String,Integer> map = new HashMap<>();
+        for(Product p:products){
+            if(map.containsKey(p.getName())){
+
+                map.replace(p.getName(),map.get(p.getName()),map.get(p.getName())+1);
+            }
+            else
+            {
+
+                map.put(p.getName(),1);
+            }
+        }
+        return map;
+    }
+
+    public HashMap<Product,Integer> getProductsAmount(){
         HashMap<Product,Integer> map = new HashMap<>();
         for(Product p:products){
-
             if(map.containsKey(p)){
                 map.replace(p,map.get(p),map.get(p)+1);
             }
