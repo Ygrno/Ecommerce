@@ -96,22 +96,28 @@ public class ComplexDiscount extends DiscountComponent {
         int count3 = 0;
 
         for(DiscountComponent discountComponent: and_discountComponents){
-            boolean validate = discountComponent.validate(shoppingBag);
-            if(validate) valid_and_discountComponents.add(discountComponent);
-            and_predicate = and_predicate && validate;
-            count1++;
+            if(!discountComponent.isCalculated()) {
+                boolean validate = discountComponent.validate(shoppingBag);
+                if (validate) valid_and_discountComponents.add(discountComponent);
+                and_predicate = and_predicate && validate;
+                count1++;
+            }
         }
         for(DiscountComponent discountComponent: or_discountComponents){
-            boolean validate = discountComponent.validate(shoppingBag);
-            if(validate) valid_or_discountComponents.add(discountComponent);
-            or_predicate = or_predicate || validate;
-            count2++;
+            if(!discountComponent.isCalculated()) {
+                boolean validate = discountComponent.validate(shoppingBag);
+                if (validate) valid_or_discountComponents.add(discountComponent);
+                or_predicate = or_predicate || validate;
+                count2++;
+            }
         }
         for(DiscountComponent discountComponent: onlyOne_discountComponents){
-            boolean validate = discountComponent.validate(shoppingBag);
-            if(validate) valid_onlyOne_discountComponents.add(discountComponent);
-            or_predicate2 = or_predicate2 || validate;
-            count3++;
+            if(!discountComponent.isCalculated()) {
+                boolean validate = discountComponent.validate(shoppingBag);
+                if (validate) valid_onlyOne_discountComponents.add(discountComponent);
+                or_predicate2 = or_predicate2 || validate;
+                count3++;
+            }
         }
 
         if(count1 == 0) and_predicate = true;
@@ -136,7 +142,7 @@ public class ComplexDiscount extends DiscountComponent {
             }
 
             //Calculate exactly one from Only One
-            valid_onlyOne_discountComponents.get(0).calculate_discount(shoppingBag);
+            if(valid_onlyOne_discountComponents.size() != 0) valid_onlyOne_discountComponents.get(0).calculate_discount(shoppingBag);
 
         }
 
