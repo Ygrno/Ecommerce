@@ -22,8 +22,9 @@ import java.util.List;
 public class Store {
 
 
+    public static ArrayList<Role> assigned_by;
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @OneToOne(targetEntity = Policy.class,cascade = CascadeType.ALL)
     private Policy purchasePolicy;
@@ -175,4 +176,12 @@ public class Store {
         this.id = id;
     }
 
+    public List<StoreOwner> GetStoreOwners() {
+        List<StoreOwner> Roles = new ArrayList<StoreOwner>();
+        for (Role store_role : roles)
+            if (store_role instanceof StoreOwner) {
+                Roles.add((StoreOwner)store_role);
+            }
+        return Roles;
+    }
 }

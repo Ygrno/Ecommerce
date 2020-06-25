@@ -42,6 +42,10 @@ public class StoreManger extends StoreRole {
         return permissions;
     }
 
+    public void setAssigned_by(Role R){
+        assigned_by= new ArrayList<Role>();
+        assigned_by.add(R);
+    }
     public boolean havePermission (String permission) {
         for(Permission p: permissions){
             if(p.toString().equals(permission)) return true;

@@ -35,12 +35,17 @@ public class ObserverTest {
         SUBImp.open_store("Admin","test");
     }
 
+    //observer has 2 function other then the 3 get functions
+
+    //admin opened store then it should work as expected
+    //subscriber shouldnt
     @Test
     public void CheckNotification() throws Exception {
         assertTrue(_Observer.CheckNotification("Admin"));
         assertFalse(_Observer.CheckNotification("subscriber"));
     }
-
+    
+    //it should work as expected and the arraylist should be updated
     @Test
     public void update() throws Exception {
         JSONObject o = new JSONObject();

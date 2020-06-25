@@ -3,6 +3,7 @@ package DomainLayer.Roles;
 import DomainLayer.User.Subscriber;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -14,12 +15,7 @@ public abstract class Role {
     @ManyToOne
     @JoinColumn(name = "storeRole_id")
     private StoreRole storeRole;
-    @ManyToOne(targetEntity = StoreRole.class,cascade=CascadeType.ALL)
-    protected Role assigned_by = null;
-
-
     public Role() {
-
     }
     @Id
     @Column(name ="id")
@@ -43,4 +39,5 @@ public abstract class Role {
     public void setUser(Subscriber user) {
         this.user = user;
     }
+
 }
