@@ -30,28 +30,28 @@ public class uc_4_4_remove_store_owner {
         storeRoleImp = new StoreRoleImp();
         managerImp = new AdminImp();
         managerImp.init_system(false);
-        guestImp.login("Admin", "Password");
+        guestImp.login("A1", "Password");
         guestImp.sign_up("subscriber", "subscriber");
         guestImp.login("subscriber", "subscriber");
         SUBImp.open_store("subscriber", "store1");
 
-        storeRoleImp.assign_store_owner( "store1", "Admin");
+        storeRoleImp.assign_store_owner_approval( "store1", "A1");
 
         guestImp.sign_up("s2", "123");
         guestImp.sign_up("s3", "123");
         guestImp.sign_up("s4", "123");
 
-        storeRoleImp.assign_store_owner( "store1", "s2");
-        storeRoleImp.assign_store_owner( "store1", "s3");
-        storeRoleImp.assign_store_manager( "Admin","store1", "s4");
+        storeRoleImp.assign_store_owner_approval( "store1", "s2");
+        storeRoleImp.assign_store_owner_approval( "store1", "s3");
+        storeRoleImp.assign_store_manager( "A1","store1", "s4");
 
     }
 
     private void assign_users() throws Exception {
-        storeRoleImp.assign_store_owner( "store1", "Admin");
-        storeRoleImp.assign_store_owner( "store1", "s2");
-        storeRoleImp.assign_store_owner( "store1", "s3");
-        storeRoleImp.assign_store_manager("Admin","store1", "s4");
+        storeRoleImp.assign_store_owner_approval( "store1", "A1");
+        storeRoleImp.assign_store_owner_approval( "store1", "s2");
+        storeRoleImp.assign_store_owner_approval( "store1", "s3");
+        storeRoleImp.assign_store_manager("A1","store1", "s4");
 
     }
 
@@ -70,10 +70,10 @@ public class uc_4_4_remove_store_owner {
     @Test
     public void a_success_scenario() throws Exception {
         //Valid remove s3 store owner assigned by Admin.
-        assertTrue(storeRoleImp.remove_store_owner("Admin", "store1", "s3"));
+        assertTrue(storeRoleImp.remove_store_owner("A1", "store1", "s3"));
 
         //Valid remove Admin store owner assigned by subscriber.
-        assertTrue(storeRoleImp.remove_store_owner("subscriber", "store1", "Admin"));
+        assertTrue(storeRoleImp.remove_store_owner("subscriber", "store1", "A1"));
     }
 
 
@@ -81,20 +81,20 @@ public class uc_4_4_remove_store_owner {
     public void b_failure_scenario() throws Exception {
 
         //Trying to remove Admin after he was removed.
-        assertFalse(storeRoleImp.remove_store_owner("subscriber", "store1", "Admin"));
+        assertFalse(storeRoleImp.remove_store_owner("subscriber", "store1", "A1"));
 
         //Trying to remove Admin by a user that doesn't even exist
-        assertFalse(storeRoleImp.remove_store_owner("Moshe", "store1", "Admin"));
+        assertFalse(storeRoleImp.remove_store_owner("Moshe", "store1", "A1"));
 
         add_moshe();
 
         //Now moshe does exists in the system, but he isn't related to the store in any way.
-        assertFalse(storeRoleImp.remove_store_owner("Moshe", "store1", "Admin"));
+        assertFalse(storeRoleImp.remove_store_owner("Moshe", "store1", "A1"));
 
         assign_moshe();
 
         //Now moshe does exits in the system and a related to the store, but he can't remove store owner - Admin because he is a manager. (Managers can't remove Store Owners)
-        assertFalse(storeRoleImp.remove_store_owner("Moshe", "store1", "Admin"));
+        assertFalse(storeRoleImp.remove_store_owner("Moshe", "store1", "A1"));
 
         //Reassigning users to the store.
         assign_users();

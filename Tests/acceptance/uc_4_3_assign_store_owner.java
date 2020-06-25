@@ -80,29 +80,29 @@ public class uc_4_3_assign_store_owner {
     //first owner request to store1
     @Test
     public void OwnerStoreReq() throws Exception {
-        assertTrue(storeRoleImp.assign_store_owner("store1","subscriber2"));
+        assertTrue(storeRoleImp.assign_store_owner_approval("store1","subscriber2"));
         //seceond owner request to store1
-        assertTrue(storeRoleImp.assign_store_owner("store1","subscriber3"));
+        assertTrue(storeRoleImp.assign_store_owner_approval("store1","subscriber3"));
     }
 
     //trying to request without logging in(in theory should work)
     @Test
     public void OwnerStoreReqNoLog() throws Exception {
-      assertTrue(storeRoleImp.assign_store_owner("store1","subscriber4"));
+        assertTrue(storeRoleImp.assign_store_owner_approval("store1","subscriber4"));
     }
 
     //some of the owners did not responed yet
     @Test
     public void OwnerStoreReqNotAll() throws Exception {
         resopnse.remove(O);
-        assertFalse(storeRoleImp.assign_store_owner("store1","subscriber2"));
+        assertFalse(storeRoleImp.assign_store_owner_approval("store1","subscriber2"));
     }
 
     //requesting to the same subscriber on the same store twice while he is already an owner
     @Test
     public void OwnerStoreReqTwice() throws Exception {
-        storeRoleImp.assign_store_owner("store1","subscriber2");
-        assertFalse(storeRoleImp.assign_store_owner("store1","subscriber2"));
+        storeRoleImp.assign_store_owner_approval("store1","subscriber2");
+        assertFalse(storeRoleImp.assign_store_owner_approval("store1","subscriber2"));
 
     }
 
@@ -114,7 +114,7 @@ public class uc_4_3_assign_store_owner {
         O1.put("username","subscriber2");
         O1.put("response","no");
         resopnse1.add(O1);
-        assertFalse(storeRoleImp.assign_store_owner("store1","subscriber2"));
+        assertFalse(storeRoleImp.assign_store_owner_approval("store1","subscriber2"));
     }
 
 }
